@@ -1,11 +1,11 @@
 [submodule "pmm-client"]
 	path = sources/pmm-client/src/github.com/percona/pmm-client
 	url = https://github.com/percona/pmm-client.git
-	branch = PMM-1.5
+	branch = master
 [submodule "qan-agent"]
 	path = sources/qan-agent/src/github.com/percona/qan-agent
 	url = https://github.com/percona/qan-agent.git
-	branch = PMM-1.5
+	branch = master
 [submodule "node_exporter"]
 	path = sources/node_exporter/src/github.com/prometheus/node_exporter
 	url = https://github.com/percona/node_exporter.git
