@@ -26,3 +26,39 @@
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
 	branch = 3.0
+[submodule "pmm-manage"]
+	path = sources/pmm-manage/src/github.com/percona/pmm-manage
+	url = https://github.com/percona/pmm-manage
+	branch = master
+[submodule "pmm-managed"]
+	path = sources/pmm-managed/src/github.com/percona/pmm-managed
+	url = https://github.com/percona/pmm-managed
+	branch = master
+[submodule "qan-api"]
+	path = sources/qan-api/src/github.com/percona/qan-api
+	url = https://github.com/percona/qan-api
+	branch = master
+[submodule "qan-app"]
+	path = sources/qan-app/src/github.com/percona/qan-app
+	url = https://github.com/percona/qan-app
+	branch = master
+[submodule "pmm-update"]
+	path = sources/pmm-update
+	url = https://github.com/percona/pmm-update
+	branch = master
+[submodule "pmm-server"]
+	path = sources/pmm-server
+	url = https://github.com/percona/pmm-server
+	branch = master
+[submodule "pmm-server-packaging"]
+	path = sources/pmm-server-packaging
+	url = https://github.com/percona/pmm-server-packaging
+	branch = master
+[submodule "grafana-dashboards"]
+	path = sources/grafana-dashboards
+	url = https://github.com/percona/grafana-dashboards
+	branch = master
+[submodule "rds_exporter"]
+	path = sources/rds_exporter/src/github.com/percona/rds_exporter
+	url = https://github.com/percona/rds_exporter
+	branch = master
