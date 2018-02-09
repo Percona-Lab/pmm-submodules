@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -o errexit
+set -o xtrace
+
+root_dir=$(cd $(dirname $0)/../..; pwd -P)
+docker build --squash -t perconalab/rpmbuild:latest ${root_dir}/build/rpmbuild-docker

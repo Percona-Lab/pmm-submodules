@@ -1,0 +1,22 @@
+#!/bin/bash
+
+root_dir=$(dirname $0)
+
+${root_dir}/build-rpmbuild-docker
+
+${root_dir}/build-rpm golang
+${root_dir}/build-rpm go-srpm-macros
+${root_dir}/build-rpm percona-dashboards grafana-dashboards
+${root_dir}/build-rpm pmm-manage
+${root_dir}/build-rpm pmm-managed
+${root_dir}/build-rpm percona-qan-api qan-api
+${root_dir}/build-rpm percona-qan-app qan-app
+${root_dir}/build-rpm pmm-server
+${root_dir}/build-rpm pmm-update
+
+${root_dir}/build-rpm node_exporter
+${root_dir}/build-rpm consul
+${root_dir}/build-rpm orchestrator
+${root_dir}/build-rpm rds_exporter
+${root_dir}/build-rpm prometheus
+${root_dir}/build-rpm grafana
