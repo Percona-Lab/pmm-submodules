@@ -4,6 +4,7 @@ set -o errexit
 set -o xtrace
 
 root_dir=$(cd $(dirname $0)/../..; pwd -P)
+rpms_dir=${root_dir}/build/pmm-server-docker/RPMS
 rpmbuild_dir=${root_dir}/sources/pmm-server-packaging/rhel
 pmm_version=$(cat ${root_dir}/VERSION)
 
@@ -36,9 +37,9 @@ is_build_needed() {
         --region us-east-2 \
         --no-sign-request \
         s3://pmm-build-cache/${spec_name}-${rpm_version} \
-        ${rpmbuild_dir}/RPMS/${spec_name}-${rpm_version}
+        ${rpms_dir}/${spec_name}-${rpm_version}
 
-    local packages=$(find ${rpmbuild_dir}/RPMS/${spec_name}-${rpm_version} -name "*.rpm" | wc -l)
+    local packages=$(find ${rpms_dir}/${spec_name}-${rpm_version} -name "*.rpm" | wc -l)
 
     # return result as true or flase
     [[ ${packages// /} == 0 ]]
@@ -75,13 +76,13 @@ build() {
     prepare_specs "${spec_name}" "${repo_name}"
     local rpm_version=$(get_rpm_version "${spec_name}")
     if is_build_needed "${spec_name}" "${rpm_version}" || [[ -n "${FORCE_REBUILD}" ]]; then
-        docker run -it --rm -v ${rpmbuild_dir}:/home/builder/rpm perconalab/rpmbuild sh -c "
+        docker run -it --rm -v ${rpmbuild_dir}:/home/builder/rpm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c "
             set -o errexit
             set -o xtrace
 
             printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
                 | sudo tee /etc/yum.repos.d/local.repo
-            /usr/bin/createrepo_c --update RPMS
+            /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
             ls -la /home/builder/rpm/RPMS
             sudo yum-builddep -y SPECS/${spec_name}.spec
 
@@ -91,7 +92,7 @@ build() {
 
         aws s3 sync \
             --region us-east-2 \
-            ${rpmbuild_dir}/RPMS/${spec_name}-${rpm_version} \
+            ${rpms_dir}/${spec_name}-${rpm_version} \
             s3://pmm-build-cache/${spec_name}-${rpm_version} \
             || :
     fi
