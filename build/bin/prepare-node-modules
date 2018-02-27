@@ -1,0 +1,57 @@
+#!/bin/bash
+
+set -o errexit
+set -o xtrace
+
+root_dir=$(cd $(dirname $0)/../..; pwd -P)
+rpms_dir=${root_dir}/tmp/pmm-server-RPMS
+rpmbuild_dir=${root_dir}/sources/pmm-server-packaging/rhel
+pmm_version=$(cat ${root_dir}/VERSION)
+
+prepare_specs() {
+    local spec_name=$1
+    local repo_name=$2
+
+    if [ -d "${root_dir}/sources/${repo_name}" ]; then
+        local git_dir=$(dirname $(find "${root_dir}/sources/${repo_name}" -name .git | head -1))
+        local full_commit=$(git -C "${git_dir}" rev-parse HEAD)
+        local short_commit=${full_commit:0:7}
+
+        sed -i -e "s/global commit.*/global commit ${full_commit}/" ${rpmbuild_dir}/SPECS/${spec_name}.spec
+        sed -i -e "s/Version:.*/Version: ${pmm_version}/"           ${rpmbuild_dir}/SPECS/${spec_name}.spec
+
+        if [ -f "${rpmbuild_dir}/SOURCES/${repo_name}-${short_commit}.tar.gz" ]; then
+            echo SOURCES/${repo_name}-${short_commit}.tar.gz already exists, skipping build
+        else
+            git -C "${git_dir}" archive \
+                --format=tar.gz \
+                --prefix=${repo_name}-${full_commit}/ \
+                -o ${rpmbuild_dir}/SOURCES/${repo_name}-${short_commit}.tar.gz \
+                "${full_commit}"
+        fi
+    fi
+}
+
+update_node_modules() {
+    docker run -it --rm -v ${rpmbuild_dir}:/home/builder/rpm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c "
+        set -o errexit
+        set -o xtrace
+
+        rm -rf BUILD/qan-app-*
+        rpmbuild -bp SPECS/percona-qan-app.spec || :
+        pushd BUILD/qan-app-*
+            rm -rf node_modules
+            npm install
+            cp package-lock.json package.json node_modules/
+            tar -zcpf ../../SOURCES/qan-app-node_modules-${pmm_version}.tar.gz node_modules
+        popd
+    "
+}
+
+main() {
+    prepare_specs percona-qan-app qan-app
+    update_node_modules
+}
+
+main
+exit 0
