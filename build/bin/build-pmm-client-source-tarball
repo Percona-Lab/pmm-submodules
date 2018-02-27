@@ -1,0 +1,88 @@
+#!/bin/bash
+
+set -o errexit
+set -o xtrace
+
+root_dir=$(cd $(dirname $0)/../..; pwd -P)
+version=$(cat ${root_dir}/VERSION)
+tmp_dir=${root_dir}/tmp
+source_dir=${root_dir}/tmp/source/pmm-client-${version}
+source_tarball=${root_dir}/results/source/pmm-client-${version}.tar.gz
+
+prepare_tarball() {
+    local repo_name=$1
+    local git_dir=$(dirname $(find "${root_dir}/sources/${repo_name}" -name .git | head -1))
+    local commit=$(git -C "${git_dir}" rev-parse --short HEAD)
+    local tarball=${source_dir}/${repo_name}-${commit}.tar.gz
+
+    if [ -f "${tarball}" ]; then
+        echo ${tarball} already exists, skipping build
+    else
+        git -C "${git_dir}" archive \
+            --format=tar.gz \
+            --prefix=${repo_name}-${commit}/ \
+            -o ${tarball} \
+            "${commit}"
+    fi
+}
+
+repack_toolkit() {
+    if tar -ztf ${source_dir}/percona-toolkit-*.tar.gz | grep '/vendor/'; then
+        echo skip percona-toolkit repack
+        return
+    fi
+
+    tar \
+        -C ${tmp_dir}/source \
+        -zxpf ${source_dir}/percona-toolkit-*.tar.gz
+
+    pushd ${tmp_dir}/source/percona-toolkit-*
+        docker run -it --rm -v $(pwd -P):/home/builder/go/src/percona-toolkit perconalab/rpmbuild sh -c "
+            set -o errexit
+            set -o xtrace
+
+            export GOPATH=/home/builder/go
+            sudo chown -R builder \$GOPATH
+            pushd /home/builder/go/src/percona-toolkit
+                go get -u github.com/golang/dep/cmd/dep
+                \$GOPATH/bin/dep ensure
+            popd
+        "
+    popd
+
+    # Run tar inside docker because macOS tar is not gnu compatible on update operation
+    docker run -it --rm -v ${root_dir}:/home/builder/root perconalab/rpmbuild sh -c "
+        set -o errexit
+        set -o xtrace
+
+        source_dir=/home/builder/root/tmp/source/pmm-client-${version}
+        pushd /home/builder/root/tmp/source
+            gunzip -f \${source_dir}/percona-toolkit-*.tar.gz
+            tar \
+                -upf \${source_dir}/percona-toolkit-*.tar \
+                percona-toolkit-*/vendor
+            gzip -f \${source_dir}/percona-toolkit-*.tar
+        popd
+    "
+}
+
+main() {
+    mkdir -p ${source_dir}/ || :
+
+    prepare_tarball pmm-client
+    prepare_tarball mongodb_exporter
+    prepare_tarball mysqld_exporter
+    prepare_tarball proxysql_exporter
+    prepare_tarball qan-agent
+    prepare_tarball node_exporter
+
+    prepare_tarball percona-toolkit
+    repack_toolkit
+
+    rm -rf ${source_tarball}
+    mkdir -p $(dirname ${source_tarball}) || :
+    tar -C $(dirname ${source_dir}) -zcpf ${source_tarball} $(basename ${source_dir})
+}
+
+main
+exit 0

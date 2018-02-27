@@ -1,0 +1,8 @@
+#!/bin/bash
+
+bin_dir=$(dirname $0)
+
+${bin_dir}/build-rpmbuild-docker
+
+${bin_dir}/build-pmm-client-source-tarball
+${bin_dir}/build-pmm-client-binary-tarball

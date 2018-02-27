@@ -1,0 +1,100 @@
+#!/bin/bash
+
+set -o errexit
+set -o xtrace
+
+root_dir=$(cd $(dirname $0)/../..; pwd -P)
+version=$(cat ${root_dir}/VERSION)
+
+tmp_dir=${root_dir}/tmp
+source_dir=${root_dir}/tmp/source/pmm-client-${version}
+binary_dir=${root_dir}/tmp/binary/pmm-client-${version}
+source_tarball=${root_dir}/results/source/pmm-client-${version}.tar.gz
+binary_tarball=${root_dir}/results/binary/pmm-client-${version}.tar.gz
+
+extract_source_tarball() {
+    if [ ! -d "${source_dir}" ]; then
+        mkdir -p $(dirname ${source_dir})
+        tar -C $(dirname ${source_dir}) -zxpf ${source_tarball}
+    fi
+}
+
+gobuild_component() {
+    local component=$1
+    local extract_path=${2:-"github.com/percona/$component"}
+    local component_path=$3
+    local result_file=${4:-bin/$(basename ${component_path:-$extract_path})}
+
+    if [ -x "${binary_dir}/${result_file}" ]; then
+        echo skip build
+        return
+    fi
+
+    docker run -it --rm -v ${tmp_dir}:/home/builder/tmp perconalab/rpmbuild sh -c "
+        set -o errexit
+        set -o xtrace
+
+        source_dir=/home/builder/tmp/source/pmm-client-${version}
+        binary_dir=/home/builder/tmp/binary/pmm-client-${version}
+        mkdir -p \$binary_dir/bin
+
+        mkdir -p /tmp/go/src/${extract_path}
+        tar \
+            -C /tmp/go/src/${extract_path} \
+            --strip-components=1 \
+            -zxpf \${source_dir}/${component}-*.tar.gz
+        pushd /tmp/go
+            export GOPATH=\$(pwd -P)
+            go build \
+                -o \${binary_dir}/${result_file} \
+                ./src/${extract_path}/${component_path}
+        popd
+    "
+}
+
+copy_component() {
+    local component=$1
+    local component_path=$2
+    local component_dest=${3:-$component_path}
+    local component_dir=${tmp_dir}/source/${component}
+
+    if [ ! -d "${component_dir}" ]; then
+        mkdir -p ${component_dir}
+        tar \
+            -C ${component_dir} \
+            --strip-components=1 \
+            -zxpf ${source_dir}/${component}-*.tar.gz
+    fi
+
+    cp ${component_dir}/${component_path} ${binary_dir}/${component_dest}
+}
+
+main() {
+    extract_source_tarball
+
+    gobuild_component "node_exporter"     "github.com/prometheus/node_exporter"
+    gobuild_component "mysqld_exporter"
+    gobuild_component "mongodb_exporter"
+    gobuild_component "proxysql_exporter"
+
+    gobuild_component "qan-agent" "" "bin/percona-qan-agent"
+    gobuild_component "qan-agent" "" "bin/percona-qan-agent-installer"
+    gobuild_component "pmm-client" "" "" "bin/pmm-admin"
+
+    echo ${version} > ${binary_dir}/VERSION
+    copy_component "pmm-client" "CHANGELOG.md"
+    copy_component "pmm-client" "LICENSE"
+    copy_component "pmm-client" "scripts/install" "install"
+    copy_component "pmm-client" "scripts/uninstall" "uninstall"
+
+    copy_component "percona-toolkit" "bin/pt-summary"
+    copy_component "percona-toolkit" "bin/pt-mysql-summary"
+    gobuild_component "percona-toolkit" "github.com/percona/percona-toolkit" "src/go/pt-mongodb-summary"
+
+    rm -rf ${binary_tarball}
+    mkdir -p $(dirname ${binary_tarball}) || :
+    tar -C $(dirname ${binary_dir}) -zcpf ${binary_tarball} $(basename ${binary_dir})
+}
+
+main
+exit 0
