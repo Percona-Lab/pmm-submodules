@@ -1,27 +1,23 @@
 #!/bin/bash
 
-root_dir=$(dirname $0)
+bin_dir=$(dirname $0)
 
-${root_dir}/build-rpmbuild-docker
-
-# build deps
-${root_dir}/build-rpm golang
-${root_dir}/build-rpm go-srpm-macros
+${bin_dir}/build-rpmbuild-docker
 
 # 1st-party
-${root_dir}/build-rpm percona-dashboards grafana-dashboards
-${root_dir}/build-rpm pmm-manage
-${root_dir}/build-rpm pmm-managed
-${root_dir}/build-rpm percona-qan-api qan-api
-${root_dir}/build-rpm percona-qan-app qan-app
-${root_dir}/build-rpm pmm-server
-${root_dir}/build-rpm pmm-update
+${bin_dir}/build-rpm percona-dashboards grafana-dashboards
+${bin_dir}/build-rpm pmm-manage
+${bin_dir}/build-rpm pmm-managed
+${bin_dir}/build-rpm percona-qan-api qan-api
+${bin_dir}/build-rpm percona-qan-app qan-app
+${bin_dir}/build-rpm pmm-server
+${bin_dir}/build-rpm pmm-update
 
 # 3rd-party
-${root_dir}/build-rpm consul
-${root_dir}/build-rpm orchestrator
-${root_dir}/build-rpm rds_exporter
-${root_dir}/build-rpm prometheus
-${root_dir}/build-rpm grafana
+${bin_dir}/build-rpm consul
+${bin_dir}/build-rpm orchestrator
+${bin_dir}/build-rpm rds_exporter
+${bin_dir}/build-rpm prometheus
+${bin_dir}/build-rpm grafana
 
-${root_dir}/build-pmm-server-docker
+#${bin_dir}/build-pmm-server-docker

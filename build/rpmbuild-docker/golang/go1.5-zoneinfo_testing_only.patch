@@ -1,0 +1,21 @@
+diff --git a/src/time/zoneinfo_unix.go b/src/time/zoneinfo_unix.go
+index ed9502d..c2569e7 100644
+--- a/src/time/zoneinfo_unix.go
++++ b/src/time/zoneinfo_unix.go
+@@ -32,14 +32,14 @@ var zoneDirs = []string{
+ 	"/usr/share/zoneinfo/",
+ 	"/usr/share/lib/zoneinfo/",
+ 	"/usr/lib/locale/TZ/",
+-	runtime.GOROOT() + "/lib/time/zoneinfo.zip",
+ }
+ 
+ var origZoneDirs = zoneDirs
+ 
+ func forceZipFileForTesting(zipOnly bool) {
+-	zoneDirs = make([]string, len(origZoneDirs))
++	zoneDirs = make([]string, len(origZoneDirs)+1)
+ 	copy(zoneDirs, origZoneDirs)
++	zoneDirs = append(zoneDirs, runtime.GOROOT()+"/lib/time/zoneinfo.zip")
+ 	if zipOnly {
+ 		for i := 0; i < len(zoneDirs)-1; i++ {
+ 			zoneDirs[i] = "/XXXNOEXIST"

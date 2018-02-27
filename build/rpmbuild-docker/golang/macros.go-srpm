@@ -1,0 +1,20 @@
+# Copyright (c) 2015 Jakub Cajka <jcajka@redhat.com>, Jan Chaloupka <jchaloup@redhat.com>
+# This file is distributed under the terms of GNU GPL license version 3, or
+# any later version.
+
+# This file contains macros for building projects in golang for packages
+# with golang compiler or gcc-go compiler based on an architecture.
+# Golang is primarly for primary architectures, gcc-go for secondary.
+#
+# This file provides only macros and must not use any other package.
+
+# Define arches for PA and SA
+%golang_arches   %{ix86} x86_64 %{arm} aarch64 %{power64} s390x
+%gccgo_arches    %{mips}
+%go_arches       %{golang_arches} %{gccgo_arches}
+
+# Where to set GOPATH for builds
+%gopath          %{_datadir}/gocode
+
+# Define go_compilers macro to signal go-compiler package is available
+%go_compiler     1

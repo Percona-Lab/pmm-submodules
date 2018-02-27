@@ -4,7 +4,7 @@ set -o errexit
 set -o xtrace
 
 root_dir=$(cd $(dirname $0)/../..; pwd -P)
-rpms_dir=${root_dir}/build/pmm-server-docker/RPMS
+rpms_dir=${root_dir}/tmp/pmm-server-RPMS
 rpmbuild_dir=${root_dir}/sources/pmm-server-packaging/rhel
 pmm_version=$(cat ${root_dir}/VERSION)
 

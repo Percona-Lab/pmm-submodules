@@ -1,2 +1,5 @@
 build/pmm-server-docker/RPMS
+*.swp
 *~
+tmp
+results
