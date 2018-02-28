@@ -9,6 +9,6 @@ if [ -z "${pmm_version}" ]; then
     fi
 fi
 rpms_dir=${root_dir}/tmp/pmm-server/RPMS
-docker_tarball=${root_dir}/results/docker/pmm-server-${pmm_version}.tar.gz
+docker_tarball=${root_dir}/results/docker/pmm-server-${pmm_version}.docker
 
 rpmbuild_dir=${root_dir}/sources/pmm-server-packaging/rhel
