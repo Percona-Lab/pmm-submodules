@@ -33,7 +33,7 @@ prepare_specs() {
 }
 
 update_node_modules() {
-    docker run -it --rm -v ${rpmbuild_dir}:/home/builder/rpm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c "
+    docker run --rm -v ${rpmbuild_dir}:/home/builder/rpm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c "
         set -o errexit
         set -o xtrace
 

@@ -76,7 +76,7 @@ build() {
     prepare_specs "${spec_name}" "${repo_name}"
     local rpm_version=$(get_rpm_version "${spec_name}")
     if is_build_needed "${spec_name}" "${rpm_version}" || [[ -n "${FORCE_REBUILD}" ]]; then
-        docker run -it --rm -v ${rpmbuild_dir}:/home/builder/rpm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c "
+        docker run --rm -v ${rpmbuild_dir}:/home/builder/rpm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c "
             set -o errexit
             set -o xtrace
 

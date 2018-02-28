@@ -30,7 +30,7 @@ gobuild_component() {
         return
     fi
 
-    docker run -it --rm -v ${tmp_dir}:/home/builder/tmp perconalab/rpmbuild sh -c "
+    docker run --rm -v ${tmp_dir}:/home/builder/tmp perconalab/rpmbuild sh -c "
         set -o errexit
         set -o xtrace
 
