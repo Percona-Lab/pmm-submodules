@@ -3,14 +3,21 @@
 set -o errexit
 set -o xtrace
 
-root_dir=$(cd $(dirname $0)/../..; pwd -P)
-rpms_dir=${root_dir}/build/pmm-server-docker/RPMS
+. $(dirname $0)/vars
+
+if [ -f "${docker_tarball}" ]; then
+    echo skip docker build
+    exit 0
+fi
 
 docker run -it --rm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c "
     /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 "
-tag=$(git rev-parse --abbrev-ref HEAD)
-if [ -z "${tag}" ] || [[ ${tag} == "master" ]]; then
-    tag=$(date -u '+%Y%m%d%H%M')
+cp ${root_dir}/build/pmm-server-docker/* ${rpms_dir}/../
+mkdir -p $(dirname $docker_tarball)
+
+docker build --squash --no-cache -t perconalab/pmm-server:${branch} ${rpms_dir}/../
+
+if [ -n "$SAVE_DOCKER" ]; then
+    docker save perconalab/pmm-server:${branch} | xz > $docker_tarball
 fi
-docker build --squash --no-cache -t perconalab/pmm-server:${tag} ${root_dir}/build/pmm-server-docker

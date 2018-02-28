@@ -20,4 +20,4 @@ ${bin_dir}/build-rpm rds_exporter
 ${bin_dir}/build-rpm prometheus
 ${bin_dir}/build-rpm grafana
 
-#${bin_dir}/build-pmm-server-docker
+${bin_dir}/build-pmm-server-docker
