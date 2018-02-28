@@ -2,8 +2,6 @@
 
 bin_dir=$(dirname $0)
 
-${bin_dir}/build-rpmbuild-docker
-
 # 1st-party
 ${bin_dir}/build-rpm percona-dashboards grafana-dashboards
 ${bin_dir}/build-rpm pmm-manage
