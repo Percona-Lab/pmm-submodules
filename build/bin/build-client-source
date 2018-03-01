@@ -3,11 +3,7 @@
 set -o errexit
 set -o xtrace
 
-root_dir=$(cd $(dirname $0)/../..; pwd -P)
-version=$(cat ${root_dir}/VERSION)
-tmp_dir=${root_dir}/tmp
-source_dir=${root_dir}/tmp/source/pmm-client-${version}
-source_tarball=${root_dir}/results/source/pmm-client-${version}.tar.gz
+. $(dirname $0)/vars
 
 prepare_tarball() {
     local repo_name=$1
@@ -55,7 +51,7 @@ repack_toolkit() {
         set -o errexit
         set -o xtrace
 
-        source_dir=/home/builder/root/tmp/source/pmm-client-${version}
+        source_dir=/home/builder/root/tmp/source/pmm-client-${pmm_version}
         pushd /home/builder/root/tmp/source
             gunzip -f \${source_dir}/percona-toolkit-*.tar.gz
             tar \

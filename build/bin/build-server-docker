@@ -16,9 +16,10 @@ docker run --rm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c 
     /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 "
 
-docker build --squash --no-cache -t perconalab/pmm-server:${branch} ${rpms_dir}/../
+docker build --squash --no-cache -t perconalab/pmm-server-fb:${branch} ${rpms_dir}/../
 
 if [ -n "$SAVE_DOCKER" ]; then
     mkdir -p $(dirname $docker_tarball)
-    docker save perconalab/pmm-server:${branch} | xz > $docker_tarball
+    docker save perconalab/pmm-server-fb:${branch} | xz > $docker_tarball
+    docker push perconalab/pmm-server-fb:${branch}
 fi

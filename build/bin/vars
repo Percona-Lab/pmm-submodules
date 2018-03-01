@@ -1,15 +1,20 @@
 bin_dir=$(cd $(dirname $0); pwd -P)
 root_dir=$(cd $(dirname $0)/../..; pwd -P)
+tmp_dir=${root_dir}/tmp
 branch=$(git rev-parse --abbrev-ref HEAD)
 real_pmm_version=$(cat ${root_dir}/VERSION)
 if [ -z "${pmm_version}" ]; then
     if [[ ${branch} == "master" ]]; then
         pmm_version=$real_pmm_version
     else
-        pmm_version=$(git rev-parse --short HEAD)
+        pmm_version=${branch}-$(git rev-parse --short HEAD)
     fi
 fi
 rpms_dir=${root_dir}/tmp/pmm-server/RPMS
 docker_tarball=${root_dir}/results/docker/pmm-server-${pmm_version}.docker
-
 rpmbuild_dir=${root_dir}/sources/pmm-server-packaging/rhel
+
+source_dir=${root_dir}/tmp/source/pmm-client-${pmm_version}
+binary_dir=${root_dir}/tmp/binary/pmm-client-${pmm_version}
+source_tarball=${root_dir}/results/source/pmm-client-${pmm_version}.tar.gz
+binary_tarball=${root_dir}/results/binary/pmm-client-${pmm_version}.tar.gz

@@ -3,14 +3,7 @@
 set -o errexit
 set -o xtrace
 
-root_dir=$(cd $(dirname $0)/../..; pwd -P)
-version=$(cat ${root_dir}/VERSION)
-
-tmp_dir=${root_dir}/tmp
-source_dir=${root_dir}/tmp/source/pmm-client-${version}
-binary_dir=${root_dir}/tmp/binary/pmm-client-${version}
-source_tarball=${root_dir}/results/source/pmm-client-${version}.tar.gz
-binary_tarball=${root_dir}/results/binary/pmm-client-${version}.tar.gz
+. $(dirname $0)/vars
 
 extract_source_tarball() {
     if [ ! -d "${source_dir}" ]; then
@@ -34,8 +27,8 @@ gobuild_component() {
         set -o errexit
         set -o xtrace
 
-        source_dir=/home/builder/tmp/source/pmm-client-${version}
-        binary_dir=/home/builder/tmp/binary/pmm-client-${version}
+        source_dir=/home/builder/tmp/source/pmm-client-${pmm_version}
+        binary_dir=/home/builder/tmp/binary/pmm-client-${pmm_version}
         mkdir -p \$binary_dir/bin
 
         mkdir -p /tmp/go/src/${extract_path}
