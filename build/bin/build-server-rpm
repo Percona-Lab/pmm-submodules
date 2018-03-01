@@ -81,7 +81,7 @@ build() {
             sudo yum-builddep -y SPECS/${spec_name}.spec
 
             spectool -C SOURCES -g SPECS/${spec_name}.spec
-            rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' -ba SPECS/${spec_name}.spec
+            rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SPECS/${spec_name}.spec
         "
 
         aws s3 sync \
