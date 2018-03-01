@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -o errexit
+set -o xtrace
+
+bin_dir=$(dirname $0)
+
+# 1st-party
+${bin_dir}/build-server-rpm percona-dashboards grafana-dashboards
+${bin_dir}/build-server-rpm pmm-manage
+${bin_dir}/build-server-rpm pmm-managed
+${bin_dir}/build-server-rpm percona-qan-api qan-api
+${bin_dir}/build-server-rpm percona-qan-app qan-app
+${bin_dir}/build-server-rpm pmm-server
+${bin_dir}/build-server-rpm pmm-update
+
+# 3rd-party
+${bin_dir}/build-server-rpm consul
+${bin_dir}/build-server-rpm orchestrator
+${bin_dir}/build-server-rpm rds_exporter
+${bin_dir}/build-server-rpm prometheus
+${bin_dir}/build-server-rpm grafana
+
+${bin_dir}/build-server-docker

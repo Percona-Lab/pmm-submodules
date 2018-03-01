@@ -5,5 +5,5 @@ set -o xtrace
 
 bin_dir=$(dirname $0)
 
-${bin_dir}/build-client
-${bin_dir}/build-server
+${bin_dir}/build-client-source
+${bin_dir}/build-client-binary
