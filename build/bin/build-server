@@ -3,7 +3,7 @@
 set -o errexit
 set -o xtrace
 
-bin_dir=$(dirname $0)
+. $(dirname $0)/vars
 
 # 1st-party
 ${bin_dir}/build-server-rpm percona-dashboards grafana-dashboards

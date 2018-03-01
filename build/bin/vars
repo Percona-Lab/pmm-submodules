@@ -1,3 +1,4 @@
+bin_dir=$(cd $(dirname $0); pwd -P)
 root_dir=$(cd $(dirname $0)/../..; pwd -P)
 branch=$(git rev-parse --abbrev-ref HEAD)
 real_pmm_version=$(cat ${root_dir}/VERSION)

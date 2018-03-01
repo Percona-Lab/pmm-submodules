@@ -32,13 +32,29 @@ prepare_specs() {
     fi
 }
 
-update_node_modules() {
+update_grafana_node_modules() {
+    docker run --rm -v ${rpmbuild_dir}:/home/builder/rpm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c "
+        set -o errexit
+        set -o xtrace
+
+        rm -rf BUILD/grafana-*
+        rpmbuild --nodeps -bp SPECS/grafana.spec || :
+        pushd BUILD/grafana-*
+            rm -rf node_modules
+            npm install
+            cp package.json node_modules/
+            tar -zcpf ../../SOURCES/grafana-node_modules-${pmm_version}.tar.gz node_modules
+        popd
+    "
+}
+
+update_qan_node_modules() {
     docker run --rm -v ${rpmbuild_dir}:/home/builder/rpm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c "
         set -o errexit
         set -o xtrace
 
         rm -rf BUILD/qan-app-*
-        rpmbuild -bp SPECS/percona-qan-app.spec || :
+        rpmbuild --nodeps -bp SPECS/percona-qan-app.spec || :
         pushd BUILD/qan-app-*
             rm -rf node_modules
             npm install
@@ -50,7 +66,8 @@ update_node_modules() {
 
 main() {
     prepare_specs percona-qan-app qan-app
-    update_node_modules
+    update_qan_node_modules
+    #update_grafana_node_modules
 }
 
 main
