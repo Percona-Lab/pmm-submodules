@@ -29,12 +29,12 @@ pipeline {
         }
         stage('Build client source') {
             steps {
-                sh 'sg docker -c "./build/bin/build-pmm-client-source-tarball"'
+                sh 'sg docker -c "./build/bin/build-client-source"'
             }
         }
         stage('Build client binary') {
             steps {
-                sh 'sg docker -c "./build/bin/build-pmm-client-binary-tarball"'
+                sh 'sg docker -c "./build/bin/build-client-binary"'
                 archiveArtifacts 'results/binary/pmm-client-*.tar.gz'
             }
         }
@@ -65,7 +65,7 @@ pipeline {
         }
         stage('Build server docker') {
             steps {
-                sh 'sg docker -c "SAVE_DOCKER=1 ./build/bin/build-pmm-server-docker"'
+                sh 'sg docker -c "SAVE_DOCKER=1 ./build/bin/build-server-docker"'
                 archiveArtifacts 'results/docker/pmm-server-*.docker'
             }
         }
