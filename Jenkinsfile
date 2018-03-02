@@ -65,6 +65,13 @@ pipeline {
         }
         stage('Build server docker') {
             steps {
+                withCredentials([usernamePassword(credentialsId: 'hub.docker.com', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    sh """
+                        sg docker -c "
+                            docker login -u "${USER}" -p "${PASS}"
+                        "
+                    """
+                }
                 sh 'sg docker -c "SAVE_DOCKER=1 ./build/bin/build-server-docker"'
                 archiveArtifacts 'results/docker/pmm-server-*.docker'
             }
