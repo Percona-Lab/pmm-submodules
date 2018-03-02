@@ -22,7 +22,7 @@ pipeline {
                 '''
                 sh '''
                     git submodule init
-                    git submodule update
+                    git submodule update --remote
                 '''
                 slackSend channel: '#pmm-ci', color: '#FFFF00', message: "[${JOB_NAME}]: build started - ${BUILD_URL}"
             }
