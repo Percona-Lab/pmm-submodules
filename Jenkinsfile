@@ -45,20 +45,20 @@ pipeline {
                         export PATH=$PATH:$(pwd -P)/build/bin
 
                         # 1st-party
-                        build-rpm percona-dashboards grafana-dashboards
-                        build-rpm pmm-manage
-                        build-rpm pmm-managed
-                        build-rpm percona-qan-api qan-api
-                        build-rpm percona-qan-app qan-app
-                        build-rpm pmm-server
-                        build-rpm pmm-update
+                        build-server-rpm percona-dashboards grafana-dashboards
+                        build-server-rpm pmm-manage
+                        build-server-rpm pmm-managed
+                        build-server-rpm percona-qan-api qan-api
+                        build-server-rpm percona-qan-app qan-app
+                        build-server-rpm pmm-server
+                        build-server-rpm pmm-update
 
                         # 3rd-party
-                        build-rpm consul
-                        build-rpm orchestrator
-                        build-rpm rds_exporter
-                        build-rpm prometheus
-                        build-rpm grafana
+                        build-server-rpm consul
+                        build-server-rpm orchestrator
+                        build-server-rpm rds_exporter
+                        build-server-rpm prometheus
+                        build-server-rpm grafana
                     "
                 '''
             }
