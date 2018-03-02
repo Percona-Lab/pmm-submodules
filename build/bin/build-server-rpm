@@ -77,7 +77,7 @@ build() {
             printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
                 | sudo tee /etc/yum.repos.d/local.repo
             /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
-            ls -la /home/builder/rpm/RPMS
+            sudo chown -R builder SOURCES SPECS
             sudo yum-builddep -y SPECS/${spec_name}.spec
 
             spectool -C SOURCES -g SPECS/${spec_name}.spec
