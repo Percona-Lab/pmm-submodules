@@ -1,5 +1,8 @@
 #!/bin/sh
 
+set -o errexit
+set -o xtrace
+
 shell_quote_string() {
   echo "$1" | sed -e 's,\([^a-zA-Z0-9/_.=-]\),\\\1,g'
 }
@@ -62,28 +65,28 @@ parse_arguments() {
 
 get_branches() {
     COMPONENT=$1
-    if [ ! -e pmm-submodules ]; then
-        git clone https://github.com/Percona-Lab/pmm-submodules.git
+    if [ ! -e ${WORKDIR}/pmm-submodules ]; then
+        git clone https://github.com/Percona-Lab/pmm-submodules.git ${WORKDIR}/pmm-submodules 1>&2
     fi
-    cd pmm-submodules
+    cd ${WORKDIR}/pmm-submodules
       git reset --hard > /dev/null 2>&1
       git clean -xdf > /dev/null 2>&1
       git checkout $SUBMODULE_BRANCH > /dev/null 2>&1
       git submodule status | grep $COMPONENT | awk '{print $1}' | awk -F'-' '{print $2}'
-    cd ../
+    cd - >/dev/null
 }
 
 get_repos() {
     COMPONENT=$1
-    if [ ! -e pmm-submodules ]; then
-        git clone https://github.com/Percona-Lab/pmm-submodules.git
+    if [ ! -e ${WORKDIR}/pmm-submodules ]; then
+        git clone https://github.com/Percona-Lab/pmm-submodules.git ${WORKDIR}/pmm-submodules
     fi
-    cd pmm-submodules
+    cd ${WORKDIR}/pmm-submodules
       git reset --hard > /dev/null 2>&1
       git clean -xdf > /dev/null 2>&1
       git checkout $SUBMODULE_BRANCH > /dev/null 2>&1
       grep -A 3 "\[submodule \"${COMPONENT}\"\]" .gitmodules | grep "url" | awk '{print $3}'
-    cd ../
+    cd - >/dev/null
 }
 
 check_workdir(){
@@ -272,10 +275,10 @@ install_deps() {
 
 get_tar(){
     TARBALL=$1
-    TARFILE=$(basename $(find $WORKDIR/$TARBALL -name 'pmm-client*.tar.gz' | sort | tail -n1))
+    TARFILE=$(basename $(find $WORKDIR/$TARBALL -name 'pmm-client*.tar.gz' | sort | tail -n1) || :)
     if [ -z $TARFILE ]
     then
-        TARFILE=$(basename $(find $CURDIR/$TARBALL -name 'pmm-client*.tar.gz' | sort | tail -n1))
+        TARFILE=$(basename $(find $CURDIR/$TARBALL -name 'pmm-client*.tar.gz' | sort | tail -n1) || :)
         if [ -z $TARFILE ]
         then
             echo "There is no $TARBALL for build"
@@ -335,18 +338,7 @@ build_srpm(){
     mkdir -vp rpmbuild/{SOURCES,SPECS,BUILD,SRPMS,RPMS}
     #
     
-    git clone $REPO  pmm-client-$VERSION
-    pushd pmm-client-$VERSION
-        git fetch origin
-        if [ ! -z ${BRANCH} ]; then
-            git reset --hard
-            git clean -xdf
-            git checkout ${BRANCH}
-        fi
-    popd
-    pushd pmm-client-$VERSION
-    REVISION=$(git rev-parse --short HEAD)
-    popd
+    tar -C ${WORKDIR} -zxpf ${TARFILE} ${NAME}-${VERSION}/build
     #
     cd ${WORKDIR}/rpmbuild/SPECS
     cp -ap ${WORKDIR}/${NAME}-${VERSION}/build/*.spec .
@@ -372,10 +364,10 @@ build_rpm(){
         echo "It is not possible to build rpm here"
         exit 1
     fi
-    SRC_RPM=$(basename $(find $WORKDIR/srpm -name 'pmm-client*.src.rpm' | sort | tail -n1))
+    SRC_RPM=$(basename $(find $WORKDIR/srpm -name 'pmm-client*.src.rpm' | sort | tail -n1) || :)
     if [ -z $SRC_RPM ]
     then
-        SRC_RPM=$(basename $(find $CURDIR/srpm -name 'pmm-client*.src.rpm' | sort | tail -n1))
+        SRC_RPM=$(basename $(find $CURDIR/srpm -name 'pmm-client*.src.rpm' | sort | tail -n1) || :)
         if [ -z $SRC_RPM ]
         then
             echo "There is no src rpm for build"
@@ -535,10 +527,12 @@ build_tarball(){
     tar -zxvf ${TARFILE}
     rm -rf ${TARFILE}
     cd ${NAME}-${VERSION}
-    export GOROOT="/usr/local/go/"
     export GOPATH=$(pwd)/
-    export PATH="/usr/local/go/bin:$PATH:$GOPATH"
-    export GOBINPATH="/usr/local/go/bin"
+    if [ -e "/usr/local/go" ]; then
+        export GOROOT="/usr/local/go/"
+        export PATH="/usr/local/go/bin:$PATH:$GOPATH"
+        export GOBINPATH="/usr/local/go/bin"
+    fi
     
     mkdir -p $GOPATH/src/github.com/percona
     cd $GOPATH/src/github.com/percona
@@ -614,12 +608,13 @@ build_tarball(){
     sh -x scripts/build
     
     cp distro/${NAME}-${VERSION}-*.tar.gz ${WORKDIR}/${NAME}-${VERSION}.tar.gz
+    cp -r build ${WORKDIR}/build
     cd ${WORKDIR}
-    rm -rf `ls | grep -v tar.gz| grep -v $VERSION_FILE`
-    cd ${WORKDIR}
+    rm -rf `ls | grep -v tar.gz | grep -v build | grep -v $VERSION_FILE`
     tar -xvzf ${NAME}-${VERSION}.tar.gz
     
     mv ${NAME}-${VERSION}-x86_64 ${NAME}-${VERSION}
+    mv ${WORKDIR}/build ${NAME}-${VERSION}/build
     tar -cvzf ${NAME}-${VERSION}.tar.gz ${NAME}-${VERSION}
     EXPORTED_TAR=$(basename $(find . -type f -name *.tar.gz | sort | tail -n 1))
     #
@@ -631,9 +626,11 @@ build_tarball(){
     mkdir -p golang/src/github.com/percona
     export GOPATH=$(pwd)/golang
     cd golang/src/github.com/percona
-    export GOROOT="/usr/local/go/"
-    export PATH="/usr/local/go/bin:$PATH:$GOPATH"
-    export GOBINPATH="/usr/local/go/bin"
+    if [ -e "/usr/local/go" ]; then
+        export GOROOT="/usr/local/go/"
+        export PATH="/usr/local/go/bin:$PATH:$GOPATH"
+        export GOBINPATH="/usr/local/go/bin"
+    fi
     
     git clone $TOOLKIT_REPO
     cd percona-toolkit
