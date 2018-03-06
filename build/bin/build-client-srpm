@@ -1,0 +1,26 @@
+#!/bin/bash
+
+. $(dirname $0)/vars
+
+set -o errexit
+set -o xtrace
+
+bin_dir=$(cd $(dirname $0); pwd -P)
+tmp_dir=${root_dir}/tmp
+
+main() {
+        docker run --rm -v ${bin_dir}:/home/builder/bin -v ${root_dir}/results:/home/builder/results perconalab/rpmbuild sh -c "
+            set -o errexit
+            set -o xtrace
+
+            mkdir -p /tmp/pmm
+            pushd /home/builder/results
+                ~/bin/build-client-packages \
+                    --builddir=/tmp/pmm \
+                    --build_src_rpm=1
+            popd
+        "
+}
+
+main
+exit 0

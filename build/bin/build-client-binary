@@ -59,7 +59,7 @@ copy_component() {
             -zxpf ${source_dir}/${component}-*.tar.gz
     fi
 
-    cp ${component_dir}/${component_path} ${binary_dir}/${component_dest}
+    cp -r ${component_dir}/${component_path} ${binary_dir}/${component_dest}
 }
 
 main() {
@@ -79,6 +79,7 @@ main() {
     copy_component "pmm-client" "LICENSE"
     copy_component "pmm-client" "scripts/install" "install"
     copy_component "pmm-client" "scripts/uninstall" "uninstall"
+    copy_component "pmm-client" "build"
 
     copy_component "percona-toolkit" "bin/pt-summary"
     copy_component "percona-toolkit" "bin/pt-mysql-summary"

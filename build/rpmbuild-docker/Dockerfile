@@ -20,6 +20,7 @@ RUN yum install -y gcc gcc-c++ \
                    automake autoconf \
                    rpmdevtools createrepo_c epel-release \
                    yum-utils rpm-build \
+                   wget \
                    epel-release
 RUN yum install -y nodejs
 
