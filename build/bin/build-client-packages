@@ -239,36 +239,33 @@ install_deps() {
         echo "It is not possible to instal dependencies. Please run as root"
         exit 1
     fi
-    install_golang
-    CURPLACE=$(pwd)
     if [ "x$OS" = "xrpm" ]
     then
         add_percona_yum_repo
-        yum -y install git wget
-        yum -y install epel-release rpmdevtools bison
-        cd $WORKDIR
+        yum -y install git wget epel-release rpmdevtools bison yum-utils
+        install_golang
         link="https://raw.githubusercontent.com/percona/pmm-client/master/build/rpm.spec"
         if [ ! -z $BRANCH ]
         then
-            sed "s:master:$BRANCH:" $link
+            link=$(echo $link | sed "s:master:$BRANCH:")
         fi
-        wget $link
+        wget -O $WORKDIR/rpm.spec $link
         yum-builddep -y $WORKDIR/rpm.spec
     else
         add_percona_apt_repo
         apt-get update
         apt-get -y install devscripts equivs
-        CURPLACE=$(pwd)
-        cd $WORKDIR
+        install_golang
+        sed -i 's:apt-get :apt-get -y --force-yes :g' /usr/bin/mk-build-deps
         link="https://raw.githubusercontent.com/percona/pmm-client/master/build/deb/control"
         if [ ! -z $BRANCH ]
         then
-            sed "s:master:$BRANCH:" $link
+            link=$(echo $link | sed "s:master:$BRANCH:")
         fi
-        wget $link
-        cd $CURPLACE
-        sed -i 's:apt-get :apt-get -y --force-yes :g' /usr/bin/mk-build-deps
-        mk-build-deps --install $WORKDIR/control
+        wget -O $WORKDIR/control $link
+        cd $WORKDIR
+            mk-build-deps --install $WORKDIR/control
+        cd -
     fi
     return;
 }
@@ -341,8 +338,8 @@ build_srpm(){
     tar -C ${WORKDIR} -zxpf ${TARFILE} ${NAME}-${VERSION}/build
     #
     cd ${WORKDIR}/rpmbuild/SPECS
-    cp -ap ${WORKDIR}/${NAME}-${VERSION}/build/*.spec .
-    cp -ap ${WORKDIR}/${TARFILE} ../SOURCES/
+    cp ${WORKDIR}/${NAME}-${VERSION}/build/*.spec .
+    cp ${WORKDIR}/${TARFILE} ../SOURCES/
     cd ${WORKDIR}
     rpmbuild -bs --define "_topdir ${WORKDIR}/rpmbuild" --define "version $VERSION" --define "release $RPM_RELEASE" --define "dist .generic" rpmbuild/SPECS/rpm.spec
     mkdir -p ${WORKDIR}/srpm
