@@ -341,7 +341,7 @@ build_srpm(){
     cp ${WORKDIR}/${NAME}-${VERSION}/build/*.spec .
     cp ${WORKDIR}/${TARFILE} ../SOURCES/
     cd ${WORKDIR}
-    rpmbuild -bs --define "_topdir ${WORKDIR}/rpmbuild" --define "version $VERSION" --define "release $RPM_RELEASE" --define "dist .generic" rpmbuild/SPECS/rpm.spec
+    rpmbuild -bs --define "_topdir ${WORKDIR}/rpmbuild" --define "version $VERSION" --define "release $RPM_RELEASE" --define "dist %{nil}" rpmbuild/SPECS/rpm.spec
     mkdir -p ${WORKDIR}/srpm
     mkdir -p ${CURDIR}/srpm
     cp rpmbuild/SRPMS/*.src.rpm ${CURDIR}/srpm

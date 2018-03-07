@@ -9,18 +9,21 @@ bin_dir=$(cd $(dirname $0); pwd -P)
 tmp_dir=${root_dir}/tmp
 
 main() {
-        docker run --rm -v ${bin_dir}:/home/builder/bin -v ${root_dir}/results:/home/builder/results perconalab/rpmbuild sh -c "
-            set -o errexit
-            set -o xtrace
+    local IMAGE=${1:-perconalab/rpmbuild}
+    docker run --rm -v ${bin_dir}:/home/builder/bin -v ${root_dir}/results:/home/builder/results ${IMAGE} sh -c "
+        set -o errexit
+        set -o xtrace
 
-            mkdir -p /tmp/pmm
-            pushd /home/builder/results
-                ~/bin/build-client-packages \
-                    --builddir=/tmp/pmm \
-                    --build_rpm=1
-            popd
-        "
+        export sudo_path=\$(ls /usr/bin/sudo)
+        [[ ${IMAGE} = perconalab/rpmbuild ]] || \$sudo_path yum -y install git rpm-build
+        mkdir -p /tmp/pmm
+        pushd /home/builder/results
+            /home/builder/bin/build-client-packages \
+                --builddir=/tmp/pmm \
+                --build_rpm=1
+        popd
+    "
 }
 
-main
+main $*
 exit 0
