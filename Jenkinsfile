@@ -35,7 +35,7 @@ pipeline {
         stage('Build client binary') {
             steps {
                 sh 'sg docker -c "./build/bin/build-client-binary"'
-                archiveArtifacts 'results/binary/pmm-client-*.tar.gz'
+                archiveArtifacts 'results/tarball/pmm-client-*.tar.gz'
             }
         }
         stage('Build server packages') {
