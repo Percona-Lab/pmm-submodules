@@ -20,6 +20,7 @@ docker build --squash --no-cache -t perconalab/pmm-server-fb:${pmm_version} ${rp
 
 if [ -n "$SAVE_DOCKER" ]; then
     mkdir -p $(dirname $docker_tarball)
+    echo perconalab/pmm-server-fb:${pmm_version} > ${docker_tag}
     docker push perconalab/pmm-server-fb:${pmm_version}
-    docker save perconalab/pmm-server-fb:${pmm_version} | xz > $docker_tarball
+    docker save perconalab/pmm-server-fb:${pmm_version} | xz > ${docker_tarball}
 fi

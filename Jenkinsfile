@@ -81,6 +81,17 @@ pipeline {
         always {
             script {
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
+                    if (env.CHANGE_URL) {
+                        withCredentials([string(credentialsId: 'GITHUB_API_TOKEN', variable: 'GITHUB_API_TOKEN')]) {
+                            sh """
+                                set -o xtrace
+                                curl -v -X POST \
+                                    -H "Authorization: token ${GITHUB_API_TOKEN}" \
+                                    -d "{\\"body\\":\\"docker - \$(cat results/docker/TAG)\\nclient - ${BUILD_URL}artifact/results/binary/\\"}" \
+                                    "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
+                            """
+                        }
+                    }
                     slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished"
                 } else {
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result}"
