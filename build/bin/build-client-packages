@@ -292,10 +292,10 @@ get_tar(){
 get_deb_sources(){
     param=$1
     echo $param
-    FILE=$(basename $(find $WORKDIR/source_deb -name "pmm-client*.$param" | sort | tail -n1))
+    FILE=$(basename $(find $WORKDIR/source_deb -name "pmm-client*.$param" | sort | tail -n1) || :)
     if [ -z $FILE ]
     then
-        FILE=$(basename $(find $CURDIR/source_deb -name "pmm-client*.$param" | sort | tail -n1))
+        FILE=$(basename $(find $CURDIR/source_deb -name "pmm-client*.$param" | sort | tail -n1) || :)
         if [ -z $FILE ]
         then
             echo "There is no sources for build"
@@ -420,7 +420,7 @@ build_source_deb(){
     #
     
     git clone $REPO ${NAME}-${VERSION}_all
-    push ${NAME}-${VERSION}_all
+    pushd ${NAME}-${VERSION}_all
         git fetch origin
         if [ ! -z ${BRANCH} ]; then
             git reset --hard
