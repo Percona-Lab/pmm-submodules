@@ -10,6 +10,12 @@ prepare_tarball() {
     local git_dir=$(dirname $(find "${root_dir}/sources/${repo_name}" -name .git | head -1))
     local commit=$(git -C "${git_dir}" rev-parse --short HEAD)
     local tarball=${source_dir}/${repo_name}-${commit}.tar.gz
+    local repo_var=$(
+        echo "${repo_name}_commit" \
+            | sed -e 's:-:_:g' \
+            | tr '[[:lower:]]' '[[:upper:]]'
+    )
+    echo "${repo_var}=$commit" >> ${client_properties}
 
     if [ -f "${tarball}" ]; then
         echo ${tarball} already exists, skipping build
@@ -65,6 +71,7 @@ repack_toolkit() {
 main() {
     rm -rf ${source_tarball}
     mkdir -p ${source_dir}/ $(dirname ${source_tarball}) || :
+    echo "PMM_SUBMODULES_COMMIT=$(git rev-parse --short HEAD)" > ${client_properties}
 
     prepare_tarball pmm-client
     prepare_tarball mongodb_exporter
