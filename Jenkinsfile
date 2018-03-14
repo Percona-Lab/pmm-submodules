@@ -5,13 +5,12 @@ library changelog: false, identifier: 'lib@master', retriever: modernSCM([
 
 pipeline {
     agent {
-        label 'min-centos-7-x64'
+        label 'large-amazon'
     }
     stages {
         stage('Prepare') {
             steps {
                 installDocker()
-                installCentosGit()
                 sh '''
                     env
                     git reset --hard
