@@ -59,6 +59,7 @@ repack_toolkit() {
         set -o xtrace
 
         source_dir=/home/builder/root/tmp/source/pmm-client-${pmm_version}
+        sudo chown -R builder:builder \${source_dir} /home/builder/root/tmp
         pushd /home/builder/root/tmp/source
             gunzip -f \${source_dir}/percona-toolkit-*.tar.gz
             tar \
@@ -66,7 +67,7 @@ repack_toolkit() {
                 percona-toolkit-*/vendor
             gzip -f \${source_dir}/percona-toolkit-*.tar
         popd
-        sudo chown -R $(id -u):$(id -g) /home/builder/root/tmp
+        sudo chown -R $(id -u):$(id -g) \${source_dir} /home/builder/root/tmp
     "
 }
 
