@@ -37,7 +37,8 @@ RUN useradd builder -u 1000 -m -G users,wheel && \
     echo "# macros"                      >  /home/builder/.rpmmacros && \
     echo "%_topdir    /home/builder/rpm" >> /home/builder/.rpmmacros && \
     mkdir /home/builder/rpm && \
-    chown -R builder /home/builder
+    chmod 755 /home/builder && \
+    chown -R builder:builder /home/builder
 USER builder
 
 ENV FLAVOR=rpmbuild OS=centos DIST=el7

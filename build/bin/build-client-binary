@@ -42,6 +42,7 @@ gobuild_component() {
                 -o \${binary_dir}/${result_file} \
                 ./src/${extract_path}/${component_path}
         popd
+        sudo chown -R $(id -u):$(id -g) \${binary_dir}
     "
 }
 

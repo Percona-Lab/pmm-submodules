@@ -49,6 +49,7 @@ repack_toolkit() {
                 go get -u github.com/golang/dep/cmd/dep
                 \$GOPATH/bin/dep ensure
             popd
+            sudo chown -R $(id -u):$(id -g) \$GOPATH
         "
     popd
 
@@ -65,6 +66,7 @@ repack_toolkit() {
                 percona-toolkit-*/vendor
             gzip -f \${source_dir}/percona-toolkit-*.tar
         popd
+        sudo chown -R $(id -u):$(id -g) /home/builder/root/tmp
     "
 }
 

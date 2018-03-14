@@ -14,14 +14,15 @@ main() {
         set -o errexit
         set -o xtrace
 
-	apt-get update
-	apt-get -y install git lsb-release devscripts dh-make
+        apt-get update
+        apt-get -y install git lsb-release devscripts dh-make
         mkdir -p /tmp/pmm
         cd /home/builder/results
             bash /home/builder/bin/build-client-packages \
                 --builddir=/tmp/pmm \
                 --build_deb=1
         cd -
+        chown -R $(id -u):$(id -g) /home/builder/results/deb
     "
 }
 
