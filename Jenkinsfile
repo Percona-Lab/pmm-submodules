@@ -10,20 +10,13 @@ pipeline {
     stages {
         stage('Prepare') {
             steps {
-                sh 'rm -rf tmp results'
                 installDocker()
+                installCentosGit()
                 sh '''
                     env
-                    sudo yum -y install centos-release-scl-rh
-                    sudo yum -y install rh-git29
-                    sudo yum -y remove git
-                    sudo ln -fs /opt/rh/rh-git29/root/usr/bin/git /usr/bin/git
-                    sudo ln -fs /opt/rh/httpd24/root/usr/lib64/libcurl-httpd24.so.4 /usr/lib64/libcurl-httpd24.so.4
-                    sudo ln -fs /opt/rh/httpd24/root/usr/lib64/libnghttp2-httpd24.so.14 /usr/lib64/libnghttp2-httpd24.so.14
-                '''
-                sh '''
-                    git submodule init
-                    git submodule update --remote
+                    git reset --hard
+                    git clean -xdf
+                    git submodule update --remote --init --recommend-shallow --jobs 10
                 '''
                 slackSend channel: '#pmm-ci', color: '#FFFF00', message: "[${JOB_NAME}]: build started - ${BUILD_URL}"
             }
@@ -98,7 +91,6 @@ pipeline {
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result}"
                 }
             }
-            deleteDir()
         }
     }
 }
