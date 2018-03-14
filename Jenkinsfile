@@ -11,12 +11,6 @@ pipeline {
         stage('Prepare') {
             steps {
                 installDocker()
-                sh '''
-                    env
-                    git reset --hard
-                    sudo git clean -xdf
-                    git submodule update --remote --init --recommend-shallow --jobs 10
-                '''
                 slackSend channel: '#pmm-ci', color: '#FFFF00', message: "[${JOB_NAME}]: build started - ${BUILD_URL}"
             }
         }
