@@ -13,6 +13,7 @@ pipeline {
                 sh 'rm -rf tmp results'
                 installDocker()
                 sh '''
+                    env
                     sudo yum -y install centos-release-scl-rh
                     sudo yum -y install rh-git29
                     sudo yum -y remove git
