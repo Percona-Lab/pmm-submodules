@@ -3,10 +3,7 @@
 set -o errexit
 set -o xtrace
 
-root_dir=$(cd $(dirname $0)/../..; pwd -P)
-rpms_dir=${root_dir}/tmp/pmm-server/RPMS
-rpmbuild_dir=${root_dir}/sources/pmm-server-packaging/rhel
-pmm_version=$(cat ${root_dir}/VERSION)
+. $(dirname $0)/vars
 
 get_rpm_version() {
     local spec_name=$1
@@ -50,7 +47,7 @@ prepare_specs() {
         local short_commit=${full_commit:0:7}
 
         sed -i -e "s/global commit.*/global commit ${full_commit}/" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
-        sed -i -e "s/Version:.*/Version: ${pmm_version}/"           ${rpmbuild_dir}/SOURCES/${spec_name}.spec
+        sed -i -e "s/Version:.*/Version: ${real_pmm_version}/"      ${rpmbuild_dir}/SOURCES/${spec_name}.spec
 
         if [ -f "${rpmbuild_dir}/SOURCES/${repo_name}-${short_commit}.tar.gz" ]; then
             echo SOURCES/${repo_name}-${short_commit}.tar.gz already exists, skipping build
