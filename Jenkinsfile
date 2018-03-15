@@ -27,27 +27,29 @@ pipeline {
         }
         stage('Build server packages') {
             steps {
-                sh '''
-                    sg docker -c "
-                        export PATH=$PATH:$(pwd -P)/build/bin
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    sh '''
+                        sg docker -c "
+                            export PATH=$PATH:$(pwd -P)/build/bin
 
-                        # 1st-party
-                        build-server-rpm percona-dashboards grafana-dashboards
-                        build-server-rpm pmm-manage
-                        build-server-rpm pmm-managed
-                        build-server-rpm percona-qan-api qan-api
-                        build-server-rpm percona-qan-app qan-app
-                        build-server-rpm pmm-server
-                        build-server-rpm pmm-update
+                            # 1st-party
+                            build-server-rpm percona-dashboards grafana-dashboards
+                            build-server-rpm pmm-manage
+                            build-server-rpm pmm-managed
+                            build-server-rpm percona-qan-api qan-api
+                            build-server-rpm percona-qan-app qan-app
+                            build-server-rpm pmm-server
+                            build-server-rpm pmm-update
 
-                        # 3rd-party
-                        build-server-rpm consul
-                        build-server-rpm orchestrator
-                        build-server-rpm rds_exporter
-                        build-server-rpm prometheus
-                        build-server-rpm grafana
-                    "
-                '''
+                            # 3rd-party
+                            build-server-rpm consul
+                            build-server-rpm orchestrator
+                            build-server-rpm rds_exporter
+                            build-server-rpm prometheus
+                            build-server-rpm grafana
+                        "
+                    '''
+                }
             }
         }
         stage('Build server docker') {
@@ -59,7 +61,13 @@ pipeline {
                         "
                     """
                 }
-                sh 'sg docker -c "PUSH_DOCKER=1 ./build/bin/build-server-docker"'
+                sh '''
+                    sg docker -c "
+                        export PUSH_DOCKER=1
+
+                        ./build/bin/build-server-docker
+                    "
+                '''
                 archiveArtifacts 'results/docker/pmm-server-*.docker'
             }
         }
