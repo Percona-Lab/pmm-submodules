@@ -27,5 +27,5 @@ if [ -n "$PUSH_DOCKER" ]; then
 fi
 if [ -n "$SAVE_DOCKER" ]; then
     mkdir -p $(dirname $docker_tarball)
-    docker save perconalab/pmm-server-fb:${pmm_version} | xz > ${docker_tarball}
+    docker save ${DOCKER_TAG} | xz > ${docker_tarball}
 fi
