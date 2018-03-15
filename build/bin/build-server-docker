@@ -16,11 +16,16 @@ docker run --rm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c 
     /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 "
 
-docker build --squash --no-cache -t perconalab/pmm-server-fb:${pmm_version} ${rpms_dir}/../
+if [ -z "${DOCKER_TAG}" ]; then
+    DOCKER_TAG=perconalab/pmm-server-fb:${pmm_version}
+fi
+docker build --squash --no-cache -t ${DOCKER_TAG} ${rpms_dir}/../
 
+if [ -n "$PUSH_DOCKER" ]; then
+    echo ${DOCKER_TAG} > ${docker_tag_file}
+    docker push ${DOCKER_TAG}
+fi
 if [ -n "$SAVE_DOCKER" ]; then
     mkdir -p $(dirname $docker_tarball)
-    echo perconalab/pmm-server-fb:${pmm_version} > ${docker_tag}
-    docker push perconalab/pmm-server-fb:${pmm_version}
     docker save perconalab/pmm-server-fb:${pmm_version} | xz > ${docker_tarball}
 fi

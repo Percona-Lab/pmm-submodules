@@ -59,7 +59,7 @@ pipeline {
                         "
                     """
                 }
-                sh 'sg docker -c "SAVE_DOCKER=1 ./build/bin/build-server-docker"'
+                sh 'sg docker -c "PUSH_DOCKER=1 ./build/bin/build-server-docker"'
                 archiveArtifacts 'results/docker/pmm-server-*.docker'
             }
         }
