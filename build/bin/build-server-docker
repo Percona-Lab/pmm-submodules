@@ -15,6 +15,18 @@ docker run --rm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c 
     sudo chown -R builder /home/builder/rpm/RPMS
     /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 "
+for rpm in $(cd ${rpms_dir}; find . -name '*.noarch.rpm' -o -name '*.x86_64.rpm'); do
+    echo $rpm
+    rpm_name=$(
+        docker run --rm -v ${rpms_dir}:/home/builder/rpm perconalab/rpmbuild \
+            rpm -q --qf '%{name}' -p $rpm
+    )
+    rpm_fullname=$(
+        docker run --rm -v ${rpms_dir}:/home/builder/rpm perconalab/rpmbuild \
+            rpm -q -p $rpm
+    )
+    sed -i -e "s/- ${rpm_name}$/- ${rpm_fullname}/" ${rpms_dir}/../playbook-install.yml
+done
 
 if [ -z "${DOCKER_TAG}" ]; then
     DOCKER_TAG=perconalab/pmm-server-fb:${pmm_version}

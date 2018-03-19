@@ -5,6 +5,12 @@ set -o xtrace
 
 . $(dirname $0)/vars
 
+# build pmm-client
+${bin_dir}/build-client
+${bin_dir}/build-client-srpm
+${bin_dir}/build-client-rpm
+cp ${root_dir}/results/rpm/*.rpm ${rpms_dir}/
+
 # 1st-party
 ${bin_dir}/build-server-rpm percona-dashboards grafana-dashboards
 ${bin_dir}/build-server-rpm pmm-manage
