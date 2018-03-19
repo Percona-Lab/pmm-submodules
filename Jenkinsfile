@@ -38,7 +38,7 @@ pipeline {
                         aws s3 cp \
                             --acl public-read \
                             results/tarball/pmm-client-*.tar.gz \
-                            s3://pmm-build-cache/pmm-client/pmm-client-${BRANCH}-${COMMIT_ID}.tar.gz
+                            s3://pmm-build-cache/pmm-client/pmm-client-${BRANCH_NAME}-${GIT_COMMIT:0:7}.tar.gz
                     '''
                 }
             }
@@ -99,6 +99,7 @@ pipeline {
                 sh '''
                     sg docker -c "
                         export PUSH_DOCKER=1
+                        export DOCKER_TAG=perconalab/pmm-server-fb:${BRANCH_NAME}-${GIT_COMMIT:0:7}
 
                         ./build/bin/build-server-docker
                     "
@@ -120,7 +121,7 @@ pipeline {
                                 set -o xtrace
                                 curl -v -X POST \
                                     -H "Authorization: token ${GITHUB_API_TOKEN}" \
-                                    -d "{\\"body\\":\\"docker - ${IMAGE}\\nclient - https://s3.us-east-2.amazonaws.com/pmm-build-cache/pmm-client/pmm-client-${BRANCH}-${COMMIT_ID}.tar.gz\\"}" \
+                                    -d "{\\"body\\":\\"docker - ${IMAGE}\\nclient - https://s3.us-east-2.amazonaws.com/pmm-build-cache/pmm-client/pmm-client-${BRANCH_NAME}-\${GIT_COMMIT:0:7}.tar.gz\\"}" \
                                     "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
                             """
                         }
