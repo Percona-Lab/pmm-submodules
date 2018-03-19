@@ -18,6 +18,8 @@ pipeline {
             steps {
                 sh '''
                     sg docker -c "
+                        env
+                        export pmm_version=$(cat VERSION)
                         ./build/bin/build-client-source
                     "
                 '''
@@ -27,10 +29,18 @@ pipeline {
             steps {
                 sh '''
                     sg docker -c "
+                        export pmm_version=$(cat VERSION)
                         ./build/bin/build-client-binary
                     "
                 '''
-                archiveArtifacts 'results/tarball/pmm-client-*.tar.gz'
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    sh '''
+                        aws s3 cp \
+                            --acl public-read \
+                            results/tarball/pmm-client-*.tar.gz \
+                            s3://pmm-build-cache/pmm-client/pmm-client-${BRANCH}-${COMMIT_ID}.tar.gz
+                    '''
+                }
             }
         }
         stage('Build client source rpm') {
@@ -110,7 +120,7 @@ pipeline {
                                 set -o xtrace
                                 curl -v -X POST \
                                     -H "Authorization: token ${GITHUB_API_TOKEN}" \
-                                    -d "{\\"body\\":\\"docker - ${IMAGE}\\nclient - ${BUILD_URL}artifact/results/binary/\\"}" \
+                                    -d "{\\"body\\":\\"docker - ${IMAGE}\\nclient - https://s3.us-east-2.amazonaws.com/pmm-build-cache/pmm-client/pmm-client-${BRANCH}-${COMMIT_ID}.tar.gz\\"}" \
                                     "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
                             """
                         }
