@@ -16,13 +16,38 @@ pipeline {
         }
         stage('Build client source') {
             steps {
-                sh 'sg docker -c "./build/bin/build-client-source"'
+                sh '''
+                    sg docker -c "
+                        ./build/bin/build-client-source
+                    "
+                '''
             }
         }
         stage('Build client binary') {
             steps {
-                sh 'sg docker -c "./build/bin/build-client-binary"'
+                sh '''
+                    sg docker -c "
+                        ./build/bin/build-client-binary
+                    "
+                '''
                 archiveArtifacts 'results/tarball/pmm-client-*.tar.gz'
+            }
+        }
+        stage('Build client source rpm') {
+            steps {
+                sh 'sg docker -c "./build/bin/build-client-srpm centos:6"'
+            }
+        }
+        stage('Build client binary rpm') {
+            steps {
+                sh '''
+                    sg docker -c "
+                        ./build/bin/build-client-rpm centos:7
+
+                        mkdir -p tmp/pmm-server/RPMS/
+                        cp results/rpm/pmm-client-*.rpm tmp/pmm-server/RPMS/
+                    "
+                '''
             }
         }
         stage('Build server packages') {
@@ -68,7 +93,8 @@ pipeline {
                         ./build/bin/build-server-docker
                     "
                 '''
-                archiveArtifacts 'results/docker/pmm-server-*.docker'
+                stash includes: 'results/docker/TAG', name: 'IMAGE'
+                archiveArtifacts 'results/docker/TAG'
             }
         }
     }
@@ -76,18 +102,20 @@ pipeline {
         always {
             script {
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
+                    unstash 'IMAGE'
+                    def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
                     if (env.CHANGE_URL) {
                         withCredentials([string(credentialsId: 'GITHUB_API_TOKEN', variable: 'GITHUB_API_TOKEN')]) {
                             sh """
                                 set -o xtrace
                                 curl -v -X POST \
                                     -H "Authorization: token ${GITHUB_API_TOKEN}" \
-                                    -d "{\\"body\\":\\"docker - \$(cat results/docker/TAG)\\nclient - ${BUILD_URL}artifact/results/binary/\\"}" \
+                                    -d "{\\"body\\":\\"docker - ${IMAGE}\\nclient - ${BUILD_URL}artifact/results/binary/\\"}" \
                                     "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
                             """
                         }
                     }
-                    slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished"
+                    slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                 } else {
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result}"
                 }
