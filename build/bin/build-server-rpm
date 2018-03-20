@@ -72,6 +72,7 @@ build() {
             set -o errexit
             set -o xtrace
             sudo chown -R builder:builder /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
+            rm -rf /home/builder/rpm/RPMS/${spec_name}-*
 
             printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
                 | sudo tee /etc/yum.repos.d/local.repo
