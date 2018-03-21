@@ -11,10 +11,8 @@ COPY RPMS /tmp/RPMS
 COPY playbook-install.yml /opt/playbook-install.yml
 RUN ansible-playbook -vvv -i 'localhost,' -c local /opt/playbook-install.yml
 
-COPY supervisord.conf /etc/supervisord.d/pmm.ini
 COPY playbook-init.yml /opt/playbook-init.yml
 RUN ansible-playbook -vvv -i 'localhost,' -c local /opt/playbook-init.yml
-
-COPY entrypoint.sh /opt
+RUN cp /usr/share/pmm-server/entrypoint.sh /opt/entrypoint.sh
 
 CMD ["/opt/entrypoint.sh"]
