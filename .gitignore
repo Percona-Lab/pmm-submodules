@@ -1,5 +1,6 @@
-build/pmm-server-docker/RPMS
+build/pmm-server-docker/RPMS/
 *.swp
 *~
-tmp
-results
+tmp/
+results/
+.kitchen/
