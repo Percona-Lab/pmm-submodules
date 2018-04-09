@@ -37,11 +37,11 @@
 [submodule "qan-api"]
 	path = sources/qan-api/src/github.com/percona/qan-api
 	url = https://github.com/percona/qan-api
-	branch = master
+	branch = PMM-946-sparkline-no-data
 [submodule "qan-app"]
 	path = sources/qan-app/src/github.com/percona/qan-app
 	url = https://github.com/percona/qan-app
-	branch = master
+	branch = PMM-946-sparkline-no-data
 [submodule "pmm-update"]
 	path = sources/pmm-update
 	url = https://github.com/percona/pmm-update
