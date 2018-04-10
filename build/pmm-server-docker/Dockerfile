@@ -8,6 +8,7 @@ RUN useradd -s /bin/false pmm
 RUN yum -y install epel-release && yum -y install ansible
 
 COPY RPMS /tmp/RPMS
+COPY gitCommit /tmp/gitCommit
 COPY playbook-install.yml /opt/playbook-install.yml
 RUN ansible-playbook -vvv -i 'localhost,' -c local /opt/playbook-install.yml
 
