@@ -62,3 +62,7 @@
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
 	branch = master
+[submodule "qan-api.pmm-server-packaging"]
+	branch = PMM-2319-grafana-v5
+[submodule "qan-api.grafana-dashboards"]
+	branch = PMM-2332-grafana5
