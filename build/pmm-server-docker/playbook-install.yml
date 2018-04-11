@@ -235,7 +235,7 @@
         dest: /etc/grafana/grafana.ini
         section: snapshots
         option: external_snapshot_url
-        value: https://snapshots.percona.com
+        value: https://snapshots-g504.percona.com
 
     - name: Grafana                    | Set snapshot server
       when: not grafana_db.stat.exists
@@ -243,7 +243,7 @@
         dest: /etc/grafana/grafana.ini
         section: snapshots
         option: external_snapshot_name
-        value: Share with Percona Team at snapshots.percona.com
+        value: Share with Percona
 
     - name: supervisor                 | Fix credentials
       ini_file:
