@@ -1,7 +1,7 @@
 [submodule "pmm-client"]
 	path = sources/pmm-client/src/github.com/percona/pmm-client
 	url = https://github.com/percona/pmm-client.git
-	branch = master
+	branch = PMM-1667-Capture-NUMA-Information
 [submodule "qan-agent"]
 	path = sources/qan-agent/src/github.com/percona/qan-agent
 	url = https://github.com/percona/qan-agent.git
