@@ -11,6 +11,7 @@ pipeline {
         stage('Prepare') {
             steps {
                 sh '''
+                    sudo rm -rf results tmp || :
                     git reset --hard
                     git clean -fdx
                     git submodule foreach --recursive git reset --hard
