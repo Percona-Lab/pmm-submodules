@@ -26,6 +26,8 @@ gobuild_component() {
     docker run --rm -v ${tmp_dir}:/home/builder/tmp perconalab/rpmbuild sh -c "
         set -o errexit
         set -o xtrace
+        export GOOS=${GOOS:-linux}
+        export GOARCH=${GOARCH:-amd64}
         sudo chown -R builder:builder /home/builder/tmp
 
         source_dir=/home/builder/tmp/source/pmm-client-${pmm_version}
