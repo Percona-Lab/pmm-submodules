@@ -41,7 +41,7 @@
 [submodule "qan-app"]
 	path = sources/qan-app/src/github.com/percona/qan-app
 	url = https://github.com/percona/qan-app
-	branch = master
+	branch = PMM-2453-update-hoek
 [submodule "pmm-update"]
 	path = sources/pmm-update
 	url = https://github.com/percona/pmm-update
