@@ -37,7 +37,7 @@
 [submodule "qan-api"]
 	path = sources/qan-api/src/github.com/percona/qan-api
 	url = https://github.com/percona/qan-api
-	branch = master
+	branch = PMM-2540-visual-explain
 [submodule "qan-app"]
 	path = sources/qan-app/src/github.com/percona/qan-app
 	url = https://github.com/percona/qan-app
