@@ -1,0 +1,177 @@
+From 09581ca4826b6d67b1c3a3c8597038b28a37f52d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jakub=20=C4=8Cajka?= <jcajka@redhat.com>
+Date: Fri, 5 Jan 2018 13:38:55 +0100
+Subject: [PATCH] cmd/go/internal/work : improve pkgconfig support to work with
+ latest(1.4+) pkgconf
+
+Fixes #23373
+
+Fix interfacing with latest(1.4+) pkgconf versions, as they have change the output format, by extending parsing function splitPkgConfigOutput to accommodate more possible fragment escaping formats. Function is based on pkgconfigs own implementation at https://github.com/pkgconf/pkgconf/blob/master/libpkgconf/argvsplit.c. Along with this change test case TestSplitPkgConfigOutput have been expanded. Thanks to ignatenko for help on test cases and insights in to the pkgconfig.
+
+Change-Id: I55301bb564b07128d5564ec1454dd247f84a95c3
+---
+ src/cmd/go/internal/work/build_test.go | 44 +++++++++++++++++---
+ src/cmd/go/internal/work/exec.go       | 75 +++++++++++++++++++++++-----------
+ 2 files changed, 90 insertions(+), 29 deletions(-)
+
+diff --git a/src/cmd/go/internal/work/build_test.go b/src/cmd/go/internal/work/build_test.go
+index 3f5ba37c64..c3c63a97a4 100644
+--- a/src/cmd/go/internal/work/build_test.go
++++ b/src/cmd/go/internal/work/build_test.go
+@@ -39,14 +39,46 @@ func TestSplitPkgConfigOutput(t *testing.T) {
+ 	for _, test := range []struct {
+ 		in   []byte
+ 		want []string
++		pass bool
+ 	}{
+-		{[]byte(`-r:foo -L/usr/white\ space/lib -lfoo\ bar -lbar\ baz`), []string{"-r:foo", "-L/usr/white space/lib", "-lfoo bar", "-lbar baz"}},
+-		{[]byte(`-lextra\ fun\ arg\\`), []string{`-lextra fun arg\`}},
+-		{[]byte(`broken flag\`), []string{"broken", "flag"}},
+-		{[]byte("\textra     whitespace\r\n"), []string{"extra", "whitespace"}},
+-		{[]byte("     \r\n      "), nil},
++		{[]byte(`-r:foo -L/usr/white\ space/lib -lfoo\ bar -lbar\ baz`), []string{"-r:foo", "-L/usr/white space/lib", "-lfoo bar", "-lbar baz"}, true},
++		{[]byte(`-lextra\ fun\ arg\\`), []string{`-lextra fun arg\`}, true},
++		{[]byte(`broken flag\`), []string{"broken", "flag"}, true},
++		{[]byte(`extra broken flag \`), []string{"extra", "broken", "flag"}, true},
++		{[]byte(`\`), nil, true},
++		{[]byte("\textra     whitespace\r\n"), []string{"extra", "whitespace"}, true},
++		{[]byte("     \r\n      "), nil, true},
++		{[]byte(`"-r:foo" "-L/usr/white space/lib" "-lfoo bar" "-lbar baz"`), []string{"-r:foo", "-L/usr/white space/lib", "-lfoo bar", "-lbar baz"}, true},
++		{[]byte(`"-lextra fun arg\\"`), []string{`-lextra fun arg\`}, true},
++		{[]byte(`"     \r\n\      "`), []string{`     \r\n\      `}, true},
++		{[]byte(`""`), nil, true},
++		{[]byte(``), nil, true},
++		{[]byte(`"\\"`), []string{`\`}, true},
++		{[]byte(`"\x"`), []string{`\x`}, true},
++		{[]byte(`"\\x"`), []string{`\x`}, true},
++		{[]byte(`'\\'`), []string{`\`}, true},
++		{[]byte(`'\x'`), []string{`\x`}, true},
++		{[]byte(`"\\x"`), []string{`\x`}, true},
++		{[]byte(`-fPIC -I/test/include/foo -DQUOTED='"/test/share/doc"'`), []string{"-fPIC", "-I/test/include/foo", `-DQUOTED="/test/share/doc"`}, true},
++		{[]byte(`-fPIC -I/test/include/foo -DQUOTED="/test/share/doc"`), []string{"-fPIC", "-I/test/include/foo", "-DQUOTED=/test/share/doc"}, true},
++		{[]byte(`-fPIC -I/test/include/foo -DQUOTED=\"/test/share/doc\"`), []string{"-fPIC", "-I/test/include/foo", `-DQUOTED="/test/share/doc"`}, true},
++		{[]byte(`-fPIC -I/test/include/foo -DQUOTED='/test/share/doc'`), []string{"-fPIC", "-I/test/include/foo", "-DQUOTED=/test/share/doc"}, true},
++		{[]byte(`-DQUOTED='/te\st/share/d\oc'`), []string{`-DQUOTED=/te\st/share/d\oc`}, true},
++		{[]byte(`-Dhello=10 -Dworld=+32 -DDEFINED_FROM_PKG_CONFIG=hello\ world`), []string{"-Dhello=10", "-Dworld=+32", "-DDEFINED_FROM_PKG_CONFIG=hello world"}, true},
++		{[]byte(`"     \r\n      `), nil, false},
++		{[]byte(`"-r:foo" "-L/usr/white space/lib "-lfoo bar" "-lbar baz"`), nil, false},
++		{[]byte(`"-lextra fun arg\\`), nil, false},
+ 	} {
+-		got := splitPkgConfigOutput(test.in)
++		got, err := splitPkgConfigOutput(test.in)
++		if err != nil {
++			if test.pass {
++				t.Errorf("splitPkgConfigOutput(%v) = %v; function returned error %v", test.in, got, err)
++			}
++			if got != nil {
++				t.Errorf("splitPkgConfigOutput failed with error %v and output has been non nil %v", err, got)
++			}
++			continue
++		}
+ 		if !reflect.DeepEqual(got, test.want) {
+ 			t.Errorf("splitPkgConfigOutput(%v) = %v; want %v", test.in, got, test.want)
+ 		}
+diff --git a/src/cmd/go/internal/work/exec.go b/src/cmd/go/internal/work/exec.go
+index a5ab75f6a8..8774be1385 100644
+--- a/src/cmd/go/internal/work/exec.go
++++ b/src/cmd/go/internal/work/exec.go
+@@ -900,36 +900,62 @@ func (b *Builder) PkgconfigCmd() string {
+ }
+ 
+ // splitPkgConfigOutput parses the pkg-config output into a slice of
+-// flags. pkg-config always uses \ to escape special characters.
+-func splitPkgConfigOutput(out []byte) []string {
++// flags. This implements the algorithm from pkgconf/libpkgconf/argvsplit.c
++func splitPkgConfigOutput(out []byte) ([]string, error) {
+ 	if len(out) == 0 {
+-		return nil
++		return nil, nil
+ 	}
+ 	var flags []string
+-	flag := make([]byte, len(out))
+-	r, w := 0, 0
+-	for r < len(out) {
+-		switch out[r] {
+-		case ' ', '\t', '\r', '\n':
+-			if w > 0 {
+-				flags = append(flags, string(flag[:w]))
++	flag := make([]byte, 0, len(out))
++	escaped := false
++	quote := byte(0)
++
++	for _, c := range out {
++		if escaped {
++			if quote == '"' || quote == '\'' {
++				switch c {
++				case '$', '`', '"', '\\':
++				default:
++					flag = append(flag, '\\')
++				}
++				flag = append(flag, c)
++			} else {
++				flag = append(flag, c)
+ 			}
+-			w = 0
+-		case '\\':
+-			r++
+-			fallthrough
+-		default:
+-			if r < len(out) {
+-				flag[w] = out[r]
+-				w++
++			escaped = false
++		} else if quote != 0 {
++			if c == quote {
++				quote = 0
++			} else {
++				switch c {
++				case '\\':
++					escaped = true
++				default:
++					flag = append(flag, c)
++				}
+ 			}
++		} else if strings.IndexByte(" \t\n\v\f\r", c) < 0 {
++			switch c {
++			case '\\':
++				escaped = true
++			case '\'', '"':
++				quote = c
++			default:
++				flag = append(flag, c)
++			}
++		} else if len(flag) != 0 {
++			flags = append(flags, string(flag))
++			flag = flag[:0]
+ 		}
+-		r++
+ 	}
+-	if w > 0 {
+-		flags = append(flags, string(flag[:w]))
++
++	if quote != 0 {
++		return nil, errors.New("unterminated quoted string in pkgconf output ")
++	} else if len(flag) != 0 {
++		flags = append(flags, string(flag))
+ 	}
+-	return flags
++
++	return flags, nil
+ }
+ 
+ // Calls pkg-config if needed and returns the cflags/ldflags needed to build the package.
+@@ -948,7 +974,10 @@ func (b *Builder) getPkgConfigFlags(p *load.Package) (cflags, ldflags []string,
+ 			return nil, nil, errPrintedOutput
+ 		}
+ 		if len(out) > 0 {
+-			cflags = splitPkgConfigOutput(out)
++			cflags, err = splitPkgConfigOutput(out)
++			if err != nil {
++				return nil, nil, err
++			}
+ 			if err := checkCompilerFlags("CFLAGS", "pkg-config --cflags", cflags); err != nil {
+ 				return nil, nil, err
+ 			}
+-- 
+2.14.3
+

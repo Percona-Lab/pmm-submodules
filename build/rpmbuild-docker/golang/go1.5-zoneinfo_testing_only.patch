@@ -1,21 +1,70 @@
-diff --git a/src/time/zoneinfo_unix.go b/src/time/zoneinfo_unix.go
-index ed9502d..c2569e7 100644
---- a/src/time/zoneinfo_unix.go
-+++ b/src/time/zoneinfo_unix.go
-@@ -32,14 +32,14 @@ var zoneDirs = []string{
+diff -up go-dd7cbf3a846c2cb125ac65173abaf6a8b9f903ff/src/time/internal_test.go.time go-dd7cbf3a846c2cb125ac65173abaf6a8b9f903ff/src/time/internal_test.go
+--- go-dd7cbf3a846c2cb125ac65173abaf6a8b9f903ff/src/time/internal_test.go.time	2017-12-05 01:10:10.000000000 +0100
++++ go-dd7cbf3a846c2cb125ac65173abaf6a8b9f903ff/src/time/internal_test.go	2017-12-05 14:55:10.574637475 +0100
+@@ -4,13 +4,15 @@
+ 
+ package time
+ 
++import "runtime"
++
+ func init() {
+ 	// force US/Pacific for time zone tests
+ 	ForceUSPacificForTesting()
+ }
+ 
+ func initTestingZone() {
+-	z, err := loadLocation("America/Los_Angeles", zoneSources[len(zoneSources)-1:])
++	z, err := loadLocation("America/Los_Angeles", zoneSources)
+ 	if err != nil {
+ 		panic("cannot load America/Los_Angeles for testing: " + err.Error())
+ 	}
+@@ -21,8 +23,9 @@ func initTestingZone() {
+ var OrigZoneSources = zoneSources
+ 
+ func forceZipFileForTesting(zipOnly bool) {
+-	zoneSources = make([]string, len(OrigZoneSources))
++	zoneSources = make([]string, len(OrigZoneSources)+1)
+ 	copy(zoneSources, OrigZoneSources)
++	zoneSources = append(zoneSources, runtime.GOROOT()+"/lib/time/zoneinfo.zip")
+ 	if zipOnly {
+ 		zoneSources = zoneSources[len(zoneSources)-1:]
+ 	}
+diff -up go-dd7cbf3a846c2cb125ac65173abaf6a8b9f903ff/src/time/zoneinfo_test.go.time go-dd7cbf3a846c2cb125ac65173abaf6a8b9f903ff/src/time/zoneinfo_test.go
+--- go-dd7cbf3a846c2cb125ac65173abaf6a8b9f903ff/src/time/zoneinfo_test.go.time	2017-12-05 01:10:10.000000000 +0100
++++ go-dd7cbf3a846c2cb125ac65173abaf6a8b9f903ff/src/time/zoneinfo_test.go	2017-12-05 14:58:09.823109248 +0100
+@@ -8,6 +8,7 @@ import (
+ 	"fmt"
+ 	"os"
+ 	"reflect"
++	"runtime"
+ 	"testing"
+ 	"time"
+ )
+@@ -128,7 +129,7 @@ func TestLoadLocationFromTZData(t *testi
+ 		t.Fatal(err)
+ 	}
+ 
+-	tzinfo, err := time.LoadTzinfo(locationName, time.OrigZoneSources[len(time.OrigZoneSources)-1])
++	tzinfo, err := time.LoadTzinfo(locationName, runtime.GOROOT()+"/lib/time/zoneinfo.zip")
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
+diff -up go-dd7cbf3a846c2cb125ac65173abaf6a8b9f903ff/src/time/zoneinfo_unix.go.time go-dd7cbf3a846c2cb125ac65173abaf6a8b9f903ff/src/time/zoneinfo_unix.go
+--- go-dd7cbf3a846c2cb125ac65173abaf6a8b9f903ff/src/time/zoneinfo_unix.go.time	2017-12-05 01:10:10.000000000 +0100
++++ go-dd7cbf3a846c2cb125ac65173abaf6a8b9f903ff/src/time/zoneinfo_unix.go	2017-12-05 14:55:10.574637475 +0100
+@@ -12,7 +12,6 @@
+ package time
+ 
+ import (
+-	"runtime"
+ 	"syscall"
+ )
+ 
+@@ -22,7 +21,6 @@ var zoneSources = []string{
  	"/usr/share/zoneinfo/",
  	"/usr/share/lib/zoneinfo/",
  	"/usr/lib/locale/TZ/",
 -	runtime.GOROOT() + "/lib/time/zoneinfo.zip",
  }
  
- var origZoneDirs = zoneDirs
- 
- func forceZipFileForTesting(zipOnly bool) {
--	zoneDirs = make([]string, len(origZoneDirs))
-+	zoneDirs = make([]string, len(origZoneDirs)+1)
- 	copy(zoneDirs, origZoneDirs)
-+	zoneDirs = append(zoneDirs, runtime.GOROOT()+"/lib/time/zoneinfo.zip")
- 	if zipOnly {
- 		for i := 0; i < len(zoneDirs)-1; i++ {
- 			zoneDirs[i] = "/XXXNOEXIST"
+ func initLocal() {

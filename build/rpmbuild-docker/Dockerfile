@@ -5,8 +5,9 @@ COPY golang/* ./
 RUN yum install -y \
                    yum-utils rpm-build rpmdevtools \
                    golang pcre-devel glibc-static
+RUN spectool -g  go-srpm-macros.spec
 RUN rpmbuild -ba go-srpm-macros.spec
-RUN spectool -g golang.spec
+RUN spectool -g  golang.spec
 RUN rpmbuild -ba golang.spec
 
 
