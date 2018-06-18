@@ -170,6 +170,7 @@
         - /var/log/node_exporter.log
         - /var/log/orchestrator.log
         - /var/log/prometheus.log
+        - /var/log/prometheus1.log
         - /var/log/qan-api.log
         - /var/log/yum.log
         - /var/log/grafana/grafana.log
