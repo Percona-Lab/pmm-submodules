@@ -49,7 +49,7 @@
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = master
+	branch = PMM-2474-Data-resolution-on-Dashboards-became-15sec-min-instead-of-1sec
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
