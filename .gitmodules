@@ -53,11 +53,11 @@
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
-	branch = PMM-2651-Monitoring-directory-sizes-with-the-Textfile-Collector 
+	branch = master 
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = master
+	branch = PMM-2651-Monitoring-directory-sizes-with-the-Textfile-Collector
 [submodule "rds_exporter"]
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
