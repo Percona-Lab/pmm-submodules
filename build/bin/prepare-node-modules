@@ -31,7 +31,7 @@ prepare_specs() {
 }
 
 update_grafana_node_modules() {
-    docker run --rm -v ${rpmbuild_dir}/SOURCES:/home/builder/rpm/SOURCES perconalab/rpmbuild sh -c "
+    docker run --rm -v ${rpmbuild_dir}/SOURCES:/home/builder/rpm/SOURCES ${rpmbuild_docker_image} sh -c "
         set -o errexit
         set -o xtrace
 
@@ -49,7 +49,7 @@ update_grafana_node_modules() {
 }
 
 update_qan_node_modules() {
-    docker run --rm -v ${rpmbuild_dir}:/home/builder/rpm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c "
+    docker run --rm -v ${rpmbuild_dir}:/home/builder/rpm -v ${rpms_dir}:/home/builder/rpm/RPMS ${rpmbuild_docker_image} sh -c "
         set -o errexit
         set -o xtrace
 
@@ -65,7 +65,7 @@ update_qan_node_modules() {
 }
 
 update_pmm_server_node_modules() {
-    docker run --rm -v ${rpmbuild_dir}:/home/builder/rpm -v ${rpms_dir}:/home/builder/rpm/RPMS perconalab/rpmbuild sh -c "
+    docker run --rm -v ${rpmbuild_dir}:/home/builder/rpm -v ${rpms_dir}:/home/builder/rpm/RPMS ${rpmbuild_docker_image} sh -c "
         set -o errexit
         set -o xtrace
 
