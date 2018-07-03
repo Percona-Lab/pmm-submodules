@@ -33,7 +33,7 @@
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
-	branch = master
+	branch = PMM-2182-prometheus-2
 [submodule "qan-api"]
 	path = sources/qan-api/src/github.com/percona/qan-api
 	url = https://github.com/percona/qan-api
@@ -49,15 +49,15 @@
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = master
+	branch = prometheus_2
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
-	branch = master
+	branch = prometheus2
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = master
+	branch = PMM-2552-Dashboards-update-for-Prom2-version
 [submodule "rds_exporter"]
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
