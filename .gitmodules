@@ -25,7 +25,7 @@
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
-	branch = release-3.0.8
+	branch = release-3.0.10
 [submodule "pmm-manage"]
 	path = sources/pmm-manage/src/github.com/percona/pmm-manage
 	url = https://github.com/percona/pmm-manage
