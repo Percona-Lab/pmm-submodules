@@ -138,7 +138,7 @@
         - percona-orchestrator
         - percona-qan-api
         - percona-qan-app
-        - percona-toolkit
+        - percona-toolkit-3.0.10
         - percona-dashboards
         - pmm-server
         - pmm-client
