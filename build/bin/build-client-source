@@ -39,7 +39,7 @@ repack_toolkit() {
         -zxpf ${source_dir}/percona-toolkit-*.tar.gz
 
     pushd ${tmp_dir}/source/percona-toolkit-*
-        docker run --rm -v $(pwd -P):/home/builder/go/src/percona-toolkit perconalab/rpmbuild sh -c "
+        docker run --rm -v $(pwd -P):/home/builder/go/src/percona-toolkit ${rpmbuild_docker_image} sh -c "
             set -o errexit
             set -o xtrace
 
@@ -54,7 +54,7 @@ repack_toolkit() {
     popd
 
     # Run tar inside docker because macOS tar is not gnu compatible on update operation
-    docker run --rm -v ${root_dir}:/home/builder/root perconalab/rpmbuild sh -c "
+    docker run --rm -v ${root_dir}:/home/builder/root ${rpmbuild_docker_image} sh -c "
         set -o errexit
         set -o xtrace
 
