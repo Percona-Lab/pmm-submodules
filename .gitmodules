@@ -63,6 +63,5 @@
 	url = https://github.com/percona/rds_exporter
 	branch = master
 [submodule "pmm"]
-	path = sources/pmm
 	url = https://github.com/percona/pmm
 	branch = PMM-2644-add-first-seen-to-query-profile
