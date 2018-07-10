@@ -37,7 +37,7 @@
 [submodule "qan-api"]
 	path = sources/qan-api/src/github.com/percona/qan-api
 	url = https://github.com/percona/qan-api
-	branch = master
+	branch = PMM-2644-add-first-seen-to-query-profile
 [submodule "qan-app"]
 	path = sources/qan-app/src/github.com/percona/qan-app
 	url = https://github.com/percona/qan-app
@@ -62,3 +62,7 @@
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
 	branch = master
+[submodule "pmm"]
+	path = sources/pmm
+	url = https://github.com/percona/pmm
+	branch = PMM-2644-add-first-seen-to-query-profile
