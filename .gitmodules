@@ -62,5 +62,3 @@
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
 	branch = master
-[submodule "pmm"]
-	branch = PMM-2472-identify-new-queries-in-qan
