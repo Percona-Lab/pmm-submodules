@@ -552,6 +552,16 @@ build_tarball(){
                 git checkout ${MysqlExp_BRANCH_NAME}
             fi
         cd ../
+     #
+        git clone $PostgreSQLExp_REPO
+        cd postgres_exporter
+            git fetch origin
+            if [ ! -z ${PostgreSQLExp_BRANCH_NAME} ]; then
+                git reset --hard
+                git clean -xdf
+                git checkout ${PostgreSQLExp_BRANCH_NAME}
+            fi
+        cd ../
     #
         git clone $ProxysqlExp_REPO
         cd proxysql_exporter
@@ -706,6 +716,8 @@ TOOLKIT_BRANCH_NAME=$(get_branches "percona-toolkit")
 TOOLKIT_REPO=$(get_repos "percona-toolkit")
 MysqlExp_BRANCH_NAME=$(get_branches "mysqld_exporter")
 MysqlExp_REPO=$(get_repos "mysqld_exporter")
+PostgreSQLExp_BRANCH_NAME=$(get_branches "postgres_exporter")
+PostgreSQLExp_REPO=$(get_repos "postgres_exporter")
 ProxysqlExp_BRANCH_NAME=$(get_branches "proxysql_exporter")
 ProxysqlExp_REPO=$(get_repos "proxysql_exporter")
 QAN_BRANCH_NAME=$(get_branches "qan-agent")
