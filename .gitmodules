@@ -1,68 +1,68 @@
 [submodule "pmm-client"]
 	path = sources/pmm-client/src/github.com/percona/pmm-client
-	url = ../../percona/pmm-client.git
+	url = https://github.com/percona/pmm-client.git
 	branch = master
 [submodule "qan-agent"]
 	path = sources/qan-agent/src/github.com/percona/qan-agent
-	url = ../../percona/qan-agent.git
+	url = https://github.com/percona/qan-agent.git
 	branch = master
 [submodule "node_exporter"]
 	path = sources/node_exporter/src/github.com/prometheus/node_exporter
-	url = ../../percona/node_exporter.git
+	url = https://github.com/percona/node_exporter.git
 	branch = master
 [submodule "mysqld_exporter"]
 	path = sources/mysqld_exporter/src/github.com/percona/mysqld_exporter
-	url = ../../percona/mysqld_exporter.git
+	url = https://github.com/percona/mysqld_exporter.git
 	branch = master
 [submodule "mongodb_exporter"]
 	path = sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
-	url = ../../percona/mongodb_exporter.git
+	url = https://github.com/percona/mongodb_exporter.git
 	branch = master
 [submodule "proxysql_exporter"]
 	path = sources/proxysql_exporter/src/github.com/percona/proxysql_exporter
-	url = ../../percona/proxysql_exporter.git
+	url = https://github.com/percona/proxysql_exporter.git
 	branch = master
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
-	url = ../../percona/percona-toolkit.git
+	url = https://github.com/percona/percona-toolkit.git
 	branch = release-3.0.10
 [submodule "pmm-manage"]
 	path = sources/pmm-manage/src/github.com/percona/pmm-manage
-	url = ../../percona/pmm-manage
+	url = https://github.com/percona/pmm-manage
 	branch = master
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
-	url = ../../percona/pmm-managed
+	url = https://github.com/percona/pmm-managed
 	branch = master
 [submodule "qan-api"]
 	path = sources/qan-api/src/github.com/percona/qan-api
-	url = ../../percona/qan-api
+	url = https://github.com/percona/qan-api
 	branch = master
 [submodule "qan-app"]
 	path = sources/qan-app/src/github.com/percona/qan-app
-	url = ../../percona/qan-app
+	url = https://github.com/percona/qan-app
 	branch = master
 [submodule "pmm-update"]
 	path = sources/pmm-update
-	url = ../../percona/pmm-update
+	url = https://github.com/percona/pmm-update
 	branch = master
 [submodule "pmm-server"]
 	path = sources/pmm-server
-	url = ../../percona/pmm-server
+	url = https://github.com/percona/pmm-server
 	branch = master
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
-	url = ../../percona/pmm-server-packaging
+	url = https://github.com/percona/pmm-server-packaging
 	branch = master
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
-	url = ../../percona/grafana-dashboards
+	url = https://github.com/percona/grafana-dashboards
 	branch = master
 [submodule "rds_exporter"]
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
-	url = ../../percona/rds_exporter
+	url = https://github.com/percona/rds_exporter
 	branch = master
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
-	url = ../../percona/postgres_exporter
+	url = https://github.com/percona/postgres_exporter
 	branch = master	
