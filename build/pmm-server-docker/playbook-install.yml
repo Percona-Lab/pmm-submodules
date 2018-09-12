@@ -206,15 +206,23 @@
       stat: path=/srv/grafana/grafana.db
       register: grafana_db
 
-    - name: Grafana                    | Enable Anonymous access
+    - name: Grafana                    | Disable Anonymous access
+      when: not grafana_db.stat.exists
+      ini_file:
+        dest: /etc/grafana/grafana.ini
+        section: auth.basic
+        option: enabled
+        value: true
+
+    - name: Grafana                    | Disable Anonymous access
       when: not grafana_db.stat.exists
       ini_file:
         dest: /etc/grafana/grafana.ini
         section: auth.anonymous
         option: enabled
-        value: true
+        value: false
 
-    - name: Grafana                    | Enable Anonymous access
+    - name: Grafana                    | Disable Anonymous access
       when: not grafana_db.stat.exists
       ini_file:
         dest: /etc/grafana/grafana.ini
