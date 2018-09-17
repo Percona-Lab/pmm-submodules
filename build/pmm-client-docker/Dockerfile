@@ -1,4 +1,4 @@
-FROM centos:latest
+FROM centos:7
 
 ENV MONIT_VERSION=5.25.2
 
@@ -17,7 +17,7 @@ RUN tar -zxpf /tmp/pmm-client.tar.gz -C /tmp \
     && bash ./install
 
 
-FROM centos:latest
+FROM centos:7
 RUN yum -y install iproute \
     && rm -rf /var/cache/yum
 
