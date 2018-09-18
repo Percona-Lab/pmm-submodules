@@ -18,7 +18,7 @@ RUN tar -zxpf /tmp/pmm-client.tar.gz -C /tmp \
 
 
 FROM centos:7
-RUN yum -y install iproute \
+RUN yum -y install iproute nc \
     && rm -rf /var/cache/yum
 
 COPY --from=0 /usr/local/bin/monit /usr/bin/monit
