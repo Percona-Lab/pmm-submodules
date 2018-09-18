@@ -33,11 +33,13 @@ if [ -z "${DOCKER_TAG}" ]; then
     DOCKER_TAG=perconalab/pmm-server-fb:${pmm_version}
 fi
 docker build --squash --no-cache -t ${DOCKER_TAG} ${rpms_dir}/../
+docker build --squash --no-cache -t ${DOCKER_TAG}-rootless -f ${rpms_dir}/../Dockerfile-rootless ${rpms_dir}/../
 
 if [ -n "${PUSH_DOCKER}" ]; then
     mkdir -p $(dirname ${docker_tag_file})
     echo ${DOCKER_TAG} > ${docker_tag_file}
     docker push ${DOCKER_TAG}
+    docker push ${DOCKER_TAG}-rootless
 fi
 if [ -n "${SAVE_DOCKER}" ]; then
     mkdir -p $(dirname ${docker_tarball})
