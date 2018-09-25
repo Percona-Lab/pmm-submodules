@@ -46,7 +46,7 @@ if [ -n "${PMM_PASSWORD}" ]; then
     ARGS+=" --server-password ${PMM_PASSWORD}"
 fi
 
-PMM_SERVER_IP=$(ping -c 1 "${PMM_SERVER}" | grep PING | sed -e 's/).*//; s/.*(//')
+PMM_SERVER_IP=$(ping -c 1 "${PMM_SERVER/:*/}" | grep PING | sed -e 's/).*//; s/.*(//')
 SRC_ADDR=$(ip route get "${PMM_SERVER_IP}" | grep 'src ' | awk '{print$7}')
 CLIENT_NAME=${DB_HOST:-$HOSTNAME}
 
