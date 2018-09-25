@@ -1,0 +1,13 @@
+#!/bin/bash
+
+SERVICE=$1
+COMMAND=$2
+
+cat <<-EOF | tee /etc/monit.d/${SERVICE}
+check process ${SERVICE} with pidfile /var/run/${SERVICE}.pid
+    start program = "/etc/init.d/${SERVICE} start"
+    stop program = "/etc/init.d/${SERVICE} stop"
+EOF
+
+monit reload
+monit "${COMMAND}" "${SERVICE}"
