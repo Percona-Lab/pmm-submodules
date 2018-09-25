@@ -5,13 +5,14 @@ set -o xtrace
 
 wait_for_url() {
     local URL=$1
+    local RESPONSE=$2
 
-    for i in `seq 6` ; do
-        curl -k "${URL}" > /dev/null 2>&1 && result=$? || result=$?
+    for i in `seq 1 60` ; do
+        curl -k "${URL}" | grep "$RESPONSE" > /dev/null 2>&1 && result=$? || result=$?
         if [ $result -eq 0 ] ; then
             return
         fi
-        sleep 10
+        sleep 1
     done
 
     echo "Operation timed out" >&2
@@ -22,12 +23,12 @@ wait_for_port() {
     local HOST=$1
     local PORT=$2
 
-    for i in `seq 6` ; do
+    for i in `seq 1 60` ; do
         nc -z "${HOST}" "${PORT}" > /dev/null 2>&1 && result=$? || result=$?
         if [ $result -eq 0 ] ; then
             return
         fi
-        sleep 10
+        sleep 1
     done
 
     echo "Operation timed out" >&2
@@ -49,8 +50,8 @@ PMM_SERVER_IP=$(ping -c 1 "${PMM_SERVER}" | grep PING | sed -e 's/).*//; s/.*(//
 SRC_ADDR=$(ip route get "${PMM_SERVER_IP}" | grep 'src ' | awk '{print$7}')
 CLIENT_NAME=${DB_HOST:-$HOSTNAME}
 
-wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/qan-api/ping"
-wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/v1/agent/checks"
+wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/qan-api/ping" ""
+wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/v1/status/leader" "127.0.0.1:8300"
 
 pmm-admin config \
     --skip-root \
