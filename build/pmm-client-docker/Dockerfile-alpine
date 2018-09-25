@@ -1,7 +1,5 @@
 FROM alpine:latest
 
-ENV MONIT_VERSION=5.25.2
-
 # Compile and install monit
 RUN apk add --update monit bash
 
@@ -14,12 +12,9 @@ RUN tar -zxpf /tmp/pmm-client.tar.gz -C /tmp \
 FROM alpine:latest
 RUN apk add --update --no-cache bash curl
 
-# golang binaries typically have only one dynamic library dependency - /lib64/ld-linux-x86-64.so.2
-# but Alpine Linux uses a smaller realization
-RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
-
 COPY --from=0 /usr/bin/monit /usr/bin/monit
 ADD --chown=nobody:nobody monitrc /etc/monitrc
+RUN chmod 700 /etc/monitrc
 RUN install -d -o nobody -g nobody /etc/monit.d /var/lib/monit /var/lib/monit/eventqueue /run /var/log /etc/init.d
 
 COPY --from=0 --chown=nobody:nobody /usr/local/percona /usr/local/percona

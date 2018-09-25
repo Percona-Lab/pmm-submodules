@@ -28,6 +28,7 @@ gobuild_component() {
         set -o xtrace
         export GOOS=${GOOS:-linux}
         export GOARCH=${GOARCH:-amd64}
+        export CGO_ENABLED=0
         sudo chown -R builder:builder /home/builder/tmp
 
         source_dir=/home/builder/tmp/source/pmm-client-${pmm_version}
