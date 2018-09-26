@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -o errexit
+set -o xtrace
+
+. $(dirname $0)/vars
+
+if [ -f "${docker_client_tarball}" ]; then
+    echo skip docker build
+    exit 0
+fi
+
+mkdir -p ${tmp_dir}/pmm-client
+cp ${root_dir}/build/pmm-client-docker/* ${tmp_dir}/pmm-client/
+cp ${root_dir}/results/tarball/pmm-client-*.tar.gz ${tmp_dir}/pmm-client/pmm-client.tar.gz
+git -C ${root_dir} rev-parse HEAD > ${tmp_dir}/pmm-client/gitCommit
+
+if [ -z "${DOCKER_CLIENT_TAG}" ]; then
+    DOCKER_CLIENT_TAG=perconalab/pmm-client-fb:${pmm_version}
+fi
+docker build --squash --no-cache -t ${DOCKER_CLIENT_TAG} ${tmp_dir}/pmm-client
+
+if [ -n "${PUSH_DOCKER}" ]; then
+    mkdir -p $(dirname ${docker_client_tag_file})
+    echo ${DOCKER_CLIENT_TAG} > ${docker_client_tag_file}
+    docker push ${DOCKER_CLIENT_TAG}
+fi
+if [ -n "${SAVE_DOCKER}" ]; then
+    mkdir -p $(dirname ${docker_client_tarball})
+    docker save ${DOCKER_CLIENT_TAG} | xz > ${docker_client_tarball}
+fi

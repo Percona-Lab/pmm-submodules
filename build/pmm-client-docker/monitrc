@@ -1,0 +1,14 @@
+set daemon  30
+
+set httpd port 2812 and
+    use address localhost  # only accept connection from localhost
+    allow localhost        # allow localhost to connect to the server and
+    allow admin:monit      # require user 'admin' with password 'monit'
+
+set pidfile /var/lib/monit/.monit.pid
+set idfile /var/lib/monit/.monit.id
+set statefile /var/lib/monit/.monit.state
+set eventqueue
+    basedir /var/lib/monit/eventqueue
+
+include /etc/monit.d/*
