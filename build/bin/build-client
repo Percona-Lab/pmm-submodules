@@ -7,3 +7,4 @@ bin_dir=$(dirname $0)
 
 ${bin_dir}/build-client-source
 ${bin_dir}/build-client-binary
+${bin_dir}/build-client-docker
