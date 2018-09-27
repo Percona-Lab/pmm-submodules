@@ -50,7 +50,6 @@ PMM_SERVER_IP=$(ping -c 1 "${PMM_SERVER/:*/}" | grep PING | sed -e 's/).*//; s/.
 SRC_ADDR=$(ip route get "${PMM_SERVER_IP}" | grep 'src ' | sed -e 's/.* src //; s/ .*//')
 CLIENT_NAME=${DB_HOST:-$HOSTNAME}
 
-wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/qan-api/ping" ""
 wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/v1/status/leader" "127.0.0.1:8300"
 
 pmm-admin config \
