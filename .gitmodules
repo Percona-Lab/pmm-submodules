@@ -61,7 +61,7 @@
 [submodule "rds_exporter"]
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
-	branch = master
+	branch = PMM-2116-improvements
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
