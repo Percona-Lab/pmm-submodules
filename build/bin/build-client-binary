@@ -75,6 +75,7 @@ main() {
     gobuild_component "postgres_exporter" "" "cmd/postgres_exporter"
     gobuild_component "mongodb_exporter"
     gobuild_component "proxysql_exporter"
+    gobuild_component "pid-watchdog"
 
     gobuild_component "qan-agent" "" "bin/percona-qan-agent"
     gobuild_component "qan-agent" "" "bin/percona-qan-agent-installer"
