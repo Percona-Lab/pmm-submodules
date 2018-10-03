@@ -83,6 +83,7 @@ main() {
     prepare_tarball proxysql_exporter
     prepare_tarball qan-agent
     prepare_tarball node_exporter
+    prepare_tarball pid-watchdog
 
     prepare_tarball percona-toolkit
     repack_toolkit

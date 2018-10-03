@@ -85,8 +85,4 @@ if [ -n "${DB_TYPE}" ]; then
         ${DB_ARGS}
 fi
 
-if [ -z "${RUN_COMMAND}" ]; then
-    exec /usr/bin/monit -I
-else
-    exec "$@"
-fi
+exec "$@"
