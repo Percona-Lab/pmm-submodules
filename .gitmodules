@@ -66,3 +66,7 @@
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
 	branch = master
+[submodule "pid-watchdog"]
+	path = sources/pid-watchdog/src/github.com/percona/pid-watchdog
+	url = https://github.com/percona/pid-watchdog
+	branch = master
