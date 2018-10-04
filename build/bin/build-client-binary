@@ -86,6 +86,7 @@ main() {
     copy_component "pmm-client" "scripts/install" "install"
     copy_component "pmm-client" "scripts/uninstall" "uninstall"
     copy_component "pmm-client" "build"
+    copy_component "mysqld_exporter" "queries-mysqld.yml"
 
     copy_component "percona-toolkit" "bin/pt-summary"
     copy_component "percona-toolkit" "bin/pt-mysql-summary"
