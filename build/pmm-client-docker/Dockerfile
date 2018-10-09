@@ -11,8 +11,9 @@ RUN tar -zxpf /tmp/pmm-client.tar.gz -C /tmp \
     && rm -rf /tmp/pmm-client-*
 
 RUN touch /usr/local/percona/pmm-client/config.yaml \
+    && chmod -R g+rwx /usr/local/percona \
     && chown -R nobody:nobody /usr/local/percona \
-    && install -d -o nobody -g nobody /run /var/log /etc/rc.d/init.d
+    && install -d -o nobody -g nobody -m 0775 /run /var/log /etc/rc.d/init.d
 
 COPY entrypoint.sh /entrypoint.sh
 
