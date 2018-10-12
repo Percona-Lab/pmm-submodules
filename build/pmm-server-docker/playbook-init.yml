@@ -14,7 +14,7 @@
     - name: PMM                        | Create dirs
       file: path={{ item }} state=directory owner=clickhouse group=clickhouse
       with_items:
-        - /srv/clickhouse
+        - /opt/clickhouse
 
     - name: NGINX                      | Disable daemon
       lineinfile:
@@ -187,6 +187,7 @@
         - /opt/consul-data/*
         - /opt/prometheus/data
         - /opt/consul-data
+        - /opt/clickhouse
         - /tmp/RPMS
 
     - name: cloud-init                 | Create dirs
