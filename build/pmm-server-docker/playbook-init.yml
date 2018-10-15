@@ -136,6 +136,13 @@
         delay: 10
         timeout: 180
 
+    - name: PMM                        | Wait for clickhouse start
+      wait_for:
+        port: 9000
+        state: present
+        delay: 30
+        timeout: 60
+
     - name: PMM                        | Create ClickHouse database
       command: bash -c "clickhouse-client --query=\"CREATE DATABASE pmm\""
 
@@ -199,3 +206,4 @@
       with_items:
         - /opt/prometheus/data
         - /opt/consul-data
+        - /opt/clickhouse
