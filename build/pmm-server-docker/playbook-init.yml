@@ -136,8 +136,8 @@
         delay: 10
         timeout: 180
 
-    - name: PMM                        | Create ClickHouse database
-      command: clickhouse-client --query="CREATE DATABASE pmm"
+        #    - name: PMM                        | Create ClickHouse database
+        #      command: clickhouse-client --query="CREATE DATABASE pmm"
 
     - name: PMM                        | Create pmm-update dirs
       file: path={{ item }} state=directory
@@ -169,6 +169,7 @@
     - name: PMM                        | Cleanup logs
       file: path={{ item }} state=absent
       with_items:
+        - /var/log/clickhouse.log
         - /var/log/consul.log
         - /var/log/createdb.log
         - /var/log/cron.log
