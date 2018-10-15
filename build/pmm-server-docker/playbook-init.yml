@@ -137,7 +137,10 @@
         timeout: 180
 
     - name: PMM                        | Create ClickHouse database
-      command: clickhouse-client --query="CREATE DATABASE pmm"
+      command: bash -c "clickhouse-client --query=\"CREATE DATABASE pmm\""
+
+    - name: PMM                        | Show ClickHouse database
+      command: bash -c "clickhouse-client --query=\"SHOW DATABASES\""
 
     - name: PMM                        | Create pmm-update dirs
       file: path={{ item }} state=directory
