@@ -70,3 +70,5 @@
 	path = sources/pid-watchdog/src/github.com/percona/pid-watchdog
 	url = https://github.com/percona/pid-watchdog
 	branch = master
+[submodule "grafaba-dashboards"]
+	branch = PMM-3126-locale-format-date
