@@ -437,6 +437,7 @@ build_source_deb(){
     cd ${NAME}-${VERSION}
     mv bin/* ../${NAME}-${VERSION}_all/distro/
     mv queries-mysqld.yml ../${NAME}-${VERSION}_all/
+    mv example.prom ../${NAME}-${VERSION}_all/
     cd ../
     
     rm -rf ${NAME}-${VERSION}
