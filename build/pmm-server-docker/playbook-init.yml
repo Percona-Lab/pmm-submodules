@@ -206,4 +206,4 @@
       with_items:
         - /opt/prometheus/data
         - /opt/consul-data
-        - /opt/clickhouse
+#        - /opt/clickhouse
