@@ -12,7 +12,7 @@
         - /srv/collect_info
 
     - name: PMM                        | Create dirs
-      file: path={{ item }} state=directory owner=clickhouse group=clickhouse
+      file: path={{ item }} state=directory owner=pmm group=pmm
       with_items:
         - /opt/clickhouse
 
