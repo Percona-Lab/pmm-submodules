@@ -71,10 +71,12 @@ build() {
         docker run --rm -v ${rpmbuild_dir}/SOURCES:/home/builder/rpm/SOURCES -v ${rpms_dir}:/home/builder/rpm/RPMS ${rpmbuild_docker_image} sh -c "
             set -o errexit
             set -o xtrace
-
-            sudo yum -y install centos-release-scl;\
-            sudo yum clean all;\
-            sudo yum -y install devtoolset-6-gcc-c++;\
+	    echo ${spec_name}
+	    if [ ${spec_name} == 'clickhouse' ] then
+            	sudo yum -y install centos-release-scl;\
+            	sudo yum clean all;\
+            	sudo yum -y install devtoolset-6-gcc-c++;\
+	    fi
 
             sudo chown -R builder:builder /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
             rm -rf /home/builder/rpm/RPMS/${spec_name}-*

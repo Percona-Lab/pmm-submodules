@@ -136,18 +136,18 @@
         delay: 10
         timeout: 180
 
-    - name: PMM                        | Wait for clickhouse start
-      wait_for:
-        port: 9000
-        state: present
-        delay: 30
-        timeout: 60
+#    - name: PMM                        | Wait for clickhouse start
+#      wait_for:
+#        port: 9000
+#        state: present
+#        delay: 30
+#        timeout: 60
 
-    - name: PMM                        | Create ClickHouse database
-      command: clickhouse-client --query="CREATE DATABASE pmm"
+#    - name: PMM                        | Create ClickHouse database
+#      command: clickhouse-client --query="CREATE DATABASE pmm"
 
-    - name: PMM                        | Show ClickHouse database
-      command: clickhouse-client --query="SHOW DATABASES"
+#    - name: PMM                        | Show ClickHouse database
+#      command: clickhouse-client --query="SHOW DATABASES"
 
     - name: PMM                        | Create pmm-update dirs
       file: path={{ item }} state=directory

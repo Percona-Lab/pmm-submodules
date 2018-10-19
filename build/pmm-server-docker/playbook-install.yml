@@ -146,8 +146,8 @@
         - pmm-managed
         - pmm-update
         - rds_exporter
-        - percona-clickhouse-client
-        - percona-clickhouse-server
+#        - percona-clickhouse-client
+#        - percona-clickhouse-server
 
     - name: PMM                        | Fix nginx config
       replace:
