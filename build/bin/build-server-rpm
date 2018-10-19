@@ -72,10 +72,10 @@ build() {
             set -o errexit
             set -o xtrace
 	    echo ${spec_name}
-	    if [ ${spec_name} == 'clickhouse' ] then
-            	sudo yum -y install centos-release-scl;\
-            	sudo yum clean all;\
-            	sudo yum -y install devtoolset-6-gcc-c++;\
+	    if [ \"${spec_name}\" == \"clickhouse\" ]; then
+            	sudo yum -y install centos-release-scl;
+            	sudo yum clean all;
+            	sudo yum -y install devtoolset-6-gcc-c++;
 	    fi
 
             sudo chown -R builder:builder /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
