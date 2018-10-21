@@ -78,7 +78,7 @@ build() {
 	    sudo chown -R builder:builder /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
             rm -rf /home/builder/rpm/RPMS/${spec_name}-*
 
-            printf '[local]\nname=local\nbaseurl<F11>=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
+            printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
                     | sudo tee /etc/yum.repos.d/local.repo
             /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 
