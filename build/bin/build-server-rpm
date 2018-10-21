@@ -141,16 +141,11 @@ build() {
 
 		git clone \"https://github.com/Altinity/clickhouse-rpm\"
 		cd clickhouse-rpm
-		pwd
-		ls -la
 
 		echo \"====> Prepare dirs\"
         	mkdir -p /home/builder/clickhouse-rpm/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS,TMP}
 
-		ls -la 
-
         	echo \"====> Create RPM packages\"
-#		echo \"** Cloning from github v${rpm_version} into /home/builder/clickhouse-rpm/rpmbuild/SOURCES/ClickHouse-${CH_VERSION}-${CH_TAG}\"
 		echo \"** Cloning from github v${rpm_version} into /home/builder/clickhouse-rpm/rpmbuild/SOURCES/ClickHouse-${rpm_version}\"
 
         	cd /home/builder/clickhouse-rpm/rpmbuild/SOURCES
@@ -186,6 +181,8 @@ build() {
                 -e \"s|@CH_TAG@|${CH_TAG}|\" \
                 -e \"s|@CMAKE_OPTIONS@|${CMAKE_OPTIONS}|\" \
                 -e \"s|@MAKE_OPTIONS@|${MAKE_OPTIONS}|\" \
+		-e \"s|Name: clickhouse|Name: percona-clickhouse|\" \
+                -e \"s|CLICKHOUSE_DATADIR=/var/lib/clickhouse|CLICKHOUSE_DATADIR=/opt/clickhouse|\" \
                 -e \"/@CLICKHOUSE_SPEC_FUNCS_SH@/ { 
 r /home/builder/clickhouse-rpm/src/clickhouse.spec.funcs.sh
 d }\" \
@@ -221,12 +218,6 @@ d }\" \
 
 	    else 
 
-#            	sudo chown -R builder:builder /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
-#            	rm -rf /home/builder/rpm/RPMS/${spec_name}-*
-
-#            	printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
-#                	| sudo tee /etc/yum.repos.d/local.repo
-#            	/usr/bin/createrepo_c --update /home/builder/rpm/RPMS
             	sudo yum-builddep -y SOURCES/${spec_name}.spec
 
             	spectool -C SOURCES -g SOURCES/${spec_name}.spec
