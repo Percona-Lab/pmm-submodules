@@ -191,7 +191,6 @@
         - /opt/consul-data/*
         - /opt/prometheus/data
         - /opt/consul-data
-        - /opt/clickhouse
         - /tmp/RPMS
 
     - name: cloud-init                 | Create dirs
@@ -199,4 +198,3 @@
       with_items:
         - /opt/prometheus/data
         - /opt/consul-data
-        - /opt/clickhouse
