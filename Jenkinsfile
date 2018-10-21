@@ -105,7 +105,7 @@ pipeline {
                             build-server-rpm pmm-update
 
                             # 3rd-party
-#                            build-server-rpm clickhouse
+                            build-server-rpm clickhouse
                             build-server-rpm consul
                             build-server-rpm orchestrator
                             build-server-rpm rds_exporter
