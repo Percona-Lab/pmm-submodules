@@ -84,33 +84,6 @@ build() {
 
 	    if [ \"${spec_name}\" == \"clickhouse\" ]; then
 
-		# Current work dir
-		CWD_DIR=\"/home/builder/clickhouse-rpm\"
-
-		# Source files dir
-		SRC_DIR=\"/home/builder/clickhouse-rpm/src\"
-
-		# Where RPMs would be built
-		RPMBUILD_DIR=\"/home/builder/clickhouse-rpm/rpmbuild\"
-
-		# Where build process will be run
-		BUILD_DIR=\"/home/builder/clickhouse-rpm/rpmbuild/BUILD\"
-
-		# Where build RPM files would be kept
-		RPMS_DIR=\"/home/builder/clickhouse-rpm/rpmbuild/RPMS/x86_64\"
-
-		# Where source files would be kept
-		SOURCES_DIR=\"/home/builder/clickhouse-rpm/rpmbuild/SOURCES\"
-
-		# Where RPM spec file would be kept
-		SPECS_DIR=\"/home/builder/clickhouse-rpm/rpmbuild/SPECS\"
-
-		# Where built SRPM files would be kept
-		SRPMS_DIR=\"/home/builder/clickhouse-rpm/rpmbuild/SRPMS\"
-
-		# Where temp files would be kept
-		TMP_DIR=\"/home/builder/clickhouse-rpm/rpmbuild/TMP\"
-
 		# Build most libraries using default GCC
 		export PATH=${PATH/\"/usr/local/bin:\"/}:/usr/local/bin
 
@@ -146,7 +119,7 @@ build() {
         	mkdir -p /home/builder/clickhouse-rpm/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS,TMP}
 
         	echo \"====> Create RPM packages\"
-		echo \"** Cloning from github v${rpm_version} into /home/builder/clickhouse-rpm/rpmbuild/SOURCES/ClickHouse-${rpm_version}\"
+		echo \"Cloning from github v${rpm_version} into /home/builder/clickhouse-rpm/rpmbuild/SOURCES/ClickHouse-${rpm_version}\"
 
         	cd /home/builder/clickhouse-rpm/rpmbuild/SOURCES
 
@@ -176,6 +149,7 @@ build() {
         	MAKE_OPTIONS=\"${MAKE_OPTIONS}\"
 
         	# Create spec file from template
+		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/opt/g\" \%{_builddir}/\%{buildsubdir}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
         	cat \"/home/builder/clickhouse-rpm/src/clickhouse.spec.in\" | sed \
                 -e \"s|@CH_VERSION@|${CH_VERSION}|\" \
                 -e \"s|@CH_TAG@|${CH_TAG}|\" \
