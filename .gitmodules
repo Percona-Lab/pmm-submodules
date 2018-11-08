@@ -21,7 +21,7 @@
 [submodule "proxysql_exporter"]
 	path = sources/proxysql_exporter/src/github.com/percona/proxysql_exporter
 	url = https://github.com/percona/proxysql_exporter.git
-	branch = master
+	branch = PMM-2192-strange-memory-usage
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
