@@ -225,7 +225,7 @@
         option: enabled
         value: false
 
-     - name: Grafana                    | Disable Anonymous access
+    - name: Grafana                    | Disable Anonymous access
       when: not grafana_db.stat.exists
       ini_file:
         dest: /etc/grafana/grafana.ini
