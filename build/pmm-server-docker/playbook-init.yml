@@ -11,6 +11,11 @@
         - /opt/consul-data
         - /srv/collect_info
 
+    - name: PMM                        | Create dirs
+      file: path={{ item }} state=directory owner=pmm group=pmm
+      with_items:
+        - /opt/clickhouse
+
     - name: NGINX                      | Disable daemon
       lineinfile:
         dest: /etc/nginx/nginx.conf
@@ -131,6 +136,12 @@
         delay: 10
         timeout: 180
 
+    - name: PMM                        | Create ClickHouse database
+      command: clickhouse-client --query="CREATE DATABASE pmm"
+
+    - name: PMM                        | Show ClickHouse database
+      command: clickhouse-client --query="SHOW DATABASES"
+
     - name: PMM                        | Create pmm-update dirs
       file: path={{ item }} state=directory
       with_items:
@@ -161,6 +172,7 @@
     - name: PMM                        | Cleanup logs
       file: path={{ item }} state=absent
       with_items:
+        - /var/log/clickhouse.log
         - /var/log/consul.log
         - /var/log/createdb.log
         - /var/log/cron.log
