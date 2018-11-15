@@ -39,7 +39,6 @@
       with_items:
         - /opt/prometheus/data
         - /srv/prometheus/data
-        - /opt/consul-data
         - /srv/consul
         - /srv/clickhouse
         - /srv/logs
