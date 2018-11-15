@@ -37,11 +37,17 @@
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory owner=pmm
       with_items:
+<<<<<<< HEAD
         - /opt/prometheus/data
         - /srv/prometheus/data
         - /srv/consul
         - /srv/clickhouse
         - /srv/logs
+=======
+        - /srv/prometheus/data
+        - /srv/consul
+        - /srv/clickhouse
+>>>>>>> PMM-3281 Consistent mount points and directory paths
 
     - name: cloud-init                 | Configure yum-cron
       replace:

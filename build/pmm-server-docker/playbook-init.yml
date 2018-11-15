@@ -188,7 +188,11 @@
         - /var/log/yum.log
         - /var/log/grafana/grafana.log
         - /var/log/supervisor/supervisord.log
+<<<<<<< HEAD
         - /var/logs/pmm-manage.log
+=======
+        - /var/log/pmm-manage.log
+>>>>>>> PMM-3281 Consistent mount points and directory paths
         - /srv/consul/*
         - /srv/prometheus/data
         - /srv/consul
@@ -197,8 +201,13 @@
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory owner=pmm group=pmm
       with_items:
+<<<<<<< HEAD
         - /opt/prometheus/data
         - /srv/prometheus/data
         - /opt/consul-data
         - /srv/consul
         - /srv/logs
+=======
+        - /srv/prometheus/data
+        - /srv/consul
+>>>>>>> PMM-3281 Consistent mount points and directory paths

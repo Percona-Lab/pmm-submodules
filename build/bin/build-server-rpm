@@ -79,7 +79,7 @@ build() {
             rm -rf /home/builder/rpm/RPMS/${spec_name}-*
 
             printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
-                    | sudo tee /etc/yum.repos.d/local.repo
+                | sudo tee /etc/yum.repos.d/local.repo
             /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 
 	    if [ \"${spec_name}\" == \"clickhouse\" ]; then
@@ -149,23 +149,15 @@ build() {
         	MAKE_OPTIONS=\"${MAKE_OPTIONS}\"
 
         	# Create spec file from template
-<<<<<<< HEAD
 		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/srv/g\" \%{_builddir}/\%{buildsubdir}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
 		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/log\\\/clickhouse-server/srv\\\/logs/g\" \%{_builddir}/\%{buildsubdir}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
-=======
-		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/opt/g\" \%{_builddir}/\%{buildsubdir}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
->>>>>>> Add Grafana-5.3.3 Prometheus-2.5.0 ClickHouse-18.14.13
         	cat \"/home/builder/clickhouse-rpm/src/clickhouse.spec.in\" | sed \
                 -e \"s|@CH_VERSION@|${CH_VERSION}|\" \
                 -e \"s|@CH_TAG@|${CH_TAG}|\" \
                 -e \"s|@CMAKE_OPTIONS@|${CMAKE_OPTIONS}|\" \
                 -e \"s|@MAKE_OPTIONS@|${MAKE_OPTIONS}|\" \
 		-e \"s|Name: clickhouse|Name: percona-clickhouse|\" \
-<<<<<<< HEAD
                 -e \"s|CLICKHOUSE_DATADIR=/var/lib/clickhouse|CLICKHOUSE_DATADIR=/srv/clickhouse|\" \
-=======
-                -e \"s|CLICKHOUSE_DATADIR=/var/lib/clickhouse|CLICKHOUSE_DATADIR=/opt/clickhouse|\" \
->>>>>>> Add Grafana-5.3.3 Prometheus-2.5.0 ClickHouse-18.14.13
                 -e \"/@CLICKHOUSE_SPEC_FUNCS_SH@/ { 
 r /home/builder/clickhouse-rpm/src/clickhouse.spec.funcs.sh
 d }\" \
@@ -198,22 +190,12 @@ d }\" \
 		cp -r /home/builder/clickhouse-rpm/rpmbuild/RPMS/* /home/builder/rpm/RPMS/${spec_name}-${rpm_version}
 		ls -la /home/builder/clickhouse-rpm/rpmbuild/SOURCES
 		cp -r /home/builder/clickhouse-rpm/rpmbuild/SOURCES/* /home/builder/rpm/SOURCES
-
-<<<<<<< HEAD
 	    else 
-=======
-	    else
->>>>>>> Add Grafana-5.3.3 Prometheus-2.5.0 ClickHouse-18.14.13
-
             	sudo yum-builddep -y SOURCES/${spec_name}.spec
 
             	spectool -C SOURCES -g SOURCES/${spec_name}.spec
             	rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
             	rm -f SOURCES/${spec_name}.spec*
-<<<<<<< HEAD
-	    
-=======
->>>>>>> Add Grafana-5.3.3 Prometheus-2.5.0 ClickHouse-18.14.13
             fi
             sudo chown -R $(id -u):$(id -g) /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
         "
