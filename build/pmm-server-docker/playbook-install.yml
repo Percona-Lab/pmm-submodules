@@ -37,9 +37,9 @@
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory owner=pmm
       with_items:
-        - /opt/prometheus/data
-        - /opt/consul-data
-        - /opt/clickhouse
+        - /srv/prometheus/data
+        - /srv/consul
+        - /srv/clickhouse
 
     - name: cloud-init                 | Configure yum-cron
       replace:

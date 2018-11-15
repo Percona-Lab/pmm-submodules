@@ -79,7 +79,7 @@ build() {
             rm -rf /home/builder/rpm/RPMS/${spec_name}-*
 
             printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
-                    | sudo tee /etc/yum.repos.d/local.repo
+                | sudo tee /etc/yum.repos.d/local.repo
             /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 
 	    if [ \"${spec_name}\" == \"clickhouse\" ]; then
@@ -156,7 +156,7 @@ build() {
                 -e \"s|@CMAKE_OPTIONS@|${CMAKE_OPTIONS}|\" \
                 -e \"s|@MAKE_OPTIONS@|${MAKE_OPTIONS}|\" \
 		-e \"s|Name: clickhouse|Name: percona-clickhouse|\" \
-                -e \"s|CLICKHOUSE_DATADIR=/var/lib/clickhouse|CLICKHOUSE_DATADIR=/opt/clickhouse|\" \
+                -e \"s|CLICKHOUSE_DATADIR=/var/lib/clickhouse|CLICKHOUSE_DATADIR=/srv/clickhouse|\" \
                 -e \"/@CLICKHOUSE_SPEC_FUNCS_SH@/ { 
 r /home/builder/clickhouse-rpm/src/clickhouse.spec.funcs.sh
 d }\" \
@@ -173,9 +173,9 @@ d }\" \
 		cat ~/.rpmmacros
 
         	echo \"====> Setup path to compilers\"
-                export CMAKE=cmake3
-                export CC=/opt/rh/devtoolset-7/root/usr/bin/gcc
-                export CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
+        	export CMAKE=cmake3
+        	export CC=/opt/rh/devtoolset-7/root/usr/bin/gcc
+        	export CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
 
         	echo \"cd into /home/builder/clickhouse-rpm\"
         	cd /home/builder/clickhouse-rpm 
