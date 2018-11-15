@@ -7,14 +7,15 @@
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory owner=pmm group=pmm
       with_items:
-        - /opt/prometheus/data
-        - /opt/consul-data
+        - /srv/prometheus/data
+        - /srv/consul
         - /srv/collect_info
+        - /srv/logs
 
     - name: PMM                        | Create dirs
       file: path={{ item }} state=directory owner=pmm group=pmm
       with_items:
-        - /opt/clickhouse
+        - /srv/clickhouse
 
     - name: NGINX                      | Disable daemon
       lineinfile:
@@ -188,13 +189,13 @@
         - /var/log/grafana/grafana.log
         - /var/log/supervisor/supervisord.log
         - /var/log/pmm-manage.log
-        - /opt/consul-data/*
-        - /opt/prometheus/data
-        - /opt/consul-data
+        - /srv/consul/*
+        - /srv/prometheus/data
+        - /srv/consul
         - /tmp/RPMS
 
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory owner=pmm group=pmm
       with_items:
-        - /opt/prometheus/data
-        - /opt/consul-data
+        - /srv/prometheus/data
+        - /srv/consul
