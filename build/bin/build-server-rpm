@@ -149,7 +149,8 @@ build() {
         	MAKE_OPTIONS=\"${MAKE_OPTIONS}\"
 
         	# Create spec file from template
-#		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/opt/g\" \%{_builddir}/\%{buildsubdir}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+		cat /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/srv/g\" \%{_builddir}/\%{buildsubdir}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
         	cat \"/home/builder/clickhouse-rpm/src/clickhouse.spec.in\" | sed \
                 -e \"s|@CH_VERSION@|${CH_VERSION}|\" \
                 -e \"s|@CH_TAG@|${CH_TAG}|\" \
