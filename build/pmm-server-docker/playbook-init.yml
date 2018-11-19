@@ -126,7 +126,7 @@
 
     - name: PMM                        | Wait for dashboards
       wait_for:
-        path: /var/lib/grafana/PERCONA_DASHBOARDS_VERSION
+        path: /srv/grafana/PERCONA_DASHBOARDS_VERSION
         state: present
 
     - name: PMM                        | Stop services
