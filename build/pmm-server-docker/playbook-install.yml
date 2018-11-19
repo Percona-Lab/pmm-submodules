@@ -43,6 +43,7 @@
         - /srv/consul-data
         - /opt/clickhouse
         - /srv/clickhouse
+        - /srv/logs
 
     - name: cloud-init                 | Configure yum-cron
       replace:
