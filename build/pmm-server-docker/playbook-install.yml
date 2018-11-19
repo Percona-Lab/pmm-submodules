@@ -38,8 +38,11 @@
       file: path={{ item }} state=directory owner=pmm
       with_items:
         - /opt/prometheus/data
+        - /srv/prometheus/data
         - /opt/consul-data
+        - /srv/consul-data
         - /opt/clickhouse
+        - /srv/clickhouse
 
     - name: cloud-init                 | Configure yum-cron
       replace:
