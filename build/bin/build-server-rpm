@@ -156,7 +156,7 @@ build() {
                 -e \"s|@CMAKE_OPTIONS@|${CMAKE_OPTIONS}|\" \
                 -e \"s|@MAKE_OPTIONS@|${MAKE_OPTIONS}|\" \
 		-e \"s|Name: clickhouse|Name: percona-clickhouse|\" \
-                -e \"s|CLICKHOUSE_DATADIR=/var/lib/clickhouse|CLICKHOUSE_DATADIR=/opt/clickhouse|\" \
+                -e \"s|CLICKHOUSE_DATADIR=/var/lib/clickhouse|CLICKHOUSE_DATADIR=/srv/clickhouse|\" \
                 -e \"/@CLICKHOUSE_SPEC_FUNCS_SH@/ { 
 r /home/builder/clickhouse-rpm/src/clickhouse.spec.funcs.sh
 d }\" \
