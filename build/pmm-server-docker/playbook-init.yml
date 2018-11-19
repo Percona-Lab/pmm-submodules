@@ -204,3 +204,4 @@
         - /srv/prometheus/data
         - /opt/consul-data
         - /srv/consul
+        - /srv/logs
