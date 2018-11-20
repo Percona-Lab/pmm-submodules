@@ -79,7 +79,7 @@ build() {
             rm -rf /home/builder/rpm/RPMS/${spec_name}-*
 
             printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
-                | sudo tee /etc/yum.repos.d/local.repo
+                    | sudo tee /etc/yum.repos.d/local.repo
             /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 
 	    if [ \"${spec_name}\" == \"clickhouse\" ]; then
@@ -174,9 +174,9 @@ d }\" \
 		cat ~/.rpmmacros
 
         	echo \"====> Setup path to compilers\"
-        	export CMAKE=cmake3
-        	export CC=/opt/rh/devtoolset-7/root/usr/bin/gcc
-        	export CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
+                export CMAKE=cmake3
+                export CC=/opt/rh/devtoolset-7/root/usr/bin/gcc
+                export CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
 
         	echo \"cd into /home/builder/clickhouse-rpm\"
         	cd /home/builder/clickhouse-rpm 
@@ -196,6 +196,7 @@ d }\" \
             	spectool -C SOURCES -g SOURCES/${spec_name}.spec
             	rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
             	rm -f SOURCES/${spec_name}.spec*
+	    
             fi
             sudo chown -R $(id -u):$(id -g) /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
         "
