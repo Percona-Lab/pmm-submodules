@@ -79,7 +79,7 @@ build() {
             rm -rf /home/builder/rpm/RPMS/${spec_name}-*
 
             printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
-                | sudo tee /etc/yum.repos.d/local.repo
+                    | sudo tee /etc/yum.repos.d/local.repo
             /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 
 	    if [ \"${spec_name}\" == \"clickhouse\" ]; then
@@ -149,7 +149,8 @@ build() {
         	MAKE_OPTIONS=\"${MAKE_OPTIONS}\"
 
         	# Create spec file from template
-		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/opt/g\" \%{_builddir}/\%{buildsubdir}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/srv/g\" \%{_builddir}/\%{buildsubdir}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/log\\\/clickhouse-server/srv\\\/logs/g\" \%{_builddir}/\%{buildsubdir}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
         	cat \"/home/builder/clickhouse-rpm/src/clickhouse.spec.in\" | sed \
                 -e \"s|@CH_VERSION@|${CH_VERSION}|\" \
                 -e \"s|@CH_TAG@|${CH_TAG}|\" \
@@ -173,9 +174,9 @@ d }\" \
 		cat ~/.rpmmacros
 
         	echo \"====> Setup path to compilers\"
-        	export CMAKE=cmake3
-        	export CC=/opt/rh/devtoolset-7/root/usr/bin/gcc
-        	export CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
+                export CMAKE=cmake3
+                export CC=/opt/rh/devtoolset-7/root/usr/bin/gcc
+                export CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
 
         	echo \"cd into /home/builder/clickhouse-rpm\"
         	cd /home/builder/clickhouse-rpm 
@@ -190,13 +191,14 @@ d }\" \
 		ls -la /home/builder/clickhouse-rpm/rpmbuild/SOURCES
 		cp -r /home/builder/clickhouse-rpm/rpmbuild/SOURCES/* /home/builder/rpm/SOURCES
 
-	    else
+	    else 
 
             	sudo yum-builddep -y SOURCES/${spec_name}.spec
 
             	spectool -C SOURCES -g SOURCES/${spec_name}.spec
             	rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
             	rm -f SOURCES/${spec_name}.spec*
+	    
             fi
             sudo chown -R $(id -u):$(id -g) /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
         "
