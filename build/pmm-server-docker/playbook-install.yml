@@ -38,10 +38,12 @@
       file: path={{ item }} state=directory owner=pmm
       with_items:
         - /opt/prometheus/data
-        - /opt/consul-data
         - /srv/prometheus/data
-        - /srv/consul
+        - /opt/consul-data
+        - /srv/consul-data
+        - /opt/clickhouse
         - /srv/clickhouse
+        - /srv/logs
 
     - name: cloud-init                 | Configure yum-cron
       replace:
@@ -211,15 +213,23 @@
       stat: path=/srv/grafana/grafana.db
       register: grafana_db
 
-    - name: Grafana                    | Enable Anonymous access
+    - name: Grafana                    | Disable Anonymous access
+      when: not grafana_db.stat.exists
+      ini_file:
+        dest: /etc/grafana/grafana.ini
+        section: auth.basic
+        option: enabled
+        value: true
+
+    - name: Grafana                    | Disable Anonymous access
       when: not grafana_db.stat.exists
       ini_file:
         dest: /etc/grafana/grafana.ini
         section: auth.anonymous
         option: enabled
-        value: true
+        value: false
 
-    - name: Grafana                    | Enable Anonymous access
+    - name: Grafana                    | Disable Anonymous access
       when: not grafana_db.stat.exists
       ini_file:
         dest: /etc/grafana/grafana.ini
