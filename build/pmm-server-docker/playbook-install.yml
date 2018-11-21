@@ -40,8 +40,7 @@
         - /opt/prometheus/data
         - /srv/prometheus/data
         - /opt/consul-data
-        - /srv/consul-data
-        - /opt/clickhouse
+        - /srv/consul
         - /srv/clickhouse
         - /srv/logs
 
