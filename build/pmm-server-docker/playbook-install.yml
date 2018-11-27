@@ -139,7 +139,6 @@
         - percona-consul
         - percona-grafana
         - percona-prometheus
-        - percona-prometheus1
         - percona-orchestrator
         - percona-qan-api
         - percona-qan-app
