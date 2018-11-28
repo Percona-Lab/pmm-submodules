@@ -302,3 +302,12 @@
 
     - name: Postgres                   | Create Postgres data cluster
       command: su postgres -c "/usr/pgsql-10/bin/initdb -D /srv/postgres"
+
+    - name: Postgres                   | Create Postgres log file
+      copy:
+        content: ""
+        dest: /srv/logs/postgres.log
+        force: no
+        group: postgres
+        owner: postgres 
+        mode: 0644
