@@ -299,3 +299,6 @@
       file: path={{ item }} state=directory owner=postgres group=postgres
       with_items:
         - /srv/postgres
+
+    - name: Postgres                   | Create Postgres data cluster
+      command: su postgres -c "/usr/pgsql-10/bin/initdb -D /srv/postgres"
