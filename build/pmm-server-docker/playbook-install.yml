@@ -125,6 +125,9 @@
         - postgresql10-server
         - postgresql10
 
+          #    - name: Postgres created data | Create Postgres data cluster
+          #        command: service postgresql10 initdb
+
     - name: PMM                        | Add PMM Server YUM repository
       when: ansible_os_family == 'RedHat'
       yum_repository:
@@ -292,3 +295,7 @@
         dest: /etc/my.cnf
         line: '!includedir /etc/my.cnf.d/'
 
+    - name: cloud-init                 | Create Postgres data dir
+      file: path={{ item }} state=directory owner=postgres group=postgres
+      with_items:
+        - /srv/postgres
