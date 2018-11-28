@@ -10,6 +10,12 @@
         name: https://www.percona.com/redir/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
         state: installed
 
+    - name: Packages                   | Add Postgres repository
+      when: ansible_os_family == 'RedHat'
+      yum:
+        name: https://yum.postgresql.org/10/redhat/rhel-6-x86_64/pgdg-redhat10-10-2.noarch.rpm
+        state: installed
+
     - name: Packages                   | Update OS
       when: ansible_os_family == 'RedHat'
       yum:
@@ -106,6 +112,13 @@
         group: grafana
         home: /etc/grafana
         shell: /sbin/nologin
+
+    - name: Postgres   | Install Postgres
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - postgresql10-server
+        - postgresql10
 
     - name: PMM                        | Add PMM Server YUM repository
       when: ansible_os_family == 'RedHat'
@@ -265,3 +278,19 @@
         dest: /etc/my.cnf
         line: '!includedir /etc/my.cnf.d/'
 
+    - name: cloud-init                 | Create Postgres data dir
+      file: path={{ item }} state=directory owner=postgres group=postgres
+      with_items:
+        - /srv/postgres
+
+    - name: Postgres                   | Create Postgres data cluster
+      command: su postgres -c "/usr/pgsql-10/bin/initdb -D /srv/postgres"
+
+    - name: Postgres                   | Create Postgres log file
+      copy:
+        content: ""
+        dest: /srv/logs/postgres.log
+        force: no
+        group: postgres
+        owner: postgres
+        mode: 0644
