@@ -16,6 +16,12 @@
         name: https://yum.postgresql.org/10/redhat/rhel-6-x86_64/pgdg-redhat10-10-2.noarch.rpm
         state: installed
 
+    - name: Packages                   | Add Nginx repository
+      yum_repository:
+        name: nginx
+        baseurl: http://nginx.org/packages/mainline/centos/7/$basearch/ 
+        enabled: yes
+
     - name: Packages                   | Update OS
       when: ansible_os_family == 'RedHat'
       yum:
@@ -124,9 +130,6 @@
       with_items:
         - postgresql10-server
         - postgresql10
-
-          #    - name: Postgres created data | Create Postgres data cluster
-          #        command: service postgresql10 initdb
 
     - name: PMM                        | Add PMM Server YUM repository
       when: ansible_os_family == 'RedHat'
