@@ -19,6 +19,7 @@
     - name: Packages                   | Add Nginx repository
       yum_repository:
         name: nginx
+        description: nginx repo
         baseurl: http://nginx.org/packages/mainline/centos/7/$basearch/ 
         enabled: yes
 
