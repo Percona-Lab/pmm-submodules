@@ -10,6 +10,10 @@
 	path = sources/node_exporter/src/github.com/prometheus/node_exporter
 	url = https://github.com/percona/node_exporter.git
 	branch = pmm-1.X
+[submodule "clickhouse_exporter"]
+        path = sources/clickhouse_exporter/src/github.com/f1yegor/clickhouse_exporter
+        url = https://github.com/f1yegor/clickhouse_exporter.git
+        branch = master
 [submodule "mysqld_exporter"]
 	path = sources/mysqld_exporter/src/github.com/percona/mysqld_exporter
 	url = https://github.com/percona/mysqld_exporter.git
