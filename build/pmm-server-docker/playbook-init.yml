@@ -37,6 +37,12 @@
         regexp: '^(\s*)listen'
         replace: '\1#listen'
 
+    - name: PMM                        | Fix nginx default config
+      replace:
+        dest: /etc/nginx/conf.d/default.conf
+        regexp: 'listen       80'
+        replace: 'listen       8080'
+
     # https://github.com/geerlingguy/drupal-vm/issues/1497
     # https://docs.docker.com/engine/userguide/storagedriver/overlayfs-driver/#limitations-on-overlayfs-compatibility
     - name: PMM                        | Run workaround for overlayfs
