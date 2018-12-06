@@ -1,7 +1,7 @@
 [submodule "pmm-client"]
 	path = sources/pmm-client/src/github.com/percona/pmm-client
 	url = https://github.com/percona/pmm-client.git
-	branch = PMM-3302-Clickhouse-monitoring-inside-PMM-server
+	branch = PMM-2.0
 [submodule "qan-agent"]
 	path = sources/qan-agent/src/github.com/percona/qan-agent
 	url = https://github.com/percona/qan-agent.git
@@ -45,15 +45,15 @@
 [submodule "pmm-update"]
 	path = sources/pmm-update
 	url = https://github.com/percona/pmm-update
-	branch = PMM-3176-Remove-Prometheus-1.x
+	branch = PMM-2.0
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = PMM-2911-PMM-with-Clickhouse
+	branch = PMM-2.0
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
-	branch = PMM-2912-Grafana-5.3.2
+	branch = PMM-2.0
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
