@@ -239,7 +239,7 @@
         dest: /etc/grafana/grafana.ini
         section: auth.basic
         option: enabled
-        value: false
+        value: true
 
     - name: Grafana                    | Disable Anonymous access
       when: not grafana_db.stat.exists
@@ -247,7 +247,7 @@
         dest: /etc/grafana/grafana.ini
         section: auth.anonymous
         option: enabled
-        value: true
+        value: false
 
     - name: Grafana                    | Disable Anonymous access
       when: not grafana_db.stat.exists
