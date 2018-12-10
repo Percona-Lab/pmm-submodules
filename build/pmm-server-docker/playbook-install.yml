@@ -43,8 +43,10 @@
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory owner=pmm
       with_items:
-        - /opt/prometheus/data
-        - /opt/consul-data
+        - /srv/prometheus/data
+        - /srv/consul
+        - /srv/clickhouse
+        - /srv/logs
 
     - name: cloud-init                 | Configure yum-cron
       replace:
@@ -147,7 +149,6 @@
         - percona-consul
         - percona-grafana
         - percona-prometheus
-        - percona-prometheus1
         - percona-orchestrator
         - percona-qan-api
         - percona-qan-app
@@ -159,6 +160,8 @@
         - pmm-managed
         - pmm-update
         - rds_exporter
+        - percona-clickhouse-client
+        - percona-clickhouse-server
 
     - name: PMM                        | Fix nginx config
       replace:
@@ -219,15 +222,23 @@
       stat: path=/srv/grafana/grafana.db
       register: grafana_db
 
-    - name: Grafana                    | Enable Anonymous access
+    - name: Grafana                    | Disable Anonymous access
+      when: not grafana_db.stat.exists
+      ini_file:
+        dest: /etc/grafana/grafana.ini
+        section: auth.basic
+        option: enabled
+        value: true
+
+    - name: Grafana                    | Disable Anonymous access
       when: not grafana_db.stat.exists
       ini_file:
         dest: /etc/grafana/grafana.ini
         section: auth.anonymous
         option: enabled
-        value: true
+        value: false
 
-    - name: Grafana                    | Enable Anonymous access
+    - name: Grafana                    | Disable Anonymous access
       when: not grafana_db.stat.exists
       ini_file:
         dest: /etc/grafana/grafana.ini

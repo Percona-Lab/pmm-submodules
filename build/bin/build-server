@@ -22,11 +22,11 @@ ${bin_dir}/build-server-rpm pmm-server
 ${bin_dir}/build-server-rpm pmm-update
 
 # 3rd-party
+${bin_dir}/build-server-rpm clickhouse
 ${bin_dir}/build-server-rpm consul
 ${bin_dir}/build-server-rpm orchestrator
 ${bin_dir}/build-server-rpm rds_exporter
 ${bin_dir}/build-server-rpm prometheus
-${bin_dir}/build-server-rpm prometheus1
 ${bin_dir}/build-server-rpm grafana
 
 ${bin_dir}/build-server-docker
