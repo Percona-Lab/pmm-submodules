@@ -278,7 +278,7 @@
         dest: /etc/my.cnf
         line: '!includedir /etc/my.cnf.d/'
 
-    - name: cloud-init                 | Create Postgres data dir
+    - name: Postgres                   | Create Postgres data dir
       file: path={{ item }} state=directory owner=postgres group=postgres
       with_items:
         - /srv/postgres
