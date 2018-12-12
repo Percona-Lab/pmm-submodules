@@ -281,6 +281,27 @@
         option: external_snapshot_name
         value: Share with Percona
 
+    - name: Grafana                   | Install plugin yesoreyeram-boomtable-panel
+      command: "/usr/bin/grafana-cli plugins install yesoreyeram-boomtable-panel"
+
+    - name: Grafana                   | Install plugin grafana-piechart-panel
+      command: "/usr/bin/grafana-cli plugins install grafana-piechart-panel"
+
+    - name: Grafana                   | Install plugin petrslavotinek-carpetplot-panel 
+      command: "/usr/bin/grafana-cli plugins install petrslavotinek-carpetplot-panel"
+
+    - name: Grafana                   | Install plugin jdbranham-diagram-panel
+      command: "/usr/bin/grafana-cli plugins install jdbranham-diagram-panel"
+
+    - name: Grafana                   | Install plugin natel-discrete-panel
+      command: "/usr/bin/grafana-cli plugins install natel-discrete-panel"
+
+    - name: Grafana                   | Install plugin larona-epict-panel
+      command: "/usr/bin/grafana-cli plugins install larona-epict-panel"
+
+    - name: Grafana                   | Install plugin bessler-pictureit-panel
+      command: "/usr/bin/grafana-cli plugins install bessler-pictureit-panel"
+
     - name: supervisor                 | Fix credentials
       ini_file:
         dest: /etc/supervisord.conf
