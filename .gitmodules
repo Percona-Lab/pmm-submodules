@@ -45,7 +45,7 @@
 [submodule "pmm-update"]
 	path = sources/pmm-update
 	url = https://github.com/percona/pmm-update
-	branch = PMM-3176-Remove-Prometheus-1.x
+	branch = PMM-3363-qan-api-v2
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
