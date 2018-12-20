@@ -302,6 +302,9 @@
     - name: Grafana                   | Install plugin bessler-pictureit-panel
       command: "/usr/bin/grafana-cli plugins install bessler-pictureit-panel"
 
+    - name: Grafana                   | Install plugin grafana-polystat-panel
+      command: "/usr/bin/grafana-cli plugins install grafana-polystat-panel"
+
     - name: supervisor                 | Fix credentials
       ini_file:
         dest: /etc/supervisord.conf
