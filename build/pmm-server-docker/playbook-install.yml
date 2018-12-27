@@ -284,6 +284,24 @@
         option: password
         value: dummy
 
+    - name: alertmanager               | Download and unarchive alertmanager
+      unarchive:
+        src: "https://github.com/prometheus/alertmanager/releases/download/v0.15.3/alertmanager-0.15.3.linux-amd64.tar.gz"
+        dest: /tmp/
+        remote_src: yes
+
+    - name: alertmanager               | Copy alertmanager bin files 
+      copy:
+        src: "/tmp/alertmanager-0.15.3.linux-amd64/alertmanager"
+        dest: "/usr/local/bin/alertmanager"
+        remote_src: yes
+        mode: 0755
+
+    - name: alertmanager               | Delete alertmanager tmp folder
+      file:
+        path: '/tmp/alertmanager-0.15.3.linux-amd64'
+        state: absent
+
     - name: MySQL                      | Add includedir to MySQL config
       lineinfile:
         dest: /etc/my.cnf

@@ -8,6 +8,7 @@
       file: path={{ item }} state=directory owner=pmm group=pmm
       with_items:
         - /srv/prometheus/data
+        - /srv/alertmanager/data
         - /srv/consul
         - /srv/collect_info
         - /srv/logs
@@ -173,6 +174,7 @@
     - name: PMM                        | Cleanup logs
       file: path={{ item }} state=absent
       with_items:
+        - /srv/logs/alertmanager.log
         - /srv/logs/clickhouse.log
         - /srv/logs/consul.log
         - /srv/logs/createdb.log
@@ -192,11 +194,13 @@
         - /srv/consul/*
         - /srv/prometheus/data
         - /srv/consul
+        - /srv/alertmanager/data
         - /tmp/RPMS
 
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory owner=pmm group=pmm
       with_items:
         - /srv/prometheus/data
+        - /srv/alertmanager/data
         - /srv/consul
         - /srv/logs
