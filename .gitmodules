@@ -74,3 +74,7 @@
 	path = sources/clickhouse_exporter/src/github.com/f1yegor/clickhouse_exporter
 	url = https://github.com/f1yegor/clickhouse_exporter
 	branch = master
+[submodule "qan-api2"]
+	path = sources/qan-api2/src/github.com/Percona-Lab/qan-api
+	url = https://github.com/Percona-Lab/qan-api
+	branch = PMM-3152-data-ingestion
