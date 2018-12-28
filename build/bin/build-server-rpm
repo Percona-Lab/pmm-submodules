@@ -94,7 +94,7 @@ build() {
         	sudo yum install -y rpm-build redhat-rpm-config createrepo
 
 	        echo \"====> Install MySQL client library\"
-		sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
+		sudo yum --nogpgcheck install -y http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
 
 		echo \"====> Install build tools\"
         	sudo yum install -y m4 make
