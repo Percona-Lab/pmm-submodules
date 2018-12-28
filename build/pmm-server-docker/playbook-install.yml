@@ -24,6 +24,14 @@
         gpgcheck: no
         enabled: yes
 
+    - name: Download Percona GPG Key
+      get_uri:
+        url: https://raw.githubusercontent.com/percona/percona-repositories/70632f5adeb2d783f5cc6af8f71f7942081fbde5/rpm/RPM-GPG-KEY-Percona
+        dest: /tmp/RPM-GPG-KEY-Percona
+
+    - name: Import Percona GPG Key
+      command: rpm --import /tmp/RPM-GPG-KEY-Percona
+
     - name: Packages                   | Update OS
       when: ansible_os_family == 'RedHat'
       yum:
