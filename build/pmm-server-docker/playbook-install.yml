@@ -7,7 +7,7 @@
     - name: Packages                   | Add Percona repository
       when: ansible_os_family == 'RedHat'
       yum:
-        name: https://www.percona.com/redir/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
+        name: https://www.percona.com/redir/downloads/percona-release/redhat/latest/percona-release-0.1-6.noarch.rpm 
         state: installed
 
     - name: Packages                   | Add Postgres repository
