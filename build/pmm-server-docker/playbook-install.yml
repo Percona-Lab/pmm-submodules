@@ -17,15 +17,12 @@
         name: https://yum.postgresql.org/10/redhat/rhel-6-x86_64/pgdg-redhat10-10-2.noarch.rpm
         state: installed
 
-    - name: Download Percona GPG Key   | Download Percona GPG Key
-      get_uri:
-        url: https://raw.githubusercontent.com/percona/percona-repositories/70632f5adeb2d783f5cc6af8f71f7942081fbde5/rpm/RPM-GPG-KEY-Percona
-        dest: /tmp/RPM-GPG-KEY-Percona
- 
     - name: Add the Percona GPG keys   | Add Percona GPG Key
       rpm_key:
+        key: "{{ item }}"
         state: present
-        key: /tmp/RPM-GPG-KEY-Percona
+      with_items:
+        - https://raw.githubusercontent.com/percona/percona-repositories/70632f5adeb2d783f5cc6af8f71f7942081fbde5/rpm/RPM-GPG-KEY-Percona 
 
     - name: Packages                   | Update OS
       when: ansible_os_family == 'RedHat'
