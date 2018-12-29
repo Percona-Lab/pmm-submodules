@@ -137,7 +137,6 @@
         name: pmm
         description: PMM Server YUM repository - x86_64
         baseurl: https://repo.percona.com/pmm/7/RPMS/x86_64/
-        gpgcheck: no 
         enabled: no
         gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Percona
 
