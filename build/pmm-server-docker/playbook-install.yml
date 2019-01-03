@@ -7,7 +7,8 @@
     - name: Packages                   | Add Percona repository
       when: ansible_os_family == 'RedHat'
       yum:
-        name: https://www.percona.com/redir/downloads/percona-release/redhat/latest/percona-release-0.1-6.noarch.rpm 
+              #        name: https://www.percona.com/redir/downloads/percona-release/redhat/latest/percona-release-0.1-6.noarch.rpm 
+        name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm 
         state: installed
 
     - name: Packages                   | Add Postgres repository
@@ -16,12 +17,12 @@
         name: https://yum.postgresql.org/10/redhat/rhel-6-x86_64/pgdg-redhat10-10-2.noarch.rpm
         state: installed
 
-    - name: Add the Percona GPG keys   | Add Percona GPG Key
-      rpm_key:
-        key: "{{ item }}"
-        state: present
-      with_items:
-        - https://raw.githubusercontent.com/percona/percona-repositories/70632f5adeb2d783f5cc6af8f71f7942081fbde5/rpm/RPM-GPG-KEY-Percona 
+        #    - name: Add the Percona GPG keys   | Add Percona GPG Key
+        #      rpm_key:
+        #        key: "{{ item }}"
+        #        state: present
+        #      with_items:
+        #        - https://raw.githubusercontent.com/percona/percona-repositories/70632f5adeb2d783f5cc6af8f71f7942081fbde5/rpm/RPM-GPG-KEY-Percona 
 
     - name: Packages                   | Update OS
       when: ansible_os_family == 'RedHat'
