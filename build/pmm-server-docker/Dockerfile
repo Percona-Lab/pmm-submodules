@@ -13,6 +13,7 @@ COPY playbook-install.yml /opt/playbook-install.yml
 RUN ansible-playbook -vvv -i 'localhost,' -c local /opt/playbook-install.yml
 
 COPY alertmanager.yml /etc/alertmanager.yml
+COPY alertRules.yml /etc/alertRules.yml
 
 COPY playbook-init.yml /opt/playbook-init.yml
 RUN ansible-playbook -vvv -i 'localhost,' -c local /opt/playbook-init.yml
