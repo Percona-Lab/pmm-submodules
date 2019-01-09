@@ -191,7 +191,7 @@ d }\" \
 		ls -la /home/builder/clickhouse-rpm/rpmbuild/SOURCES
 		cp -r /home/builder/clickhouse-rpm/rpmbuild/SOURCES/* /home/builder/rpm/SOURCES
 	    elif [ \"${spec_name}\" == \"grafana\" ]; then 
-	        sudo yum remove -y nodejs npm
+	        sudo sudo rpm -ev --nodeps nodejs npm
                 sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
                 sudo yum clean all
                 sudo yum -y install nodejs

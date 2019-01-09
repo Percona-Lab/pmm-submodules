@@ -36,7 +36,7 @@ update_grafana_node_modules() {
     docker run --rm -v ${rpmbuild_dir}/SOURCES:/home/builder/rpm/SOURCES ${rpmbuild_docker_image} sh -c "
         set -o errexit
         set -o xtrace
-	sudo yum remove -y nodejs npm
+        sudo rpm -ev --nodeps nodejs npm
 	sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
 	sudo yum clean all
 	sudo yum -y install nodejs
