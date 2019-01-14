@@ -45,7 +45,7 @@
 [submodule "pmm-update"]
 	path = sources/pmm-update
 	url = https://github.com/percona/pmm-update
-	branch = PMM-3280-Deprecate-TLSv1.1
+	branch = PMM-2.0
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server

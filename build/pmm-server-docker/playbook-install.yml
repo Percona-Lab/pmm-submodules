@@ -153,7 +153,7 @@
       when: ansible_os_family == 'RedHat'
       yum: name={{ item }} state=installed enablerepo=local
       with_items:
-        - nginx-1.15.7
+        - nginx-1.15.8
         - percona-consul
         - percona-grafana
         - percona-prometheus
