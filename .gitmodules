@@ -38,6 +38,10 @@
 	path = sources/qan-api/src/github.com/percona/qan-api
 	url = https://github.com/percona/qan-api
 	branch = master
+[submodule "qan-api2"]
+	path = sources/qan-api2/src/github.com/Percona-Lab/qan-api
+	url = https://github.com/Percona-Lab/qan-api
+	branch = master
 [submodule "qan-app"]
 	path = sources/qan-app/src/github.com/percona/qan-app
 	url = https://github.com/percona/qan-app
@@ -70,7 +74,3 @@
 	path = sources/pid-watchdog/src/github.com/percona/pid-watchdog
 	url = https://github.com/percona/pid-watchdog
 	branch = master
-[submodule "qan-api2"]
-	path = sources/qan-api2/src/github.com/Percona-Lab/qan-api
-	url = https://github.com/Percona-Lab/qan-api
-	branch = PMM-2.0
