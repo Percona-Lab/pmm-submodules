@@ -73,4 +73,4 @@
 [submodule "qan-api2"]
 	path = sources/qan-api2/src/github.com/Percona-Lab/qan-api
 	url = https://github.com/Percona-Lab/qan-api
-	branch = pmm-2.0
+	branch = PMM-2.0
