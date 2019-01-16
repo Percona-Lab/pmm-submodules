@@ -610,6 +610,20 @@ build_tarball(){
         cd ../
     cd ../
     cd $GOPATH
+
+    mkdir -p $GOPATH/src/github.com/f1yegor
+    cd $GOPATH/src/github.com/f1yegor
+        git clone $ClickhouseExp_REPO
+        cd clickhouse_exporter
+            git fetch origin
+            if [ ! -z ${ClickhouseExp_BRANCH_NAME} ]; then
+                git reset --hard
+                git clean -xdf
+                git checkout ${ClickhouseExp_BRANCH_NAME}
+            fi
+        cd ../
+    cd ../
+    cd $GOPATH
     
     cd src/github.com/percona/pmm-client
     sed -i 's:make:make build:' scripts/build
@@ -726,6 +740,8 @@ QAN_BRANCH_NAME=$(get_branches "qan-agent")
 QAN_REPO=$(get_repos "qan-agent")
 NodeExp_BRANCH_NAME=$(get_branches "node_exporter")
 NodeExp_REPO=$(get_repos "node_exporter")
+ClickhouseExp_BRANCH_NAME=$(get_branches "clickhouse_exporter")
+ClickhouseExp_REPO=$(get_repos "clickhouse_exporter")
 
 check_workdir
 get_system
