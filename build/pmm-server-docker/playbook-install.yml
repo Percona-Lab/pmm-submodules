@@ -16,6 +16,14 @@
         name: https://yum.postgresql.org/10/redhat/rhel-6-x86_64/pgdg-redhat10-10-2.noarch.rpm
         state: installed
 
+    - name: Packages                   | Add Nginx repository
+      yum_repository:
+        name: nginx
+        description: nginx repo
+        baseurl: http://nginx.org/packages/mainline/centos/7/$basearch/ 
+        gpgcheck: no
+        enabled: yes
+
     - name: Packages                   | Update OS
       when: ansible_os_family == 'RedHat'
       yum:
@@ -145,7 +153,7 @@
       when: ansible_os_family == 'RedHat'
       yum: name={{ item }} state=installed enablerepo=local
       with_items:
-        - nginx
+        - nginx-1.15.8
         - percona-consul
         - percona-grafana
         - percona-prometheus
@@ -168,6 +176,12 @@
         dest: /etc/nginx/nginx.conf
         regexp: '^(\s*)listen'
         replace: '\1#listen'
+
+    - name: PMM                        | Fix nginx default config
+      replace:
+        dest: /etc/nginx/conf.d/default.conf
+        regexp: 'listen       80'
+        replace: 'listen       8080'
 
     - name: NGINX SSL Certificate      | Add script
       copy:
