@@ -1,14 +1,14 @@
 [submodule "pmm-client"]
 	path = sources/pmm-client/src/github.com/percona/pmm-client
 	url = https://github.com/percona/pmm-client.git
-	branch = PMM-2.0
+	branch = PMM-3421-Update-Node-Exporter-to-0.17 
 [submodule "qan-agent"]
 	path = sources/qan-agent/src/github.com/percona/qan-agent
 	url = https://github.com/percona/qan-agent.git
 	branch = master
 [submodule "node_exporter"]
 	path = sources/node_exporter/src/github.com/prometheus/node_exporter
-	url = https://github.com/percona/node_exporter.git
+	url = https://github.com/adivinho/node_exporter.git
 	branch = master
 [submodule "mysqld_exporter"]
 	path = sources/mysqld_exporter/src/github.com/percona/mysqld_exporter
