@@ -9,7 +9,7 @@
 [submodule "node_exporter"]
 	path = sources/node_exporter/src/github.com/prometheus/node_exporter
 	url = https://github.com/adivinho/node_exporter.git
-	branch = master
+	branch = v0.17.0-percona.2
 [submodule "mysqld_exporter"]
 	path = sources/mysqld_exporter/src/github.com/percona/mysqld_exporter
 	url = https://github.com/percona/mysqld_exporter.git
