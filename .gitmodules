@@ -53,7 +53,7 @@
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = PMM-2.0
+	branch = PMM-3460-Prometheus-v2.7.0
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
@@ -61,7 +61,7 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-2.0
+	branch = master
 [submodule "rds_exporter"]
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
