@@ -13,7 +13,7 @@
 [submodule "mysqld_exporter"]
 	path = sources/mysqld_exporter/src/github.com/percona/mysqld_exporter
 	url = https://github.com/percona/mysqld_exporter.git
-	branch = pmm-1.X
+	branch = PMM-3472-Fix-global-status-metric-names
 [submodule "mongodb_exporter"]
 	path = sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
 	url = https://github.com/percona/mongodb_exporter.git
