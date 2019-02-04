@@ -40,6 +40,11 @@
         option: enable_gzip
         value: true
 
+   - name: Grafana                     | Create the folder for panels
+     file:
+       path: /var/lib/grafana/plugins 
+       state: directory
+
     - name: Grafana                    | Add community panels
       unarchive:
         src: src={{item}}
