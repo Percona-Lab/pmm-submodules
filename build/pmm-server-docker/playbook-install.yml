@@ -247,14 +247,6 @@
         option: external_snapshot_name
         value: Share with Percona
 
-    - name: Grafana                    | Add community panels
-      unarchive:
-        src: src={{item}}
-        dest: /var/lib/grafana/plugins
-        remote_src: yes
-      with_fileglob:
-        - "/usr/share/percona-dashboards/panels/*.zip"
-
     - name: supervisor                 | Fix credentials
       ini_file:
         dest: /etc/supervisord.conf

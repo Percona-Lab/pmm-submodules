@@ -40,6 +40,14 @@
         option: enable_gzip
         value: true
 
+    - name: Grafana                    | Add community panels
+      unarchive:
+        src: src={{item}}
+        dest: /var/lib/grafana/plugins
+        remote_src: yes
+      with_fileglob:
+        - "/usr/share/percona-dashboards/panels/*.zip"
+
     - name: PMM                        | Start services
       shell: supervisord -c /etc/supervisord.conf &
 
