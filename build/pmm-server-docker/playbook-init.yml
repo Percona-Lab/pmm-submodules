@@ -128,7 +128,7 @@
 
     - name: Grafana                    | Add community panels
       unarchive:
-        src: {{item}}
+        src: {{ item }}
         dest: /tmp
         remote_src: yes
       with_fileglob:
