@@ -42,6 +42,9 @@
 
     - name: Grafana                     | Create the folder for panels
       file: path={{ item }} state=directory
+      owner: grafana 
+      group: grafana
+      recurse: yes
       with_items:
         - /var/lib/grafana/plugins 
 
@@ -51,7 +54,7 @@
         dest: /tmp
         remote_src: yes
       with_fileglob:
-        - "/usr/share/percona-dashboards/panels/*.zip"
+        - '/usr/share/percona-dashboards/panels/*.zip'
 
     - name: PMM                        | Start services
       shell: supervisord -c /etc/supervisord.conf &
