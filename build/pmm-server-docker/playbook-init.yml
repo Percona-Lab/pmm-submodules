@@ -46,14 +46,6 @@
         #      with_items:
         #        - /var/lib/grafana/plugins 
 
-    - name: Grafana                    | Add community panels
-      unarchive:
-        src: src={{item}}
-        dest: /tmp
-        remote_src: yes
-      with_fileglob:
-        - '/usr/share/percona-dashboards/panels/*.zip'
-
     - name: PMM                        | Start services
       shell: supervisord -c /etc/supervisord.conf &
 
@@ -133,6 +125,14 @@
       wait_for:
         path: /var/lib/grafana/PERCONA_DASHBOARDS_VERSION
         state: present
+
+    - name: Grafana                    | Add community panels
+      unarchive:
+        src: src={{item}}
+        dest: /tmp
+        remote_src: yes
+      with_fileglob:
+        - '/usr/share/percona-dashboards/panels/*.zip'
 
     - name: PMM                        | Stop services
       shell: supervisorctl restart orchestrator
