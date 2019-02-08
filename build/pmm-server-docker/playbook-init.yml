@@ -121,10 +121,10 @@
         regexp: 'percona:percona'
         replace: 'qan-api:5goldenfipar'
 
-    - name: PMM                        | Wait for dashboards	
-      wait_for:	
-        path: /srv/grafana/PERCONA_DASHBOARDS_VERSION	
-        state: present	
+#    - name: PMM                        | Wait for dashboards	
+#      wait_for:	
+#        path: /srv/grafana/PERCONA_DASHBOARDS_VERSION	
+#        state: present	
 
     - name: PMM                        | Stop services
       shell: supervisorctl restart orchestrator
