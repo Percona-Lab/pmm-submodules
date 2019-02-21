@@ -7,8 +7,22 @@
     - name: Packages                   | Add Percona repository
       when: ansible_os_family == 'RedHat'
       yum:
-        name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm 
+        name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
         state: installed
+
+    - name: Packages                   | Add Postgres repository
+      when: ansible_os_family == 'RedHat'
+      yum:
+        name: https://yum.postgresql.org/10/redhat/rhel-6-x86_64/pgdg-redhat10-10-2.noarch.rpm
+        state: installed
+
+    - name: Packages                   | Add Nginx repository
+      yum_repository:
+        name: nginx
+        description: nginx repo
+        baseurl: http://nginx.org/packages/mainline/centos/7/$basearch/ 
+        gpgcheck: no
+        enabled: yes
 
     - name: Packages                   | Update OS
       when: ansible_os_family == 'RedHat'
@@ -37,8 +51,10 @@
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory owner=pmm
       with_items:
-        - /opt/prometheus/data
-        - /opt/consul-data
+        - /srv/prometheus/data
+        - /srv/consul
+        - /srv/clickhouse
+        - /srv/logs
 
     - name: cloud-init                 | Configure yum-cron
       replace:
@@ -107,6 +123,13 @@
         home: /etc/grafana
         shell: /sbin/nologin
 
+    - name: Postgres   | Install Postgres
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - postgresql10-server
+        - postgresql10
+
     - name: PMM                        | Add PMM Server YUM repository
       when: ansible_os_family == 'RedHat'
       yum_repository:
@@ -130,11 +153,10 @@
       when: ansible_os_family == 'RedHat'
       yum: name={{ item }} state=installed enablerepo=local
       with_items:
-        - nginx
+        - nginx-1.15.8
         - percona-consul
         - percona-grafana
         - percona-prometheus
-        - percona-prometheus1
         - percona-orchestrator
         - percona-qan-api
         - percona-qan-app
@@ -146,12 +168,20 @@
         - pmm-managed
         - pmm-update
         - rds_exporter
+        - percona-clickhouse-client
+        - percona-clickhouse-server
 
     - name: PMM                        | Fix nginx config
       replace:
         dest: /etc/nginx/nginx.conf
         regexp: '^(\s*)listen'
         replace: '\1#listen'
+
+    - name: PMM                        | Fix nginx default config
+      replace:
+        dest: /etc/nginx/conf.d/default.conf
+        regexp: 'listen       80'
+        replace: 'listen       8080'
 
     - name: NGINX SSL Certificate      | Add script
       copy:
@@ -206,15 +236,23 @@
       stat: path=/srv/grafana/grafana.db
       register: grafana_db
 
-    - name: Grafana                    | Enable Anonymous access
+    - name: Grafana                    | Disable Anonymous access
+      when: not grafana_db.stat.exists
+      ini_file:
+        dest: /etc/grafana/grafana.ini
+        section: auth.basic
+        option: enabled
+        value: true
+
+    - name: Grafana                    | Disable Anonymous access
       when: not grafana_db.stat.exists
       ini_file:
         dest: /etc/grafana/grafana.ini
         section: auth.anonymous
         option: enabled
-        value: true
+        value: false
 
-    - name: Grafana                    | Enable Anonymous access
+    - name: Grafana                    | Disable Anonymous access
       when: not grafana_db.stat.exists
       ini_file:
         dest: /etc/grafana/grafana.ini
@@ -265,3 +303,19 @@
         dest: /etc/my.cnf
         line: '!includedir /etc/my.cnf.d/'
 
+    - name: Postgres                   | Create Postgres data dir
+      file: path={{ item }} state=directory owner=postgres group=postgres
+      with_items:
+        - /srv/postgres
+
+    - name: Postgres                   | Create Postgres data cluster
+      command: su postgres -c "/usr/pgsql-10/bin/initdb -D /srv/postgres"
+
+    - name: Postgres                   | Create Postgres log file
+      copy:
+        content: ""
+        dest: /srv/logs/postgres.log
+        force: no
+        group: postgres
+        owner: postgres
+        mode: 0644
