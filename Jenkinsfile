@@ -100,16 +100,17 @@ pipeline {
                             build-server-rpm pmm-manage
                             build-server-rpm pmm-managed
                             build-server-rpm percona-qan-api qan-api
+                            build-server-rpm percona-qan-api2 qan-api2
                             build-server-rpm percona-qan-app qan-app
                             build-server-rpm pmm-server
                             build-server-rpm pmm-update
 
                             # 3rd-party
+                            build-server-rpm clickhouse
                             build-server-rpm consul
                             build-server-rpm orchestrator
                             build-server-rpm rds_exporter
                             build-server-rpm prometheus
-                            build-server-rpm prometheus1
                             build-server-rpm grafana
                         "
                     '''
