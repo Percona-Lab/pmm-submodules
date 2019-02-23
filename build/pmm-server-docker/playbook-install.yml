@@ -159,6 +159,7 @@
         - percona-prometheus
         - percona-orchestrator
         - percona-qan-api
+        - percona-qan-api2
         - percona-qan-app
         - percona-toolkit-3.0.10
         - percona-dashboards
