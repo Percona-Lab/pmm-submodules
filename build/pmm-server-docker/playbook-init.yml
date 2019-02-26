@@ -40,12 +40,6 @@
         option: enable_gzip
         value: true
 
-        #    - name: Grafana                     | Create the folder for panels
-        #      file: path={{ item }} state=directory
-        #      recurse: yes
-        #      with_items:
-        #        - /var/lib/grafana/plugins 
-
     - name: PMM                        | Start services
       shell: supervisord -c /etc/supervisord.conf &
 
