@@ -164,6 +164,14 @@
       when: not pmm_update_file.stat.exists
       command: yum-config-manager --disable percona-testing-x86_64 --disable pmm-laboratory
 
+    - name: Grafana                    | Add some community panels and datasources
+      unarchive:
+        src: "{{ item }}"
+        dest: /var/lib/grafana/plugins
+        remote_src: yes
+      with_fileglob:
+        - "/usr/share/percona-dashboards/panels/*.zip"
+
     - name: PMM                        | Stop services
       shell: supervisorctl shutdown
 
