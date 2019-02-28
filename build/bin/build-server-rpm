@@ -191,7 +191,7 @@ d }\" \
 		ls -la /home/builder/clickhouse-rpm/rpmbuild/SOURCES
 		cp -r /home/builder/clickhouse-rpm/rpmbuild/SOURCES/* /home/builder/rpm/SOURCES
 	    elif [ \"${spec_name}\" == \"grafana\" ]; then 
-	        sudo sudo rpm -ev --nodeps nodejs npm
+	        sudo yum remove -y nodejs npm
                 sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
                 sudo yum clean all
                 sudo yum -y install nodejs
@@ -199,6 +199,14 @@ d }\" \
                 sudo yum-builddep -y SOURCES/${spec_name}.spec
 
                 spectool -C SOURCES -g SOURCES/${spec_name}.spec
+
+                sudo go version
+                sudo wget https://dl.google.com/go/go1.11.5.linux-amd64.tar.gz
+                sudo tar -C /usr/local -xzf go1.11.5.linux-amd64.tar.gz
+                sudo update-alternatives --install \"/usr/bin/go\" \"go\" \"/usr/local/go/bin/go\" 0
+                sudo update-alternatives --set go /usr/local/go/bin/go
+                sudo go version
+
                 rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
                 rm -f SOURCES/${spec_name}.spec*
 	    else 
