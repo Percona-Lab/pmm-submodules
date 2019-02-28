@@ -123,7 +123,7 @@
         home: /etc/grafana
         shell: /sbin/nologin
 
-    - name: Postgres   | Install Postgres
+    - name: Postgres                   | Install Postgres
       when: ansible_os_family == 'RedHat'
       yum: name={{ item }} state=installed
       with_items:
