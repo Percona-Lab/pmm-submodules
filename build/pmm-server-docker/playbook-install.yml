@@ -41,6 +41,7 @@
         - yum-cron
         - supervisor
         - logrotate
+        - unzip
 
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory
