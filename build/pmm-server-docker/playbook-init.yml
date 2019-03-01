@@ -8,7 +8,6 @@
       file: path={{ item }} state=directory owner=pmm group=pmm
       with_items:
         - /srv/prometheus/data
-        - /srv/consul
         - /srv/collect_info
         - /srv/logs
 
@@ -203,7 +202,6 @@
       file: path={{ item }} state=absent
       with_items:
         - /srv/logs/clickhouse.log
-        - /srv/logs/consul.log
         - /srv/logs/createdb.log
         - /srv/logs/cron.log
         - /srv/logs/dashboard-upgrade.log
@@ -218,14 +216,11 @@
         - /var/log/grafana/grafana.log
         - /var/log/supervisor/supervisord.log
         - /var/logs/pmm-manage.log
-        - /srv/consul/*
         - /srv/prometheus/data
-        - /srv/consul
         - /tmp/RPMS
 
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory owner=pmm group=pmm
       with_items:
         - /srv/prometheus/data
-        - /srv/consul
         - /srv/logs
