@@ -9,13 +9,13 @@ bin_dir=$(cd $(dirname $0); pwd -P)
 tmp_dir=${root_dir}/tmp
 
 main() {
-    local IMAGE=${1:-debian:wheezy}
+    local IMAGE=${1:-ubuntu:xenial}
     docker run --rm -v ${bin_dir}:/home/builder/bin -v ${root_dir}/results:/home/builder/results ${IMAGE} sh -c "
         set -o errexit
         set -o xtrace
 
         apt-get update
-        apt-get -y install git lsb-release devscripts dh-make
+        apt-get -y install git lsb-release devscripts dh-make dh-systemd
         mkdir -p /tmp/pmm
         cd /home/builder/results
             bash /home/builder/bin/build-client-packages \
