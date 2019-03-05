@@ -54,8 +54,12 @@
       with_items:
         - /srv/prometheus/data
         - /srv/consul
-        - /srv/clickhouse
         - /srv/logs
+
+    - name: cloud-init                 | Create dirs due to https://github.com/yandex/ClickHouse/pull/3785
+      file: path={{ item }} state=directory owner=root
+      with_items:
+        - /srv/clickhouse
 
     - name: cloud-init                 | Configure yum-cron
       replace:
