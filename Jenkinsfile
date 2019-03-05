@@ -44,7 +44,7 @@ pipeline {
                     sh '''
                         aws s3 cp \
                             --acl public-read \
-                            results/tarball/pmm-client-*.tar.gz \
+                            results/tarball/pmm2-client-*.tar.gz \
                             s3://pmm-build-cache/pmm-client/pmm-client-${BRANCH_NAME}-${GIT_COMMIT:0:7}.tar.gz
                     '''
                 }
