@@ -102,6 +102,7 @@ build() {
                 sudo yum install -y cmake3
                 sudo yum install -y centos-release-scl
                 sudo yum install -y devtoolset-7
+                sudo yum install -y tree
 
 		echo \"====> Install CH dev dependencies\"
         	sudo yum install -y zlib-devel openssl-devel libicu-devel libtool-ltdl-devel unixODBC-devel readline-devel
@@ -149,8 +150,9 @@ build() {
         	MAKE_OPTIONS=\"${MAKE_OPTIONS}\"
 
         	# Create spec file from template
-		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/srv/g\" \%{_builddir}/\%{buildsubdir}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
-		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/log\\\/clickhouse-server/srv\\\/logs/g\" \%{_builddir}/\%{buildsubdir}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/srv/g\" \%{_builddir}//ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/log\\\/clickhouse-server/srv\\\/logs/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+                sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/<!-- <listen_host>0.0.0.0<\\\/listen_host> -->/<listen_host>0.0.0.0<\\\/listen_host>/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
         	cat \"/home/builder/clickhouse-rpm/src/clickhouse.spec.in\" | sed \
                 -e \"s|@CH_VERSION@|${CH_VERSION}|\" \
                 -e \"s|@CH_TAG@|${CH_TAG}|\" \
@@ -182,10 +184,13 @@ d }\" \
         	cd /home/builder/clickhouse-rpm 
 
         	echo \"====> Build RPMs\"
-
+                export BUILD_DIR=\"/home/builder/clickhouse-rpm/rpmbuild/BUILD\"
+                export SOURCES_DIR=\"/home/builder/clickhouse-rpm/rpmbuild/SOURCES\"
         	rpmbuild -v -bs \"/home/builder/clickhouse-rpm/rpmbuild/SPECS/clickhouse.spec\"
         	rpmbuild -v -bb \"/home/builder/clickhouse-rpm/rpmbuild/SPECS/clickhouse.spec\"
+
         	echo \"====> Build RPMs completed\"
+
 		mkdir /home/builder/rpm/RPMS/${spec_name}-${rpm_version}
 		cp -r /home/builder/clickhouse-rpm/rpmbuild/RPMS/* /home/builder/rpm/RPMS/${spec_name}-${rpm_version}
 		ls -la /home/builder/clickhouse-rpm/rpmbuild/SOURCES
