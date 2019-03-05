@@ -13,7 +13,7 @@
         - /srv/logs
 
     - name: PMM                        | Create dirs
-      file: path={{ item }} state=directory owner=pmm group=pmm
+      file: path={{ item }} state=directory owner=root group=pmm
       with_items:
         - /srv/clickhouse
 
