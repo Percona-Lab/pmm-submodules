@@ -82,10 +82,6 @@ build() {
                     | sudo tee /etc/yum.repos.d/local.repo
             /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 
-            wget https://github.com/git-lfs/git-lfs/releases/download/v2.7.1/git-lfs-linux-amd64-v2.7.1.tar.gz
-            tar -zxvf git-lfs-linux-amd64-v2.7.1.tar.gz
-            sudo ./install.sh
-
 	    if [ \"${spec_name}\" == \"clickhouse\" ]; then
 
 		# Build most libraries using default GCC
@@ -156,6 +152,7 @@ build() {
         	# Create spec file from template
 		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/srv/g\" \%{_builddir}//ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
 		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/log\\\/clickhouse-server/srv\\\/logs/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+                sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/<!-- <listen_host>0.0.0.0<\\\/listen_host> -->/<listen_host>0.0.0.0<\\\/listen_host>/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
         	cat \"/home/builder/clickhouse-rpm/src/clickhouse.spec.in\" | sed \
                 -e \"s|@CH_VERSION@|${CH_VERSION}|\" \
                 -e \"s|@CH_TAG@|${CH_TAG}|\" \
