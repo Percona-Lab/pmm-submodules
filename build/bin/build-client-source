@@ -7,7 +7,12 @@ set -o xtrace
 
 prepare_tarball() {
     local repo_name=$1
-    local git_dir=$(dirname $(find "${root_dir}/sources/${repo_name}" -name .git | head -1))
+    if [ $repo_name = 'pmm-submodules' ]; then
+        mkdir -p ${root_dir}/sources/${repo_name}
+        git_dir="${root_dir}/sources/${repo_name}"
+    else
+        local git_dir=$(dirname $(find "${root_dir}/sources/${repo_name}" -name .git | head -1))
+    fi
     local commit=$(git -C "${git_dir}" rev-parse --short HEAD)
     local tarball=${source_dir}/${repo_name}-${commit}.tar.gz
     local repo_var=$(
@@ -20,11 +25,19 @@ prepare_tarball() {
     if [ -f "${tarball}" ]; then
         echo ${tarball} already exists, skipping build
     else
-        git -C "${git_dir}" archive \
-            --format=tar.gz \
-            --prefix=${repo_name}-${commit}/ \
-            -o ${tarball} \
-            "${commit}"
+        if [ ${repo_name} = 'pmm-submodules' ]; then
+            cp -r build/debian ${git_dir}/
+            cp -r build/rpm ${git_dir}/
+            cp -r build/config ${git_dir}/
+            tar -C sources -zcf ${repo_name}-${commit}.tar.gz  ${repo_name}
+            mv ${repo_name}-${commit}.tar.gz  ${source_dir}/
+        else
+            git -C "${git_dir}" archive \
+                --format=tar.gz \
+                --prefix=${repo_name}-${commit}/ \
+                -o ${tarball} \
+                "${commit}"
+        fi
     fi
 }
 
@@ -58,7 +71,7 @@ repack_toolkit() {
         set -o errexit
         set -o xtrace
 
-        source_dir=/home/builder/root/tmp/source/pmm-client-${pmm_version}
+        source_dir=/home/builder/root/tmp/source/pmm2-client-${pmm_version}
         sudo chown -R builder:builder \${source_dir} /home/builder/root/tmp
         pushd /home/builder/root/tmp/source
             gunzip -f \${source_dir}/percona-toolkit-*.tar.gz
@@ -76,7 +89,9 @@ main() {
     mkdir -p ${source_dir}/ $(dirname ${source_tarball}) || :
     echo "PMM_SUBMODULES_COMMIT=$(git rev-parse --short HEAD)" > ${client_properties}
 
-    prepare_tarball pmm-client
+    prepare_tarball pmm-submodules
+    prepare_tarball pmm-admin
+    prepare_tarball pmm-agent
     prepare_tarball mongodb_exporter
     prepare_tarball mysqld_exporter
     prepare_tarball postgres_exporter
