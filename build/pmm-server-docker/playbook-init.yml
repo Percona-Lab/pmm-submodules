@@ -167,10 +167,10 @@
         timeout: 180
 
     - name: PMM                        | Create ClickHouse database
-      command: clickhouse-client --query="CREATE DATABASE pmm"
+      command: clickhouse-client --host 127.0.0.1 --query="CREATE DATABASE pmm"
 
     - name: PMM                        | Show ClickHouse database
-      command: clickhouse-client --query="SHOW DATABASES"
+      command: clickhouse-client --host 127.0.0.1 --query="SHOW DATABASES"
 
     - name: PMM                        | Create pmm-update dirs
       file: path={{ item }} state=directory
