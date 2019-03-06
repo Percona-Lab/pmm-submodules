@@ -11,11 +11,22 @@ pipeline {
         stage('Prepare') {
             steps {
                 sh '''
+                    curdir=$(pwd)
+                    cd ../
+                    wget https://github.com/git-lfs/git-lfs/releases/download/v2.7.1/git-lfs-linux-amd64-v2.7.1.tar.gz
+                    tar -zxvf git-lfs-linux-amd64-v2.7.1.tar.gz
+                    sudo ./install.sh
+                    cd $curdir
                     sudo rm -rf results tmp || :
                     git reset --hard
                     git clean -fdx
                     git submodule foreach --recursive git reset --hard
                     git submodule foreach --recursive git clean -fdx
+                    cd sources/pmm-server-packaging/
+                    git lfs install
+                    git lfs pull
+                    git lfs checkout
+                    cd $curdir
                 '''
                 installDocker()
                 slackSend channel: '#pmm-ci', color: '#FFFF00', message: "[${JOB_NAME}]: build started - ${BUILD_URL}"
