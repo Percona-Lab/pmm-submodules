@@ -79,7 +79,7 @@ pipeline {
                 sh '''
                     sg docker -c "
                         export PUSH_DOCKER=1
-                        export DOCKER_CLIENT_TAG=perconalab/pmm2-client-fb:${BRANCH_NAME}-${GIT_COMMIT:0:7}
+                        export DOCKER_CLIENT_TAG=perconalab/pmm-client-fb:${BRANCH_NAME}-${GIT_COMMIT:0:7}
 
                         ./build/bin/build-client-docker
                     "

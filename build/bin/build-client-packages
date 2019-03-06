@@ -343,8 +343,8 @@ build_srpm(){
     cd ${WORKDIR}
     rpmbuild -bs --define "_topdir ${WORKDIR}/rpmbuild" --define "version $VERSION" --define "release $RPM_RELEASE" --define "dist %{nil}" rpmbuild/SPECS/pmm2-client.spec
     mkdir -p ${WORKDIR}/srpm
-    sudo mkdir -p ${CURDIR}/srpm
-    sudo cp rpmbuild/SRPMS/*.src.rpm ${CURDIR}/srpm
+    mkdir -p ${CURDIR}/srpm
+    cp rpmbuild/SRPMS/*.src.rpm ${CURDIR}/srpm
     cp rpmbuild/SRPMS/*.src.rpm ${WORKDIR}/srpm
     #
 
@@ -386,10 +386,10 @@ build_rpm(){
     if [ $return_code != 0 ]; then
         exit $return_code
     fi
-    sudo mkdir -p ${WORKDIR}/rpm
-    sudo mkdir -p ${CURDIR}/rpm
-    sudo cp rpmbuild/RPMS/*/*.rpm ${WORKDIR}/rpm
-    sudo cp rpmbuild/RPMS/*/*.rpm ${CURDIR}/rpm
+    mkdir -p ${WORKDIR}/rpm
+    mkdir -p ${CURDIR}/rpm
+    cp rpmbuild/RPMS/*/*.rpm ${WORKDIR}/rpm
+    cp rpmbuild/RPMS/*/*.rpm ${CURDIR}/rpm
     
 }
 
