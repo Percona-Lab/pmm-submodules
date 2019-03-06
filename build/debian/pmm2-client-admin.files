@@ -1,0 +1,7 @@
+#!/bin/sh
+SOURCE_DIR=$1
+RPM_BUILD_ROOT=$2
+cd $SOURCE_DIR
+
+install -m 0755 -d $RPM_BUILD_ROOT/usr/sbin
+install -m 0755 bin/pmm-admin $RPM_BUILD_ROOT/usr/sbin/
