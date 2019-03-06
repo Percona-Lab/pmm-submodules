@@ -68,9 +68,11 @@ build() {
     local rpm_version=$(get_rpm_version "${spec_name}")
     local CH_VERSION=${rpm_version%-*}
     local CH_TAG=${rpm_version#*-}
+    echo \"docker image: ${rpmbuild_docker_image}\"
 
     if is_build_needed "${spec_name}" "${rpm_version}" || [[ -n "${FORCE_REBUILD}" ]]; then
         docker run --rm -v ${rpmbuild_dir}/SOURCES:/home/builder/rpm/SOURCES -v ${rpms_dir}:/home/builder/rpm/RPMS ${rpmbuild_docker_image} sh -c "
+            tar --version 
             set -o errexit
             set -o xtrace
 	    echo \"spec_name: ${spec_name}\"
@@ -218,6 +220,7 @@ d }\" \
             	sudo yum-builddep -y SOURCES/${spec_name}.spec
 
             	spectool -C SOURCES -g SOURCES/${spec_name}.spec
+                ls -la SOURCES
             	rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
             	rm -f SOURCES/${spec_name}.spec*
 	    
