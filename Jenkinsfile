@@ -20,9 +20,9 @@ pipeline {
                     sudo rm -rf results tmp || :
                     git reset --hard
                     git clean -fdx
+                    git lfs install
                     git submodule foreach --recursive git reset --hard
                     git submodule foreach --recursive git clean -fdx
-                    git lfs install
                     git lfs pull
                     git lfs checkout
                 '''
