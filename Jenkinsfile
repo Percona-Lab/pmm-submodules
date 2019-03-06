@@ -20,11 +20,13 @@ pipeline {
                     sudo rm -rf results tmp || :
                     git reset --hard
                     git clean -fdx
-                    git lfs install
                     git submodule foreach --recursive git reset --hard
                     git submodule foreach --recursive git clean -fdx
+                    cd sources/pmm-server-packaging/
+                    git lfs install
                     git lfs pull
                     git lfs checkout
+                    cd $curdir
                 '''
                 installDocker()
                 slackSend channel: '#pmm-ci', color: '#FFFF00', message: "[${JOB_NAME}]: build started - ${BUILD_URL}"
