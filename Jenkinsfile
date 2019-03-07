@@ -17,6 +17,7 @@ pipeline {
                     tar -zxvf git-lfs-linux-amd64-v2.7.1.tar.gz
                     sudo ./install.sh
                     cd $curdir
+                    ls -la
                     sudo rm -rf results tmp || :
                     git reset --hard
                     git clean -fdx
