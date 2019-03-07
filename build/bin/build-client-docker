@@ -16,7 +16,7 @@ cp ${root_dir}/results/tarball/pmm2-client-*.tar.gz ${tmp_dir}/pmm2-client/pmm2-
 git -C ${root_dir} rev-parse HEAD > ${tmp_dir}/pmm2-client/gitCommit
 
 if [ -z "${DOCKER_CLIENT_TAG}" ]; then
-    DOCKER_CLIENT_TAG=perconalab/pmm2-client-fb:${pmm_version}
+    DOCKER_CLIENT_TAG=perconalab/pmm-client-fb:${pmm_version}
 fi
 docker build --squash --no-cache -t ${DOCKER_CLIENT_TAG} ${tmp_dir}/pmm2-client
 
