@@ -170,7 +170,7 @@
         - percona-toolkit-3.0.10
         - percona-dashboards
         - pmm-server
-        - pmm-client
+        - pmm2-client
         - pmm-manage
         - pmm-managed
         - pmm-update
