@@ -1,0 +1,17 @@
+#!/bin/sh
+SOURCE_DIR=$1
+RPM_BUILD_ROOT=$2
+cd $SOURCE_DIR
+
+install -m 0755 -d $RPM_BUILD_ROOT/usr/sbin
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0755 bin/pmm-agent $RPM_BUILD_ROOT/usr/sbin/
+install -m 0755 bin/node_exporter $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0755 bin/mysqld_exporter $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0755 bin/postgres_exporter $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0755 bin/mongodb_exporter $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0755 bin/proxysql_exporter $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0755 bin/pt-summary $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0755 bin/pt-mysql-summary $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0755 bin/pt-mongodb-summary $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0755 config.yaml $RPM_BUILD_ROOT/usr/local/percona/

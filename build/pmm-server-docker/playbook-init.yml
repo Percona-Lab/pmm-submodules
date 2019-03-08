@@ -12,7 +12,7 @@
         - /srv/logs
 
     - name: PMM                        | Create dirs
-      file: path={{ item }} state=directory owner=pmm group=pmm
+      file: path={{ item }} state=directory owner=root group=pmm
       with_items:
         - /srv/clickhouse
 
@@ -166,7 +166,7 @@
         timeout: 180
 
     - name: PMM                        | Create ClickHouse database
-      command: clickhouse-client --query="CREATE DATABASE pmm"
+      command: clickhouse-client --query="CREATE DATABASE IF NOT EXISTS pmm"
 
     - name: PMM                        | Show ClickHouse database
       command: clickhouse-client --query="SHOW DATABASES"

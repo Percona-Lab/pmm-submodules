@@ -1,0 +1,14 @@
+[Unit]
+Description=pmm-agent
+After=time-sync.target network.target
+
+[Service]
+Type=simple
+User=pmm-agent
+Group=pmm-agent
+PermissionsStartOnly=true
+ExecStart=/usr/sbin/pmm-agent
+
+[Install]
+WantedBy=multi-user.target
+

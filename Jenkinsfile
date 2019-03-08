@@ -11,11 +11,22 @@ pipeline {
         stage('Prepare') {
             steps {
                 sh '''
+                    curdir=$(pwd)
+                    cd ../
+                    wget https://github.com/git-lfs/git-lfs/releases/download/v2.7.1/git-lfs-linux-amd64-v2.7.1.tar.gz
+                    tar -zxvf git-lfs-linux-amd64-v2.7.1.tar.gz
+                    sudo ./install.sh
+                    cd $curdir
                     sudo rm -rf results tmp || :
                     git reset --hard
                     git clean -fdx
                     git submodule foreach --recursive git reset --hard
                     git submodule foreach --recursive git clean -fdx
+                    cd sources/pmm-server-packaging/
+                    git lfs install
+                    git lfs pull
+                    git lfs checkout
+                    cd $curdir
                 '''
                 installDocker()
                 slackSend channel: '#pmm-ci', color: '#FFFF00', message: "[${JOB_NAME}]: build started - ${BUILD_URL}"
@@ -44,8 +55,8 @@ pipeline {
                     sh '''
                         aws s3 cp \
                             --acl public-read \
-                            results/tarball/pmm-client-*.tar.gz \
-                            s3://pmm-build-cache/pmm-client/pmm-client-${BRANCH_NAME}-${GIT_COMMIT:0:7}.tar.gz
+                            results/tarball/pmm2-client-*.tar.gz \
+                            s3://pmm-build-cache/pmm2-client/pmm2-client-${BRANCH_NAME}-${GIT_COMMIT:0:7}.tar.gz
                     '''
                 }
             }
@@ -62,7 +73,7 @@ pipeline {
                         ./build/bin/build-client-rpm centos:7
 
                         mkdir -p tmp/pmm-server/RPMS/
-                        cp results/rpm/pmm-client-*.rpm tmp/pmm-server/RPMS/
+                        cp results/rpm/pmm2-client-*.rpm tmp/pmm-server/RPMS/
                     "
                 '''
             }
@@ -151,7 +162,7 @@ pipeline {
                                 set -o xtrace
                                 curl -v -X POST \
                                     -H "Authorization: token ${GITHUB_API_TOKEN}" \
-                                    -d "{\\"body\\":\\"server docker - ${IMAGE}\\nclient docker - ${CLIENT_IMAGE}\\nclient - https://s3.us-east-2.amazonaws.com/pmm-build-cache/pmm-client/pmm-client-${BRANCH_NAME}-\${GIT_COMMIT:0:7}.tar.gz\\"}" \
+                                    -d "{\\"body\\":\\"server docker - ${IMAGE}\\nclient docker - ${CLIENT_IMAGE}\\nclient - https://s3.us-east-2.amazonaws.com/pmm-build-cache/pmm2-client/pmm2-client-${BRANCH_NAME}-\${GIT_COMMIT:0:7}.tar.gz\\"}" \
                                     "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
                             """
                         }
