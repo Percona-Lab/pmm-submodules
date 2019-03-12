@@ -53,7 +53,6 @@
       file: path={{ item }} state=directory owner=pmm
       with_items:
         - /srv/prometheus/data
-        - /srv/consul
         - /srv/logs
 
     - name: cloud-init                 | Create dirs due to https://github.com/yandex/ClickHouse/pull/3785
@@ -160,7 +159,6 @@
       yum: name={{ item }} state=installed enablerepo=local
       with_items:
         - nginx-1.15.8
-        - percona-consul
         - percona-grafana
         - percona-prometheus
         - percona-orchestrator
