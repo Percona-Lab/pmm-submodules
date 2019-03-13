@@ -107,7 +107,24 @@ check_workdir(){
 add_percona_yum_repo(){
     if [ ! -f /etc/yum.repos.d/percona-dev.repo ]
     then
-        cat >/etc/yum.repos.d/percona-dev.repo <<EOL
+        if [ "x$RHEL" = "x8" ]; then
+            cat >/etc/yum.repos.d/percona-dev.repo <<EOL
+[percona-rhel8-AppStream]
+name=Percona internal YUM repository for RHEL8 AppStream
+baseurl=http://jenkins.percona.com/yum-repo/rhel8/AppStream
+gpgkey=https://jenkins.percona.com/yum-repo/rhel8/AppStream/RPM-GPG-KEY-redhat-beta
+gpgcheck=0
+enabled=1
+
+[percona-rhel8-BaseOS]
+name=Percona internal YUM repository for RHEL8 BaseOS
+baseurl=https://jenkins.percona.com/yum-repo/rhel8/BaseOS/
+gpgkey=https://jenkins.percona.com/yum-repo/rhel8/BaseOS/RPM-GPG-KEY-redhat-beta
+gpgcheck=0
+enabled=1
+EOL
+        else
+            cat >/etc/yum.repos.d/percona-dev.repo <<EOL
 [percona-dev-$basearch]
 name=Percona internal YUM repository for build slaves \$releasever - \$basearch
 baseurl=http://jenkins.percona.com/yum-repo/\$releasever/RPMS/\$basearch
@@ -122,6 +139,7 @@ gpgkey=http://jenkins.percona.com/yum-repo/PERCONA-PACKAGING-KEY
 gpgcheck=0
 enabled=1
 EOL
+        fi
     fi
     return
 }
@@ -242,15 +260,8 @@ install_deps() {
     if [ "x$OS" = "xrpm" ]
     then
         add_percona_yum_repo
-        yum -y install git wget epel-release rpmdevtools bison yum-utils
+        yum -y install git wget rpmdevtools bison yum-utils rpm-build
         install_golang
-        link="https://raw.githubusercontent.com/percona/pmm-client/master/build/rpm.spec"
-        if [ ! -z $BRANCH ]
-        then
-            link=$(echo $link | sed "s:master:$BRANCH:")
-        fi
-        wget -O $WORKDIR/rpm.spec $link
-        yum-builddep -y $WORKDIR/rpm.spec
     else
         add_percona_apt_repo
         apt-get update
@@ -265,7 +276,7 @@ install_deps() {
         wget -O $WORKDIR/control $link
         cd $WORKDIR
             mk-build-deps --install $WORKDIR/control
-        cd -
+        cd - >/dev/null
     fi
     return;
 }
@@ -380,7 +391,7 @@ build_rpm(){
     rm -fr rpmbuild
     mkdir -vp rpmbuild/{SOURCES,SPECS,BUILD,SRPMS,RPMS}
     cp $SRC_RPM rpmbuild/SRPMS/
-    rpmbuild --define "_topdir ${WORKDIR}/rpmbuild" --define "dist .$OS_NAME" --rebuild rpmbuild/SRPMS/$SRC_RPM
+    rpmbuild --define "_topdir ${WORKDIR}/rpmbuild" --define "version $pmm_version" --define "release $RPM_RELEASE" --define "dist .$OS_NAME" --rebuild rpmbuild/SRPMS/$SRC_RPM
 
     return_code=$?
     if [ $return_code != 0 ]; then
@@ -709,6 +720,8 @@ RPM_RELEASE=1
 DEB_RELEASE=1
 REVISION=0
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
+get_system
+install_deps
 
 BRANCH=$(get_branches "pmm-client" "branch")
 REPO=$(get_repos "pmm-client")
