@@ -14,10 +14,13 @@ main() {
         set -o errexit
         set -o xtrace
 
+	export pmm_version=$pmm_version
         export sudo_path=\$(ls /usr/bin/sudo)
-        [[ ${IMAGE} = ${rpmbuild_docker_image} ]] || \$sudo_path yum -y install git rpm-build
         mkdir -p /tmp/pmm
         pushd /home/builder/results
+            /home/builder/bin/build-client-packages \
+                --builddir=/tmp/pmm \
+                --install_deps=1
             /home/builder/bin/build-client-packages \
                 --builddir=/tmp/pmm \
                 --build_rpm=1
