@@ -33,11 +33,6 @@
         regexp: '^(\s*)listen'
         replace: '\1#listen'
 
-    # https://github.com/geerlingguy/drupal-vm/issues/1497
-    # https://docs.docker.com/engine/userguide/storagedriver/overlayfs-driver/#limitations-on-overlayfs-compatibility
-    - name: PMM                        | Run workaround for overlayfs
-      command: find /var/lib/mysql -type f -exec touch {} \;
-
     - name: Grafana                    | Enable gzip
       ini_file:
         dest: /etc/grafana/grafana.ini
@@ -47,27 +42,6 @@
 
     - name: PMM                        | Start services
       shell: supervisord -c /etc/supervisord.conf &
-
-    - name: PMM                        | Wait for mysqld start
-      wait_for:
-        port: 3306
-        state: present
-        delay: 30
-        timeout: 60
-
-    - name: pmm-managed                | Create MySQL database
-      mysql_db:
-        name: pmm-managed
-        state: present
-
-    - name: pmm-managed                | Create MySQL user
-      mysql_user:
-        name: pmm-managed
-        host: localhost
-        password: '*816FFB19BC44AC2749D546E48FA0DF957EDB2C5A'
-        priv: 'pmm-managed.*:ALL'
-        encrypted: yes
-        state: present
 
     - name: PMM                        | Wait for postgres start
       wait_for:
@@ -88,51 +62,6 @@
         password: 'md5da757ec3e22c6d86a2bb8e70307fa937'
         priv: 'ALL'
         expires: infinity
-        state: present
-
-    - name: Orchestrator               | Create MySQL database
-      mysql_db:
-        name: orchestrator
-        state: present
-
-    - name: Orchestrator               | Create MySQL user
-      mysql_user:
-        name: orchestrator
-        host: localhost
-        password: '*0AD183209365CECFB9275669074B645DFEF2D180'
-        priv: 'orchestrator.*:ALL'
-        encrypted: yes
-        state: present
-
-    - name: qan-api                    | Create MySQL database
-      mysql_db:
-        name: pmm
-        state: present
-      register: pmm_db
-
-    - name: qan-api                    | Import MySQL database
-      when: pmm_db.changed
-      mysql_db:
-        name: pmm
-        state: import
-        target: /usr/share/percona-qan-api/schema/pmm.sql
-
-    - name: qan-api                    | Create MySQL user
-      mysql_user:
-        name: qan-api
-        host: localhost
-        password: '*5D6945E21E52CD547FBC205C676C7EFE950836B2'
-        priv: 'pmm.*:ALL'
-        encrypted: yes
-        state: present
-
-    - name: qan-api                    | Create MySQL user for Grafana
-      mysql_user:
-        name: grafana
-        host: localhost
-        password: '*58324E2D77A9BBFD9DD1E904649697615FE74649'
-        priv: 'pmm.*:SELECT'
-        encrypted: yes
         state: present
 
     - name: qan-api                    | Fix DSN
@@ -205,7 +134,6 @@
         - /srv/logs/createdb.log
         - /srv/logs/cron.log
         - /srv/logs/dashboard-upgrade.log
-        - /var/log/mysql.log
         - /srv/logs/nginx.log
         - /srv/logs/node_exporter.log
         - /srv/logs/orchestrator.log
