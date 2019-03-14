@@ -88,10 +88,6 @@
 	path = sources/qan-agent/src/github.com/percona/qan-agent
 	url = https://github.com/percona/qan-agent.git
 	branch = master
-[submodule "pmm-client"]
-	path = sources/pmm-client/src/github.com/percona/pmm-client
-	url = https://github.com/percona/pmm-client.git
-	branch = PMM-2.0
 [submodule "qan-api"]
 	path = sources/qan-api/src/github.com/percona/qan-api
 	url = https://github.com/percona/qan-api
