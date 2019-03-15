@@ -88,3 +88,7 @@
 	path = sources/qan-agent/src/github.com/percona/qan-agent
 	url = https://github.com/percona/qan-agent.git
 	branch = master
+[submodule "qan-api"]
+	path = sources/qan-api/src/github.com/percona/qan-api
+	url = https://github.com/percona/qan-api
+	branch = master
