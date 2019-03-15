@@ -72,47 +72,11 @@
         regexp: 'update_cmd = default'
         replace: 'update_cmd = minimal-security'
 
-    - name: Percona Server for MySQL   | Install Percona Client
-      when: ansible_os_family == 'RedHat'
-      yum: name={{ item }} state=installed
-      with_items:
-        - Percona-Server-client-55
-
     - name: Percona Server for MySQL   | Remove MariaDB Client
       when: ansible_os_family == 'RedHat'
       yum: name={{ item }} state=absent
       with_items:
         - mariadb-libs
-
-    - name: Percona Server for MySQL   | Install Percona Server
-      when: ansible_os_family == 'RedHat'
-      yum: name={{ item }} state=installed
-      with_items:
-        - Percona-Server-server-55
-        - MySQL-python
-
-    - name: Percona Server for MySQL   | stat /root/.my.cnf
-      stat: path=/root/.my.cnf
-      register: root_mycnf_file
-
-    - name: Percona Server for MySQL   | Add password generator script
-      when: not root_mycnf_file.stat.exists
-      copy:
-        content: |
-          #!/bin/sh
-
-          TEMP_PASS=$(grep 'temporary password' /var/log/mysqld.log  | sed -e 's/.*localhost: //' | tail -1)
-          NEW_PASS=$(dd if=/dev/urandom bs=1 count=256 2>/dev/null | tr -cd '[:alnum:],.!@#$%^&*' | head -c32)
-          mysql "-p${TEMP_PASS}" --connect-expired-password -e "SET PASSWORD = PASSWORD('$NEW_PASS');"
-          echo "[client]
-          password = '$NEW_PASS'" > /root/.my.cnf
-          echo "
-          ++++++++++++++++++++++++++ Percona Server for MySQL ++++++++++++++++++++++++++
-            Setting password for root@localhost user: $NEW_PASS
-          ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-          " | tee -a /var/log/mysqld.log
-        dest: /var/lib/cloud/scripts/per-once/init-mysql-password
-        mode: 0755
 
     - name: PMM                        | Create grafana group
       group:
@@ -302,11 +266,6 @@
         section: supervisorctl
         option: password
         value: dummy
-
-    - name: MySQL                      | Add includedir to MySQL config
-      lineinfile:
-        dest: /etc/my.cnf
-        line: '!includedir /etc/my.cnf.d/'
 
     - name: Postgres                   | Create Postgres data dir
       file: path={{ item }} state=directory owner=postgres group=postgres
