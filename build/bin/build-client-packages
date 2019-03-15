@@ -391,6 +391,7 @@ build_rpm(){
     rm -fr rpmbuild
     mkdir -vp rpmbuild/{SOURCES,SPECS,BUILD,SRPMS,RPMS}
     cp $SRC_RPM rpmbuild/SRPMS/
+    pmm_version=$(echo ${SRC_RPM} | awk -F'-' '{print $3}')
     rpmbuild --define "_topdir ${WORKDIR}/rpmbuild" --define "version $pmm_version" --define "release $RPM_RELEASE" --define "dist .$OS_NAME" --rebuild rpmbuild/SRPMS/$SRC_RPM
 
     return_code=$?
