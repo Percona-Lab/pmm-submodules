@@ -7,4 +7,4 @@ proxysql_exporter /usr/local/percona/
 pt-summary /usr/local/percona/
 pt-mysql-summary /usr/local/percona/
 pt-mongodb-summary /usr/local/percona/
-config.yaml /usr/local/percona/
+pmm-agent.yaml /usr/local/percona/

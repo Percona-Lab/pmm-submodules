@@ -10,7 +10,7 @@ RUN tar -zxpf /tmp/pmm2-client.tar.gz -C /tmp \
     && rm -rf /tmp/pmm2-client-*
 
 RUN install -d -o nobody -g nobody -m 0775 /usr/local/percona \
-    touch /usr/local/percona/config.yaml \
+    touch /usr/local/percona/pmm-agent.yaml \
     && chmod -R g+rwx /usr/local/percona \
     && chown -R nobody:nobody /usr/local/percona \
     && install -d -o nobody -g nobody -m 0775 /run /var/log /etc/rc.d/init.d
