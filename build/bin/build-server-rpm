@@ -195,7 +195,7 @@ d }\" \
 		cp -r /home/builder/clickhouse-rpm/rpmbuild/RPMS/* /home/builder/rpm/RPMS/${spec_name}-${rpm_version}
 		ls -la /home/builder/clickhouse-rpm/rpmbuild/SOURCES
 		cp -r /home/builder/clickhouse-rpm/rpmbuild/SOURCES/* /home/builder/rpm/SOURCES
-	    elif [ \"${spec_name}\" == \"grafana\" ]; then 
+	    elif [ \"${spec_name}\" == \"grafana\" ] || [ \"${spec_name}\" == \"percona-qan-api2\" ]; then 
 	        sudo yum remove -y nodejs npm
                 sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
                 sudo yum clean all
