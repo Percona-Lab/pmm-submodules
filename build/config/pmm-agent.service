@@ -7,8 +7,7 @@ Type=simple
 User=pmm-agent
 Group=pmm-agent
 PermissionsStartOnly=true
-ExecStart=/usr/sbin/pmm-agent
+ExecStart=/usr/sbin/pmm-agent --config-file=/usr/local/percona/pmm-agent.yaml
 
 [Install]
 WantedBy=multi-user.target
-

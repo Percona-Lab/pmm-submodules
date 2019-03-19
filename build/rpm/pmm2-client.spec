@@ -60,7 +60,7 @@ install -m 0755 bin/proxysql_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/pt-summary $RPM_BUILD_ROOT/usr/local/percona/qan-agent/bin/
 install -m 0755 bin/pt-mysql-summary $RPM_BUILD_ROOT/usr/local/percona/qan-agent/bin/
 install -m 0755 bin/pt-mongodb-summary $RPM_BUILD_ROOT/usr/local/percona/qan-agent/bin/
-install -m 0755 config/config.yaml $RPM_BUILD_ROOT/usr/local/percona/config/
+install -m 0755 config/pmm-agent.yaml $RPM_BUILD_ROOT/usr/local/percona/
 %if 0%{?rhel} >= 7
 install -m 755 -d $RPM_BUILD_ROOT/%{_unitdir}
 install -m 644 config/pmm-agent.service %{buildroot}/%{_unitdir}/pmm-agent.service
@@ -119,4 +119,4 @@ fi
 /usr/local/percona/proxysql_exporter
 /usr/local/percona/mongodb_exporter
 /usr/local/percona/qan-agent/bin/*
-%config(noreplace) /usr/local/percona/config/config.yaml
+%config(noreplace) /usr/local/percona/pmm-agent.yaml

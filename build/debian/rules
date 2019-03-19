@@ -54,8 +54,7 @@ override_dh_auto_install:
 	cp -f distro/pt-summary $(TMP)/pt-summary
 	cp -f distro/pt-mysql-summary $(TMP)/pt-mysql-summary
 	cp -f distro/pt-mongodb-summary $(TMP)/pt-mongodb-summary
-	install -m 0644 config.yaml $(TMP)/config.yaml
+	install -m 0644 pmm-agent.yaml $(TMP)/pmm-agent.yaml
 
 override_dh_systemd_enable:
 	dh_systemd_enable --name=pmm-agent
-
