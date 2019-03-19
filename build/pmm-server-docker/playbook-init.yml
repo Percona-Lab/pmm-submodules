@@ -83,9 +83,6 @@
       with_fileglob:
         - "/usr/share/percona-dashboards/panels/*.zip"
 
-    - name: PMM                        | Stop services
-      shell: supervisorctl restart orchestrator
-
     - name: PMM                        | Create ClickHouse database
       command: clickhouse-client --query="CREATE DATABASE IF NOT EXISTS pmm"
 
@@ -128,7 +125,6 @@
         - /srv/logs/dashboard-upgrade.log
         - /srv/logs/nginx.log
         - /srv/logs/node_exporter.log
-        - /srv/logs/orchestrator.log
         - /srv/logs/prometheus.log
         - /srv/logs/prometheus1.log
         - /srv/logs/qan-api.log
