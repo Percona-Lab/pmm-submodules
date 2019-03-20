@@ -83,8 +83,6 @@ main() {
     gobuild_component "pid-watchdog"
     gobuild_component "clickhouse_exporter"     "github.com/f1yegor/clickhouse_exporter"
 
-    gobuild_component "qan-agent" "" "bin/percona-qan-agent"
-    gobuild_component "qan-agent" "" "bin/percona-qan-agent-installer"
     gobuild_component "pmm-admin" "" "" "github.com/percona/pmm-agent/bin/pmm-admin"
     gobuild_component "pmm-agent" "" "" "github.com/percona/pmm-agent/bin/pmm-agent"
 
