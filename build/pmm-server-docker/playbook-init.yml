@@ -64,12 +64,6 @@
         expires: infinity
         state: present
 
-    - name: qan-api                    | Fix DSN
-      replace:
-        dest: /etc/percona-qan-api.conf
-        regexp: 'percona:percona'
-        replace: 'qan-api:5goldenfipar'
-
     - name: PMM                        | Wait for dashboards
       wait_for:
         path: /srv/grafana/PERCONA_DASHBOARDS_VERSION
@@ -127,7 +121,7 @@
         - /srv/logs/node_exporter.log
         - /srv/logs/prometheus.log
         - /srv/logs/prometheus1.log
-        - /srv/logs/qan-api.log
+        - /srv/logs/qan-api2.log
         - /var/log/yum.log
         - /var/log/grafana/grafana.log
         - /var/log/supervisor/supervisord.log
