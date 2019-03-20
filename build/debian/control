@@ -16,15 +16,3 @@ Description: Percona Monitoring and Management Client
  PMM is a free and open-source solution that you can run in your own environment for maximum security and reliability.
  It provides thorough time-based analysis for MySQL and MongoDB servers to ensure that your data works as efficiently
  as possible.
-Depends: pmm2-client-agent, pmm2-client-admin
-
-Package: pmm2-client-agent
-Architecture: amd64
-Breaks: pmm-client
-Description: PMM-AGENT
-Build-Depends: debhelper, dh-systemd
-
-Package: pmm2-client-admin
-Architecture: amd64
-Breaks: pmm-client
-Description: PMM-ADMIN

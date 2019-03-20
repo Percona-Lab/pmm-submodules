@@ -1,0 +1,20 @@
+#!/bin/bash
+# postinst script for pmm-agent
+#
+# see: dh_installdeb(1)
+
+if [ -f /usr/share/debconf/confmodule ]; then
+    . /usr/share/debconf/confmodule
+fi
+
+for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter proxysql_exporter
+do
+    ln -s -f /usr/local/percona/$file /usr/bin/$file
+done
+for file in pt-summary pt-mysql-summary pt-mongodb-summary
+do
+    ln -s -f /usr/local/percona/qan-agent/bin/$file /usr/bin/$file
+done
+#DEBHELPER#
+
+exit 0

@@ -1,4 +1,5 @@
 pmm-agent /usr/sbin/
+pmm-admin /usr/sbin/
 node_exporter /usr/local/percona/
 mysqld_exporter /usr/local/percona/
 postgres_exporter /usr/local/percona/
