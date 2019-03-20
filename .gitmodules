@@ -52,14 +52,14 @@
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
 	branch = PMM-2.0
-[submodule "qan-api2"]
-	path = sources/qan-api2/src/github.com/Percona-Lab/qan-api
-	url = https://github.com/Percona-Lab/qan-api
-	branch = master
 [submodule "qan-app"]
 	path = sources/qan-app/src/github.com/percona/qan-app
 	url = https://github.com/percona/qan-app
 	branch = PMM-2.0
+[submodule "qan-api2"]
+        path = sources/qan-api2/src/github.com/percona/qan-api2
+        url = git@github.com:percona/qan-api2
+        branch = master
 [submodule "pmm-update"]
 	path = sources/pmm-update
 	url = https://github.com/percona/pmm-update
