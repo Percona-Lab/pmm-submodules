@@ -125,7 +125,6 @@
         - nginx-1.15.8
         - percona-grafana
         - percona-prometheus
-        - percona-orchestrator
         - percona-qan-api2
         - percona-qan-app
         - percona-toolkit-3.0.10
