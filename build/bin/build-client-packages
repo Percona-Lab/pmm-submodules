@@ -593,16 +593,6 @@ build_tarball(){
             fi
         cd ../
     #
-      git clone $QAN_REPO
-        cd qan-agent
-            git fetch origin
-            if [ ! -z ${QAN_BRANCH_NAME} ]; then
-                git reset --hard
-                git clean -xdf
-                git checkout ${QAN_BRANCH_NAME}
-            fi
-        cd ../
-    #
     cd ../
     
     mkdir -p $GOPATH/src/github.com/prometheus
@@ -746,8 +736,6 @@ PostgreSQLExp_BRANCH_NAME=$(get_branches "postgres_exporter")
 PostgreSQLExp_REPO=$(get_repos "postgres_exporter")
 ProxysqlExp_BRANCH_NAME=$(get_branches "proxysql_exporter")
 ProxysqlExp_REPO=$(get_repos "proxysql_exporter")
-QAN_BRANCH_NAME=$(get_branches "qan-agent")
-QAN_REPO=$(get_repos "qan-agent")
 NodeExp_BRANCH_NAME=$(get_branches "node_exporter")
 NodeExp_REPO=$(get_repos "node_exporter")
 ClickhouseExp_BRANCH_NAME=$(get_branches "clickhouse_exporter")
