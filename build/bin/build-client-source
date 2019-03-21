@@ -96,7 +96,6 @@ main() {
     prepare_tarball mysqld_exporter
     prepare_tarball postgres_exporter
     prepare_tarball proxysql_exporter
-    prepare_tarball qan-agent
     prepare_tarball node_exporter
     prepare_tarball clickhouse_exporter
     prepare_tarball pid-watchdog

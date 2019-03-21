@@ -80,11 +80,3 @@
 	path = sources/pid-watchdog/src/github.com/percona/pid-watchdog
 	url = https://github.com/percona/pid-watchdog
 	branch = master
-
-
-# TODO remove
-
-[submodule "qan-agent"]
-	path = sources/qan-agent/src/github.com/percona/qan-agent
-	url = https://github.com/percona/qan-agent.git
-	branch = master
