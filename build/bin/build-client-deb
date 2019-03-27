@@ -14,6 +14,14 @@ main() {
         set -o errexit
         set -o xtrace
 
+        OS_VERSION=\$(cat /etc/os-release | grep VERSION_ID | awk -F'\"' '{print \$2}')
+        if [ \$OS_VERSION = 8 ]; then
+                echo \"deb http://httpredir.debian.org/debian jessie main\" > /etc/apt/sources.list
+                echo \"deb-src http://httpredir.debian.org/debian jessie main\" >> /etc/apt/sources.list
+                echo \"deb http://security.debian.org/ jessie/updates main\" >> /etc/apt/sources.list
+                echo \"deb-src http://security.debian.org/ jessie/updates main\" >> /etc/apt/sources.list
+        fi
+
         apt-get update
         apt-get -y install git lsb-release devscripts dh-make dh-systemd
         mkdir -p /tmp/pmm
