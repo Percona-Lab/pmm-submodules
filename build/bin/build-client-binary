@@ -92,10 +92,6 @@ main() {
     copy_component "pmm-submodules" "debian"
     copy_component "pmm-submodules" "rpm"
 
-    copy_component "percona-toolkit" "bin/pt-summary"
-    copy_component "percona-toolkit" "bin/pt-mysql-summary"
-    gobuild_component "percona-toolkit" "github.com/percona/percona-toolkit" "src/go/pt-mongodb-summary"
-
     rm -rf ${binary_tarball}
     mkdir -p $(dirname ${binary_tarball}) || :
     tar -C $(dirname ${binary_dir}) -zcpf ${binary_tarball} $(basename ${binary_dir})

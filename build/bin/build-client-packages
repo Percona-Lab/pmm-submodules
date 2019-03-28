@@ -652,47 +652,7 @@ build_tarball(){
         export PATH="/usr/local/go/bin:$PATH:$GOPATH"
         export GOBINPATH="/usr/local/go/bin"
     fi
-    
-    git clone $TOOLKIT_REPO
-    cd percona-toolkit
-        git fetch origin
-        if [ ! -z ${TOOLKIT_BRANCH_NAME} ]; then
-            git reset --hard
-            git clean -xdf
-            git checkout ${TOOLKIT_BRANCH_NAME}
-        fi
-    cd ../
-    
-    cd percona-toolkit
-        export BUILD_TAR=1
-        export BUILD_RPM=0
-        export BUILD_DEB=0
-        export BUILD_GO=1
-        export QUIET=1
-        export UPDATE=0
-        export CHECK=0
-        
-        
-        go get -u github.com/golang/dep/cmd/dep
-        go install github.com/golang/dep/cmd/dep
-        rm -rf bin/govendor
-        
-        bash -x util/build-packages ${VERSION} docs/release_notes.rst
-        cp release/* ${WORKDIR}/
-    cd ../
-    
-    cd  ${WORKDIR}
-    TOOLKIT_TAR=$(basename $(find . -type f -name percona-toolkit*.tar.gz | sort | tail -n 1))
-    TOOLKIT_DIR=${TOOLKIT_TAR%.tar.gz}
-    rm -rf ${TOOLKIT_DIR}
-    tar xvzf ${TOOLKIT_TAR}
-    rm -rf ${TOOLKIT_TAR}
-    
-    cp ${TOOLKIT_DIR}/bin/pt-summary ${CLIENT_DIR}/bin/
-    cp ${TOOLKIT_DIR}/bin/pt-mysql-summary ${CLIENT_DIR}/bin/
-    cp ${TOOLKIT_DIR}/bin/pt-mongodb-summary ${CLIENT_DIR}/bin/
-    
-    rm -rf ${TOOLKIT_DIR}
+   
     tar -cvzf ${CLIENT_DIR}.tar.gz ${CLIENT_DIR}
     mkdir -p ${WORKDIR}/tarball
     mkdir -p ${CURDIR}/tarball
