@@ -41,49 +41,6 @@ prepare_tarball() {
     fi
 }
 
-repack_toolkit() {
-    if tar -ztf ${source_dir}/percona-toolkit-*.tar.gz | grep '/vendor/'; then
-        echo skip percona-toolkit repack
-        return
-    fi
-
-    tar \
-        -C ${tmp_dir}/source \
-        -zxpf ${source_dir}/percona-toolkit-*.tar.gz
-
-    pushd ${tmp_dir}/source/percona-toolkit-*
-        docker run --rm -v $(pwd -P):/home/builder/go/src/percona-toolkit ${rpmbuild_docker_image} sh -c "
-            set -o errexit
-            set -o xtrace
-
-            export GOPATH=/home/builder/go
-            sudo chown -R builder:builder \$GOPATH
-            pushd /home/builder/go/src/percona-toolkit
-                go get -u github.com/golang/dep/cmd/dep
-                \$GOPATH/bin/dep ensure
-            popd
-            sudo chown -R $(id -u):$(id -g) \$GOPATH
-        "
-    popd
-
-    # Run tar inside docker because macOS tar is not gnu compatible on update operation
-    docker run --rm -v ${root_dir}:/home/builder/root ${rpmbuild_docker_image} sh -c "
-        set -o errexit
-        set -o xtrace
-
-        source_dir=/home/builder/root/tmp/source/pmm2-client-${pmm_version}
-        sudo chown -R builder:builder \${source_dir} /home/builder/root/tmp
-        pushd /home/builder/root/tmp/source
-            gunzip -f \${source_dir}/percona-toolkit-*.tar.gz
-            tar \
-                -upf \${source_dir}/percona-toolkit-*.tar \
-                percona-toolkit-*/vendor
-            gzip -f \${source_dir}/percona-toolkit-*.tar
-        popd
-        sudo chown -R $(id -u):$(id -g) \${source_dir} /home/builder/root/tmp
-    "
-}
-
 main() {
     rm -rf ${source_tarball}
     mkdir -p ${source_dir}/ $(dirname ${source_tarball}) || :
@@ -99,9 +56,6 @@ main() {
     prepare_tarball node_exporter
     prepare_tarball clickhouse_exporter
     prepare_tarball pid-watchdog
-
-    prepare_tarball percona-toolkit
-    repack_toolkit
 
     tar -C $(dirname ${source_dir}) -zcpf ${source_tarball} $(basename ${source_dir})
 }

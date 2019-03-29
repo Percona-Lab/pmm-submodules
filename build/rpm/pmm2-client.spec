@@ -43,9 +43,6 @@ install -m 0755 bin/mysqld_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/postgres_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/mongodb_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/proxysql_exporter $RPM_BUILD_ROOT/usr/local/percona/
-install -m 0755 bin/pt-summary $RPM_BUILD_ROOT/usr/local/percona/qan-agent/bin/
-install -m 0755 bin/pt-mysql-summary $RPM_BUILD_ROOT/usr/local/percona/qan-agent/bin/
-install -m 0755 bin/pt-mongodb-summary $RPM_BUILD_ROOT/usr/local/percona/qan-agent/bin/
 install -m 0755 config/pmm-agent.yaml $RPM_BUILD_ROOT/usr/local/percona/
 %if 0%{?rhel} >= 7
 install -m 755 -d $RPM_BUILD_ROOT/%{_unitdir}
@@ -74,10 +71,6 @@ for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter pro
 do
   %{__ln_s} -f /usr/local/percona/$file /usr/bin/$file
 done
-for file in pt-summary pt-mysql-summary pt-mongodb-summary
-do
-  %{__ln_s} -f /usr/local/percona/qan-agent/bin/$file /usr/bin/$file
-done
 %endif
 
 %preun
@@ -93,7 +86,7 @@ if [ $1 == 0 ]; then
   if /usr/bin/id -g pmm-agent > /dev/null 2>&1; then
     /usr/sbin/userdel pmm-agent > /dev/null 2>&1
     /usr/sbin/groupdel pmm-agent > /dev/null 2>&1 || true
-    for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter proxysql_exporter pt-summary pt-mysql-summary pt-mongodb-summary
+    for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter proxysql_exporter
     do
       if [ -L /usr/bin/$file ]; then
         rm -rf /usr/bin/$file
@@ -114,5 +107,4 @@ fi
 /usr/local/percona/postgres_exporter
 /usr/local/percona/proxysql_exporter
 /usr/local/percona/mongodb_exporter
-/usr/local/percona/qan-agent/bin/*
 %config(noreplace) /usr/local/percona/pmm-agent.yaml
