@@ -10,7 +10,7 @@ if [ -z "${pmm_version}" ]; then
         pmm_version=${branch}-$(git rev-parse --short HEAD)
     fi
 fi
-rpmbuild_docker_image=${RPMBUILD_DOCKER_IMAGE:-perconalab/rpmbuild}
+rpmbuild_docker_image=${RPMBUILD_DOCKER_IMAGE:-perconalab/rpmbuild:2}
 rpms_dir=${root_dir}/tmp/pmm-server/RPMS
 rpmbuild_dir=${root_dir}/sources/pmm-server-packaging/rhel
 source_dir=${root_dir}/tmp/source/pmm2-client-${pmm_version}
