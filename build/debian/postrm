@@ -22,7 +22,7 @@ esac
 
 if [ "$1" = "purge" ]; then
     userdel pmm-agent || true
-    for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter proxysql_exporter pt-summary pt-mysql-summary pt-mongodb-summary
+    for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter proxysql_exporter
     do
         if [ -L /usr/bin/$file ]; then
             rm -rf /usr/bin/$file

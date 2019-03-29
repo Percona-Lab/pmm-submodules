@@ -5,7 +5,4 @@ mysqld_exporter /usr/local/percona/
 postgres_exporter /usr/local/percona/
 mongodb_exporter /usr/local/percona/
 proxysql_exporter /usr/local/percona/
-pt-summary /usr/local/percona/
-pt-mysql-summary /usr/local/percona/
-pt-mongodb-summary /usr/local/percona/
 pmm-agent.yaml /usr/local/percona/

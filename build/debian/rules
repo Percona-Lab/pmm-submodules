@@ -51,9 +51,6 @@ override_dh_auto_install:
 	cp -f distro/postgres_exporter $(TMP)/postgres_exporter
 	cp -f distro/mongodb_exporter $(TMP)/mongodb_exporter
 	cp -f distro/proxysql_exporter $(TMP)/proxysql_exporter
-	cp -f distro/pt-summary $(TMP)/pt-summary
-	cp -f distro/pt-mysql-summary $(TMP)/pt-mysql-summary
-	cp -f distro/pt-mongodb-summary $(TMP)/pt-mongodb-summary
 	install -m 0644 pmm-agent.yaml $(TMP)/pmm-agent.yaml
 
 override_dh_systemd_enable:

@@ -11,10 +11,6 @@ for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter pro
 do
     ln -s -f /usr/local/percona/$file /usr/bin/$file
 done
-for file in pt-summary pt-mysql-summary pt-mongodb-summary
-do
-    ln -s -f /usr/local/percona/qan-agent/bin/$file /usr/bin/$file
-done
 #DEBHELPER#
 
 exit 0
