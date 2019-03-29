@@ -176,12 +176,12 @@ Requires:       %{name}-bin = %{version}-%{release}
 Requires:       %{name}-src = %{version}-%{release}
 Requires:       go-srpm-macros
 
-# we had been just removing the zoneinfo.zip, but that caused tests to fail for users that 
+# we had been just removing the zoneinfo.zip, but that caused tests to fail for users that
 # later run `go test -a std`. This makes it only use the zoneinfo.zip where needed in tests.
 Patch215:       ./go1.5-zoneinfo_testing_only.patch
 
 # Proposed patch by mmunday https://golang.org/cl/35262
-Patch219: s390x-expose-IfInfomsg-X__ifi_pad.patch 
+Patch219: s390x-expose-IfInfomsg-X__ifi_pad.patch
 
 # Proposed patch by jcajka https://golang.org/cl/86541
 Patch221: golang-1.10-pkgconfig-fix.patch
@@ -414,9 +414,9 @@ pushd $RPM_BUILD_ROOT%{goroot}
         echo "%%{goroot}/$file" >> $shared_list
         echo "%%{golibdir}/$(basename $file)" >> $shared_list
     done
-    
-	find pkg/*_dynlink/ -type d -printf '%%%dir %{goroot}/%p\n' >> $shared_list
-	find pkg/*_dynlink/ ! -type d -printf '%{goroot}/%p\n' >> $shared_list
+
+    find pkg/*_dynlink/ -type d -printf '%%%dir %{goroot}/%p\n' >> $shared_list
+    find pkg/*_dynlink/ ! -type d -printf '%{goroot}/%p\n' >> $shared_list
 %endif
 
 %if %{race}

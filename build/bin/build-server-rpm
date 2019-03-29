@@ -73,130 +73,130 @@ build() {
         docker run --rm -v ${rpmbuild_dir}/SOURCES:/home/builder/rpm/SOURCES -v ${rpms_dir}:/home/builder/rpm/RPMS ${rpmbuild_docker_image} sh -c "
             set -o errexit
             set -o xtrace
-	    echo \"spec_name: ${spec_name}\"
-	    echo \"repo_name: ${repo_name}\"
-	    sudo chown -R builder:builder /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
+            echo \"spec_name: ${spec_name}\"
+            echo \"repo_name: ${repo_name}\"
+            sudo chown -R builder:builder /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
             rm -rf /home/builder/rpm/RPMS/${spec_name}-*
 
             printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
                     | sudo tee /etc/yum.repos.d/local.repo
             /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 
-	    if [ \"${spec_name}\" == \"clickhouse\" ]; then
+            if [ \"${spec_name}\" == \"clickhouse\" ]; then
 
-		# Build most libraries using default GCC
-		export PATH=${PATH/\"/usr/local/bin:\"/}:/usr/local/bin
+                # Build most libraries using default GCC
+                export PATH=${PATH/\"/usr/local/bin:\"/}:/usr/local/bin
 
-		echo \"====> Install general dependencies\"
-        	sudo yum install -y git wget curl zip unzip sed
+                echo \"====> Install general dependencies\"
+                sudo yum install -y git wget curl zip unzip sed
 
-		echo \"====> RPM build dependencies\"
-        	sudo yum install -y rpm-build redhat-rpm-config createrepo
+                echo \"====> RPM build dependencies\"
+                sudo yum install -y rpm-build redhat-rpm-config createrepo
 
-	        echo \"====> Install MySQL client library\"
-		sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
+                echo \"====> Install MySQL client library\"
+                sudo yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
 
-		echo \"====> Install build tools\"
-        	sudo yum install -y m4 make
-		sudo yum install -y epel-release
+                echo \"====> Install build tools\"
+                sudo yum install -y m4 make
+                sudo yum install -y epel-release
                 sudo yum install -y cmake3
                 sudo yum install -y centos-release-scl
                 sudo yum install -y devtoolset-7
                 sudo yum install -y tree
 
-		echo \"====> Install CH dev dependencies\"
-        	sudo yum install -y zlib-devel openssl-devel libicu-devel libtool-ltdl-devel unixODBC-devel readline-devel
+                echo \"====> Install CH dev dependencies\"
+                sudo yum install -y zlib-devel openssl-devel libicu-devel libtool-ltdl-devel unixODBC-devel readline-devel
 
-		sudo yum clean all
+                sudo yum clean all
 
-		cd
-		echo \"====> Fetch repository clickhouse-rpm\"
-		echo \"Cloning from github https://github.com/Altinity/clickhouse-rpm\"	
+                cd
+                echo \"====> Fetch repository clickhouse-rpm\"
+                echo \"Cloning from github https://github.com/Altinity/clickhouse-rpm\"
 
-		git clone \"https://github.com/Altinity/clickhouse-rpm\"
-		cd clickhouse-rpm
+                git clone \"https://github.com/Altinity/clickhouse-rpm\"
+                cd clickhouse-rpm
 
-		echo \"====> Prepare dirs\"
-        	mkdir -p /home/builder/clickhouse-rpm/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS,TMP}
+                echo \"====> Prepare dirs\"
+                mkdir -p /home/builder/clickhouse-rpm/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS,TMP}
 
-        	echo \"====> Create RPM packages\"
-		echo \"Cloning from github v${rpm_version} into /home/builder/clickhouse-rpm/rpmbuild/SOURCES/ClickHouse-${rpm_version}\"
+                echo \"====> Create RPM packages\"
+                echo \"Cloning from github v${rpm_version} into /home/builder/clickhouse-rpm/rpmbuild/SOURCES/ClickHouse-${rpm_version}\"
 
-        	cd /home/builder/clickhouse-rpm/rpmbuild/SOURCES
+                cd /home/builder/clickhouse-rpm/rpmbuild/SOURCES
 
-		echo \"====> Clone ClickHouse repo\"
-       		git clone \"https://github.com/yandex/ClickHouse\" \"ClickHouse-${rpm_version}\"
+                echo \"====> Clone ClickHouse repo\"
+                       git clone \"https://github.com/yandex/ClickHouse\" \"ClickHouse-${rpm_version}\"
 
-        	cd \"ClickHouse-${rpm_version}\"
+                cd \"ClickHouse-${rpm_version}\"
 
-        	echo \"====> Checkout specific tag v${rpm_version}\"
-        	git checkout \"v${rpm_version}\"
+                echo \"====> Checkout specific tag v${rpm_version}\"
+                git checkout \"v${rpm_version}\"
 
-        	echo \"====> Update submodules\"
-        	git submodule update --init --recursive
+                echo \"====> Update submodules\"
+                git submodule update --init --recursive
 
-        	cd /home/builder/clickhouse-rpm/rpmbuild/SOURCES
+                cd /home/builder/clickhouse-rpm/rpmbuild/SOURCES
 
-        	echo \"====> Move files into .zip with minimal compression\"
-        	zip -r0mq \"ClickHouse-${rpm_version}.zip\" \"ClickHouse-${rpm_version}\"
+                echo \"====> Move files into .zip with minimal compression\"
+                zip -r0mq \"ClickHouse-${rpm_version}.zip\" \"ClickHouse-${rpm_version}\"
 
-        	echo \"Ensure .zip file is available\"
-		ls -l \"ClickHouse-${rpm_version}.zip\"
+                echo \"Ensure .zip file is available\"
+                ls -l \"ClickHouse-${rpm_version}.zip\"
 
-        	cd /home/builder/clickhouse-rpm 
+                cd /home/builder/clickhouse-rpm
 
-		echo \"====> Build .spec file\"
+                echo \"====> Build .spec file\"
 
-        	MAKE_OPTIONS=\"${MAKE_OPTIONS}\"
+                MAKE_OPTIONS=\"${MAKE_OPTIONS}\"
 
-        	# Create spec file from template
-		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/srv/g\" \%{_builddir}//ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
-		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/log\\\/clickhouse-server/srv\\\/logs/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+                # Create spec file from template
+                sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/srv/g\" \%{_builddir}//ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+                sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/log\\\/clickhouse-server/srv\\\/logs/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
                 sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/<!-- <listen_host>0.0.0.0<\\\/listen_host> -->/<listen_host>0.0.0.0<\\\/listen_host>/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
-        	cat \"/home/builder/clickhouse-rpm/src/clickhouse.spec.in\" | sed \
+                cat \"/home/builder/clickhouse-rpm/src/clickhouse.spec.in\" | sed \
                 -e \"s|@CH_VERSION@|${CH_VERSION}|\" \
                 -e \"s|@CH_TAG@|${CH_TAG}|\" \
                 -e \"s|@CMAKE_OPTIONS@|${CMAKE_OPTIONS}|\" \
                 -e \"s|@MAKE_OPTIONS@|${MAKE_OPTIONS}|\" \
-		-e \"s|Name: clickhouse|Name: percona-clickhouse|\" \
+                -e \"s|Name: clickhouse|Name: percona-clickhouse|\" \
                 -e \"s|CLICKHOUSE_DATADIR=/var/lib/clickhouse|CLICKHOUSE_DATADIR=/srv/clickhouse|\" \
-                -e \"/@CLICKHOUSE_SPEC_FUNCS_SH@/ { 
+                -e \"/@CLICKHOUSE_SPEC_FUNCS_SH@/ {
 r /home/builder/clickhouse-rpm/src/clickhouse.spec.funcs.sh
 d }\" \
                 > \"/home/builder/clickhouse-rpm/rpmbuild/SPECS/clickhouse.spec\"
 
-        	echo \"====> Looking for .spec file\"
-        	ls -l \"/home/builder/clickhouse-rpm/rpmbuild/SPECS/clickhouse.spec\"
+                echo \"====> Looking for .spec file\"
+                ls -l \"/home/builder/clickhouse-rpm/rpmbuild/SPECS/clickhouse.spec\"
 
-		echo \"====> Setup RPM Macros\"
-        	echo '%_topdir '/home/builder/clickhouse-rpm/rpmbuild'
+                echo \"====> Setup RPM Macros\"
+                echo '%_topdir '/home/builder/clickhouse-rpm/rpmbuild'
 %_tmppath '/home/builder/clickhouse-rpm/rpmbuild/TMP'
 %_smp_mflags  -j'$(grep -c ^processor /proc/cpuinfo) > ~/.rpmmacros
 
-		cat ~/.rpmmacros
+                cat ~/.rpmmacros
 
-        	echo \"====> Setup path to compilers\"
+                echo \"====> Setup path to compilers\"
                 export CMAKE=cmake3
                 export CC=/opt/rh/devtoolset-7/root/usr/bin/gcc
                 export CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
 
-        	echo \"cd into /home/builder/clickhouse-rpm\"
-        	cd /home/builder/clickhouse-rpm 
+                echo \"cd into /home/builder/clickhouse-rpm\"
+                cd /home/builder/clickhouse-rpm
 
-        	echo \"====> Build RPMs\"
+                echo \"====> Build RPMs\"
                 export BUILD_DIR=\"/home/builder/clickhouse-rpm/rpmbuild/BUILD\"
                 export SOURCES_DIR=\"/home/builder/clickhouse-rpm/rpmbuild/SOURCES\"
-        	rpmbuild -v -bs \"/home/builder/clickhouse-rpm/rpmbuild/SPECS/clickhouse.spec\"
-        	rpmbuild -v -bb \"/home/builder/clickhouse-rpm/rpmbuild/SPECS/clickhouse.spec\"
+                rpmbuild -v -bs \"/home/builder/clickhouse-rpm/rpmbuild/SPECS/clickhouse.spec\"
+                rpmbuild -v -bb \"/home/builder/clickhouse-rpm/rpmbuild/SPECS/clickhouse.spec\"
 
-        	echo \"====> Build RPMs completed\"
+                echo \"====> Build RPMs completed\"
 
-		mkdir /home/builder/rpm/RPMS/${spec_name}-${rpm_version}
-		cp -r /home/builder/clickhouse-rpm/rpmbuild/RPMS/* /home/builder/rpm/RPMS/${spec_name}-${rpm_version}
-		ls -la /home/builder/clickhouse-rpm/rpmbuild/SOURCES
-		cp -r /home/builder/clickhouse-rpm/rpmbuild/SOURCES/* /home/builder/rpm/SOURCES
-	    elif [ \"${spec_name}\" == \"grafana\" ] || [ \"${spec_name}\" == \"percona-qan-api2\" ]; then 
-	        sudo yum remove -y nodejs npm
+                mkdir /home/builder/rpm/RPMS/${spec_name}-${rpm_version}
+                cp -r /home/builder/clickhouse-rpm/rpmbuild/RPMS/* /home/builder/rpm/RPMS/${spec_name}-${rpm_version}
+                ls -la /home/builder/clickhouse-rpm/rpmbuild/SOURCES
+                cp -r /home/builder/clickhouse-rpm/rpmbuild/SOURCES/* /home/builder/rpm/SOURCES
+            elif [ \"${spec_name}\" == \"grafana\" ] || [ \"${spec_name}\" == \"percona-qan-api2\" ]; then
+                sudo yum remove -y nodejs npm
                 sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
                 sudo yum clean all
                 sudo yum -y install nodejs
@@ -206,7 +206,7 @@ d }\" \
                 spectool -C SOURCES -g SOURCES/${spec_name}.spec
 
                 sudo go version
-		sudo wget https://dl.google.com/go/go1.11.5.linux-amd64.tar.gz
+                sudo wget https://dl.google.com/go/go1.11.5.linux-amd64.tar.gz
                 sudo tar -C /usr/local -xzf go1.11.5.linux-amd64.tar.gz
                 sudo update-alternatives --install \"/usr/bin/go\" \"go\" \"/usr/local/go/bin/go\" 0
                 sudo update-alternatives --set go /usr/local/go/bin/go
@@ -214,13 +214,13 @@ d }\" \
 
                 rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
                 rm -f SOURCES/${spec_name}.spec*
-	    else 
-            	sudo yum-builddep -y SOURCES/${spec_name}.spec
+            else
+                    sudo yum-builddep -y SOURCES/${spec_name}.spec
 
-            	spectool -C SOURCES -g SOURCES/${spec_name}.spec
-            	rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
-            	rm -f SOURCES/${spec_name}.spec*
-	    
+                    spectool -C SOURCES -g SOURCES/${spec_name}.spec
+                    rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
+                    rm -f SOURCES/${spec_name}.spec*
+
             fi
             sudo chown -R $(id -u):$(id -g) /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
         "
