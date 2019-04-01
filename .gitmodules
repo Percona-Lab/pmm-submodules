@@ -63,7 +63,7 @@
 [submodule "pmm-update"]
 	path = sources/pmm-update
 	url = https://github.com/percona/pmm-update
-	branch = PMM-2.0
+	branch = PMM-3771-FB-with-Grafana-6.1.0.beta1
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
