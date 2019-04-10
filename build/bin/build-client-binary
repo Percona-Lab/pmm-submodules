@@ -22,7 +22,7 @@ gobuild_component() {
         echo skip build
         return
     fi
-    if [ ${component} = 'pmm-admin' -o ${component} = 'pmm-agent' ]; then
+    if [ ${component} = 'pmm-admin' -o ${component} = 'pmm-agent' -o ${component} = 'pmm-managed' ]; then
         build_command="cd /tmp/go/src/${extract_path} && make release"
     else
         build_command="go build -o \${binary_dir}/${result_file} ./src/${extract_path}/${component_path}"
