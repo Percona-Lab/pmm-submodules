@@ -60,6 +60,11 @@ if [ $1 == 1 ]; then
     /usr/sbin/useradd -M -r -g pmm-agent -d /usr/local/percona/ -s /bin/false -c pmm-agent pmm-agent > /dev/null 2>&1
   fi
 fi
+if [ $1 -eq 2 ]; then
+    /usr/bin/systemctl stop pmm-agent.service >/dev/null 2>&1 ||:
+fi
+
+
 
 %post
 %if 0%{?rhel} >= 7
@@ -72,6 +77,14 @@ do
   %{__ln_s} -f /usr/local/percona/$file /usr/bin/$file
 done
 %endif
+if [ $1 -eq 1 ]; then        
+    /usr/bin/systemctl daemon-reload
+    /usr/bin/systemctl start pmm-agent.service
+fi
+if [ $1 -eq 2 ]; then
+    /usr/bin/systemctl daemon-reload
+    /usr/bin/systemctl start pmm-agent.service    
+fi
 
 %preun
 %if 0%{?rhel} >= 7
@@ -99,7 +112,7 @@ fi
 %files
 /usr/sbin/pmm-admin
 %if 0%{?rhel} >= 7
-%{_unitdir}/pmm-agent.service
+%config %{_unitdir}/pmm-agent.service
 %endif
 /usr/sbin/pmm-agent
 /usr/local/percona/node_exporter
