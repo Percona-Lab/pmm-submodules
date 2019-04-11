@@ -11,6 +11,21 @@ for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter pro
 do
     ln -s -f /usr/local/percona/$file /usr/bin/$file
 done
+case "$1" in
+    configure)
+      chown -R pmm-agent:pmm-agent /usr/local/percona
+      chmod 0660 /usr/local/percona/pmm-agent.yaml
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
 #DEBHELPER#
 
 exit 0
