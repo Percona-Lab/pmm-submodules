@@ -114,10 +114,10 @@ fi
 %if 0%{?rhel} >= 7
 %config %{_unitdir}/pmm-agent.service
 %endif
-/usr/sbin/pmm-agent
-/usr/local/percona/node_exporter
-/usr/local/percona/mysqld_exporter
-/usr/local/percona/postgres_exporter
-/usr/local/percona/proxysql_exporter
-/usr/local/percona/mongodb_exporter
-%config(noreplace) /usr/local/percona/pmm-agent.yaml
+%attr(-,pmm-agent,pmm-agent) /usr/sbin/pmm-agent
+%attr(-,pmm-agent,pmm-agent) /usr/local/percona/node_exporter
+%attr(-,pmm-agent,pmm-agent) /usr/local/percona/mysqld_exporter
+%attr(-,pmm-agent,pmm-agent) /usr/local/percona/postgres_exporter
+%attr(-,pmm-agent,pmm-agent) /usr/local/percona/proxysql_exporter
+%attr(-,pmm-agent,pmm-agent) /usr/local/percona/mongodb_exporter
+%attr(0660,pmm-agent,pmm-agent) %config(noreplace) /usr/local/percona/pmm-agent.yaml
