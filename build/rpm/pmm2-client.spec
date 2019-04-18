@@ -1,4 +1,9 @@
 %define debug_package %{nil}
+
+%{!?with_systemd:%global systemd 0}
+%{?el7:          %global systemd 1}
+%{?el8:          %global systemd 1}
+
 Name:           pmm2-client
 Summary:        Percona Monitoring and Management Client
 Version:        %{version}
@@ -10,10 +15,17 @@ URL:            https://percona.com
 Source:         pmm2-client-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 Summary:        PMM-agent
-%if 0%{?rhel} > 6
+
+%if 0%{?systemd}
+BuildRequires:  systemd
+BuildRequires:  pkgconfig(systemd)
 Requires(post):   systemd
 Requires(preun):  systemd
 Requires(postun): systemd
+%else
+Requires(post):   /sbin/chkconfig
+Requires(preun):  /sbin/chkconfig
+Requires(preun):  /sbin/service
 %endif
 AutoReq:        no
 Conflicts:      pmm-client
@@ -44,10 +56,14 @@ install -m 0755 bin/postgres_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/mongodb_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/proxysql_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 config/pmm-agent.yaml $RPM_BUILD_ROOT/usr/local/percona/
-%if 0%{?rhel} >= 7
-install -m 755 -d $RPM_BUILD_ROOT/%{_unitdir}
-install -m 644 config/pmm-agent.service %{buildroot}/%{_unitdir}/pmm-agent.service
+%if 0%{?systemd}
+  install -m 755 -d $RPM_BUILD_ROOT/%{_unitdir}
+  install -m 644 config/pmm-agent.service %{buildroot}/%{_unitdir}/pmm-agent.service
+%else
+  install -m 0755 -d $RPM_BUILD_ROOT/etc/rc.d/init.d
+  install -m 0750 config/pmm-agent.init $RPM_BUILD_ROOT/etc/rc.d/init.d/pmm-agent
 %endif
+
 
 
 %clean
@@ -61,40 +77,69 @@ if [ $1 == 1 ]; then
   fi
 fi
 if [ $1 -eq 2 ]; then
-    /usr/bin/systemctl stop pmm-agent.service >/dev/null 2>&1 ||:
+    %if 0%{?systemd}
+      /usr/bin/systemctl stop pmm-agent.service >/dev/null 2>&1 ||:
+    %else
+      /sbin/service pmm-agent stop >/dev/null 2>&1 ||:
+    %endif
 fi
 
 
-
 %post
-%if 0%{?rhel} >= 7
-%systemd_post pmm-agent.service
+%if 0%{?systemd}
+  %systemd_post pmm-agent.service
   if [ $1 == 1 ]; then
-    /usr/bin/systemctl enable pmm-agent >/dev/null 2>&1 || :
+      /usr/bin/systemctl enable pmm-agent >/dev/null 2>&1 || :
+      /usr/bin/systemctl daemon-reload
+      /usr/bin/systemctl start pmm-agent.service
   fi
+%else
+  if [ $1 == 1 ]; then
+      /sbin/chkconfig --add pmm-agent
+      /sbin/service pmm-agent start >/dev/null 2>&1 ||:
+  fi
+%endif
+
 for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter proxysql_exporter
 do
   %{__ln_s} -f /usr/local/percona/$file /usr/bin/$file
 done
-%endif
-if [ $1 -eq 1 ]; then        
-    /usr/bin/systemctl daemon-reload
-    /usr/bin/systemctl start pmm-agent.service
-fi
+
 if [ $1 -eq 2 ]; then
-    /usr/bin/systemctl daemon-reload
-    /usr/bin/systemctl start pmm-agent.service    
+    %if 0%{?systemd}
+      /usr/bin/systemctl daemon-reload
+      /usr/bin/systemctl start pmm-agent.service
+    %else
+      /sbin/service pmm-agent start >/dev/null 2>&1 ||:
+    %endif
 fi
 
 %preun
 %if 0%{?rhel} >= 7
-%systemd_preun pmm-agent.service
+  %systemd_preun_with_restart pmm-agent.service
+%else
+  if [ "$1" = 0 ]; then
+    /sbin/service pmm-agent stop >/dev/null 2>&1 || :
+    /sbin/chkconfig --del pmm-agent
+  fi
 %endif
 
 %postun
-%if 0%{?rhel} >= 7
-%systemd_postun pmm-agent.service
-%endif
+case "$1" in
+   0) # This is a yum remove.
+      /usr/sbin/userdel pmm-agent
+      %if 0%{?systemd}
+          %systemd_postun_with_restart pmm-agent.service
+      %endif
+   ;;
+   1) # This is a yum upgrade.
+      %if 0%{?systemd}
+          %systemd_postun_with_restart pmm-agent.service
+      %else
+          /sbin/service pmm-agent restart >/dev/null 2>&1 || :
+      %endif
+   ;;
+esac
 if [ $1 == 0 ]; then
   if /usr/bin/id -g pmm-agent > /dev/null 2>&1; then
     /usr/sbin/userdel pmm-agent > /dev/null 2>&1
@@ -113,6 +158,8 @@ fi
 /usr/sbin/pmm-admin
 %if 0%{?rhel} >= 7
 %config %{_unitdir}/pmm-agent.service
+%else
+/etc/rc.d/init.d/pmm-agent
 %endif
 %attr(-,pmm-agent,pmm-agent) /usr/sbin/pmm-agent
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/node_exporter
