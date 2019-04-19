@@ -110,6 +110,7 @@ if [ $1 -eq 2 ]; then
       /usr/bin/systemctl daemon-reload
       /usr/bin/systemctl start pmm-agent.service
     %else
+      install -m 0640 -o pmm-agent -g pmm-agent /dev/null /var/log/pmm-agent.log
       /sbin/service pmm-agent start >/dev/null 2>&1 ||:
     %endif
 fi
