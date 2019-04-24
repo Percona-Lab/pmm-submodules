@@ -22,6 +22,7 @@ pipeline {
                     git clean -fdx
                     git submodule foreach --recursive git reset --hard
                     git submodule foreach --recursive git clean -fdx
+                    git submodule status
                     cd sources/pmm-server-packaging/
                     git lfs install
                     git lfs pull

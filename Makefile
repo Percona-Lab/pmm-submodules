@@ -2,6 +2,7 @@ all: client server
 
 submodules:
 	git submodule update --init --remote
+	git submodule status
 
 server: submodules
 	./build/bin/build-server
