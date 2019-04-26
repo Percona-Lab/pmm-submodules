@@ -11,6 +11,10 @@ for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter pro
 do
     ln -s -f /usr/local/percona/$file /usr/bin/$file
 done
+for file in pmm-admin pmm-agent
+do
+    ln -s -f /usr/sbin/$file /usr/bin/$file
+done
 case "$1" in
     configure)
       chown -R pmm-agent:pmm-agent /usr/local/percona
