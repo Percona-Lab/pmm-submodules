@@ -10,15 +10,13 @@
 
 CONFIGFILE=""/usr/local/percona/pmm-agent.yaml
 OPTIONS="--config-file=$CONFIGFILE "
-USER=pmm-agent
-GROUP=pmm-agent
-pmm_agent=${PBM_AGENT:-/usr/sbin/pmm-agent}
+pmm_agent=${PMM_AGENT:-/usr/sbin/pmm-agent}
 pmm_log="/var/log/pmm-agent.log"
 
 start()
 {
   echo -n $"Starting pmm-agent: "
-  daemon --user "$USER" --check ${pmm_agent} " $pmm_agent $OPTIONS >> ${pmm_log} 2>&1 &"
+  daemon --check ${pmm_agent} " $pmm_agent $OPTIONS >> ${pmm_log} 2>&1 &"
   [ $RETVAL -eq 0 ] && touch /var/lock/subsys/pmm_agent
   echo
 }
