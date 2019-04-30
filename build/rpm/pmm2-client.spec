@@ -117,7 +117,7 @@ fi
 
 %preun
 %if 0%{?rhel} >= 7
-  %systemd_preun_with_restart pmm-agent.service
+  %systemd_preun pmm-agent.service
 %else
   if [ "$1" = 0 ]; then
     /sbin/service pmm-agent stop >/dev/null 2>&1 || :
