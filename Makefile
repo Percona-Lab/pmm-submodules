@@ -1,7 +1,7 @@
 all: client server
 
 submodules:
-	git submodule update --init --remote
+	git submodule update --init --remote --jobs 10
 	git submodule status
 
 server: submodules
