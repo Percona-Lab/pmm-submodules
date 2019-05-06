@@ -62,16 +62,16 @@
 	branch = PMM-2.0
 [submodule "pmm-update"]
 	path = sources/pmm-update
-	url = https://github.com/percona/pmm-update
-	branch = PMM-2.0
+	url = https://github.com/hors/pmm-update
+	branch = PMM-3985-update-clickhouse
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
 	branch = PMM-2.0
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
-	url = https://github.com/percona/pmm-server-packaging
-	branch = PMM-2.0
+	url = https://github.com/hors/pmm-server-packaging
+	branch = PMM-3985-update-clickhouse
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
