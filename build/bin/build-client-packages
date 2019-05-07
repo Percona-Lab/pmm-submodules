@@ -677,8 +677,8 @@ ARCH=
 OS=
 SUBMODULE_BRANCH="master"
 INSTALL=0
-RPM_RELEASE=1
-DEB_RELEASE=1
+RPM_RELEASE=2
+DEB_RELEASE=2
 REVISION=0
 GO_TARBALL="https://dl.google.com/go/go1.12.1.linux-amd64.tar.gz"
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
