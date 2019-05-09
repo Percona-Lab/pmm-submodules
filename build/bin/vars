@@ -1,15 +1,27 @@
 bin_dir=$(cd $(dirname $0); pwd -P)
 root_dir=$(cd $(dirname $0)/../..; pwd -P)
 tmp_dir=${root_dir}/tmp
-branch=$(git rev-parse --abbrev-ref HEAD)
-real_pmm_version=$(cat ${root_dir}/VERSION)
-if [ -z "${pmm_version}" ]; then
-    if [[ ${branch} == "master" ]]; then
-        pmm_version=$real_pmm_version
-    else
-        pmm_version=${branch}-$(git rev-parse --short HEAD)
-    fi
+
+# Failsafe during refactoring.
+if [ -n "${pmm_version}" ]; then
+    echo "pmm_version is already defined: ${pmm_version}"
+    exit 1
 fi
+
+# In VERSION file we can have numeric value like '2.0.0' as well as
+# alphanumeric value like '2.0.0-alpha3' which we can not be used entirely
+# e.g. in Version directive in spec files. So we define:
+# * full_pmm_version to contain full version and build metadata: '2.0.0-alpha3-PMM-1234-fb-branch-123abc';
+# * pmm_version to contain only MAJOR.MINOR.PATCH: '2.0.0';
+# * pmm_release to contain only pre-release part (may be empty): 'alpha3'.
+pmm_branch=$(git rev-parse --abbrev-ref HEAD)
+full_pmm_version=$(cat ${root_dir}/VERSION)
+if [[ ${pmm_branch} != 'PMM-2.0' ]]; then
+    full_pmm_version=${full_pmm_version}-${pmm_branch}-$(git rev-parse --short HEAD)
+fi
+pmm_version=$(cat ${root_dir}/VERSION | awk -F'-' '{print $1}')
+pmm_release=$(cat ${root_dir}/VERSION | awk -F'-' '{print $2}')
+
 rpmbuild_docker_image=${RPMBUILD_DOCKER_IMAGE:-perconalab/rpmbuild:2}
 rpms_dir=${root_dir}/tmp/pmm-server/RPMS
 rpmbuild_dir=${root_dir}/sources/pmm-server-packaging/rhel

@@ -94,7 +94,7 @@
 
     - name: PMM                        | Enable testing repo for pmm-client and percona-toolkit
       when: not pmm_update_file.stat.exists
-      command: yum-config-manager --enable percona-testing-x86_64 --enable pmm-laboratory
+      command: yum-config-manager --enable percona-testing-x86_64 --enable pmm2-laboratory
 
     - name: PMM                        | Run pmm-update
       when: not pmm_update_file.stat.exists
