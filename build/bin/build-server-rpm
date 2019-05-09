@@ -156,7 +156,7 @@ build() {
         	cat \"/home/builder/clickhouse-rpm/src/clickhouse.spec.in\" | sed \
                 -e \"s|@CH_VERSION@|${CH_VERSION}|\" \
                 -e \"s|@CH_TAG@|${CH_TAG}|\" \
-                -e \"s|@CMAKE_OPTIONS@|${CMAKE_OPTIONS}|\" \
+                -e \"s|@CMAKE_OPTIONS@|-DGLIBC_COMPATIBILITY=OFF|\" \
                 -e \"s|@MAKE_OPTIONS@|${MAKE_OPTIONS}|\" \
 		-e \"s|Name: clickhouse|Name: percona-clickhouse|\" \
                 -e \"s|CLICKHOUSE_DATADIR=/var/lib/clickhouse|CLICKHOUSE_DATADIR=/srv/clickhouse|\" \
