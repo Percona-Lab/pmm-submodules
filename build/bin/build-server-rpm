@@ -69,6 +69,7 @@ build() {
     local CH_VERSION=${rpm_version%-*}
     local CH_TAG=${rpm_version#*-}
 
+    FORCE_REBUILD=1
     if is_build_needed "${spec_name}" "${rpm_version}" || [[ -n "${FORCE_REBUILD}" ]]; then
         docker run --rm -v ${rpmbuild_dir}/SOURCES:/home/builder/rpm/SOURCES -v ${rpms_dir}:/home/builder/rpm/RPMS ${rpmbuild_docker_image} sh -c "
             set -o errexit
@@ -148,6 +149,7 @@ build() {
 		echo \"====> Build .spec file\"
 
         	MAKE_OPTIONS=\"${MAKE_OPTIONS}\"
+                CMAKE_OPTIONS='-DGLIBC_COMPATIBILITY=OFF'
 
         	# Create spec file from template
 		sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/srv/g\" \%{_builddir}//ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
@@ -156,7 +158,7 @@ build() {
         	cat \"/home/builder/clickhouse-rpm/src/clickhouse.spec.in\" | sed \
                 -e \"s|@CH_VERSION@|${CH_VERSION}|\" \
                 -e \"s|@CH_TAG@|${CH_TAG}|\" \
-                -e \"s|@CMAKE_OPTIONS@|${CMAKE_OPTIONS}|\" \
+                -e "s|@CMAKE_OPTIONS@|${CMAKE_OPTIONS}|" \
                 -e \"s|@MAKE_OPTIONS@|${MAKE_OPTIONS}|\" \
 		-e \"s|Name: clickhouse|Name: percona-clickhouse|\" \
                 -e \"s|CLICKHOUSE_DATADIR=/var/lib/clickhouse|CLICKHOUSE_DATADIR=/srv/clickhouse|\" \
