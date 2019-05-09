@@ -27,13 +27,21 @@ gobuild_component() {
     else
         build_command="go build -o \${binary_dir}/${result_file} ./src/${extract_path}/${component_path}"
     fi
+
+# If real_pmm_release is present we need to use it to get current
+# full version of pmm component like '2.0.0-alpha3'
+    full_pmm_version=${pmm_version}
+    if [ -n "${real_pmm_release}" ]; then
+        full_pmm_version="${pmm_version}-${real_pmm_release}"
+    fi
+
     docker run --rm -v ${tmp_dir}:/home/builder/tmp ${rpmbuild_docker_image} sh -c "
         set -o errexit
         set -o xtrace
         export GOOS=${GOOS:-linux}
         export GOARCH=${GOARCH:-amd64}
         export CGO_ENABLED=0
-        export PMM_RELEASE_VERSION=${pmm_version}
+        export PMM_RELEASE_VERSION=${full_pmm_version}
         export PMM_RELEASE_TIMESTAMP=$(date '+%s')
         export PMM_RELEASE_FULLCOMMIT=$(cd sources/${component}/src/${extract_path} && git rev-parse HEAD)
         export PMM_RELEASE_BRANCH=""

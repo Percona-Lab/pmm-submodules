@@ -180,7 +180,7 @@ get_sources(){
     REVISION=$(git rev-parse --short HEAD)
     git reset --hard
     #
-    VERSION=$(cat VERSION)
+    VERSION=${real_pmm_version}
     mv Makefile build/
     #cat VERSION > $VERSION_FILE
     echo "VERSION=${VERSION}" > $VERSION_FILE
@@ -679,6 +679,11 @@ SUBMODULE_BRANCH="master"
 INSTALL=0
 RPM_RELEASE=2
 DEB_RELEASE=2
+
+if [ -n "$real_pmm_release" ]; then
+    RPM_RELEASE="$RPM_RELEASE.$real_pmm_release"
+    DEB_RELEASE="$DEB_RELEASE.$real_pmm_release"
+fi
 REVISION=0
 GO_TARBALL="https://dl.google.com/go/go1.12.1.linux-amd64.tar.gz"
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
