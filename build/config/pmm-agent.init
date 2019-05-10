@@ -8,8 +8,7 @@
 
 . /etc/rc.d/init.d/functions
 
-CONFIGFILE=""/usr/local/percona/pmm-agent.yaml
-OPTIONS="--config-file=$CONFIGFILE "
+OPTIONS="--config-file=/usr/local/percona/pmm-agent.yaml"
 pmm_agent=${PMM_AGENT:-/usr/sbin/pmm-agent}
 pmm_log="/var/log/pmm-agent.log"
 
