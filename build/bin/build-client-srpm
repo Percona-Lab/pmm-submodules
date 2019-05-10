@@ -14,7 +14,7 @@ main() {
         set -o errexit
         set -o xtrace
 
-        export real_pmm_release=$real_pmm_release
+        export pmm_release=$pmm_release
         export sudo_path=\$(ls /usr/bin/sudo)
         [[ ${IMAGE} = ${rpmbuild_docker_image} ]] || \$sudo_path yum -y install git rpm-build
         mkdir -p /tmp/pmm

@@ -14,8 +14,8 @@ main() {
         set -o errexit
         set -o xtrace
 
-	export pmm_version=$(echo $pmm_version | awk -F'-' '{print $1}')
-        export real_pmm_release=$real_pmm_release
+        export pmm_version=$pmm_version
+        export pmm_release=$pmm_release
         export sudo_path=\$(ls /usr/bin/sudo)
         mkdir -p /tmp/pmm
         pushd /home/builder/results
