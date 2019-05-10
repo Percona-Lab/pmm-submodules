@@ -13,7 +13,8 @@ main() {
     docker run --rm -v ${bin_dir}:/home/builder/bin -v ${root_dir}/results:/home/builder/results ${IMAGE} sh -c "
         set -o errexit
         set -o xtrace
-
+        
+        export pmm_release=$pmm_release
         OS_VERSION=\$(cat /etc/os-release | grep VERSION_ID | awk -F'\"' '{print \$2}')
         if [ \$OS_VERSION = 8 ]; then
                 echo \"deb http://httpredir.debian.org/debian jessie main\" > /etc/apt/sources.list

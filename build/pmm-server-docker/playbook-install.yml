@@ -24,6 +24,15 @@
         gpgcheck: no
         enabled: yes
 
+    - name: Packages                   | Add PMM Server YUM repository
+      yum_repository:
+        name: pmm2-laboratory
+        description: PMM Server YUM repository - x86_64
+        baseurl: https://repo.percona.com/pmm2-components/yum/laboratory/7/RPMS/x86_64/
+        gpgcheck: yes
+        enabled: no
+        gpgkey: file:///etc/pki/rpm-gpg/PERCONA-PACKAGING-KEY
+
     - name: Packages                   | Update OS
       when: ansible_os_family == 'RedHat'
       yum:

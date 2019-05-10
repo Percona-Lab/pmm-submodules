@@ -33,7 +33,9 @@ gobuild_component() {
         export GOOS=${GOOS:-linux}
         export GOARCH=${GOARCH:-amd64}
         export CGO_ENABLED=0
-        export PMM_RELEASE_VERSION=${pmm_version}
+
+        # for 'make release'
+        export PMM_RELEASE_VERSION=${full_pmm_version}
         export PMM_RELEASE_TIMESTAMP=$(date '+%s')
         export PMM_RELEASE_FULLCOMMIT=$(cd sources/${component}/src/${extract_path} && git rev-parse HEAD)
         export PMM_RELEASE_BRANCH=""
