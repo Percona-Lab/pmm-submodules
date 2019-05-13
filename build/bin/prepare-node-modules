@@ -16,7 +16,7 @@ prepare_specs() {
         local short_commit=${full_commit:0:7}
 
         sed -i -e "s/global commit.*/global commit ${full_commit}/" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
-        sed -i -e "s/Version:.*/Version: ${real_pmm_version}/"      ${rpmbuild_dir}/SOURCES/${spec_name}.spec
+        sed -i -e "s/Version:.*/Version: ${pmm_version}/"           ${rpmbuild_dir}/SOURCES/${spec_name}.spec
 
         if [ -f "${rpmbuild_dir}/SOURCES/${repo_name}-${short_commit}.tar.gz" ]; then
             echo SOURCES/${repo_name}-${short_commit}.tar.gz already exists, skipping build

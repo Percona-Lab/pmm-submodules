@@ -30,7 +30,7 @@ for rpm in $(cd ${rpms_dir}; find . -name '*.noarch.rpm' -o -name '*.x86_64.rpm'
 done
 
 if [ -z "${DOCKER_TAG}" ]; then
-    DOCKER_TAG=perconalab/pmm-server-fb:${pmm_version}
+    DOCKER_TAG=perconalab/pmm-server-fb:${full_pmm_version}
 fi
 docker build --squash --no-cache -t ${DOCKER_TAG} ${rpms_dir}/../
 

@@ -180,7 +180,7 @@ get_sources(){
     REVISION=$(git rev-parse --short HEAD)
     git reset --hard
     #
-    VERSION=$(cat VERSION)
+    VERSION=$(pmm_version)
     mv Makefile build/
     #cat VERSION > $VERSION_FILE
     echo "VERSION=${VERSION}" > $VERSION_FILE
@@ -390,7 +390,6 @@ build_rpm(){
     rm -fr rpmbuild
     mkdir -vp rpmbuild/{SOURCES,SPECS,BUILD,SRPMS,RPMS}
     cp $SRC_RPM rpmbuild/SRPMS/
-    pmm_version=$(echo ${SRC_RPM} | awk -F'-' '{print $3}')
     rpmbuild --define "_topdir ${WORKDIR}/rpmbuild" --define "version $pmm_version" --define "release $RPM_RELEASE" --define "dist .$OS_NAME" --rebuild rpmbuild/SRPMS/$SRC_RPM
 
     return_code=$?
@@ -679,6 +678,12 @@ SUBMODULE_BRANCH="master"
 INSTALL=0
 RPM_RELEASE=2
 DEB_RELEASE=2
+
+if [ -n "$pmm_release" ]; then
+    RPM_RELEASE="$RPM_RELEASE.$pmm_release"
+    DEB_RELEASE="$DEB_RELEASE.$pmm_release"
+fi
+
 REVISION=0
 GO_TARBALL="https://dl.google.com/go/go1.12.1.linux-amd64.tar.gz"
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
