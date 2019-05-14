@@ -49,6 +49,12 @@ prepare_specs() {
         sed -i -e "s/global commit.*/global commit ${full_commit}/" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
         sed -i -e "s/Version:.*/Version: ${pmm_version}/"           ${rpmbuild_dir}/SOURCES/${spec_name}.spec
 
+        if [ -z "${full_pmm_version}" ]; then
+            echo 'A full_pmm_version is not specified.'
+            exit 1
+        fi
+        sed -i -e "s/%define full_pmm_version.*/%define full_pmm_version ${full_pmm_version}/" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
+
         if [ -n "$pmm_release" ]; then
             sed -i -e "s/\(%define release.*\) \([1-9]\)/\1 \2.$pmm_release/" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
             grep -r 'define release' ${rpmbuild_dir}/SOURCES/${spec_name}.spec
