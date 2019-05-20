@@ -30,7 +30,8 @@ is_build_needed() {
         s3://pmm-build-cache/${spec_name}-${rpm_version} \
         ${rpms_dir}/${spec_name}-${rpm_version}
 
-    local packages=$(find ${rpms_dir}/${spec_name}-${rpm_version} -name "*.rpm" | wc -l)
+    # pmm-server package is always build due to included swagger folder from the repo pmm 
+    local packages=$(find ${rpms_dir}/${spec_name}-${rpm_version} -name "*.rpm" | grep -v "pmm-server-[1-9]" | wc -l)
 
     # return result as true or flase
     [[ ${packages// /} == 0 ]]
@@ -52,6 +53,11 @@ prepare_specs() {
         if [ -n "$pmm_release" ]; then
             sed -i -e "s/\(%define release.*\) \([1-9]\)/\1 \2.$pmm_release/" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
             grep -r 'define release' ${rpmbuild_dir}/SOURCES/${spec_name}.spec
+        fi
+
+        if [[ ${spec_name} -eq "pmm-server" ]]; then
+            local pmm_commit=$(git -C "${root_dir}/sources/pmm/src/github.com/percona/pmm" rev-parse HEAD)
+            sed -i -e "s|@@pmm_commit@@|${pmm_commit}|" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
         fi
 
         if [ -f "${rpmbuild_dir}/SOURCES/${repo_name}-${short_commit}.tar.gz" ]; then
