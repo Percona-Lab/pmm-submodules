@@ -55,7 +55,7 @@ prepare_specs() {
             grep -r 'define release' ${rpmbuild_dir}/SOURCES/${spec_name}.spec
         fi
 
-        if [[ ${spec_name} -eq "pmm-server" ]]; then
+        if [[ ${spec_name} = "pmm-server" ]]; then
             local pmm_commit=$(git -C "${root_dir}/sources/pmm/src/github.com/percona/pmm" rev-parse HEAD)
             sed -i -e "s|@@pmm_commit@@|${pmm_commit}|" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
         fi
