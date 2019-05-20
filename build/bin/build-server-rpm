@@ -30,7 +30,7 @@ is_build_needed() {
         s3://pmm-build-cache/${spec_name}-${rpm_version} \
         ${rpms_dir}/${spec_name}-${rpm_version}
 
-    # pmm-server package is always build due to included swagger folder from the repo pmm 
+    # pmm-server package is always build due to included swagger folder from the repo pmm
     local packages=$(find ${rpms_dir}/${spec_name}-${rpm_version} -name "*.rpm" | grep -v "pmm-server-[1-9]" | wc -l)
 
     # return result as true or flase
@@ -122,7 +122,7 @@ build() {
 
 		cd
 		echo \"====> Fetch repository clickhouse-rpm\"
-		echo \"Cloning from github https://github.com/Altinity/clickhouse-rpm\"	
+		echo \"Cloning from github https://github.com/Altinity/clickhouse-rpm\"
 
 		git clone \"https://github.com/Altinity/clickhouse-rpm\"
 		cd clickhouse-rpm
@@ -154,7 +154,7 @@ build() {
         	echo \"Ensure .zip file is available\"
 		ls -l \"ClickHouse-${rpm_version}.zip\"
 
-        	cd /home/builder/clickhouse-rpm 
+        	cd /home/builder/clickhouse-rpm
 
 		echo \"====> Build .spec file\"
 
@@ -171,7 +171,7 @@ build() {
                 -e \"s|@MAKE_OPTIONS@|${MAKE_OPTIONS}|\" \
 		-e \"s|Name: clickhouse|Name: percona-clickhouse|\" \
                 -e \"s|CLICKHOUSE_DATADIR=/var/lib/clickhouse|CLICKHOUSE_DATADIR=/srv/clickhouse|\" \
-                -e \"/@CLICKHOUSE_SPEC_FUNCS_SH@/ { 
+                -e \"/@CLICKHOUSE_SPEC_FUNCS_SH@/ {
 r /home/builder/clickhouse-rpm/src/clickhouse.spec.funcs.sh
 d }\" \
                 > \"/home/builder/clickhouse-rpm/rpmbuild/SPECS/clickhouse.spec\"
@@ -192,7 +192,7 @@ d }\" \
                 export CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
 
         	echo \"cd into /home/builder/clickhouse-rpm\"
-        	cd /home/builder/clickhouse-rpm 
+        	cd /home/builder/clickhouse-rpm
 
         	echo \"====> Build RPMs\"
                 export BUILD_DIR=\"/home/builder/clickhouse-rpm/rpmbuild/BUILD\"
@@ -218,13 +218,13 @@ d }\" \
 
                 rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
                 rm -f SOURCES/${spec_name}.spec*
-	    else 
+	    else
             	sudo yum-builddep -y SOURCES/${spec_name}.spec
 
             	spectool -C SOURCES -g SOURCES/${spec_name}.spec
             	rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
             	rm -f SOURCES/${spec_name}.spec*
-	    
+
             fi
             sudo chown -R $(id -u):$(id -g) /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
         "
