@@ -47,7 +47,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-2.0
+	branch = PMM-4068-labels-by-main-metric
 [submodule "pmm-manage"]
 	path = sources/pmm-manage/src/github.com/percona/pmm-manage
 	url = https://github.com/percona/pmm-manage
@@ -59,7 +59,7 @@
 [submodule "qan-api2"]
 	path = sources/qan-api2/src/github.com/percona/qan-api2
 	url = https://github.com/percona/qan-api2
-	branch = master
+	branch = PMM-4068-labels-by-main-metric
 [submodule "qan-app"]
 	path = sources/qan-app/src/github.com/percona/qan-app
 	url = https://github.com/percona/qan-app
