@@ -4,7 +4,7 @@ library changelog: false, identifier: 'lib@master', retriever: modernSCM([
 ]) _
 
 void runAPItests(String DOCKER_VERSION, OWNER) {
-    stagingJob = build job: 'pmm2-api-tests-temp', parameters: [
+    stagingJob = build job: 'pmm2-api-tests', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_VERSION),
         string(name: 'OWNER', value: OWNER),
     ]
