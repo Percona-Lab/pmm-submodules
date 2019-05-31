@@ -176,7 +176,7 @@ pipeline {
                             """
                         }
                     }
-                    runAPItests(IMAGE, "https://s3.us-east-2.amazonaws.com/pmm-build-cache/pmm2-client/pmm2-client-${BRANCH_NAME}-\${GIT_COMMIT:0:7}.tar.gz", OWNER)
+                    runAPItests(IMAGE, "https://s3.us-east-2.amazonaws.com/pmm-build-cache/pmm2-client/pmm2-client-${BRANCH_NAME}-${GIT_COMMIT:0:7}.tar.gz", OWNER)
                     slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                 } else {
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result}"
