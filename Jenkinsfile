@@ -173,10 +173,13 @@ pipeline {
                                     -H "Authorization: token ${GITHUB_API_TOKEN}" \
                                     -d "{\\"body\\":\\"server docker - ${IMAGE}\\nclient docker - ${CLIENT_IMAGE}\\nclient - https://s3.us-east-2.amazonaws.com/pmm-build-cache/pmm2-client/pmm2-client-${BRANCH_NAME}-\${GIT_COMMIT:0:7}.tar.gz\\"}" \
                                     "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
+                                export CLIENT=${BRANCH_NAME}-${GIT_COMMIT:0:7}
+                                echo $CLIENT > CLIENT
                             """
                         }
                     }
-                    runAPItests(IMAGE, "https://s3.us-east-2.amazonaws.com/pmm-build-cache/pmm2-client/pmm2-client-${BRANCH_NAME}-${GIT_COMMIT:0:7}.tar.gz", OWNER)
+                    def CLIENT = sh(returnStdout: true, script: "cat CLIENT").trim()
+                    runAPItests(IMAGE, "https://s3.us-east-2.amazonaws.com/pmm-build-cache/pmm2-client/pmm2-client-${CLIENT}.tar.gz", OWNER)
                     slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                 } else {
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result}"
