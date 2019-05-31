@@ -173,7 +173,7 @@ pipeline {
                                     -H "Authorization: token ${GITHUB_API_TOKEN}" \
                                     -d "{\\"body\\":\\"server docker - ${IMAGE}\\nclient docker - ${CLIENT_IMAGE}\\nclient - https://s3.us-east-2.amazonaws.com/pmm-build-cache/pmm2-client/pmm2-client-${BRANCH_NAME}-\${GIT_COMMIT:0:7}.tar.gz\\"}" \
                                     "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
-                                export CLIENT=${BRANCH_NAME}-${GIT_COMMIT:0:7}
+                                export CLIENT=${BRANCH_NAME}-\${GIT_COMMIT:0:7}
                                 echo $CLIENT > CLIENT
                             """
                         }
