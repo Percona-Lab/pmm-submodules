@@ -32,7 +32,6 @@ pipeline {
                     git submodule status
                     export commit_sha=$(git submodule status | grep 'pmm-managed' | awk -F ' ' '{print $1}')
                     curl -s https://api.github.com/repos/percona/pmm-managed/commits/${commit_sha} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
-                    cat OWNER
                     cd sources/pmm-server-packaging/
                     git lfs install
                     git lfs pull
