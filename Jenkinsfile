@@ -3,9 +3,9 @@ library changelog: false, identifier: 'lib@master', retriever: modernSCM([
     remote: 'https://github.com/Percona-Lab/jenkins-pipelines.git'
 ]) _
 
-void runAPItests(String DOCKER_VERSION, OWNER) {
+void runAPItests(String DOCKER_IMAGE_VERSION, OWNER) {
     stagingJob = build job: 'pmm2-api-tests', parameters: [
-        string(name: 'DOCKER_VERSION', value: DOCKER_VERSION),
+        string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'OWNER', value: OWNER),
     ]
 }
