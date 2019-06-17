@@ -3,6 +3,13 @@ library changelog: false, identifier: 'lib@master', retriever: modernSCM([
     remote: 'https://github.com/Percona-Lab/jenkins-pipelines.git'
 ]) _
 
+void runAPItests(String DOCKER_IMAGE_VERSION, OWNER) {
+    stagingJob = build job: 'pmm2-api-tests', parameters: [
+        string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
+        string(name: 'OWNER', value: OWNER),
+    ]
+}
+
 pipeline {
     agent {
         label 'large-amazon'
@@ -23,6 +30,8 @@ pipeline {
                     git submodule foreach --recursive git reset --hard
                     git submodule foreach --recursive git clean -fdx
                     git submodule status
+                    export commit_sha=$(git submodule status | grep 'pmm-managed' | awk -F ' ' '{print $1}')
+                    curl -s https://api.github.com/repos/percona/pmm-managed/commits/${commit_sha} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
                     cd sources/pmm-server-packaging/
                     git lfs install
                     git lfs pull
@@ -155,6 +164,7 @@ pipeline {
                     unstash 'IMAGE'
                     def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
                     def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                    def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
                     if (env.CHANGE_URL) {
                         withCredentials([string(credentialsId: 'GITHUB_API_TOKEN', variable: 'GITHUB_API_TOKEN')]) {
                             sh """
@@ -166,6 +176,7 @@ pipeline {
                             """
                         }
                     }
+                    runAPItests(IMAGE, OWNER)
                     slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                 } else {
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result}"
