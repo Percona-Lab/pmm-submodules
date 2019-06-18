@@ -10,12 +10,22 @@ void runAPItests(String DOCKER_IMAGE_VERSION, OWNER) {
     ]
 }
 
+def isBranchBuild = true
+if ( env.CHANGE_URL ) {
+    isBranchBuild = false
+}
+
 pipeline {
     agent {
         label 'large-amazon'
     }
     stages {
         stage('Prepare') {
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
             steps {
                 sh '''
                     curdir=$(pwd)
@@ -43,6 +53,11 @@ pipeline {
             }
         }
         stage('Build client source') {
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
             steps {
                 sh '''
                     sg docker -c "
@@ -53,6 +68,11 @@ pipeline {
             }
         }
         stage('Build client binary') {
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
             steps {
                 sh '''
                     sg docker -c "
@@ -71,11 +91,21 @@ pipeline {
             }
         }
         stage('Build client source rpm') {
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
             steps {
                 sh 'sg docker -c "./build/bin/build-client-srpm centos:6"'
             }
         }
         stage('Build client binary rpm') {
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
             steps {
                 sh '''
                     sg docker -c "
@@ -88,6 +118,11 @@ pipeline {
             }
         }
         stage('Build client docker') {
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'hub.docker.com', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh """
@@ -109,6 +144,11 @@ pipeline {
             }
         }
         stage('Build server packages') {
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
             steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh '''
@@ -136,6 +176,11 @@ pipeline {
             }
         }
         stage('Build server docker') {
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'hub.docker.com', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh """
@@ -161,11 +206,11 @@ pipeline {
         always {
             script {
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
-                    unstash 'IMAGE'
-                    def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                    def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
-                    def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
                     if (env.CHANGE_URL) {
+                        unstash 'IMAGE'
+                        def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                        def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                        def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
                         withCredentials([string(credentialsId: 'GITHUB_API_TOKEN', variable: 'GITHUB_API_TOKEN')]) {
                             sh """
                                 set -o xtrace
@@ -175,9 +220,10 @@ pipeline {
                                     "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
                             """
                         }
+
+                        runAPItests(IMAGE, OWNER)
+                        slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
-                    runAPItests(IMAGE, OWNER)
-                    slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                 } else {
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result}"
                 }
