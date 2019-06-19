@@ -239,9 +239,9 @@ get_system(){
 }
 
 install_golang() {
-    wget ${GO_TARBALL} -O /tmp/golang.tar.gz
+    wget --progress=dot:giga ${GO_TARBALL} -O /tmp/golang.tar.gz
     tar -zxf /tmp/golang.tar.gz
-    rm -rf /usr/local/go /usr/local/go1.8 /usr/local/go1.9 /usr/local/go1.11 /usr/local/go1.12
+    rm -rf /usr/local/go*
     mv go /usr/local/
 }
 
@@ -685,7 +685,7 @@ if [ -n "$pmm_release" ]; then
 fi
 
 REVISION=0
-GO_TARBALL="https://dl.google.com/go/go1.12.1.linux-amd64.tar.gz"
+GO_TARBALL="https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz"
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
 get_system
 install_deps

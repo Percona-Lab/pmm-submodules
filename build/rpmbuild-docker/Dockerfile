@@ -22,8 +22,8 @@ RUN yum install -y nodejs
 
 RUN yum clean all && rm -rf /var/cache/yum
 
-ENV GO_TARBALL https://dl.google.com/go/go1.12.1.linux-amd64.tar.gz
-RUN wget ${GO_TARBALL} -O /tmp/golang.tar.gz
+ENV GO_TARBALL https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz
+RUN wget --progress=dot:giga ${GO_TARBALL} -O /tmp/golang.tar.gz
 RUN tar -C /usr/local -xzf /tmp/golang.tar.gz; \
     update-alternatives --install "/usr/bin/go" "go" "/usr/local/go/bin/go" 0; \
     update-alternatives --set go /usr/local/go/bin/go
