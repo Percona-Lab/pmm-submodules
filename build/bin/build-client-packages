@@ -692,24 +692,23 @@ install_deps
 
 BRANCH="PMM-2.0"
 REPO="https://github.com/Percona-Lab/pmm-submodules.git"
-MongoExp_BRANCH_NAME=$(get_branches "mongodb_exporter")
-MongoExp_REPO=$(get_repos "mongodb_exporter")
-TOOLKIT_BRANCH_NAME=$(get_branches "percona-toolkit")
-TOOLKIT_REPO=$(get_repos "percona-toolkit")
-MysqlExp_BRANCH_NAME=$(get_branches "mysqld_exporter")
-MysqlExp_REPO=$(get_repos "mysqld_exporter")
-PostgreSQLExp_BRANCH_NAME=$(get_branches "postgres_exporter")
-PostgreSQLExp_REPO=$(get_repos "postgres_exporter")
-ProxysqlExp_BRANCH_NAME=$(get_branches "proxysql_exporter")
-ProxysqlExp_REPO=$(get_repos "proxysql_exporter")
-NodeExp_BRANCH_NAME=$(get_branches "node_exporter")
-NodeExp_REPO=$(get_repos "node_exporter")
-ClickhouseExp_BRANCH_NAME=$(get_branches "clickhouse_exporter")
-ClickhouseExp_REPO=$(get_repos "clickhouse_exporter")
-PMM_AGENT_BRANCH_NAME=$(get_branches "pmm-agent")
-PMM_AGENT_REPO=$(get_repos "pmm-agent")
-PMM_ADMIN_BRANCH_NAME=$(get_branches "pmm-admin")
-PMM_ADMIN_REPO=$(get_repos "pmm-admin")
+
+if [ x"$TARBALL" = x'1' -o x"$SOURCE" = x'1' ]; then
+    MongoExp_BRANCH_NAME=$(get_branches "mongodb_exporter")
+    MongoExp_REPO=$(get_repos "mongodb_exporter")
+    TOOLKIT_BRANCH_NAME=$(get_branches "percona-toolkit")
+    TOOLKIT_REPO=$(get_repos "percona-toolkit")
+    MysqlExp_BRANCH_NAME=$(get_branches "mysqld_exporter")
+    MysqlExp_REPO=$(get_repos "mysqld_exporter")
+    PostgreSQLExp_BRANCH_NAME=$(get_branches "postgres_exporter")
+    PostgreSQLExp_REPO=$(get_repos "postgres_exporter")
+    ProxysqlExp_BRANCH_NAME=$(get_branches "proxysql_exporter")
+    ProxysqlExp_REPO=$(get_repos "proxysql_exporter")
+    NodeExp_BRANCH_NAME=$(get_branches "node_exporter")
+    NodeExp_REPO=$(get_repos "node_exporter")
+    ClickhouseExp_BRANCH_NAME=$(get_branches "clickhouse_exporter")
+    ClickhouseExp_REPO=$(get_repos "clickhouse_exporter")
+fi
 
 check_workdir
 get_system

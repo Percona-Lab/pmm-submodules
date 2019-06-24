@@ -22,7 +22,6 @@ main() {
             \$sudo_path /home/builder/bin/build-client-packages \
                 --builddir=/tmp/pmm \
                 --install_deps=1
-            \$sudo_path chown -R $(id -u):$(id -g) /tmp/pmm
             /home/builder/bin/build-client-packages \
                 --builddir=/tmp/pmm \
                 --build_rpm=1
