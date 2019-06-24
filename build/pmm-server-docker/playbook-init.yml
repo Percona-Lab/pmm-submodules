@@ -4,6 +4,14 @@
   gather_facts: yes
 
   tasks:
+    - debug:
+        var: ansible_version
+
+    - name: Check Ansible version
+      assert:
+        that: "ansible_version.full is version('2.8', '>=')"
+        fail_msg: Unexpected Ansible version
+
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory owner=pmm group=pmm
       with_items:
@@ -104,6 +112,15 @@
       when: not pmm_update_file.stat.exists
       command: yum-config-manager --disable percona-testing-x86_64 --disable pmm-laboratory
 
+    - name: pmm-agent                  | Setup
+      command: >
+        pmm-agent setup
+        --config-file=/usr/local/percona/pmm-agent.yaml
+        --skip-registration
+        --id=/agent_id/pmm-server
+        --server-address=127.0.0.1:443
+        --server-insecure-tls
+
     - name: PMM                        | Stop services
       shell: supervisorctl shutdown
 
@@ -113,19 +130,28 @@
     - name: PMM                        | Cleanup logs
       file: path={{ item }} state=absent
       with_items:
-        - /srv/logs/clickhouse.log
-        - /srv/logs/createdb.log
+        - /srv/logs/clickhouse-server.err.log
+        - /srv/logs/clickhouse-server.log
+        - /srv/logs/clickhouse-server.startup.log
         - /srv/logs/cron.log
         - /srv/logs/dashboard-upgrade.log
-        - /srv/logs/nginx.log
-        - /srv/logs/node_exporter.log
+        - /srv/logs/grafana.log
+        - /srv/logs/nginx.startup.log
+        - /srv/logs/pmm-agent.log
+        # - /srv/logs/pmm-configurator.log
+        # - /srv/logs/pmm-manage.log
+        - /srv/logs/pmm-managed.log
+        - /srv/logs/postgres.log
+        - /srv/logs/postgres.startup.log
         - /srv/logs/prometheus.log
-        - /srv/logs/prometheus1.log
         - /srv/logs/qan-api2.log
         - /var/log/yum.log
         - /var/log/grafana/grafana.log
         - /var/log/supervisor/supervisord.log
-        - /var/logs/pmm-manage.log
+
+    - name: PMM                        | Cleanup data
+      file: path={{ item }} state=absent
+      with_items:
         - /srv/prometheus/data
         - /tmp/RPMS
 
