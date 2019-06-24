@@ -9,7 +9,7 @@
 
     - name: Check Ansible version
       assert:
-        that: "ansible_version.full is version('2.8', '=')"
+        that: "ansible_version.full is version('2.8', '>=')"
         fail_msg: Unexpected Ansible version
 
     - name: cloud-init                 | Create dirs
