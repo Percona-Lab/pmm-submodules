@@ -104,6 +104,15 @@
       when: not pmm_update_file.stat.exists
       command: yum-config-manager --disable percona-testing-x86_64 --disable pmm-laboratory
 
+    - name: pmm-agent                  | Setup
+      command: >
+        pmm-agent setup
+        --config-file=/usr/local/percona/pmm-agent.yaml
+        --skip-registration
+        --id=/agent_id/pmm-server
+        --server-address=127.0.0.1:443
+        --server-insecure-tls
+
     - name: PMM                        | Stop services
       shell: supervisorctl shutdown
 
