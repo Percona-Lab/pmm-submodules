@@ -117,7 +117,7 @@
         pmm-agent setup
         --config-file=/usr/local/percona/pmm-agent.yaml
         --skip-registration
-        --id=/agent_id/pmm-server
+        --id=pmm-server
         --server-address=127.0.0.1:443
         --server-insecure-tls
 
