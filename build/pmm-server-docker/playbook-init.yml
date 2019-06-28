@@ -72,6 +72,11 @@
         expires: infinity
         state: present
 
+    - name: pmm-managed                | Create pg_stat_statements PostgreSQL extension
+      postgresql_ext:
+        db: pmm-managed
+        name: pg_stat_statements
+
     - name: PMM                        | Wait for dashboards
       wait_for:
         path: /srv/grafana/PERCONA_DASHBOARDS_VERSION

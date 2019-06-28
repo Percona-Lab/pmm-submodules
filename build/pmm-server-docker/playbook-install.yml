@@ -43,14 +43,14 @@
 
     - name: Packages                   | Install OS tools
       when: ansible_os_family == 'RedHat'
-      yum: name={{ item }} state=installed
-      with_items:
-        - screen
-        - yum-utils
-        - yum-cron
-        - supervisor
-        - logrotate
-        - unzip
+      yum:
+        name:
+          - screen
+          - yum-utils
+          - yum-cron
+          - supervisor
+          - logrotate
+          - unzip
 
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory
@@ -83,9 +83,7 @@
 
     - name: Percona Server for MySQL   | Remove MariaDB Client
       when: ansible_os_family == 'RedHat'
-      yum: name={{ item }} state=absent
-      with_items:
-        - mariadb-libs
+      yum: name=mariadb-libs state=absent
 
     - name: PMM                        | Create grafana group
       group:
@@ -102,11 +100,13 @@
 
     - name: Postgres                   | Install Postgres
       when: ansible_os_family == 'RedHat'
-      yum: name={{ item }} state=installed
-      with_items:
-        - postgresql10-server
-        - postgresql10
-        - python-psycopg2
+      yum:
+        name:
+          - postgresql10-server
+          - postgresql10-contrib
+          - postgresql10
+          - python-psycopg2
+        state: installed
 
     - name: PMM                        | Add PMM Server YUM repository
       when: ansible_os_family == 'RedHat'
@@ -129,23 +129,24 @@
 
     - name: PMM                        | Install RPMs
       when: ansible_os_family == 'RedHat'
-      yum: name={{ item }} state=installed enablerepo=local
-      with_items:
-        - nginx-1.15.8
-        - percona-grafana
-        - percona-prometheus
-        - percona-qan-api2
-        - percona-qan-app
-        - percona-toolkit-3.0.10
-        - percona-dashboards
-        - pmm-server
-        - pmm2-client
-        - pmm-manage
-        - pmm-managed
-        - pmm-update
-        - rds_exporter
-        - percona-clickhouse-client
-        - percona-clickhouse-server
+      yum:
+        name:
+          - nginx-1.15.8
+          - percona-grafana
+          - percona-prometheus
+          - percona-qan-api2
+          - percona-qan-app
+          - percona-toolkit-3.0.10
+          - percona-dashboards
+          - pmm-server
+          - pmm2-client
+          - pmm-manage
+          - pmm-managed
+          - pmm-update
+          - rds_exporter
+          - percona-clickhouse-client
+          - percona-clickhouse-server
+        enablerepo: local
 
     - name: PMM                        | Fix nginx config
       replace:
