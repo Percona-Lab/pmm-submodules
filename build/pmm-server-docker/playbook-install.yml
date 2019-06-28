@@ -102,11 +102,13 @@
 
     - name: Postgres                   | Install Postgres
       when: ansible_os_family == 'RedHat'
-      yum: name={{ item }} state=installed
-      with_items:
-        - postgresql10-server
-        - postgresql10
-        - python-psycopg2
+      yum:
+        name:
+          - postgresql10-server
+          - postgresql10-contrib
+          - postgresql10
+          - python-psycopg2
+        state: installed
 
     - name: PMM                        | Add PMM Server YUM repository
       when: ansible_os_family == 'RedHat'
