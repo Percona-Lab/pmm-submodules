@@ -24,11 +24,19 @@ is_build_needed() {
     local spec_name=$1
     local rpm_version=$2
 
-    aws s3 sync \
-        --region us-east-2 \
-        --no-sign-request \
-        s3://pmm-build-cache/${spec_name}-${rpm_version} \
-        ${rpms_dir}/${spec_name}-${rpm_version}
+    if [ -n $RPM_EPOCH ]; then
+        aws s3 sync \
+            --region us-east-2 \
+            --no-sign-request \
+            s3://pmm-build-cache/PR-BUILDS/${spec_name}-${rpm_version} \
+            ${rpms_dir}/${spec_name}-${rpm_version}
+    else
+        aws s3 sync \
+            --region us-east-2 \
+            --no-sign-request \
+            s3://pmm-build-cache/${spec_name}-${rpm_version} \
+            ${rpms_dir}/${spec_name}-${rpm_version}
+    fi
 
     # pmm-server package is always build due to included swagger folder from the repo pmm
     local packages=$(find ${rpms_dir}/${spec_name}-${rpm_version} -name "*.rpm" | grep -v "pmm-server-[1-9]" | wc -l)
@@ -236,11 +244,20 @@ d }\" \
             sudo chown -R $(id -u):$(id -g) /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
         "
 
-        aws s3 sync \
-            --region us-east-2 \
-            ${rpms_dir}/${spec_name}-${rpm_version} \
-            s3://pmm-build-cache/${spec_name}-${rpm_version} \
-            || :
+        
+        if [ -n $RPM_EPOCH ]; then
+            aws s3 sync \
+                --region us-east-2 \
+                ${rpms_dir}/${spec_name}-${rpm_version} \
+                s3://pmm-build-cache/PR-BUILDS/${spec_name}-${rpm_version} \
+                || :
+        else
+            aws s3 sync \
+                --region us-east-2 \
+                ${rpms_dir}/${spec_name}-${rpm_version} \
+                s3://pmm-build-cache/${spec_name}-${rpm_version} \
+                || :
+        fi
     fi
 }
 
