@@ -32,6 +32,8 @@ done
 if [ -z "${DOCKER_TAG}" ]; then
     DOCKER_TAG=perconalab/pmm-server-fb:${full_pmm_version}
 fi
+
+echo "${DOCKER_TAG} ${rpms_dir}"
 docker build --squash --no-cache -t ${DOCKER_TAG} ${rpms_dir}/../
 
 if [ -n "${PUSH_DOCKER}" ]; then
