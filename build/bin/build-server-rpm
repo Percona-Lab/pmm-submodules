@@ -24,7 +24,7 @@ is_build_needed() {
     local spec_name=$1
     local rpm_version=$2
 
-    if [ -n $RPM_EPOCH ]; then
+    if [ -n "$RPM_EPOCH" ]; then
         aws s3 sync \
             --region us-east-2 \
             --no-sign-request \
@@ -251,7 +251,7 @@ d }\" \
         "
 
         
-        if [ -n $RPM_EPOCH ]; then
+        if [ -n "$RPM_EPOCH" ]; then
             aws s3 sync \
                 --region us-east-2 \
                 ${rpms_dir}/${spec_name}-${rpm_version} \
