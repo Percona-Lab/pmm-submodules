@@ -48,9 +48,14 @@
           - screen
           - yum-utils
           - yum-cron
-          - supervisor
           - logrotate
           - unzip
+          - python2-pip
+
+    - name: Install supervisor         | Install OS tools
+      when: ansible_os_family == 'RedHat'
+      pip:
+        name: supervisor==3.4.0
 
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory
