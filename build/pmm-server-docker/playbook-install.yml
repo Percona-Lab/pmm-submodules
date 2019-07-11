@@ -56,8 +56,8 @@
       when: ansible_os_family == 'RedHat'
       pip:
         name: supervisor==3.4.0
-    
-    - name: Confogure supervisor       | Create a defult configuration file for supervisord
+
+    - name: Configure supervisor       | Create a defult configuration file for supervisord
       shell: echo_supervisord_conf > /etc/supervisord.conf
 
     - name: Modify supervisord.conf
@@ -95,26 +95,26 @@
         option: serverurl
         value: unix:///var/run/supervisor/supervisor.sock
 
-    - name: Confogure supervisor        | Create dirs
+    - name: Configure supervisor        | Create dirs
       file: path={{ item }} state=directory mode='0770'
       with_items:
         - /var/log/supervisor
         - /var/run/supervisor
 
-    - name: Confogure supervisor        | Create dirs
+    - name: Configure supervisor        | Create dirs
       file:
         path: /etc/supervisord.d
         mode: '0755'
         state: directory
 
-    - name: Confogure supervisor       | Add logrotate.d config
+    - name: Configure supervisor       | Add logrotate.d config
       copy:
         content: |
           /var/log/supervisor/*.log {
-                 missingok
-                 weekly
-                 notifempty
-                 nocompress
+                  missingok
+                  weekly
+                  notifempty
+                  nocompress
           }
         dest: /etc/logrotate.d/supervisor
         mode: 0644
