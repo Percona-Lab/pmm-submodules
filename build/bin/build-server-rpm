@@ -65,7 +65,7 @@ prepare_specs() {
         sed -i -e "s/%define full_pmm_version.*/%define full_pmm_version ${full_pmm_version}/" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
 
         if [ -n "$pmm_release" ]; then
-            sed -i -e "s/\(%define release.*\) \([1-9]\)/\1 \2.$pmm_release/" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
+            sed -i -e "s/\(%define release.*\)/\1.$pmm_release/" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
             grep -r 'define release' ${rpmbuild_dir}/SOURCES/${spec_name}.spec
         fi
 
