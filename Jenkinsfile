@@ -10,6 +10,20 @@ void runAPItests(String DOCKER_IMAGE_VERSION, OWNER) {
     ]
 }
 
+void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION) {
+    stagingJob = build job: 'pmm2-testsuite', parameters: [
+        string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
+        string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
+    ]
+}
+
+void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION) {
+    stagingJob = build job: 'pmm2-ui-tests', parameters: [
+        string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
+        string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
+    ]
+}
+
 def isBranchBuild = true
 if ( env.CHANGE_URL ) {
     isBranchBuild = false
@@ -87,6 +101,10 @@ pipeline {
                             results/tarball/pmm2-client-*.tar.gz \
                             s3://pmm-build-cache/PR-BUILDS/pmm2-client/pmm2-client-${BRANCH_NAME}-${GIT_COMMIT:0:7}.tar.gz
                     '''
+                }
+                script {
+                    def clientPackageURL = sh script:'echo "https://s3.us-east-2.amazonaws.com/pmm-build-cache/PR-BUILDS/pmm2-client/pmm2-client-${BRANCH_NAME}-${GIT_COMMIT:0:7}.tar.gz"', returnStdout: true
+                    env.CLIENT_URL = sh(returnStdout: true, script: "echo ${clientPackageURL}").trim()
                 }
             }
         }
@@ -222,6 +240,8 @@ pipeline {
                         }
 
                         runAPItests(IMAGE, OWNER)
+                        runTestSuite(IMAGE, ${env.CLIENT_URL})
+                        runUItests(IMAGE, ${env.CLIENT_URL})
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {
