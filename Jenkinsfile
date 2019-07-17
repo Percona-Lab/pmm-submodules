@@ -103,9 +103,10 @@ pipeline {
                     '''
                 }
                 script {
-                    def clientPackageURL = sh script:'echo "https://s3.us-east-2.amazonaws.com/pmm-build-cache/PR-BUILDS/pmm2-client/pmm2-client-${BRANCH_NAME}-${GIT_COMMIT:0:7}.tar.gz"', returnStdout: true
-                    env.CLIENT_URL = sh(returnStdout: true, script: "echo ${clientPackageURL}").trim()
+                    def clientPackageURL = sh script:'echo "https://s3.us-east-2.amazonaws.com/pmm-build-cache/PR-BUILDS/pmm2-client/pmm2-client-${BRANCH_NAME}-${GIT_COMMIT:0:7}.tar.gz" | tee CLIENT_URL', returnStdout: true
+                    env.CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
                 }
+                stash includes: 'CLIENT_URL', name: 'CLIENT_URL'
             }
         }
         stage('Build client source rpm') {
@@ -229,6 +230,7 @@ pipeline {
                         def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
                         def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
                         def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                        def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
                         withCredentials([string(credentialsId: 'GITHUB_API_TOKEN', variable: 'GITHUB_API_TOKEN')]) {
                             sh """
                                 set -o xtrace
@@ -240,8 +242,8 @@ pipeline {
                         }
 
                         runAPItests(IMAGE, OWNER)
-                        runTestSuite(IMAGE, ${env.CLIENT_URL})
-                        runUItests(IMAGE, ${env.CLIENT_URL})
+                        runTestSuite(IMAGE, CLIENT_URL)
+                        runUItests(IMAGE, CLIENT_URL)
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {
