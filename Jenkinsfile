@@ -3,9 +3,10 @@ library changelog: false, identifier: 'lib@master', retriever: modernSCM([
     remote: 'https://github.com/Percona-Lab/jenkins-pipelines.git'
 ]) _
 
-void runAPItests(String DOCKER_IMAGE_VERSION, OWNER) {
+void runAPItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, OWNER) {
     stagingJob = build job: 'pmm2-api-tests', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
+        string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'OWNER', value: OWNER),
     ]
 }
@@ -241,7 +242,7 @@ pipeline {
                             """
                         }
 
-                        runAPItests(IMAGE, OWNER)
+                        runAPItests(IMAGE, CLIENT_URL, OWNER)
                         runTestSuite(IMAGE, CLIENT_URL)
                         runUItests(IMAGE, CLIENT_URL)
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
