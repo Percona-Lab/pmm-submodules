@@ -241,9 +241,9 @@ pipeline {
                             """
                         }
 
+                        runUItests(IMAGE, CLIENT_URL)
                         runAPItests(IMAGE, CLIENT_URL, OWNER)
                         runTestSuite(IMAGE, CLIENT_URL)
-                        runUItests(IMAGE, CLIENT_URL)
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {
