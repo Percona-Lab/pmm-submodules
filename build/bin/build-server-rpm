@@ -55,6 +55,8 @@ prepare_specs() {
         local full_commit=$(git -C "${git_dir}" rev-parse HEAD)
         local short_commit=${full_commit:0:7}
 
+        # replace "prepare_specs" with actual values
+
         sed -i -e "s/global commit.*/global commit ${full_commit}/" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
         sed -i -e "s/Version:.*/Version: ${pmm_version}/"           ${rpmbuild_dir}/SOURCES/${spec_name}.spec
 
@@ -102,12 +104,12 @@ build() {
 	    echo \"repo_name: ${repo_name}\"
 
 	    sudo chown -R builder:builder /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
-           
+
              # Add 'Epoch' to spec file to prevent update of rpms which are built in PR build
             if [ -n \"$RPM_EPOCH\" ]; then
                 sed -i '/^Version:.*/i Epoch: 1' /home/builder/rpm/SOURCES/${spec_name}.spec
             fi
-            
+
             rm -rf /home/builder/rpm/RPMS/${spec_name}-*
 
             printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
@@ -250,7 +252,7 @@ d }\" \
             sudo chown -R $(id -u):$(id -g) /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
         "
 
-        
+
         if [ -n "$RPM_EPOCH" ]; then
             aws s3 sync \
                 --region us-east-2 \
