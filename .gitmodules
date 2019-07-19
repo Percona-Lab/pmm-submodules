@@ -67,7 +67,7 @@
 [submodule "pmm-update"]
 	path = sources/pmm-update
 	url = https://github.com/percona/pmm-update
-	branch = PMM-2.0
+	branch = PMM-4390-Grafana-v6.3.0-beta1
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
@@ -79,7 +79,7 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-2.0
+	branch = PMM-4390-Grafana-v6.3.0-beta1 
 [submodule "pid-watchdog"]
 	path = sources/pid-watchdog/src/github.com/percona/pid-watchdog
 	url = https://github.com/percona/pid-watchdog
