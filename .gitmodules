@@ -23,7 +23,7 @@
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
-	branch = master
+	branch = PMM-3905-merge-with-upstream
 [submodule "clickhouse_exporter"]
 	path = sources/clickhouse_exporter/src/github.com/f1yegor/clickhouse_exporter
 	url = https://github.com/f1yegor/clickhouse_exporter
