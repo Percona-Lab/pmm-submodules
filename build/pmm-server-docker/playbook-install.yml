@@ -284,25 +284,9 @@
       when: not grafana_db.stat.exists
       ini_file:
         dest: /etc/grafana/grafana.ini
-        section: auth.basic
-        option: enabled
-        value: true
-
-    - name: Grafana                    | Disable Anonymous access
-      when: not grafana_db.stat.exists
-      ini_file:
-        dest: /etc/grafana/grafana.ini
         section: auth.anonymous
         option: enabled
-        value: false
-
-    - name: Grafana                    | Disable Anonymous access
-      when: not grafana_db.stat.exists
-      ini_file:
-        dest: /etc/grafana/grafana.ini
-        section: auth.anonymous
-        option: org_role
-        value: Editor
+        value: 'false'
 
     - name: Grafana                    | Set snapshot server
       when: not grafana_db.stat.exists
@@ -310,7 +294,7 @@
         dest: /etc/grafana/grafana.ini
         section: snapshots
         option: external_enabled
-        value: true
+        value: 'true'
 
     - name: Grafana                    | Set snapshot server
       when: not grafana_db.stat.exists
