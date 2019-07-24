@@ -286,7 +286,7 @@
         dest: /etc/grafana/grafana.ini
         section: auth.anonymous
         option: enabled
-        value: false
+        value: 'false'
 
     - name: Grafana                    | Set snapshot server
       when: not grafana_db.stat.exists
@@ -294,7 +294,7 @@
         dest: /etc/grafana/grafana.ini
         section: snapshots
         option: external_enabled
-        value: true
+        value: 'true'
 
     - name: Grafana                    | Set snapshot server
       when: not grafana_db.stat.exists
