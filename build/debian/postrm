@@ -9,7 +9,7 @@ if [ -f /usr/share/debconf/confmodule ]; then
 fi
 
 case "$1" in
-    
+
   purge|remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
   ;;
 
