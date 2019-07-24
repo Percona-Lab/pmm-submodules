@@ -65,7 +65,7 @@
 	url = https://github.com/percona/qan-app
 	branch = PMM-2.0
 [submodule "pmm-update"]
-	path = sources/pmm-update
+	path = sources/pmm-update/src/github.com/percona/pmm-update
 	url = https://github.com/percona/pmm-update
 	branch = PMM-2.0
 [submodule "pmm-server"]
