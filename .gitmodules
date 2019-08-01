@@ -47,7 +47,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-2.0
+	branch = PMM-4443-parse-times
 [submodule "pmm-manage"]
 	path = sources/pmm-manage/src/github.com/percona/pmm-manage
 	url = https://github.com/percona/pmm-manage
@@ -67,7 +67,7 @@
 [submodule "pmm-update"]
 	path = sources/pmm-update/src/github.com/percona/pmm-update
 	url = https://github.com/percona/pmm-update
-	branch = PMM-2.0
+	branch = PMM-4443-parse-times
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
