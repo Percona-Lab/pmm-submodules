@@ -220,7 +220,7 @@ pipeline {
                 archiveArtifacts 'results/docker/TAG'
             }
         }
-        stage('Tests Execution') {
+        stage('Tests Exec') {
             parallel {
                 stage('Test: API') {
                     steps {
