@@ -220,6 +220,50 @@ pipeline {
                 archiveArtifacts 'results/docker/TAG'
             }
         }
+        parallel {
+            stage('Test: API') {
+                steps {
+                    script {
+                       if (env.CHANGE_URL) {
+                            unstash 'IMAGE'
+                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                            runAPItests(IMAGE, CLIENT_URL, OWNER)
+                        }
+                    }
+                }
+            }
+            stage('Test: PMM-Testsuite') {
+                steps {
+                    script {
+                       if (env.CHANGE_URL) {
+                            unstash 'IMAGE'
+                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                            runTestSuite(IMAGE, CLIENT_URL)
+                        }
+                    }
+                }
+            }
+            stage('Test: UI') {
+                steps {
+                    script {
+                       if (env.CHANGE_URL) {
+                            unstash 'IMAGE'
+                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                            runUItests(IMAGE, CLIENT_URL)
+                        }
+                    }
+                }
+            }
+        }
     }
     post {
         always {
@@ -240,10 +284,6 @@ pipeline {
                                     "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
                             """
                         }
-
-                        runAPItests(IMAGE, CLIENT_URL, OWNER)
-                        runTestSuite(IMAGE, CLIENT_URL)
-                        runUItests(IMAGE, CLIENT_URL)
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {
