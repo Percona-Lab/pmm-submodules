@@ -67,7 +67,7 @@
 [submodule "pmm-update"]
 	path = sources/pmm-update/src/github.com/percona/pmm-update
 	url = https://github.com/percona/pmm-update
-	branch = PMM-2.0
+	branch = pmm-4482-clean-playbook
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
@@ -75,7 +75,7 @@
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
-	branch = PMM-2.0
+	branch = pmm-4482-clean-docker-playbook
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards

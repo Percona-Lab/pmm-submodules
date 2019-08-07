@@ -29,12 +29,6 @@
         dest: /etc/nginx/nginx.conf
         line: 'daemon off;'
 
-    - name: PMM                        | Fix nginx config
-      replace:
-        dest: /etc/nginx/nginx.conf
-        regexp: '^(\s*)listen'
-        replace: '\1#listen'
-
     - name: Grafana                    | Enable gzip
       ini_file:
         dest: /etc/grafana/grafana.ini
@@ -137,8 +131,6 @@
         - /srv/logs/grafana.log
         - /srv/logs/nginx.startup.log
         - /srv/logs/pmm-agent.log
-        # - /srv/logs/pmm-configurator.log
-        # - /srv/logs/pmm-manage.log
         - /srv/logs/pmm-managed.log
         - /srv/logs/postgres.log
         - /srv/logs/postgres.startup.log
