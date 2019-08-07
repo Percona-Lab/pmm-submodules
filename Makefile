@@ -4,10 +4,10 @@ submodules:
 	git submodule update --init --remote --jobs 10
 	git submodule status
 
-server: submodules
+server:
 	./build/bin/build-server
 
-client: submodules
+client:
 	./build/bin/build-client
 
 clean:
