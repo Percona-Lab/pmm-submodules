@@ -685,7 +685,7 @@ if [ -n "$pmm_release" ]; then
 fi
 
 REVISION=0
-GO_TARBALL="https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz"
+GO_TARBALL="https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz"
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
 get_system
 install_deps
