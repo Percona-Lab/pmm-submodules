@@ -102,12 +102,12 @@ build() {
 	    echo \"repo_name: ${repo_name}\"
 
 	    sudo chown -R builder:builder /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
-
+           
              # Add 'Epoch' to spec file to prevent update of rpms which are built in PR build
             if [ -n \"$RPM_EPOCH\" ]; then
                 sed -i '/^Version:.*/i Epoch: 1' /home/builder/rpm/SOURCES/${spec_name}.spec
             fi
-
+            
             rm -rf /home/builder/rpm/RPMS/${spec_name}-*
 
             printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
@@ -229,9 +229,10 @@ d }\" \
 		cp -r /home/builder/clickhouse-rpm/rpmbuild/SOURCES/* /home/builder/rpm/SOURCES
 	    elif [ \"${spec_name}\" == \"grafana\" ]; then
 	        sudo yum remove -y nodejs npm
-                sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+                sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -
                 sudo yum clean all
                 sudo yum -y install nodejs
+                sudo sed -i 's|SRPMS|x86_64|g' /etc/yum.repos.d/nodesource-el7.repo
 
                 sudo yum-builddep -y SOURCES/${spec_name}.spec
 
@@ -250,7 +251,7 @@ d }\" \
             sudo chown -R $(id -u):$(id -g) /home/builder/rpm/RPMS /home/builder/rpm/SOURCES
         "
 
-
+        
         if [ -n "$RPM_EPOCH" ]; then
             aws s3 sync \
                 --region us-east-2 \
