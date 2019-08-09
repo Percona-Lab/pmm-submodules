@@ -41,6 +41,9 @@ override_dh_usrlocal:
 override_dh_auto_build:
 	dh $@
 
+override_dh_strip:
+	@echo "RULES.$@"
+
 override_dh_auto_install:
 	@echo "RULES.$@"
 	mkdir -p $(TMP)
