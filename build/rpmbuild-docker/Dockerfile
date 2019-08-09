@@ -1,7 +1,10 @@
 FROM centos:7
 
+# enable EPEL for nodejs
+RUN yum install -y epel-release
 RUN yum update -y
-RUN yum install -y gcc gcc-c++ \
+RUN yum install -y --setopt=skip_missing_names_on_install=False \
+                   gcc gcc-c++ \
                    nodejs \
                    libtool libtool-ltdl \
                    make cmake \
@@ -12,7 +15,6 @@ RUN yum install -y gcc gcc-c++ \
                    rpmdevtools createrepo_c epel-release \
                    yum-utils rpm-build \
                    wget \
-                   epel-release \
                    glibc-static
 RUN yum clean all && rm -rf /var/cache/yum
 
