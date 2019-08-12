@@ -82,6 +82,7 @@ main() {
     gobuild_component "postgres_exporter" "" "cmd/postgres_exporter"
     gobuild_component "mongodb_exporter"
     gobuild_component "proxysql_exporter"
+    gobuild_component "rds_exporter"
     gobuild_component "pid-watchdog"
     gobuild_component "clickhouse_exporter"     "github.com/f1yegor/clickhouse_exporter"
 

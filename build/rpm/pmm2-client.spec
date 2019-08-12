@@ -55,6 +55,7 @@ install -m 0755 bin/mysqld_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/postgres_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/mongodb_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/proxysql_exporter $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0755 bin/rds_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 config/pmm-agent.yaml $RPM_BUILD_ROOT/usr/local/percona/
 %if 0%{?systemd}
   install -m 755 -d $RPM_BUILD_ROOT/%{_unitdir}
@@ -168,4 +169,5 @@ fi
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/postgres_exporter
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/proxysql_exporter
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/mongodb_exporter
+%attr(-,pmm-agent,pmm-agent) /usr/local/percona/rds_exporter
 %attr(0660,pmm-agent,pmm-agent) %config(noreplace) /usr/local/percona/pmm-agent.yaml
