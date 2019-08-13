@@ -47,7 +47,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-2.0
+	branch = PMM-4249-api-data-retention
 [submodule "pmm-manage"]
 	path = sources/pmm-manage/src/github.com/percona/pmm-manage
 	url = https://github.com/percona/pmm-manage
@@ -55,7 +55,7 @@
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
-	branch = PMM-2.0
+	branch = PMM-4249-api-data-retention
 [submodule "qan-api2"]
 	path = sources/qan-api2/src/github.com/percona/qan-api2
 	url = https://github.com/percona/qan-api2
