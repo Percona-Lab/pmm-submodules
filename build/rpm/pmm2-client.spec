@@ -56,10 +56,10 @@ install -m 0755 bin/postgres_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/mongodb_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/proxysql_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/rds_exporter $RPM_BUILD_ROOT/usr/local/percona/
-install -m 0755 config/pmm-agent.yaml $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0660 config/pmm-agent.yaml $RPM_BUILD_ROOT/usr/local/percona/
 %if 0%{?systemd}
-  install -m 755 -d $RPM_BUILD_ROOT/%{_unitdir}
-  install -m 644 config/pmm-agent.service %{buildroot}/%{_unitdir}/pmm-agent.service
+  install -m 0755 -d $RPM_BUILD_ROOT/%{_unitdir}
+  install -m 0644 config/pmm-agent.service %{buildroot}/%{_unitdir}/pmm-agent.service
 %else
   install -m 0755 -d $RPM_BUILD_ROOT/etc/rc.d/init.d
   install -m 0750 config/pmm-agent.init $RPM_BUILD_ROOT/etc/rc.d/init.d/pmm-agent
