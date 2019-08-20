@@ -10,12 +10,6 @@
         name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
         state: installed
 
-    - name: Packages                   | Add Postgres repository
-      when: ansible_os_family == 'RedHat'
-      yum:
-        name: https://yum.postgresql.org/10/redhat/rhel-6-x86_64/pgdg-redhat10-10-2.noarch.rpm
-        state: installed
-
     - name: Packages                   | Add Nginx repository
       yum_repository:
         name: nginx
@@ -169,9 +163,9 @@
       when: ansible_os_family == 'RedHat'
       yum:
         name:
-          - postgresql10-server
-          - postgresql10-contrib
-          - postgresql10
+          - percona-postgresql11-server
+          - percona-postgresql11-contrib
+          - percona-postgresql11
           - python-psycopg2
         state: installed
 
