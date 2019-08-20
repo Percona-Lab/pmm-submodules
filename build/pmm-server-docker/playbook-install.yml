@@ -329,7 +329,7 @@
         - /srv/postgres
 
     - name: Postgres                   | Create Postgres data cluster
-      command: su postgres -c "/usr/pgsql-10/bin/initdb -D /srv/postgres"
+      command: su postgres -c "/usr/pgsql-11/bin/initdb -D /srv/postgres"
 
     - name: Postgres                   | Create Postgres log file
       copy:
