@@ -27,6 +27,16 @@
         enabled: no
         gpgkey: file:///etc/pki/rpm-gpg/PERCONA-PACKAGING-KEY
 
+    - name: Postgres                   | Add PostgreSQL YUM repository
+      when: ansible_os_family == 'RedHat'
+      yum_repository:
+        name: percona-ppg-11-experimental
+        description: PostgreSQL YUM repository - x86_64
+        baseurl: http://repo.percona.com/ppg-11/yum/experimental/7/RPMS/x86_64
+        gpgcheck: yes
+        enabled: yes
+        gpgkey: file:///etc/pki/rpm-gpg/PERCONA-PACKAGING-KEY
+
     - name: Packages                   | Update OS
       when: ansible_os_family == 'RedHat'
       yum:
@@ -158,16 +168,6 @@
         group: grafana
         home: /etc/grafana
         shell: /sbin/nologin
-
-    - name: Postgres                   | Add PostgreSQL YUM repository
-      when: ansible_os_family == 'RedHat'
-      yum_repository:
-        name: pmm
-        description: PostgreSQL YUM repository - x86_64
-        baseurl: http://repo.percona.com/ppg-11/yum/experimental/7/RPMS/x86_64
-        gpgcheck: yes
-        enabled: yes 
-        gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Percona
 
     - name: Postgres                   | Install Postgres
       when: ansible_os_family == 'RedHat'
