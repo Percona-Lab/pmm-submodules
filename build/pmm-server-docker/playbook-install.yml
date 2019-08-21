@@ -27,6 +27,7 @@
         enabled: no
         gpgkey: file:///etc/pki/rpm-gpg/PERCONA-PACKAGING-KEY
 
+# !!! WARNING _experimental_ has to be replaced by _release_ after GA
     - name: Postgres                   | Add PostgreSQL YUM repository
       when: ansible_os_family == 'RedHat'
       yum_repository:
