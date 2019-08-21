@@ -175,16 +175,6 @@
           - python-psycopg2
         state: installed
 
-    - name: PMM                        | Add PMM Server YUM repository
-      when: ansible_os_family == 'RedHat'
-      yum_repository:
-        name: pmm
-        description: PMM Server YUM repository - x86_64
-        baseurl: https://repo.percona.com/pmm/7/RPMS/x86_64/
-        gpgcheck: yes
-        enabled: no
-        gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Percona
-
     - name: PMM                        | Add local YUM repository
       when: ansible_os_family == 'RedHat'
       yum_repository:
