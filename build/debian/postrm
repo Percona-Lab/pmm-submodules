@@ -28,6 +28,9 @@ if [ "$1" = "purge" ]; then
             rm -rf /usr/bin/$file
         fi
     done
+    if [ -f /usr/local/percona/pmm-agent.yaml ]; then
+        rm -f /usr/local/percona/pmm-agent.yaml
+    fi
 fi
 
 #DEBHELPER#
