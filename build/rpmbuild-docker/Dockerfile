@@ -1,13 +1,11 @@
 FROM centos:7
-WORKDIR /root/rpmbuild/SOURCES
-COPY golang/* ./
 
-RUN yum install -y \
-                   yum-utils rpm-build rpmdevtools \
-                   golang pcre-devel glibc-static
-
-FROM centos:7
-RUN yum install -y gcc gcc-c++ \
+# enable EPEL for nodejs
+RUN yum install -y epel-release
+RUN yum update -y
+RUN yum install -y --setopt=skip_missing_names_on_install=False \
+                   gcc gcc-c++ \
+                   nodejs \
                    libtool libtool-ltdl \
                    make cmake \
                    git \
@@ -17,16 +15,15 @@ RUN yum install -y gcc gcc-c++ \
                    rpmdevtools createrepo_c epel-release \
                    yum-utils rpm-build \
                    wget \
-                   epel-release
-RUN yum install -y nodejs
-
+                   glibc-static
 RUN yum clean all && rm -rf /var/cache/yum
 
-ENV GO_TARBALL https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz
+ENV GO_TARBALL https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz
 RUN wget --progress=dot:giga ${GO_TARBALL} -O /tmp/golang.tar.gz
 RUN tar -C /usr/local -xzf /tmp/golang.tar.gz; \
     update-alternatives --install "/usr/bin/go" "go" "/usr/local/go/bin/go" 0; \
     update-alternatives --set go /usr/local/go/bin/go
+RUN rm /tmp/golang.tar.gz
 
 RUN useradd builder -u 1000 -m -G users,wheel && \
     echo "builder ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers && \
