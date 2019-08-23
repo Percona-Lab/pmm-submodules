@@ -129,6 +129,7 @@
       file: path={{ item }} state=directory owner=pmm
       with_items:
         - /srv/prometheus/data
+        - /srv/prometheus/rules
         - /srv/logs
 
     - name: cloud-init                 | Create dirs due to https://github.com/yandex/ClickHouse/pull/3785
