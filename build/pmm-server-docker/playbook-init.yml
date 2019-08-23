@@ -16,6 +16,7 @@
       file: path={{ item }} state=directory owner=pmm group=pmm
       with_items:
         - /srv/prometheus/data
+        - /srv/prometheus/rules
         - /srv/collect_info
         - /srv/logs
 
@@ -152,10 +153,12 @@
       file: path={{ item }} state=absent
       with_items:
         - /srv/prometheus/data
+        - /srv/prometheus/rules
         - /tmp/RPMS
 
     - name: cloud-init                 | Create dirs
       file: path={{ item }} state=directory owner=pmm group=pmm
       with_items:
         - /srv/prometheus/data
+        - /srv/prometheus/rules
         - /srv/logs
