@@ -40,7 +40,7 @@ if [ -z "${PMM_SERVER}" ]; then
     exit 1
 fi
 if [ -n "${PMM_USER}" ]; then
-    ARGS+=" --server-user ${PMM_USER}"
+    ARGS+=" --server-username ${PMM_USER}"
 fi
 if [ -n "${PMM_PASSWORD}" ]; then
     ARGS+=" --server-password ${PMM_PASSWORD}"
@@ -50,13 +50,12 @@ PMM_SERVER_IP=$(ping -c 1 "${PMM_SERVER/:*/}" | grep PING | sed -e 's/).*//; s/.
 SRC_ADDR=$(ip route get "${PMM_SERVER_IP}" | grep 'src ' | sed -e 's/.* src //; s/ .*//')
 CLIENT_NAME=${DB_HOST:-$HOSTNAME}
 
-wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/v1/status/leader" "127.0.0.1:8300"
+wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/v1/readyz" "127.0.0.1:8300"
 
-pmm-admin config \
-    --skip-root \
+pmm-admin setup \
     --force \
-    --server "${PMM_SERVER}" \
-    --server-insecure-ssl \
+    --server-address="${PMM_SERVER}" \
+    --server-insecure-tls \
     --bind-address "${SRC_ADDR}" \
     --client-address "${SRC_ADDR}" \
     --client-name "${CLIENT_NAME}" \
