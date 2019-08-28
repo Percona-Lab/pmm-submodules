@@ -46,5 +46,11 @@ docker run --network=pmm-managed_default \
  -e PMM_USER=admin \
  -e PMM_PASSWORD=admin \
  -e CLIENT_NAME=pmm-agent-docker \
- perconalab/pmm-client-fb:2.0.0-beta7-PMM-4417-k8s-button-a2319d7
+ -e DB_TYPE=mysql \
+ -e DB_USER=root \
+ -e DB_PASSWORD=root-password \
+ -e DB_CLUSTER=test-cluster \
+ -e DB_HOST=172.31.0.6 \
+ -e DB_PORT=3306 \
+ perconalab/pmm-client-fb:2.0.0-beta7-PMM-4417-k8s-button-a4e4ab6
 ```

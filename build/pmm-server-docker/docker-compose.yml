@@ -1,0 +1,55 @@
+---
+version: '3'
+services:
+  pmm-k8s-server:
+    image: ${PMM_SERVER_IMAGE:-perconalab/pmm-server-fb:2.0.0-beta7-PMM-4417-k8s-button-a4e4ab6}
+    ports:
+      - 127.0.0.1:443:443
+  pmm-k8s-client:
+    depends_on:
+      - "pmm-k8s-mysql"
+      - "pmm-k8s-server"
+    image: ${PMM_CLIENT_IMAGE:-perconalab/pmm-client-fb:2.0.0-beta7-PMM-4417-k8s-button-a4e4ab6}
+    ports:
+      - 127.0.0.1:7777:7777
+      - 127.0.0.1:30100-30200:30100-30200
+    environment:
+      - CLIENT_NAME=pmm-k8s-agent
+      - CLIENT_PORT_LISTEN=7777
+      - CLIENT_PORT_MIN=30100
+      - CLIENT_PORT_MAX=30200
+      - PMM_SERVER=pmm-k8s-server:443
+      - PMM_USER=admin
+      - PMM_PASSWORD=admin
+      - DB_TYPE=mysql
+      - DB_USER=root
+      - DB_PASSWORD=root-password
+      - DB_CLUSTER=test-cluster
+      - DB_HOST=pmm-k8s-mysql
+      - DB_PORT=3306
+
+  test_db:
+    image: aleksi/test_db:1.1.0
+    container_name: pmm-agent_test_db
+    volumes:
+      - test_db_mysql:/test_db/mysql/world:ro
+
+  pmm-k8s-mysql:
+    image: ${MYSQL_IMAGE:-percona:5.7}
+    container_name: pmm-agent_mysql
+    command: >
+      --sql-mode="ANSI_QUOTES"
+      --performance-schema --innodb_monitor_enable=all
+      --slow_query_log --slow_query_log_file=/slowlogs/slow.log --long_query_time=0
+    ports:
+      - 127.0.0.1:3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root-password
+      - MYSQL_USER=pmm-agent
+      - MYSQL_PASSWORD=pmm-agent-password
+    volumes:
+      - test_db_mysql:/docker-entrypoint-initdb.d/:ro
+      - ./testdata/slowlogs:/slowlogs
+
+volumes:
+  test_db_mysql:

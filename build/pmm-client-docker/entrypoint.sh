@@ -59,9 +59,39 @@ pmm-agent setup \
   --server-insecure-tls \
   --container-id=${HOSTNAME} \
   --container-name=${CLIENT_NAME} \
-  --ports-min=41000 \
-  --ports-max=41050 \
+  --ports-min=${CLIENT_PORT_MIN:-30100} \
+  --ports-max=${CLIENT_PORT_MAX:-30200} \
+  --listen-port=${CLIENT_PORT_LISTEN:-7777} \
   ${ARGS} \
   ${CLIENT_ADDR:-$SRC_ADDR} container ${CLIENT_NAME}
+
+if [ -n "${DB_USER}" ]; then
+    DB_ARGS+=" --username=${DB_USER}"
+fi
+if [ -n "${DB_PASSWORD}" ]; then
+    DB_ARGS+=" --password=${DB_PASSWORD}"
+fi
+if [ -n "${DB_CLUSTER}" ]; then
+    DB_ARGS+=" --cluster=${DB_CLUSTER}"
+fi
+
+if [ -n "${DB_HOST}" -a "${DB_PORT}" ]; then
+    wait_for_port "${DB_HOST}" "${DB_PORT}"
+fi
+
+pmm-agent --config-file=pmm-agent.yaml \
+ --ports-min=${CLIENT_PORT_MIN:-30100} \
+ --ports-max=${CLIENT_PORT_MAX:-30200} > /dev/null 2>&1 &
+
+if [ -n "${DB_TYPE}" ]; then
+    pmm-admin add "${DB_TYPE}" \
+        --skip-connection-check \
+        --server-url="https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/" \
+        --server-insecure-tls \
+        ${DB_ARGS} \
+        ${DB_HOST}:${DB_PORT}
+fi
+
+kill %1
 
 exec "$@"

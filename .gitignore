@@ -4,3 +4,4 @@ build/pmm-server-docker/RPMS/
 tmp/
 results/
 .kitchen/
+build/pmm-server-docker/testdata/

@@ -35,4 +35,4 @@ ENTRYPOINT ["/entrypoint.sh"]
 EXPOSE 7777
 EXPOSE 41000-41050
 
-CMD ["pmm-agent", "--config-file=pmm-agent.yaml", "--ports-min=41000", "--ports-max=41050"]
+CMD ["pmm-agent", "--config-file=pmm-agent.yaml", "--ports-min=30100", "--ports-max=30200"]
