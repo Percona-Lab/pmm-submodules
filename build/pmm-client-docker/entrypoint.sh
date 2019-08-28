@@ -40,48 +40,26 @@ if [ -z "${PMM_SERVER}" ]; then
     exit 1
 fi
 if [ -n "${PMM_USER}" ]; then
-    ARGS+=" --server-username ${PMM_USER}"
+    ARGS+=" --server-username=${PMM_USER}"
 fi
 if [ -n "${PMM_PASSWORD}" ]; then
-    ARGS+=" --server-password ${PMM_PASSWORD}"
+    ARGS+=" --server-password=${PMM_PASSWORD}"
 fi
 
 PMM_SERVER_IP=$(ping -c 1 "${PMM_SERVER/:*/}" | grep PING | sed -e 's/).*//; s/.*(//')
 SRC_ADDR=$(ip route get "${PMM_SERVER_IP}" | grep 'src ' | sed -e 's/.* src //; s/ .*//')
 CLIENT_NAME=${DB_HOST:-$HOSTNAME}
 
-wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/v1/readyz" "127.0.0.1:8300"
+wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/v1/readyz"
 
-pmm-admin setup \
-    --force \
-    --server-address="${PMM_SERVER}" \
-    --server-insecure-tls \
-    --bind-address "${SRC_ADDR}" \
-    --client-address "${SRC_ADDR}" \
-    --client-name "${CLIENT_NAME}" \
-    ${ARGS}
-
-if [ -n "${DB_HOST}" ]; then
-    DB_ARGS+=" --host ${DB_HOST}"
-fi
-if [ -n "${DB_USER}" ]; then
-    DB_ARGS+=" --user ${DB_USER}"
-fi
-if [ -n "${DB_PASSWORD}" ]; then
-    DB_ARGS+=" --password ${DB_PASSWORD}"
-fi
-if [ -n "${DB_PORT}" ]; then
-    DB_ARGS+=" --port ${DB_PORT}"
-fi
-
-if [ -n "${DB_HOST}" -a "${DB_PORT}" ]; then
-    wait_for_port "${DB_HOST}" "${DB_PORT}"
-fi
-
-if [ -n "${DB_TYPE}" ]; then
-    pmm-admin add "${DB_TYPE}" \
-        --skip-root \
-        ${DB_ARGS}
-fi
+pmm-agent setup \
+  --force \
+  --config-file=pmm-agent.yaml \
+  --server-address=${PMM_SERVER} \
+  --server-insecure-tls \
+  --ports-min=41000 \
+  --ports-max=41050 \
+  ${ARGS} \
+  ${CLIENT_ADDR:-$SRC_ADDR} container ${CLIENT_NAME}
 
 exec "$@"
