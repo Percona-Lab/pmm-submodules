@@ -48,7 +48,7 @@ fi
 
 PMM_SERVER_IP=$(ping -c 1 "${PMM_SERVER/:*/}" | grep PING | sed -e 's/).*//; s/.*(//')
 SRC_ADDR=$(ip route get "${PMM_SERVER_IP}" | grep 'src ' | sed -e 's/.* src //; s/ .*//')
-CLIENT_NAME=${DB_HOST:-$HOSTNAME}
+CLIENT_NAME=${CONTAINER_NAME:-$HOSTNAME}
 
 wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/v1/readyz"
 
@@ -57,6 +57,8 @@ pmm-agent setup \
   --config-file=pmm-agent.yaml \
   --server-address=${PMM_SERVER} \
   --server-insecure-tls \
+  --container-id=${HOSTNAME} \
+  --container-name=${CLIENT_NAME} \
   --ports-min=41000 \
   --ports-max=41050 \
   ${ARGS} \

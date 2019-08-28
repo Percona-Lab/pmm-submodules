@@ -45,5 +45,6 @@ docker run --network=pmm-managed_default \
  -e PMM_SERVER=host.docker.internal:8443 \
  -e PMM_USER=admin \
  -e PMM_PASSWORD=admin \
+ -e CLIENT_NAME=pmm-agent-docker \
  perconalab/pmm-client-fb:2.0.0-beta7-PMM-4417-k8s-button-a2319d7
 ```
