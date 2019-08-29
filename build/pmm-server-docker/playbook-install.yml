@@ -337,7 +337,7 @@
       copy:
         content: ""
         dest: /srv/logs/postgres.log
-        force: no
+        force: yes
         group: postgres
         owner: postgres
         mode: 0644

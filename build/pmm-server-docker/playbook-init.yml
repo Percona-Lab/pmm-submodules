@@ -36,6 +36,30 @@
         regexp: '^(\s*)listen'
         replace: '\1#listen'
 
+    - name: PMM                        | Fix nginx config
+      replace:
+        dest: /etc/nginx/nginx.conf
+        regexp: '^(\s*)/var/log/nginx/error\.log(\s+.*)?$'
+        replace: '\1/srv/logs/nginx.error.log\2'
+
+    - name: PMM                        | Fix nginx config
+      replace:
+        dest: /etc/nginx/nginx.conf
+        regexp: '^(\s*)/var/log/nginx/access\.log(\s+.*)?$'
+        replace: '\1/srv/logs/nginx.access.log\2'
+
+    - name: PMM                        | Fix postgresql config
+      replace:
+        dest: /srv/postgres/postgresql.conf
+        regexp: '^log_directory = \'logs(\s+.*)?$'
+        replace: 'log_directory = \'../logs\1'
+
+    - name: PMM                        | Fix postgresql config
+      replace:
+        dest: /srv/postgres/postgresql.conf
+        regexp: '^log_filename = \'postgresql-%a(\s+.*)?$'
+        replace: 'log_filename = \'postgresql\1'
+
     - name: Grafana                    | Enable gzip
       ini_file:
         dest: /etc/grafana/grafana.ini
