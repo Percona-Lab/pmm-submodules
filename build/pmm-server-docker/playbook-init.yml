@@ -51,14 +51,14 @@
     - name: PMM                        | Fix postgresql config
       replace:
         dest: /srv/postgres/postgresql.conf
-        regexp: "^log_directory = 'logs(\s+.*)?$"
-        replace: "log_directory = '../logs\1"
+        regexp: "log_directory = 'logs"
+        replace: "log_directory = '../logs"
 
     - name: PMM                        | Fix postgresql config
       replace:
         dest: /srv/postgres/postgresql.conf
-        regexp: "^log_filename = 'postgresql-%a(\s+.*)?$"
-        replace: "log_filename = 'postgresql\1"
+        regexp: "log_filename = 'postgresql-%a"
+        replace: "log_filename = 'postgresql"
 
     - name: Grafana                    | Enable gzip
       ini_file:
