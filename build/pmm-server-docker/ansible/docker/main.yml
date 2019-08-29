@@ -1,0 +1,90 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+  roles:
+    - cloud-node
+
+  tasks:
+    - name: Disable SELinux
+      selinux:
+        policy: targeted
+        state: permissive
+
+    - name: Docker                     | Add firewalld rule
+      when: ansible_os_family == 'RedHat'
+      firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+      with_items:
+          - 80/tcp
+          - 443/tcp
+          - 42000-42030/tcp
+
+    - name: Docker                     | Add YUM repository
+      when: ansible_os_family == 'RedHat'
+      yum_repository:
+        name: docker-ce-stable
+        description: Docker CE Stable - $basearch
+        baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+        gpgcheck: yes
+        enabled: yes
+        gpgkey: https://download.docker.com/linux/centos/gpg
+
+    - name: Docker                     | Install
+      when: ansible_os_family == 'RedHat'
+      yum: name=docker-ce state=installed
+
+    - name: Docker                     | Start
+      when: ansible_os_family == 'RedHat'
+      service: name=docker state=started enabled=yes
+
+    - name: Docker                     | Add vagrant user to docker group
+      user:
+        name: vagrant
+        groups: docker
+        append: yes
+
+    - name: Install console tools
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - screen
+        - vim
+        - wget
+        - lsof
+        - telnet
+
+    - name: Install test dependencies
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - Percona-Server-client-57
+        - perl-Data-Dumper
+        - lynx
+        - bats
+        - git
+        - wget
+        - sysbench
+        - nodejs
+        - java-1.8.0-openjdk
+
+    - name: Install test dependencies | npm protractor
+      npm:
+        name: protractor
+        global: yes
+
+    - name: Install test dependencies | npm jasmine-reporters
+      npm:
+        name: jasmine-reporters
+        global: yes
+
+    - name: Install test dependencies | npm protractor-jasmine2-screenshot-reporter
+      npm:
+        name: protractor-jasmine2-screenshot-reporter
+        global: yes
+
+    - name: Checkout Percona QA repo
+      git:
+        repo: https://github.com/Percona-QA/percona-qa.git
+        dest: /srv/percona-qa
+        version: master
+

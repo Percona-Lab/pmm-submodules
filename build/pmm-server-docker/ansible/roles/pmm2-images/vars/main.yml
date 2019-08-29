@@ -1,0 +1,6 @@
+---
+# !!! WARNING _experimental_ has to be replaced by _release_ after GA
+    pmm2_server_repo: laboratory
+    pmm_testing_repo: "original testing"
+
+    

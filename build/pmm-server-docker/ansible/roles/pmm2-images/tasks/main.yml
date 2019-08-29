@@ -1,0 +1,251 @@
+---
+    - name: Packages                   | Add Nginx repository
+      yum_repository:
+        name: nginx
+        description: nginx repo
+        baseurl: http://nginx.org/packages/mainline/centos/7/$basearch/
+        gpgcheck: no
+        enabled: yes
+
+    - name: Packages                   | Add PMM2 Server YUM repository
+      yum_repository:
+        name: pmm2-laboratory
+        description: PMM Server YUM repository - x86_64
+        baseurl: https://repo.percona.com/pmm2-components/yum/{{ pmm2_server_repo }}/7/RPMS/x86_64/
+        gpgcheck: yes
+        enabled: no
+        gpgkey: file:///etc/pki/rpm-gpg/PERCONA-PACKAGING-KEY
+
+#    - name: Packages                   | Update OS
+#      yum:
+#        name: '*'
+#        state: latest
+#        exclude: 'ansible'
+#        disablerepo: percona-release-x86_64
+
+    - name: Packages                   | Install OS tools
+      yum:
+        name:
+          - screen
+          - yum-utils
+          - yum-cron
+          - logrotate
+          - unzip
+          - python2-pip
+
+    - name: Install supervisord
+      include_role:
+        name: supervisord-init
+
+    - name: Create dirs                | Create dirs
+      file: path={{ item }} state=directory
+      with_items:
+        - /var/lib/cloud/scripts/per-once
+        - /var/lib/cloud/scripts/per-boot
+
+    - name: Configure yum              | Configure yum-cron
+      replace:
+        dest: /etc/yum/yum-cron-hourly.conf
+        regexp: 'update_cmd = default'
+        replace: 'update_cmd = minimal-security'
+
+    - name: Configure yum              | Configure yum-cron
+      replace:
+        dest: /etc/yum/yum-cron.conf
+        regexp: 'update_cmd = default'
+        replace: 'update_cmd = minimal-security'
+
+    - name: Install RPMs               | Install RPMs for PMM2 server
+      yum:
+        name:
+          - nginx-1.15.8
+          - percona-grafana
+          - percona-prometheus
+          - percona-qan-api2
+          - percona-qan-app
+          - percona-dashboards
+          - pmm-server
+          - pmm-manage
+          - pmm-managed
+          - pmm-update
+          - rds_exporter
+          - percona-clickhouse-client
+          - percona-clickhouse-server
+          - pmm2-client
+        state: installed
+        enablerepo: "pmm2-laboratory"
+
+    - name: PMM                        | Enable testing repo for pmm2-client
+      command: percona-release enable {{ pmm_testing_repo }}
+
+#    - name: Install RPMs               | Install pmm2-client rpm
+#      yum:
+#        name:
+#          - pmm2-client
+#        state: installed
+#        enablerepo: "percona-testing-x86_64"
+
+    - name: NGINX SSL Certificate      | Add script to generate ssl certificate
+      copy:
+        src: generate-ssl-certificate
+        dest: /var/lib/cloud/scripts/per-boot/
+        mode: 0755
+
+    - name: NGINX SSL Certificate      | Check certificate file
+      stat: path=/srv/nginx/certificate.crt
+      register: certificate_file
+
+    - name: NGINX SSL Certificate      | Generate certificate
+      when: not certificate_file.stat.exists
+      command: /var/lib/cloud/scripts/per-boot/generate-ssl-certificate
+
+    - name: Grafana                    | Check data dir
+      stat: path=/srv/grafana/grafana.db
+      register: grafana_db
+
+    - name: Grafana                    | Disable Anonymous access
+      when: not grafana_db.stat.exists
+      ini_file:
+        dest: /etc/grafana/grafana.ini
+        section: auth.anonymous
+        option: enabled
+        value: 'false'
+
+    - name: Grafana                    | Set snapshot server
+      when: not grafana_db.stat.exists
+      ini_file:
+        dest: /etc/grafana/grafana.ini
+        section: snapshots
+        option: external_enabled
+        value: 'true'
+
+    - name: Grafana                    | Set snapshot server
+      when: not grafana_db.stat.exists
+      ini_file:
+        dest: /etc/grafana/grafana.ini
+        section: snapshots
+        option: external_snapshot_url
+        value: https://snapshots-g504.percona.com
+
+    - name: Grafana                    | Set snapshot server
+      when: not grafana_db.stat.exists
+      ini_file:
+        dest: /etc/grafana/grafana.ini
+        section: snapshots
+        option: external_snapshot_name
+        value: Share with Percona
+
+    - name: Clickhouse                | Disable clickhouse-server in systemd
+      when: ansible_virtualization_type != "docker"
+      service: name=clickhouse-server state=stopped enabled=no
+
+    - name: Cron                      | Disable crond
+      when: ansible_virtualization_type != "docker"
+      service: name=crond state=stopped enabled=no
+
+    - name: Disable pmm-agent service | Disable pmm-agent
+      when: ansible_virtualization_type != "docker"
+      service: name=pmm-agent state=stopped enabled=no
+
+    - name: Supervisord               | Remove supervisord block from pmm.ini
+      when: ansible_virtualization_type != "docker"
+      ini_file:
+        path: /etc/supervisord.d/pmm.ini
+        section: supervisord
+        state: absent
+
+    - name: Create pmm user           | Create pmm  user
+      when: ansible_virtualization_type != "docker"
+      user:
+        name: pmm
+        comment: John Doe
+
+    - name: Create directories        | Create dirs
+      file: path={{ item }} state=directory owner=pmm group=pmm
+      with_items:
+        - /srv/prometheus/data
+        - /srv/prometheus/rules
+        - /srv/logs
+
+    - name: Create directories        | Create dirs
+      file: path={{ item }} state=directory owner=root group=pmm
+      with_items:
+        - /srv/clickhouse
+
+    - name: NGINX                     | Disable NGINX daemon
+      lineinfile:
+        dest: /etc/nginx/nginx.conf
+        line: 'daemon off;'
+
+    - name: Grafana                   | Enable gzip for grafana
+      ini_file:
+        dest: /etc/grafana/grafana.ini
+        section: server
+        option: enable_gzip
+        value: "true"
+
+    - name: Create tmp dirs           | Create tmp dirs
+      when: ansible_virtualization_type != "docker"
+      command: /usr/bin/systemd-tmpfiles --create --remove --boot --exclude-prefix=/dev
+
+    - name: Supervisord start        | Start supervisord service for AMI/OVF
+      when: ansible_virtualization_type != "docker"
+      service: name=supervisord state=started enabled=yes
+
+    - name: Supervisord start         | Start supervisord for docker
+      when: ansible_virtualization_type == "docker"
+      shell: supervisord -c /etc/supervisord.conf &
+
+    - name: PostgresDB                | Wait for postgres start
+      wait_for:
+        port: 5432
+        state: present
+        delay: 30
+        timeout: 60
+
+    - name: PostgresDB                | Create pmm-managed database
+      postgresql_db:
+        name: pmm-managed
+        state: present
+
+    - name: PostgresDB                | Create pmm-managed user
+      postgresql_user:
+        db: pmm-managed
+        name: pmm-managed
+        password: 'md5da757ec3e22c6d86a2bb8e70307fa937'
+        priv: 'ALL'
+        expires: infinity
+        state: present
+
+    - name: PostgresDB                | Create pg_stat_statements extension
+      postgresql_ext:
+        db: pmm-managed
+        name: pg_stat_statements
+
+    - name: Grafana                   | Wait for dashboards
+      wait_for:
+        path: /srv/grafana/PERCONA_DASHBOARDS_VERSION
+        state: present
+
+    - name: Grafana                   | Add community panels
+      unarchive:
+        src: "{{ item }}"
+        dest: /var/lib/grafana/plugins
+        remote_src: yes
+      with_fileglob:
+        - "/usr/share/percona-dashboards/panels/*.zip"
+
+    - name: Cickhouse                 | Create ClickHouse database
+      command: clickhouse-client --host 127.0.0.1 --query="CREATE DATABASE IF NOT EXISTS pmm"
+
+    - name: Cickhouse                 | Show ClickHouse database
+      command: clickhouse-client --host 127.0.0.1 --query="SHOW DATABASES"
+
+    - name: PMM update                | Create pmm-update directory
+      file:
+        path: /srv/update
+        state: directory
+
+# It is a workaround until we clean up pmm2-client rpms from pmm2-components repo
+    - name: PMM                        | Disable testing repo for pmm2-client
+      command: percona-release disable {{ pmm_testing_repo }}

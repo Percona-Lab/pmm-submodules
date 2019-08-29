@@ -1,0 +1,43 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+  roles:
+    - cloud-node
+
+  tasks:
+    - name: Install console tools
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - screen
+        - vim
+        - wget
+        - lsof
+        - telnet
+
+    - name: Percona Server for MongoDB | Install
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - Percona-Server-MongoDB-34
+        - pmm-client
+
+    - name: Percona Server for MongoDB | Start service
+      service: name={{ item }} state=started enabled=yes
+      with_items:
+        - mongod
+
+    - name: Add firewalld rule
+      when: ansible_os_family == 'RedHat'
+      firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+      with_items:
+          - 27017/tcp
+          - 42000-42010/tcp
+
+    - name: cloud-init                 | Fix start-up sequence
+      replace:
+        dest: /usr/lib/systemd/system/cloud-final.service
+        regexp: 'After=network.target'
+        replace: 'After=mongod.service network.target'
+

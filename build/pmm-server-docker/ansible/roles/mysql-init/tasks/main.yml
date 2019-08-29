@@ -1,0 +1,96 @@
+---
+# Initialize Percona Server for MySQL 5.7
+
+    - name: Percona Server for MySQL   | Install Percona Client
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - Percona-Server-client-57
+
+    - name: Percona Server for MySQL   | Remove MariaDB Client
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=absent
+      with_items:
+        - mariadb-libs
+
+    - name: Percona Server for MySQL   | Install Percona Server
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - Percona-Server-server-57
+        - MySQL-python
+
+    - name: Percona Server for MySQL   | Fix selinux
+      sefcontext:
+        target: "{{ data_partition }}/mysql(/.*)?"
+        setype: mysqld_db_t
+        state: present
+
+    - name: Percona Server for MySQL   | Create directory
+      file:
+        path: "{{ data_partition }}/mysql"
+        mode: 0751
+        owner: mysql
+        group: mysql
+        state: directory
+
+    - name: Percona Server for MySQL   | Change configuration
+      ini_file:
+        dest: /etc/percona-server.conf.d/mysqld.cnf
+        section: mysqld
+        option: datadir
+        value: "{{ data_partition }}/mysql"
+
+    - name: cloud-init                 | Fix start-up sequence
+      replace:
+        dest: /usr/lib/systemd/system/mysqld.service
+        regexp: 'After=syslog.target'
+        replace: 'After=chronyd.service syslog.target'
+
+    - name: cloud-init                 | Wait for sync time
+      replace:
+        dest: /usr/lib/systemd/system/mysqld.service
+        regexp: 'ExecStartPre=/usr/bin/mysqld_pre_systemd'
+        replace: 'ExecStartPre=/usr/bin/sleep 10\nExecStartPre=/usr/bin/mysqld_pre_systemd'
+
+    - name: Percona Server for MySQL   | stat /root/.my.cnf
+      stat: path=/root/.my.cnf
+      register: root_mycnf_file
+
+    - name: Percona Server for MySQL   | Add password generator script
+      when: not root_mycnf_file.stat.exists
+      copy:
+        content: |
+          #!/bin/sh
+
+          TEMP_PASS=$(grep 'temporary password' /var/log/mysqld.log  | sed -e 's/.*localhost: //' | tail -1)
+          NEW_PASS=$(dd if=/dev/urandom bs=1 count=256 2>/dev/null | tr -cd '[:alnum:],.!@#$%^&*' | head -c32)
+          mysql "-p${TEMP_PASS}" --connect-expired-password -e "SET PASSWORD = PASSWORD('$NEW_PASS');"
+          echo "[client]
+          password = '$NEW_PASS'" > /root/.my.cnf
+          sed -e "s/${TEMP_PASS}/${NEW_PASS}/" -i'' /var/log/mysqld.log
+
+          SOURCE=$(
+              cat /var/lib/cloud/data/status.json 2>/dev/null \
+                  | python -c 'import json, sys; print json.load(sys.stdin)["v1"]["datasource"];' 2>/dev/null
+          )
+          IP=$(ip route get 1 2>/dev/null | awk '{print $NF;exit}')
+          if [ "x$SOURCE" = "xDataSourceEc2" ]; then
+              IP=$(curl --connect-timeout 5 -s http://169.254.169.254/latest/meta-data/public-ipv4)
+          fi
+          if [ -z "$IP" ]; then
+              IP=$(ip addr show up | grep 'inet ' | awk '{print$2}' | cut -d '/' -f 1 | grep -v '^127.')
+          fi
+
+          echo "
+
+          +++++++++++++++++++++++++++ Percona Server for MySQL +++++++++++++++++++++++++++
+
+                IP:      ${IP}
+
+          ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+          " | tee -a /dev/tty0
+
+        dest: /var/lib/cloud/scripts/per-once/init-mysql-password
+        mode: 0755
+

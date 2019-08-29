@@ -1,0 +1,60 @@
+---
+- hosts: localhost
+  become: yes
+  gather_facts: yes
+  vars:
+     pmm_testing_repo: "original testing"
+
+  tasks:
+# It is a workaround until we clean up pmm2-client rpms from pmm2-components repo
+#    - name: PMM                        | Enable testing repo for pmm2-client
+#      command: percona-release enable {{ pmm_testing_repo }}
+
+    - name: pmm-agent                  | Setup pmm-agent
+      command: >
+        pmm-agent setup
+        --config-file=/usr/local/percona/pmm-agent.yaml
+        --skip-registration
+        --id=pmm-server
+        --server-address=127.0.0.1:443
+        --server-insecure-tls
+
+    - name: Supervisord stop           | Stop supervisord service for AMI/OVF
+      when: ansible_virtualization_type != "docker"
+      service: name=supervisord state=stopped enabled=yes
+
+    - name: Supervisord stop           | Stop supervisord service for docker
+      when: ansible_virtualization_type == "docker"
+      shell: supervisorctl shutdown
+
+    - name: Cleanup logs               | Cleanup logs
+      file: path={{ item }} state=absent
+      with_items:
+        - /srv/logs/clickhouse-server.err.log
+        - /srv/logs/clickhouse-server.log
+        - /srv/logs/clickhouse-server.startup.log
+        - /srv/logs/cron.log
+        - /srv/logs/dashboard-upgrade.log
+        - /srv/logs/grafana.log
+        - /srv/logs/nginx.startup.log
+        - /srv/logs/pmm-agent.log
+        # - /srv/logs/pmm-configurator.log
+        # - /srv/logs/pmm-manage.log
+        - /srv/logs/pmm-managed.log
+        - /srv/logs/postgres.log
+        - /srv/logs/postgres.startup.log
+        - /srv/logs/prometheus.log
+        - /srv/logs/qan-api2.log
+        - /var/log/yum.log
+        - /var/log/grafana/grafana.log
+        - /var/log/supervisor/supervisord.log
+        - /srv/prometheus/data
+        - /tmp/RPMS
+        - /var/log/secure
+        - /var/log/wtmp
+
+    - name: Create dirs                 | Create dirs
+      file: path={{ item }} state=directory owner=pmm group=pmm
+      with_items:
+        - /srv/prometheus/data
+        - /srv/logs

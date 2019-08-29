@@ -1,0 +1,155 @@
+---
+
+    - name: Install phpMyAdmin
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - nginx
+        - php-fpm
+        - phpMyAdmin
+
+    - name: PMM                        | Fix nginx config
+      replace:
+        dest: /etc/nginx/nginx.conf
+        regexp: '^(\s*)listen'
+        replace: '\1#listen'
+
+    - name: NGINX SSL Certificate      | Add script
+      copy:
+        content: |
+          #!/bin/sh
+
+          set -o errexit
+
+          mkdir -p /srv/nginx
+
+          if [ ! -e /srv/nginx/dhparam.pem ]; then
+              openssl dhparam -out /srv/nginx/dhparam.pem 2048
+          fi
+
+          if [ ! -e /srv/nginx/ca-certs.pem ]; then
+              # Fetch letsencrypt chain
+              curl https://letsencrypt.org/certs/isrgrootx1.pem                          > /srv/nginx/ca-certs.pem
+              curl https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem       >> /srv/nginx/ca-certs.pem
+              curl https://letsencrypt.org/certs/letsencryptauthorityx1.pem             >> /srv/nginx/ca-certs.pem
+              curl https://www.identrust.com/certificates/trustid/root-download-x3.html >> /srv/nginx/ca-certs.pem
+          fi
+
+          if [ ! -e /srv/nginx/certificate.conf ]; then
+              echo "
+                  [ req ]
+                  distinguished_name = req_distinguished_name
+                  prompt             = no
+
+                  [ req_distinguished_name ]
+                  O                  = Main Org.
+              " > /srv/nginx/certificate.conf
+          fi
+
+          if [ ! -e /srv/nginx/certificate.key -o ! -e /srv/nginx/certificate.crt ]; then
+              openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+                  -keyout /srv/nginx/certificate.key \
+                  -out    /srv/nginx/certificate.crt \
+                  -config /srv/nginx/certificate.conf
+              chcon -R -t httpd_config_t /srv/nginx
+          fi
+        dest: /var/lib/cloud/scripts/per-boot/generate-ssl-certificate
+        mode: 0755
+
+    - name: NGINX SSL Certificate      | Check certificate file
+      stat: path=/srv/nginx/certificate.crt
+      register: certificate_file
+
+    - name: NGINX SSL Certificate      | Generate certificate
+      when: not certificate_file.stat.exists
+      command: /var/lib/cloud/scripts/per-boot/generate-ssl-certificate
+
+    - name: NGINX                      | Restart on failure
+      ini_file:
+        dest: /usr/lib/systemd/system/nginx.service
+        section: Service
+        option: Restart
+        value: on-failure
+
+    - name: NGINX                      | Restart on failure
+      ini_file:
+        dest: /usr/lib/systemd/system/nginx.service
+        section: Service
+        option: RestartSec
+        value: 10s
+
+    - name: NGINX config
+      copy:
+        content: |
+            server {
+                listen                  80;
+                listen                  443 ssl;
+                server_name             _;
+                server_tokens           off;
+
+                ssl_certificate         /srv/nginx/certificate.crt;
+                ssl_certificate_key     /srv/nginx/certificate.key;
+                ssl_trusted_certificate /srv/nginx/ca-certs.pem;
+                ssl_dhparam             /srv/nginx/dhparam.pem;
+
+                root                    /usr/share/phpMyAdmin;
+                index                   index.php;
+                location ~ /(libraries|setup/frames|setup/libs) {
+                    deny all;
+                    return 404;
+                }
+                location ~ \.php$ {
+                    include             fastcgi_params;
+                    fastcgi_pass        127.0.0.1:9000;
+                    fastcgi_index       index.php;
+                    fastcgi_param       SCRIPT_FILENAME /usr/share/phpMyAdmin$fastcgi_script_name;
+                }
+            }
+        dest: /etc/nginx/conf.d/phpMyAdmin.conf
+        mode: 0644
+
+    - name: Add firewalld rule
+      when: ansible_os_family == 'RedHat'
+      firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+      with_items:
+          - 80/tcp
+          - 443/tcp
+
+    - name: php session dir
+      file:
+        path: /var/lib/php/session
+        mode: 0751
+        owner: apache
+        group: apache
+        state: directory
+
+    - name: Start services
+      service: name={{ item }} state=started enabled=yes
+      with_items:
+        - nginx
+        - php-fpm
+
+    - name: ForceSSL
+      replace:
+        dest: /usr/share/phpMyAdmin/libraries/config.default.php
+        regexp: "cfg\\['ForceSSL'\\] = false"
+        replace: "cfg['ForceSSL'] = true"
+
+    - name: ServerLibraryDifference_DisableWarning
+      replace:
+        dest: /usr/share/phpMyAdmin/libraries/config.default.php
+        regexp: "cfg\\['ServerLibraryDifference_DisableWarning'\\] = false"
+        replace: "cfg['ServerLibraryDifference_DisableWarning'] = true"
+
+    - name: Add blowfish_secret generator script
+      when: not root_mycnf_file.stat.exists
+      copy:
+        content: |
+          #!/bin/sh
+
+          NEW_PASS=$(dd if=/dev/urandom bs=1 count=256 2>/dev/null | tr -cd '[:alnum:]' | head -c32)
+          sed -i -e "s/\(cfg\['blowfish_secret'\] = \)''/\1'$NEW_PASS'/" /usr/share/phpMyAdmin/libraries/config.default.php
+
+        dest: /var/lib/cloud/scripts/per-once/init-phpmyadmin-secret
+        mode: 0755
+

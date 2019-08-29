@@ -10,7 +10,7 @@ if [ -f "${docker_tarball}" ]; then
     exit 0
 fi
 
-cp ${root_dir}/build/pmm-server-docker/* ${rpms_dir}/../
+cp -r ${root_dir}/build/pmm-server-docker/* ${rpms_dir}/../
 git -C ${root_dir} rev-parse HEAD > ${rpms_dir}/../gitCommit
 docker run --rm -v ${rpms_dir}:/home/builder/rpm/RPMS ${rpmbuild_docker_image} sh -c "
     sudo chown -R builder /home/builder/rpm/RPMS

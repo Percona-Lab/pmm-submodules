@@ -1,0 +1,91 @@
+---
+
+    - name: NGINX                      | Install
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - nginx
+
+    - name: NGINX                      | Fix nginx config
+      replace:
+        dest: /etc/nginx/nginx.conf
+        regexp: '^(\s*)listen'
+        replace: '\1#listen'
+
+    - name: NGINX SSL Certificate      | Add script
+      copy:
+        content: |
+          #!/bin/sh
+
+          set -o errexit
+
+          mkdir -p /srv/nginx
+
+          if [ ! -e /srv/nginx/dhparam.pem ]; then
+              openssl dhparam -out /srv/nginx/dhparam.pem 2048
+          fi
+
+          if [ ! -e /srv/nginx/ca-certs.pem ]; then
+              # Fetch letsencrypt chain
+              curl https://letsencrypt.org/certs/isrgrootx1.pem                          > /srv/nginx/ca-certs.pem
+              curl https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem       >> /srv/nginx/ca-certs.pem
+              curl https://letsencrypt.org/certs/letsencryptauthorityx1.pem             >> /srv/nginx/ca-certs.pem
+              curl https://www.identrust.com/certificates/trustid/root-download-x3.html >> /srv/nginx/ca-certs.pem
+          fi
+
+          if [ ! -e /srv/nginx/certificate.conf ]; then
+              echo "
+                  [ req ]
+                  distinguished_name = req_distinguished_name
+                  prompt             = no
+
+                  [ req_distinguished_name ]
+                  O                  = Main Org.
+              " > /srv/nginx/certificate.conf
+          fi
+
+          if [ ! -e /srv/nginx/certificate.key -o ! -e /srv/nginx/certificate.crt ]; then
+              openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+                  -keyout /srv/nginx/certificate.key \
+                  -out    /srv/nginx/certificate.crt \
+                  -config /srv/nginx/certificate.conf
+              chcon -R -t httpd_config_t /srv/nginx
+          fi
+        dest: /var/lib/cloud/scripts/per-boot/generate-ssl-certificate
+        mode: 0755
+
+    - name: NGINX SSL Certificate      | Check certificate file
+      stat: path=/srv/nginx/certificate.crt
+      register: certificate_file
+
+    - name: NGINX SSL Certificate      | Generate certificate
+      when: not certificate_file.stat.exists
+      command: /var/lib/cloud/scripts/per-boot/generate-ssl-certificate
+
+    - name: NGINX                      | Restart on failure
+      ini_file:
+        dest: /usr/lib/systemd/system/nginx.service
+        section: Service
+        option: Restart
+        value: on-failure
+
+    - name: NGINX                      | Restart on failure
+      ini_file:
+        dest: /usr/lib/systemd/system/nginx.service
+        section: Service
+        option: RestartSec
+        value: 10s
+
+    - name: NGINX                      | Add firewalld rule
+      when: ansible_os_family == 'RedHat'
+      firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+      with_items:
+          - 80/tcp
+          - 443/tcp
+
+    - name: NGINX                      | Allow NGINX SELinux
+      seboolean:
+        name: httpd_can_network_connect
+        state: yes
+        persistent: yes
+

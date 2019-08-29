@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+#^syntax detection
+ 
+site "https://galaxy.ansible.com/api/v1";
+ 
+#role "saucelabs-ansible.awscli"
+#role "saucelabs-ansible.pip"

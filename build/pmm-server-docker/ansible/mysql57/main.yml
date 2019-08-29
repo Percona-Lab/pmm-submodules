@@ -1,0 +1,85 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+  vars:
+    data_partition: "/data"
+  roles:
+    - cloud-node
+    - mysql-init
+
+  tasks:
+    - name: Install console tools
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - screen
+        - wget
+        - telnet
+        - curl
+        - qpress
+        - yum-utils
+        - cronie
+        - policycoreutils
+        - policycoreutils-python
+        - python-boto
+        - python-setuptools
+        - python-requests
+        - rsync
+        - sysstat
+        - net-tools
+        - lsof
+        - vim
+        - tmux
+        - innotop
+
+    - name: Install Percona tools
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - percona-toolkit
+        - percona-xtrabackup
+        - pmm-client
+
+    - name: Add mydumper repository
+      when: ansible_os_family == 'RedHat'
+      yum_repository:
+        name: twindb_main
+        description: twindb_main
+        baseurl: https://packagecloud.io/twindb/main/el/7/$basearch
+        gpgkey: https://packagecloud.io/twindb/main/gpgkey
+        gpgcheck: no
+
+    - name: Install mydumper
+      when: ansible_os_family == 'RedHat'
+      yum: name={{ item }} state=installed
+      with_items:
+        - Percona-Server-devel-57
+        - mydumper
+
+    - name: Add firewalld rule
+      when: ansible_os_family == 'RedHat'
+      firewalld: port={{ item }} permanent=true state=enabled immediate=yes
+      with_items:
+          - 3306/tcp
+          - 42000-42010/tcp
+
+    - name: cloud-init                 | Fix start-up sequence
+      replace:
+        dest: /usr/lib/systemd/system/cloud-final.service
+        regexp: 'After='
+        replace: 'After=mysqld.service '
+
+    - name: cloud-init                 | Change cloud user
+      when: ansible_virtualization_type == "virtualbox"
+      replace:
+        dest: /etc/cloud/cloud.cfg
+        regexp: 'name: centos'
+        replace: 'name: vagrant'
+
+    - name: PMM                        | Delete centos user
+      shell: cd /tmp; nohup sh -c "trap 'userdel -r centos && sync' EXIT; sleep 600" </dev/null >/dev/null 2>&1 &
+
+    - name: PMM                        | Delete Azure user
+      shell: cd /tmp; nohup sh -c "trap '/usr/sbin/waagent -force -deprovision+user && sync' EXIT; sleep 600" </dev/null >/dev/null 2>&1 &
+
