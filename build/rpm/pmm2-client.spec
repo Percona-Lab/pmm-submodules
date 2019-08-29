@@ -55,10 +55,10 @@ install -m 0755 bin/mysqld_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/postgres_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/mongodb_exporter $RPM_BUILD_ROOT/usr/local/percona/
 install -m 0755 bin/proxysql_exporter $RPM_BUILD_ROOT/usr/local/percona/
-install -m 0755 config/pmm-agent.yaml $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0755 bin/rds_exporter $RPM_BUILD_ROOT/usr/local/percona/
 %if 0%{?systemd}
-  install -m 755 -d $RPM_BUILD_ROOT/%{_unitdir}
-  install -m 644 config/pmm-agent.service %{buildroot}/%{_unitdir}/pmm-agent.service
+  install -m 0755 -d $RPM_BUILD_ROOT/%{_unitdir}
+  install -m 0644 config/pmm-agent.service %{buildroot}/%{_unitdir}/pmm-agent.service
 %else
   install -m 0755 -d $RPM_BUILD_ROOT/etc/rc.d/init.d
   install -m 0750 config/pmm-agent.init $RPM_BUILD_ROOT/etc/rc.d/init.d/pmm-agent
@@ -92,10 +92,16 @@ fi
       /usr/bin/systemctl enable pmm-agent >/dev/null 2>&1 || :
       /usr/bin/systemctl daemon-reload
       /usr/bin/systemctl start pmm-agent.service
+      if [ ! -f /usr/local/percona/pmm-agent.yaml ]; then
+          install -m 0640 -o pmm-agent -g pmm-agent /dev/null /usr/local/percona/pmm-agent.yaml
+      fi
   fi
 %else
   if [ $1 == 1 ]; then
       install -m 0640 -o pmm-agent -g pmm-agent /dev/null /var/log/pmm-agent.log
+      if [ ! -f /usr/local/percona/pmm-agent.yaml ]; then
+          install -m 0640 -o pmm-agent -g pmm-agent /dev/null /usr/local/percona/pmm-agent.yaml
+      fi
       /sbin/chkconfig --add pmm-agent
       /sbin/service pmm-agent start >/dev/null 2>&1 ||:
   fi
@@ -145,6 +151,9 @@ if [ $1 == 0 ]; then
   if /usr/bin/id -g pmm-agent > /dev/null 2>&1; then
     /usr/sbin/userdel pmm-agent > /dev/null 2>&1
     /usr/sbin/groupdel pmm-agent > /dev/null 2>&1 || true
+    if [ -f /usr/local/percona/pmm-agent.yaml ]; then
+        rm -r /usr/local/percona/pmm-agent.yaml
+    fi
     for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter proxysql_exporter
     do
       if [ -L /usr/bin/$file ]; then
@@ -168,4 +177,5 @@ fi
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/postgres_exporter
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/proxysql_exporter
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/mongodb_exporter
-%attr(0660,pmm-agent,pmm-agent) %config(noreplace) /usr/local/percona/pmm-agent.yaml
+%attr(-,pmm-agent,pmm-agent) /usr/local/percona/rds_exporter
+%attr(0660,pmm-agent,pmm-agent) %ghost /usr/local/percona/pmm-agent.yaml

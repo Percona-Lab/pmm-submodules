@@ -10,12 +10,6 @@
         name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
         state: installed
 
-    - name: Packages                   | Add Postgres repository
-      when: ansible_os_family == 'RedHat'
-      yum:
-        name: https://yum.postgresql.org/10/redhat/rhel-6-x86_64/pgdg-redhat10-10-2.noarch.rpm
-        state: installed
-
     - name: Packages                   | Add Nginx repository
       yum_repository:
         name: nginx
@@ -31,6 +25,17 @@
         baseurl: https://repo.percona.com/pmm2-components/yum/laboratory/7/RPMS/x86_64/
         gpgcheck: yes
         enabled: no
+        gpgkey: file:///etc/pki/rpm-gpg/PERCONA-PACKAGING-KEY
+
+# !!! WARNING _experimental_ has to be replaced by _release_ after GA
+    - name: Postgres                   | Add PostgreSQL YUM repository
+      when: ansible_os_family == 'RedHat'
+      yum_repository:
+        name: percona-ppg-11-experimental
+        description: PostgreSQL YUM repository - x86_64
+        baseurl: http://repo.percona.com/ppg-11/yum/experimental/7/RPMS/x86_64
+        gpgcheck: yes
+        enabled: yes
         gpgkey: file:///etc/pki/rpm-gpg/PERCONA-PACKAGING-KEY
 
     - name: Packages                   | Update OS
@@ -129,6 +134,7 @@
       file: path={{ item }} state=directory owner=pmm
       with_items:
         - /srv/prometheus/data
+        - /srv/prometheus/rules
         - /srv/logs
 
     - name: cloud-init                 | Create dirs due to https://github.com/yandex/ClickHouse/pull/3785
@@ -169,9 +175,9 @@
       when: ansible_os_family == 'RedHat'
       yum:
         name:
-          - postgresql10-server
-          - postgresql10-contrib
-          - postgresql10
+          - percona-postgresql11-server
+          - percona-postgresql11-contrib
+          - percona-postgresql11
           - python-psycopg2
         state: installed
 
@@ -210,16 +216,9 @@
           - pmm-manage
           - pmm-managed
           - pmm-update
-          - rds_exporter
           - percona-clickhouse-client
           - percona-clickhouse-server
         enablerepo: local
-
-    - name: PMM                        | Fix nginx config
-      replace:
-        dest: /etc/nginx/nginx.conf
-        regexp: '^(\s*)listen'
-        replace: '\1#listen'
 
     - name: PMM                        | Fix nginx default config
       replace:
@@ -332,7 +331,7 @@
         - /srv/postgres
 
     - name: Postgres                   | Create Postgres data cluster
-      command: su postgres -c "/usr/pgsql-10/bin/initdb -D /srv/postgres"
+      command: su postgres -c "/usr/pgsql-11/bin/initdb -D /srv/postgres"
 
     - name: Postgres                   | Create Postgres log file
       copy:

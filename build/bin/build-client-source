@@ -55,6 +55,7 @@ main() {
     prepare_tarball proxysql_exporter
     prepare_tarball node_exporter
     prepare_tarball clickhouse_exporter
+    prepare_tarball rds_exporter
     prepare_tarball pid-watchdog
 
     tar -C $(dirname ${source_dir}) -zcpf ${source_tarball} $(basename ${source_dir})

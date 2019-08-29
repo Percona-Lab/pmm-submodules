@@ -447,7 +447,6 @@ build_source_deb(){
     cd ${NAME}-${VERSION}
     mv bin/* ../${NAME}-${VERSION}_all/distro/
     mv debian ../${NAME}-${VERSION}_all/
-    mv config/pmm-agent.yaml ../${NAME}-${VERSION}_all/
     mv config/pmm-agent.service ../${NAME}-${VERSION}_all/debian/pmm2-client.pmm-agent.service
     cd ../
 
@@ -685,7 +684,7 @@ if [ -n "$pmm_release" ]; then
 fi
 
 REVISION=0
-GO_TARBALL="https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz"
+GO_TARBALL="https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz"
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
 get_system
 install_deps
