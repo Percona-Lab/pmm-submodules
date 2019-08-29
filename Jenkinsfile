@@ -225,42 +225,36 @@ pipeline {
                 stage('Test: API') {
                     steps {
                         script {
-                           if (env.CHANGE_URL) {
-                                unstash 'IMAGE'
-                                def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                                def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
-                                def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
-                                def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                                runAPItests(IMAGE, CLIENT_URL, OWNER)
-                            }
+                            unstash 'IMAGE'
+                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                            runAPItests(IMAGE, CLIENT_URL, OWNER)
                         }
                     }
                 }
                 stage('Test: PMM-Testsuite') {
                     steps {
                         script {
-                           if (env.CHANGE_URL) {
-                                unstash 'IMAGE'
-                                def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                                def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
-                                def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
-                                def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                                runTestSuite(IMAGE, CLIENT_URL)
-                            }
+                            unstash 'IMAGE'
+                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                            runTestSuite(IMAGE, CLIENT_URL)
                         }
                     }
                 }
                 stage('Test: UI') {
                     steps {
                         script {
-                           if (env.CHANGE_URL) {
-                                unstash 'IMAGE'
-                                def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                                def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
-                                def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
-                                def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                                runUItests(IMAGE, CLIENT_URL)
-                            }
+                            unstash 'IMAGE'
+                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                            runUItests(IMAGE, CLIENT_URL)
                         }
                     }
                 }
