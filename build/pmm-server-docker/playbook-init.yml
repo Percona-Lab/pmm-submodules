@@ -165,14 +165,13 @@
         - /srv/logs/clickhouse-server.startup.log
         - /srv/logs/cron.log
         - /srv/logs/dashboard-upgrade.log
-        - /srv/logs/grafana.log
         - /srv/logs/nginx.startup.log
         - /srv/logs/pmm-agent.log
         # - /srv/logs/pmm-configurator.log
         # - /srv/logs/pmm-manage.log
         - /srv/logs/pmm-managed.log
-        - /srv/logs/postgres.log
-        - /srv/logs/postgres.startup.log
+        - /srv/logs/postgresql.log
+        - /srv/logs/postgresql.startup.log
         - /srv/logs/prometheus.log
         - /srv/logs/qan-api2.log
         - /var/log/yum.log
