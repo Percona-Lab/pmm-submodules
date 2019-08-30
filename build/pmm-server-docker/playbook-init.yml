@@ -39,20 +39,20 @@
     - name: PMM                        | Fix nginx config
       replace:
         dest: /etc/nginx/nginx.conf
-        regexp: '^(\s*)/var/log/nginx/error\.log(\s+.*)?$'
-        replace: '\1/srv/logs/nginx.error.log\2'
+        regexp: '/var/log/nginx/error\.log'
+        replace: '/srv/logs/nginx.error.log'
 
     - name: PMM                        | Fix nginx config
       replace:
         dest: /etc/nginx/nginx.conf
-        regexp: '^(\s*)/var/log/nginx/access\.log(\s+.*)?$'
-        replace: '\1/srv/logs/nginx.access.log\2'
+        regexp: '/var/log/nginx/access\.log'
+        replace: '/srv/logs/nginx.access.log'
 
     - name: PMM                        | Fix postgresql config
       replace:
         dest: /srv/postgres/postgresql.conf
-        regexp: 'log_directory = ''logs'
-        replace: 'log_directory = ''\.\./logs'
+        regexp: 'log_directory = (.)log'
+        replace: 'log_directory = \1../log'
 
     - name: PMM                        | Fix postgresql config
       replace:
