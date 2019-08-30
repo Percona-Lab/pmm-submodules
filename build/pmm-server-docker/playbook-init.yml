@@ -52,7 +52,7 @@
       replace:
         dest: /srv/postgres/postgresql.conf
         regexp: 'log_directory = ''logs'
-        replace: 'log_directory = ''../logs'
+        replace: 'log_directory = ''\.\./logs'
 
     - name: PMM                        | Fix postgresql config
       replace:
