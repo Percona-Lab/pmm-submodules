@@ -70,6 +70,12 @@
     - name: PMM                        | Start services
       shell: supervisord -c /etc/supervisord.conf &
 
+    - name: display postgres.startup.log & supervisord.log
+      debug: var=item
+      with_file:
+        - "/srv/logs/postgres.startup.log"
+        - "/var/log/supervisor/supervisord.log"
+
     - name: PMM                        | Wait for postgres start
       wait_for:
         port: 5432
