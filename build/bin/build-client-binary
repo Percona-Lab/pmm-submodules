@@ -94,6 +94,9 @@ main() {
     copy_component "pmm-submodules" "config"
     copy_component "pmm-submodules" "debian"
     copy_component "pmm-submodules" "rpm"
+    copy_component "node_exporter" "example.prom"
+    copy_component "mysqld_exporter" "queries-mysqld.yml"
+    copy_component "postgres_exporter" "queries-postgres.yml"
 
     rm -rf ${binary_tarball}
     mkdir -p $(dirname ${binary_tarball}) || :
