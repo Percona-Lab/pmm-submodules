@@ -48,6 +48,12 @@
         regexp: '/var/log/nginx/access\.log'
         replace: '/srv/logs/nginx.access.log'
 
+    - name: PMM                        | Fix nginx logrotate
+      replace:
+        dest: /etc/logrotate.d/nginx
+        regexp: '/var/log/nginx/'
+        replace: '/srv/logs/nginx.'
+
     - name: PMM                        | Fix postgresql config
       replace:
         dest: /srv/postgres/postgresql.conf
