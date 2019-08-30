@@ -216,6 +216,7 @@
           - pmm-manage
           - pmm-managed
           - pmm-update
+          - percona-dbaas-cli
           - percona-clickhouse-client
           - percona-clickhouse-server
         enablerepo: local
@@ -341,3 +342,20 @@
         group: postgres
         owner: postgres
         mode: 0644
+
+    - name: GCloud                   | Add GCloud YUM repository
+      when: ansible_os_family == 'RedHat'
+      yum_repository:
+        name: percona-ppg-11-experimental
+        description: PostgreSQL YUM repository - x86_64
+        baseurl: https://packages.cloud.google.com/yum/repos/cloud-sdk-el7-x86_64
+        gpgcheck: yes
+        enabled: yes
+        gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
+    - name: GCloud                   | Install GCloud
+      when: ansible_os_family == 'RedHat'
+      yum:
+        name:
+          - google-cloud-sdk
+          - kubectl

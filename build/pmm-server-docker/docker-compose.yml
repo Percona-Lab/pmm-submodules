@@ -2,7 +2,7 @@
 version: '3'
 services:
   pmm-k8s-server:
-    image: ${PMM_SERVER_IMAGE:-perconalab/pmm-server-fb:2.0.0-beta7-PMM-4417-k8s-button-7ebe0a5}
+    image: ${PMM_SERVER_IMAGE:-perconalab/pmm-server-fb:2.0.0-beta7-PMM-4417-k8s-button-4105b24}
     ports:
       - 127.0.0.1:443:443
   pmm-k8s-client:

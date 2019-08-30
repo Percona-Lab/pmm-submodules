@@ -52,6 +52,8 @@ CLIENT_NAME=${CONTAINER_NAME:-$HOSTNAME}
 
 wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/v1/readyz"
 
+rm -f pmm-agent.yaml
+
 pmm-agent setup \
   --force \
   --config-file=pmm-agent.yaml \

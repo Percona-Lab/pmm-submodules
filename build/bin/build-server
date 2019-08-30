@@ -20,6 +20,7 @@ ${bin_dir}/build-server-rpm percona-qan-api2 qan-api2
 ${bin_dir}/build-server-rpm percona-qan-app qan-app
 ${bin_dir}/build-server-rpm pmm-server
 ${bin_dir}/build-server-rpm pmm-update
+${bin_dir}/build-server-rpm percona-dbaas-cli
 
 # 3rd-party
 ${bin_dir}/build-server-rpm clickhouse
