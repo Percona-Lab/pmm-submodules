@@ -1,0 +1,8 @@
+/var/log/pmm-agent.log {
+        missingok
+        daily
+        notifempty
+        compress
+        copytruncate
+        rotate 5 
+}
