@@ -3,6 +3,8 @@
 set -o errexit
 set -o xtrace
 
+AGENT_CONFIG_FILE=/usr/local/percona/pmm-agent.yaml
+
 wait_for_url() {
     local URL=$1
     local RESPONSE=$2
@@ -56,7 +58,7 @@ rm -f /usr/local/percona/pmm-agent.yaml
 
 pmm-agent setup \
   --force \
-  --config-file=/usr/local/percona/pmm-agent.yaml \
+  --config-file=${AGENT_CONFIG_FILE} \
   --server-address=${PMM_SERVER} \
   --server-insecure-tls \
   --container-id=${HOSTNAME} \
@@ -81,7 +83,7 @@ if [ -n "${DB_HOST}" -a "${DB_PORT}" ]; then
     wait_for_port "${DB_HOST}" "${DB_PORT}"
 fi
 
-pmm-agent --config-file=/usr/local/percona/pmm-agent.yaml \
+pmm-agent --config-file=${AGENT_CONFIG_FILE} \
  --ports-min=${CLIENT_PORT_MIN:-30100} \
  --ports-max=${CLIENT_PORT_MAX:-30200} > /dev/null 2>&1 &
 
@@ -95,5 +97,7 @@ if [ -n "${DB_TYPE}" ]; then
 fi
 
 kill %1
+
+cat ${AGENT_CONFIG_FILE}
 
 exec "$@"

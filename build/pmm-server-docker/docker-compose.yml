@@ -9,7 +9,7 @@ services:
     depends_on:
       - "pmm-k8s-mysql"
       - "pmm-k8s-server"
-    image: ${PMM_CLIENT_IMAGE:-perconalab/pmm-client-fb:2.0.0-beta7-PMM-4417-k8s-button-7ebe0a5}
+    image: ${PMM_CLIENT_IMAGE:-perconalab/pmm-client-fb:2.0.0-beta7-PMM-4417-k8s-button-2abf7f3}
     ports:
       - 127.0.0.1:7777:7777
       - 127.0.0.1:30100-30200:30100-30200
