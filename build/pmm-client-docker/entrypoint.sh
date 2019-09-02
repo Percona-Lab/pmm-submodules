@@ -83,9 +83,15 @@ if [ -n "${DB_HOST}" -a "${DB_PORT}" ]; then
     wait_for_port "${DB_HOST}" "${DB_PORT}"
 fi
 
+cat ${AGENT_CONFIG_FILE}
+
 pmm-agent --config-file=${AGENT_CONFIG_FILE} \
  --ports-min=${CLIENT_PORT_MIN:-30100} \
- --ports-max=${CLIENT_PORT_MAX:-30200} > /dev/null 2>&1 &
+ --ports-max=${CLIENT_PORT_MAX:-30200} > /usr/local/percona/pmm-agent-tmp-log.log 2>&1 &
+
+wait_for_url "http://127.0.0.1:7777/Status"
+
+cat /usr/local/percona/pmm-agent-tmp-log.log
 
 if [ -n "${DB_TYPE}" ]; then
     pmm-admin add "${DB_TYPE}" \
@@ -97,7 +103,5 @@ if [ -n "${DB_TYPE}" ]; then
 fi
 
 kill %1
-
-cat ${AGENT_CONFIG_FILE}
 
 exec "$@"
