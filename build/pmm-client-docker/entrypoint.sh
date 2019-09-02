@@ -56,7 +56,7 @@ rm -f pmm-agent.yaml
 
 pmm-agent setup \
   --force \
-  --config-file=pmm-agent.yaml \
+  --config-file=/usr/local/percona/pmm-agent.yaml \
   --server-address=${PMM_SERVER} \
   --server-insecure-tls \
   --container-id=${HOSTNAME} \
@@ -81,7 +81,7 @@ if [ -n "${DB_HOST}" -a "${DB_PORT}" ]; then
     wait_for_port "${DB_HOST}" "${DB_PORT}"
 fi
 
-pmm-agent --config-file=pmm-agent.yaml \
+pmm-agent --config-file=/usr/local/percona/pmm-agent.yaml \
  --ports-min=${CLIENT_PORT_MIN:-30100} \
  --ports-max=${CLIENT_PORT_MAX:-30200} > /dev/null 2>&1 &
 
