@@ -165,6 +165,7 @@
         - /srv/logs/clickhouse-server.startup.log
         - /srv/logs/cron.log
         - /srv/logs/dashboard-upgrade.log
+        - /srv/logs/grafana.log
         - /srv/logs/nginx.startup.log
         - /srv/logs/pmm-agent.log
         # - /srv/logs/pmm-configurator.log
