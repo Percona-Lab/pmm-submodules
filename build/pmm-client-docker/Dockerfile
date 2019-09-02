@@ -33,6 +33,6 @@ WORKDIR /usr/local/percona/
 ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 7777
-EXPOSE 41000-41050
+EXPOSE 30100-30200
 
 CMD ["pmm-agent", "--config-file=pmm-agent.yaml", "--ports-min=30100", "--ports-max=30200"]
