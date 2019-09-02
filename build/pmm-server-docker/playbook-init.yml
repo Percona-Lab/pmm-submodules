@@ -176,8 +176,8 @@
         - /srv/logs/prometheus.log
         - /srv/logs/qan-api2.log
         - /var/log/yum.log
-        - /var/log/grafana/grafana.log
-        - /var/log/supervisor/supervisord.log
+        - /srv/logs/grafana.log
+        - /srv/logs/supervisord.log
 
     - name: PMM                        | Cleanup data
       file: path={{ item }} state=absent
