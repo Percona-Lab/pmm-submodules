@@ -33,6 +33,9 @@ pipeline {
     agent {
         label 'large-amazon'
     }
+    options {
+        disableConcurrentBuilds()
+    }
     stages {
         stage('Prepare') {
             when {
