@@ -89,7 +89,7 @@ pmm-agent --config-file=${AGENT_CONFIG_FILE} \
  --ports-min=${CLIENT_PORT_MIN:-30100} \
  --ports-max=${CLIENT_PORT_MAX:-30200} > /usr/local/percona/pmm-agent-tmp-log.log 2>&1 &
 
-wait_for_url "http://127.0.0.1:7777/Status"
+wait_for_url "http://127.0.0.1:7777"
 
 cat /usr/local/percona/pmm-agent-tmp-log.log
 
