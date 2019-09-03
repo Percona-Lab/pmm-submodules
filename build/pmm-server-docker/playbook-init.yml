@@ -192,3 +192,12 @@
         - /srv/prometheus/data
         - /srv/prometheus/rules
         - /srv/logs
+
+    - name: Postgres                   | Create Postgres log file
+      copy:
+        content: ""
+        dest: /srv/logs/postgresql.log
+        force: yes
+        group: postgres
+        owner: postgres
+        mode: 0644
