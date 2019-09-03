@@ -130,7 +130,7 @@ fi
       install -m 0640 -o pmm-agent -g pmm-agent /dev/null /var/log/pmm-agent.log
       if [ ! -f /usr/local/percona/pmm2/config/pmm-agent.yaml ]; then
           install -d -m 0755 /usr/local/percona/pmm2/config
-          install -m 0640 -o pmm-agent -g pmm-agent /dev/null /usr/local/percona/ppm2/config/pmm-agent.yaml
+          install -m 0640 -o pmm-agent -g pmm-agent /dev/null /usr/local/percona/pmm2/config/pmm-agent.yaml
       fi
       /sbin/chkconfig --add pmm-agent
       /sbin/service pmm-agent start >/dev/null 2>&1 ||:
