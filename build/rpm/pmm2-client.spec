@@ -9,7 +9,7 @@ Summary:        Percona Monitoring and Management Client
 Version:        %{version}
 Release:        %{release}%{?dist}
 Group:          Applications/Databases
-License:        AGPLv3
+License:        ASL 2.0
 Vendor:         Percona LLC
 URL:            https://percona.com
 Source:         pmm2-client-%{version}.tar.gz
