@@ -114,6 +114,11 @@ fi
 
 
 %post
+for file in pmm-admin pmm-agent
+do
+  %{__ln_s} -f /usr/local/percona/pmm2/bin/$file /usr/bin/$file
+  %{__ln_s} -f /usr/local/percona/pmm2/bin/$file /usr/sbin/$file
+done
 %if 0%{?systemd}
   %systemd_post pmm-agent.service
   if [ $1 == 1 ]; then
@@ -136,12 +141,6 @@ fi
       /sbin/service pmm-agent start >/dev/null 2>&1 ||:
   fi
 %endif
-
-for file in pmm-admin pmm-agent
-do
-  %{__ln_s} -f /usr/local/percona/pmm2/bin/$file /usr/bin/$file
-  %{__ln_s} -f /usr/local/percona/pmm2/bin/$file /usr/sbin/$file
-done
 
 if [ $1 -eq 2 ]; then
     %if 0%{?systemd}
