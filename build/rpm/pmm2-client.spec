@@ -117,13 +117,13 @@ fi
 %if 0%{?systemd}
   %systemd_post pmm-agent.service
   if [ $1 == 1 ]; then
-      /usr/bin/systemctl enable pmm-agent >/dev/null 2>&1 || :
-      /usr/bin/systemctl daemon-reload
-      /usr/bin/systemctl start pmm-agent.service
       if [ ! -f /usr/local/percona/pmm2/config/pmm-agent.yaml ]; then
           install -d -m 0755 /usr/local/percona/pmm2/config
           install -m 0640 -o pmm-agent -g pmm-agent /dev/null /usr/local/percona/pmm2/config/pmm-agent.yaml
       fi
+      /usr/bin/systemctl enable pmm-agent >/dev/null 2>&1 || :
+      /usr/bin/systemctl daemon-reload
+      /usr/bin/systemctl start pmm-agent.service
   fi
 %else
   if [ $1 == 1 ]; then
