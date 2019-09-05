@@ -87,4 +87,4 @@
 [submodule "percona-dbaas-cli"]
 	path = sources/percona-dbaas-cli/src/github.com/Percona-Lab/percona-dbaas-cli
 	url = https://github.com/Percona-Lab/percona-dbaas-cli
-	branch = PMM-4417-k8s-button
+	branch = master
