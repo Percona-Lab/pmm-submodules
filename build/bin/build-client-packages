@@ -259,7 +259,7 @@ install_deps() {
     if [ "x$OS" = "xrpm" ]
     then
         add_percona_yum_repo
-	yum -y install git wget rpmdevtools bison yum-utils rpm-build
+        yum -y install git wget rpmdevtools bison yum-utils rpm-build
         install_golang
     else
         add_percona_apt_repo
