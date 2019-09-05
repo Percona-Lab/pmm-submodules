@@ -177,7 +177,6 @@ pipeline {
 
                             # 1st-party
                             build-server-rpm percona-dashboards grafana-dashboards
-                            build-server-rpm pmm-manage
                             build-server-rpm pmm-managed
                             build-server-rpm percona-qan-api2 qan-api2
                             build-server-rpm percona-qan-app qan-app
@@ -186,7 +185,6 @@ pipeline {
 
                             # 3rd-party
                             build-server-rpm clickhouse
-                            build-server-rpm rds_exporter
                             build-server-rpm prometheus
                             build-server-rpm grafana
                         "
