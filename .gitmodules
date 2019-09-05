@@ -75,7 +75,7 @@
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
-	branch = PMM-2.0
+	branch = PMM-4345-remove-rds_exporter-rpm
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
@@ -87,4 +87,4 @@
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
-	branch = master
+	branch = PMM-4345-remove-rds_exporter-rpm
