@@ -24,6 +24,9 @@ RUN install -d -o nobody -g nobody -m 0775 /usr/local/percona/pmm2/config \
      /usr/local/percona/pmm2/collectors/custom-queries/postgres/medium-resolution \
      /usr/local/percona/pmm2/collectors/custom-queries/postgres/low-resolution
 
+RUN install -d -o nobody -g nobody -m 0775 /usr/local/percona/pmm2/exporters && \
+    cp /usr/bin/*_exporter /usr/local/percona/pmm2/exporters/
+
 COPY entrypoint.sh /entrypoint.sh
 
 USER nobody
