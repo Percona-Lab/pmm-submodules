@@ -10,29 +10,30 @@ RUN tar -zxpf /tmp/pmm2-client.tar.gz -C /tmp \
     && cp bin/* /usr/bin/ \
     && rm -rf /tmp/pmm2-client-*
 
-RUN install -d -o nobody -g nobody -m 0775 /usr/local/percona \
+RUN install -d -o nobody -g nobody -m 0775 /usr/local/percona/pmm2/config \
+    touch /usr/local/percona/pmm2/config/pmm-agent.yaml \
     && chmod -R g+rwx /usr/local/percona \
     && chown -R nobody:nobody /usr/local/percona \
     && install -d -o nobody -g nobody -m 0775 /run /var/log /etc/rc.d/init.d \
-    && install -d -o nobody -g nobody -m 0775 /usr/local/percona/pmm-client/textfile-collector/high-resolution \
-     /usr/local/percona/pmm-client/textfile-collector/medium-resolution \
-     /usr/local/percona/pmm-client/textfile-collector/low-resolution \
-     /usr/local/percona/pmm-client/custom-queries/mysql/high-resolution \
-     /usr/local/percona/pmm-client/custom-queries/mysql/medium-resolution \
-     /usr/local/percona/pmm-client/custom-queries/mysql/low-resolution \
-     /usr/local/percona/pmm-client/custom-queries/postgres/high-resolution \
-     /usr/local/percona/pmm-client/custom-queries/postgres/medium-resolution \
-     /usr/local/percona/pmm-client/custom-queries/postgres/low-resolution
+    && install -d -o nobody -g nobody -m 0775 /usr/local/percona/pmm2/collectors/textfile-collector/high-resolution \
+     /usr/local/percona/pmm2/collectors/textfile-collector/medium-resolution \
+     /usr/local/percona/pmm2/collectors/textfile-collector/low-resolution \
+     /usr/local/percona/pmm2/collectors/custom-queries/mysql/high-resolution \
+     /usr/local/percona/pmm2/collectors/custom-queries/mysql/medium-resolution \
+     /usr/local/percona/pmm2/collectors/custom-queries/mysql/low-resolution \
+     /usr/local/percona/pmm2/collectors/custom-queries/postgres/high-resolution \
+     /usr/local/percona/pmm2/collectors/custom-queries/postgres/medium-resolution \
+     /usr/local/percona/pmm2/collectors/custom-queries/postgres/low-resolution
 
 COPY entrypoint.sh /entrypoint.sh
 
 USER nobody
 
-WORKDIR /usr/local/percona/
+WORKDIR /usr/local/percona/pmm2/
 
 ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 7777
 EXPOSE 30100-30200
 
-CMD ["pmm-agent", "--config-file=/usr/local/percona/pmm-agent.yaml", "--ports-min=30100", "--ports-max=30200"]
+CMD ["pmm-agent", "--config-file=/usr/local/percona/pmm2/config/pmm-agent.yaml", "--ports-min=30100", "--ports-max=30200"]

@@ -177,7 +177,6 @@ pipeline {
 
                             # 1st-party
                             build-server-rpm percona-dashboards grafana-dashboards
-                            build-server-rpm pmm-manage
                             build-server-rpm pmm-managed
                             build-server-rpm percona-qan-api2 qan-api2
                             build-server-rpm percona-qan-app qan-app
@@ -187,7 +186,6 @@ pipeline {
 
                             # 3rd-party
                             build-server-rpm clickhouse
-                            build-server-rpm rds_exporter
                             build-server-rpm prometheus
                             build-server-rpm grafana
                         "
@@ -222,6 +220,11 @@ pipeline {
             }
         }
         stage('Tests Execution') {
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
             parallel {
                 stage ('Generate FB tags'){
                     steps{
@@ -284,7 +287,9 @@ pipeline {
         always {
             script {
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
-                    slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
+                    if (env.CHANGE_URL) {
+                        slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
+                    }
                 } else {
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result}"
                 }

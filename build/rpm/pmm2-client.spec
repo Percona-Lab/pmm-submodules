@@ -9,7 +9,7 @@ Summary:        Percona Monitoring and Management Client
 Version:        %{version}
 Release:        %{release}%{?dist}
 Group:          Applications/Databases
-License:        AGPLv3
+License:        ASL 2.0
 Vendor:         Percona LLC
 URL:            https://percona.com
 Source:         pmm2-client-%{version}.tar.gz
@@ -47,15 +47,43 @@ as possible.
 
 %install
 install -m 0755 -d $RPM_BUILD_ROOT/usr/sbin
-install -m 0755 bin/pmm-admin $RPM_BUILD_ROOT/usr/sbin/
-install -m 0755 bin/pmm-agent $RPM_BUILD_ROOT/usr/sbin/
-install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/qan-agent/bin
-install -m 0755 bin/node_exporter $RPM_BUILD_ROOT/usr/local/percona/
-install -m 0755 bin/mysqld_exporter $RPM_BUILD_ROOT/usr/local/percona/
-install -m 0755 bin/postgres_exporter $RPM_BUILD_ROOT/usr/local/percona/
-install -m 0755 bin/mongodb_exporter $RPM_BUILD_ROOT/usr/local/percona/
-install -m 0755 bin/proxysql_exporter $RPM_BUILD_ROOT/usr/local/percona/
-install -m 0755 bin/rds_exporter $RPM_BUILD_ROOT/usr/local/percona/
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/bin
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/config
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/textfile-collector
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/textfile-collector/low-resolution
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/textfile-collector/medium-resolution
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/textfile-collector/high-resolution
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/mysql
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/mysql/low-resolution
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/mysql/medium-resolution
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/mysql/high-resolution
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution
+install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution
+
+
+install -m 0755 bin/pmm-admin $RPM_BUILD_ROOT/usr/local/percona/pmm2/bin
+install -m 0755 bin/pmm-agent $RPM_BUILD_ROOT/usr/local/percona/pmm2/bin
+install -m 0755 bin/node_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
+install -m 0755 bin/mysqld_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
+install -m 0755 bin/postgres_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
+install -m 0755 bin/mongodb_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
+install -m 0755 bin/proxysql_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
+install -m 0755 bin/rds_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
+install -m 0660 example.prom $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/textfile-collector/low-resolution/
+install -m 0660 example.prom $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/textfile-collector/medium-resolution/
+install -m 0660 example.prom $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/textfile-collector/high-resolution/
+install -m 0660 queries-mysqld.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/mysql/low-resolution/
+install -m 0660 queries-mysqld.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/mysql/medium-resolution/
+install -m 0660 queries-mysqld.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/mysql/high-resolution/
+install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution/
+install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
+install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
 %if 0%{?systemd}
   install -m 0755 -d $RPM_BUILD_ROOT/%{_unitdir}
   install -m 0644 config/pmm-agent.service %{buildroot}/%{_unitdir}/pmm-agent.service
@@ -86,31 +114,33 @@ fi
 
 
 %post
+for file in pmm-admin pmm-agent
+do
+  %{__ln_s} -f /usr/local/percona/pmm2/bin/$file /usr/bin/$file
+  %{__ln_s} -f /usr/local/percona/pmm2/bin/$file /usr/sbin/$file
+done
 %if 0%{?systemd}
   %systemd_post pmm-agent.service
   if [ $1 == 1 ]; then
+      if [ ! -f /usr/local/percona/pmm2/config/pmm-agent.yaml ]; then
+          install -d -m 0755 /usr/local/percona/pmm2/config
+          install -m 0640 -o pmm-agent -g pmm-agent /dev/null /usr/local/percona/pmm2/config/pmm-agent.yaml
+      fi
       /usr/bin/systemctl enable pmm-agent >/dev/null 2>&1 || :
       /usr/bin/systemctl daemon-reload
       /usr/bin/systemctl start pmm-agent.service
-      if [ ! -f /usr/local/percona/pmm-agent.yaml ]; then
-          install -m 0640 -o pmm-agent -g pmm-agent /dev/null /usr/local/percona/pmm-agent.yaml
-      fi
   fi
 %else
   if [ $1 == 1 ]; then
       install -m 0640 -o pmm-agent -g pmm-agent /dev/null /var/log/pmm-agent.log
-      if [ ! -f /usr/local/percona/pmm-agent.yaml ]; then
-          install -m 0640 -o pmm-agent -g pmm-agent /dev/null /usr/local/percona/pmm-agent.yaml
+      if [ ! -f /usr/local/percona/pmm2/config/pmm-agent.yaml ]; then
+          install -d -m 0755 /usr/local/percona/pmm2/config
+          install -m 0640 -o pmm-agent -g pmm-agent /dev/null /usr/local/percona/pmm2/config/pmm-agent.yaml
       fi
       /sbin/chkconfig --add pmm-agent
       /sbin/service pmm-agent start >/dev/null 2>&1 ||:
   fi
 %endif
-
-for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter proxysql_exporter
-do
-  %{__ln_s} -f /usr/local/percona/$file /usr/bin/$file
-done
 
 if [ $1 -eq 2 ]; then
     %if 0%{?systemd}
@@ -151,11 +181,14 @@ if [ $1 == 0 ]; then
   if /usr/bin/id -g pmm-agent > /dev/null 2>&1; then
     /usr/sbin/userdel pmm-agent > /dev/null 2>&1
     /usr/sbin/groupdel pmm-agent > /dev/null 2>&1 || true
-    if [ -f /usr/local/percona/pmm-agent.yaml ]; then
-        rm -r /usr/local/percona/pmm-agent.yaml
+    if [ -f /usr/local/percona/pmm2/config/pmm-agent.yaml ]; then
+        rm -r /usr/local/percona/pmm2/config/pmm-agent.yaml
     fi
-    for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter proxysql_exporter
+    for file in pmm-admin pmm-agent
     do
+      if [ -L /usr/sbin/$file ]; then
+        rm -rf /usr/sbin/$file
+      fi
       if [ -L /usr/bin/$file ]; then
         rm -rf /usr/bin/$file
       fi
@@ -165,17 +198,14 @@ fi
 
 
 %files
-/usr/sbin/pmm-admin
 %if 0%{?rhel} >= 7
 %config %{_unitdir}/pmm-agent.service
 %else
 /etc/rc.d/init.d/pmm-agent
 %endif
-%attr(-,pmm-agent,pmm-agent) /usr/sbin/pmm-agent
-%attr(-,pmm-agent,pmm-agent) /usr/local/percona/node_exporter
-%attr(-,pmm-agent,pmm-agent) /usr/local/percona/mysqld_exporter
-%attr(-,pmm-agent,pmm-agent) /usr/local/percona/postgres_exporter
-%attr(-,pmm-agent,pmm-agent) /usr/local/percona/proxysql_exporter
-%attr(-,pmm-agent,pmm-agent) /usr/local/percona/mongodb_exporter
-%attr(-,pmm-agent,pmm-agent) /usr/local/percona/rds_exporter
-%attr(0660,pmm-agent,pmm-agent) %ghost /usr/local/percona/pmm-agent.yaml
+%attr(0660,pmm-agent,pmm-agent) %ghost /usr/local/percona/pmm2/config/pmm-agent.yaml
+%attr(-,pmm-agent,pmm-agent) /usr/local/percona/pmm2
+
+%changelog
+* Thu Aug 29 2019 Evgeniy Patlan <evgeniy.patlan@percona.com>
+- Rework file structure.

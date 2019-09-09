@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+set -eu
+
+PMM_DIR="$PWD/usr/local/percona/pmm2"
+
+install -m 0755 -d ${PMM_DIR}
+install -m 0755 -d ${PMM_DIR}/bin
+install -m 0755 -d ${PMM_DIR}/exporters
+install -m 0755 -d ${PMM_DIR}/config
+install -m 0755 -d ${PMM_DIR}/collectors
+install -m 0755 -d ${PMM_DIR}/collectors/textfile-collector
+install -m 0755 -d ${PMM_DIR}/collectors/textfile-collector/low-resolution
+install -m 0755 -d ${PMM_DIR}/collectors/textfile-collector/medium-resolution
+install -m 0755 -d ${PMM_DIR}/collectors/textfile-collector/high-resolution
+install -m 0755 -d ${PMM_DIR}/collectors/custom-queries
+install -m 0755 -d ${PMM_DIR}/collectors/custom-queries/mysql
+install -m 0755 -d ${PMM_DIR}/collectors/custom-queries/mysql/low-resolution
+install -m 0755 -d ${PMM_DIR}/collectors/custom-queries/mysql/medium-resolution
+install -m 0755 -d ${PMM_DIR}/collectors/custom-queries/mysql/high-resolution
+install -m 0755 -d ${PMM_DIR}/collectors/custom-queries/postgresql
+install -m 0755 -d ${PMM_DIR}/collectors/custom-queries/postgresql/low-resolution
+install -m 0755 -d ${PMM_DIR}/collectors/custom-queries/postgresql/medium-resolution
+install -m 0755 -d ${PMM_DIR}/collectors/custom-queries/postgresql/high-resolution
+
+for FILE in $( ls ${PWD}/bin ); do
+    if [ "x${FILE}" = "xpmm-admin" -o "x${FILE}" = "xpmm-agent" ]; then
+        install -m 0755 ${PWD}/bin/${FILE} ${PMM_DIR}/bin
+    else
+        install -m 0755 ${PWD}/bin/${FILE} ${PMM_DIR}/exporters
+    fi
+done
+for FILE in example.prom queries-mysqld.yml queries-postgres.yml; do
+    for RESOLUTION in low medium high; do
+        if [ "x${FILE}" = "xexample.prom" ]; then
+            install -m 0755 ${FILE} ${PMM_DIR}/collectors/textfile-collector/${RESOLUTION}-resolution
+        elif [ "x${FILE}" = "xqueries-mysqld.yml" ]; then
+            install -m 0755 ${FILE} ${PMM_DIR}/collectors/custom-queries/mysql/${RESOLUTION}-resolution
+        elif [ "x${FILE}" = "xqueries-postgres.yml" ]; then
+            install -m 0755 ${FILE} ${PMM_DIR}/collectors/custom-queries/postgresql/${RESOLUTION}-resolution
+        fi
+    done
+done
+
+install -m 0640 /dev/null ${PMM_DIR}/config/pmm-agent.yaml

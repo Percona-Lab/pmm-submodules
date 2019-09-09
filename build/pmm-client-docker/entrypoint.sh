@@ -3,7 +3,7 @@
 set -o errexit
 set -o xtrace
 
-AGENT_CONFIG_FILE=/usr/local/percona/pmm-agent.yaml
+AGENT_CONFIG_FILE=/usr/local/percona/pmm2/config/pmm-agent.yaml
 
 wait_for_url() {
     local URL=$1
@@ -54,7 +54,7 @@ CLIENT_NAME=${CONTAINER_NAME:-$HOSTNAME}
 
 wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/v1/readyz"
 
-rm -f /usr/local/percona/pmm-agent.yaml
+rm -f ${AGENT_CONFIG_FILE}
 
 pmm-agent setup \
   --force \
@@ -87,11 +87,11 @@ cat ${AGENT_CONFIG_FILE}
 
 pmm-agent --config-file=${AGENT_CONFIG_FILE} \
  --ports-min=${CLIENT_PORT_MIN:-30100} \
- --ports-max=${CLIENT_PORT_MAX:-30200} > /usr/local/percona/pmm-agent-tmp.log 2>&1 &
+ --ports-max=${CLIENT_PORT_MAX:-30200} > /usr/local/percona/pmm2/pmm-agent-tmp.log 2>&1 &
 
 wait_for_url "http://127.0.0.1:7777"
 
-cat /usr/local/percona/pmm-agent-tmp.log
+cat /usr/local/percona/pmm2/pmm-agent-tmp.log
 
 if [ -n "${DB_TYPE}" ]; then
     pmm-admin add "${DB_TYPE}" \
