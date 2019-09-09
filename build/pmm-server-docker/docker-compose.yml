@@ -2,14 +2,14 @@
 version: '3'
 services:
   pmm-k8s-server:
-    image: ${PMM_SERVER_IMAGE:-perconalab/pmm-server-fb:2.0.0-beta7-PMM-4417-k8s-button-4105b24}
+    image: ${PMM_SERVER_IMAGE:-perconalab/pmm-server-fb:2.0.0-beta7-PMM-4417-k8s-button-d5bca70}
     ports:
       - 127.0.0.1:443:443
   pmm-k8s-client:
     depends_on:
       - "pmm-k8s-mysql"
       - "pmm-k8s-server"
-    image: ${PMM_CLIENT_IMAGE:-perconalab/pmm-client-fb:2.0.0-beta7-PMM-4417-k8s-button-2abf7f3}
+    image: ${PMM_CLIENT_IMAGE:-perconalab/pmm-client-fb:2.0.0-beta7-PMM-4417-k8s-button-d5bca70}
     ports:
       - 127.0.0.1:7777:7777
       - 127.0.0.1:30100-30200:30100-30200
