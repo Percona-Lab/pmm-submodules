@@ -2,4 +2,4 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: pmm2-client
 
 Files: *
-License: AGPLv3
+License: Apache-2.0

@@ -22,12 +22,9 @@ esac
 
 if [ "$1" = "purge" ]; then
     userdel pmm-agent || true
-    for file in node_exporter mysqld_exporter postgres_exporter mongodb_exporter proxysql_exporter
-    do
-        if [ -L /usr/bin/$file ]; then
-            rm -rf /usr/bin/$file
-        fi
-    done
+    if [ -f /usr/local/percona/pmm2/config/pmm-agent.yaml ]; then
+        rm -f /usr/local/percona/pmm2/config/pmm-agent.yaml
+    fi
 fi
 
 #DEBHELPER#

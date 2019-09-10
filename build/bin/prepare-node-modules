@@ -37,7 +37,7 @@ update_grafana_node_modules() {
         set -o errexit
         set -o xtrace
         sudo rpm -ev --nodeps nodejs npm
-        sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+        sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -
         sudo yum clean all
         sudo yum -y install nodejs
         sudo npm --verbose install -g yarn

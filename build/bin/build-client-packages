@@ -259,7 +259,7 @@ install_deps() {
     if [ "x$OS" = "xrpm" ]
     then
         add_percona_yum_repo
-	yum -y install git wget rpmdevtools bison yum-utils rpm-build
+        yum -y install git wget rpmdevtools bison yum-utils rpm-build
         install_golang
     else
         add_percona_apt_repo
@@ -446,8 +446,10 @@ build_source_deb(){
     tar xzf ${NEWTAR}
     cd ${NAME}-${VERSION}
     mv bin/* ../${NAME}-${VERSION}_all/distro/
+    mv example.prom ../${NAME}-${VERSION}_all/distro/
+    mv queries-mysqld.yml ../${NAME}-${VERSION}_all/distro/
+    mv queries-postgres.yml ../${NAME}-${VERSION}_all/distro/
     mv debian ../${NAME}-${VERSION}_all/
-    mv config/pmm-agent.yaml ../${NAME}-${VERSION}_all/
     mv config/pmm-agent.service ../${NAME}-${VERSION}_all/debian/pmm2-client.pmm-agent.service
     cd ../
 
@@ -685,7 +687,7 @@ if [ -n "$pmm_release" ]; then
 fi
 
 REVISION=0
-GO_TARBALL="https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz"
+GO_TARBALL="https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz"
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
 get_system
 install_deps

@@ -29,6 +29,7 @@ prepare_tarball() {
             cp -r build/debian ${git_dir}/
             cp -r build/rpm ${git_dir}/
             cp -r build/config ${git_dir}/
+            cp -f build/bin/install_tarball ${git_dir}/
             tar -C sources -zcf ${repo_name}-${commit}.tar.gz  ${repo_name}
             mv ${repo_name}-${commit}.tar.gz  ${source_dir}/
         else
@@ -55,6 +56,7 @@ main() {
     prepare_tarball proxysql_exporter
     prepare_tarball node_exporter
     prepare_tarball clickhouse_exporter
+    prepare_tarball rds_exporter
     prepare_tarball pid-watchdog
 
     tar -C $(dirname ${source_dir}) -zcpf ${source_tarball} $(basename ${source_dir})

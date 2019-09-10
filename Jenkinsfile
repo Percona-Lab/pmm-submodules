@@ -177,7 +177,6 @@ pipeline {
 
                             # 1st-party
                             build-server-rpm percona-dashboards grafana-dashboards
-                            build-server-rpm pmm-manage
                             build-server-rpm pmm-managed
                             build-server-rpm percona-qan-api2 qan-api2
                             build-server-rpm percona-qan-app qan-app
@@ -186,7 +185,6 @@ pipeline {
 
                             # 3rd-party
                             build-server-rpm clickhouse
-                            build-server-rpm rds_exporter
                             build-server-rpm prometheus
                             build-server-rpm grafana
                         "
@@ -220,30 +218,75 @@ pipeline {
                 archiveArtifacts 'results/docker/TAG'
             }
         }
+        stage('Tests Execution') {
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
+            parallel {
+                stage ('Generate FB tags'){
+                    steps{
+                        script{
+                            withCredentials([string(credentialsId: 'GITHUB_API_TOKEN', variable: 'GITHUB_API_TOKEN')]) {
+                                unstash 'IMAGE'
+                                def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                                def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                                sh """
+                                    set -o xtrace
+                                    curl -v -X POST \
+                                        -H "Authorization: token ${GITHUB_API_TOKEN}" \
+                                        -d "{\\"body\\":\\"server docker - ${IMAGE}\\nclient docker - ${CLIENT_IMAGE}\\nclient - https://s3.us-east-2.amazonaws.com/pmm-build-cache/PR-BUILDS/pmm2-client/pmm2-client-${BRANCH_NAME}-\${GIT_COMMIT:0:7}.tar.gz\\"}" \
+                                        "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
+                                """
+                            }
+                        }
+                    }
+                }
+                stage('Test: API') {
+                    steps {
+                        script {
+                            unstash 'IMAGE'
+                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                            runAPItests(IMAGE, CLIENT_URL, OWNER)
+                        }
+                    }
+                }
+                stage('Test: PMM-Testsuite') {
+                    steps {
+                        script {
+                            unstash 'IMAGE'
+                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                            runTestSuite(IMAGE, CLIENT_URL)
+                        }
+                    }
+                }
+                stage('Test: UI') {
+                    steps {
+                        script {
+                            unstash 'IMAGE'
+                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                            runUItests(IMAGE, CLIENT_URL)
+                        }
+                    }
+                }
+            }
+        }
     }
     post {
         always {
             script {
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
                     if (env.CHANGE_URL) {
-                        unstash 'IMAGE'
-                        def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                        def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
-                        def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
-                        def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                        withCredentials([string(credentialsId: 'GITHUB_API_TOKEN', variable: 'GITHUB_API_TOKEN')]) {
-                            sh """
-                                set -o xtrace
-                                curl -v -X POST \
-                                    -H "Authorization: token ${GITHUB_API_TOKEN}" \
-                                    -d "{\\"body\\":\\"server docker - ${IMAGE}\\nclient docker - ${CLIENT_IMAGE}\\nclient - https://s3.us-east-2.amazonaws.com/pmm-build-cache/PR-BUILDS/pmm2-client/pmm2-client-${BRANCH_NAME}-\${GIT_COMMIT:0:7}.tar.gz\\"}" \
-                                    "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
-                            """
-                        }
-
-                        runAPItests(IMAGE, CLIENT_URL, OWNER)
-                        runTestSuite(IMAGE, CLIENT_URL)
-                        runUItests(IMAGE, CLIENT_URL)
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {

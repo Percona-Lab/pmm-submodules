@@ -19,7 +19,7 @@
 [submodule "mongodb_exporter"]
 	path = sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
 	url = https://github.com/percona/mongodb_exporter.git
-	branch = 0.8.0
+	branch = 0.9.0
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
@@ -47,10 +47,6 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-2.0
-[submodule "pmm-manage"]
-	path = sources/pmm-manage/src/github.com/percona/pmm-manage
-	url = https://github.com/percona/pmm-manage
 	branch = PMM-2.0
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
@@ -83,4 +79,8 @@
 [submodule "pid-watchdog"]
 	path = sources/pid-watchdog/src/github.com/percona/pid-watchdog
 	url = https://github.com/percona/pid-watchdog
+	branch = master
+[submodule "percona-images"]
+	path = sources/percona-images
+	url = https://github.com/Percona-Lab/percona-images
 	branch = master

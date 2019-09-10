@@ -82,6 +82,7 @@ main() {
     gobuild_component "postgres_exporter" "" "cmd/postgres_exporter"
     gobuild_component "mongodb_exporter"
     gobuild_component "proxysql_exporter"
+    gobuild_component "rds_exporter"
     gobuild_component "pid-watchdog"
     gobuild_component "clickhouse_exporter"     "github.com/f1yegor/clickhouse_exporter"
 
@@ -93,6 +94,10 @@ main() {
     copy_component "pmm-submodules" "config"
     copy_component "pmm-submodules" "debian"
     copy_component "pmm-submodules" "rpm"
+    copy_component "pmm-submodules" "install_tarball"
+    copy_component "node_exporter" "example.prom"
+    copy_component "mysqld_exporter" "queries-mysqld.yml"
+    copy_component "postgres_exporter" "queries-postgres.yml"
 
     rm -rf ${binary_tarball}
     mkdir -p $(dirname ${binary_tarball}) || :

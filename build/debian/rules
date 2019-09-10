@@ -41,6 +41,9 @@ override_dh_usrlocal:
 override_dh_auto_build:
 	dh $@
 
+override_dh_strip:
+	@echo "RULES.$@"
+
 override_dh_auto_install:
 	@echo "RULES.$@"
 	mkdir -p $(TMP)
@@ -51,7 +54,10 @@ override_dh_auto_install:
 	cp -f distro/postgres_exporter $(TMP)/postgres_exporter
 	cp -f distro/mongodb_exporter $(TMP)/mongodb_exporter
 	cp -f distro/proxysql_exporter $(TMP)/proxysql_exporter
-	install -m 0644 pmm-agent.yaml $(TMP)/pmm-agent.yaml
+	cp -f distro/rds_exporter $(TMP)/rds_exporter
+	cp -f distro/example.prom $(TMP)/example.prom
+	cp -f distro/queries-mysqld.yml $(TMP)/queries-mysqld.yml
+	cp -f distro/queries-postgres.yml $(TMP)/queries-postgres.yml
 
 override_dh_installinit:
 	dh_systemd_start --restart-after-upgrade

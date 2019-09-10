@@ -10,11 +10,11 @@ RUN yum -y install epel-release && yum -y install ansible
 COPY RPMS /tmp/RPMS
 COPY gitCommit /tmp/gitCommit
 
-COPY playbook-install.yml /opt/playbook-install.yml
-RUN ansible-playbook -vvv -i 'localhost,' -c local /opt/playbook-install.yml
-
-COPY playbook-init.yml /opt/playbook-init.yml
-RUN ansible-playbook -vvv -i 'localhost,' -c local /opt/playbook-init.yml
+COPY ansible /opt/ansible
+RUN cp -r /opt/ansible/roles /opt/ansible/pmm2-docker/roles
+RUN ansible-playbook -vvv -i 'localhost,' -c local /opt/ansible/pmm2-docker/main.yml \
+    && ansible-playbook -vvv -i 'localhost,' -c local /usr/share/pmm-update/ansible/playbook/tasks/update.yml \
+    && ansible-playbook -vvv -i 'localhost,' -c local /opt/ansible/pmm2/post-build-actions.yml
 
 RUN cp /usr/share/pmm-server/entrypoint.sh /opt/entrypoint.sh
 CMD ["/opt/entrypoint.sh"]

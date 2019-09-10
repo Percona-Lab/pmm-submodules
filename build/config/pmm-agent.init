@@ -4,11 +4,11 @@
 
 # chkconfig: 35 85 15
 # processname: pmm-agent
-# config: /usr/local/percona/pmm-agent.yaml
+# config: /usr/local/percona/pmm2/config/pmm-agent.yaml
 
 . /etc/rc.d/init.d/functions
 
-OPTIONS="--config-file=/usr/local/percona/pmm-agent.yaml"
+OPTIONS="--config-file=/usr/local/percona/pmm2/config/pmm-agent.yaml"
 pmm_agent=${PMM_AGENT:-/usr/sbin/pmm-agent}
 pmm_log="/var/log/pmm-agent.log"
 
