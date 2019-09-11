@@ -2,6 +2,12 @@ FROM centos:7
 RUN yum -y install iproute nc \
     && rm -rf /var/cache/yum
 
+RUN curl -o /tmp/pmm-client.tar.gz https://www.percona.com/downloads/pmm/1.17.1/binary/tarball/pmm-client-1.17.1.tar.gz
+RUN tar -zxpf /tmp/pmm-client.tar.gz -C /tmp \
+    && cd /tmp/pmm-client-* \
+    && bash ./install \
+    && rm -rf /tmp/pmm-client-*
+
 COPY pmm2-client.tar.gz /tmp/pmm2-client.tar.gz
 RUN tar -zxpf /tmp/pmm2-client.tar.gz -C /tmp \
     && cd /tmp/pmm2-client-* \
