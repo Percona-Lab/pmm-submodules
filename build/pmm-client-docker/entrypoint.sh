@@ -78,6 +78,9 @@ fi
 if [ -n "${DB_CLUSTER}" ]; then
     DB_ARGS+=" --cluster=${DB_CLUSTER}"
 fi
+if [ "${DB_TYPE}" == "mysql" ]; then
+    DB_ARGS+=" --query-source=perfschema"
+fi
 
 if [ -n "${DB_HOST}" -a "${DB_PORT}" ]; then
     wait_for_port "${DB_HOST}" "${DB_PORT}"
