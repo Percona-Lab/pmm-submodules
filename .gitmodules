@@ -91,6 +91,6 @@
 # PMM QA
 
 [submodule "pmm-qa"]
-	path = sources/pmm-qa
+	path = tests/pmm-qa
 	url = https://github.com/percona/pmm-qa
 	branch = master
