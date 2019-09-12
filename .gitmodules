@@ -83,4 +83,4 @@
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
-	branch = master
+	branch = PMM-4658-enable-pmm2-release-repository
