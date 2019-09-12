@@ -451,6 +451,7 @@ build_source_deb(){
     mv queries-postgres.yml ../${NAME}-${VERSION}_all/distro/
     mv debian ../${NAME}-${VERSION}_all/
     mv config/pmm-agent.service ../${NAME}-${VERSION}_all/debian/pmm2-client.pmm-agent.service
+    mv config/pmm-agent.logrotate ../${NAME}-${VERSION}_all/distro/
     cd ../
 
     rm -rf ${NAME}-${VERSION}
