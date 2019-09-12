@@ -17,8 +17,9 @@ void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION) {
     ]
 }
 
-void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION) {
+void runUItests(String GIT_BRANCH, DOCKER_IMAGE_VERSION, CLIENT_VERSION) {
     stagingJob = build job: 'pmm2-ui-tests', parameters: [
+        string(name: 'GIT_BRANCH', value: GIT_BRANCH),
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
     ]
@@ -56,6 +57,10 @@ pipeline {
                     git submodule status
                     export commit_sha=$(git submodule status | grep 'pmm-managed' | awk -F ' ' '{print $1}')
                     curl -s https://api.github.com/repos/percona/pmm-managed/commits/${commit_sha} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
+                    cd tests/pmm-qa
+                    export UI_Tests_Branch=$(git rev-parse --abbrev-ref HEAD)
+                    echo $UI_Tests_Branch > UI_Tests_Branch
+                    cd ../..
                     cd sources/pmm-server-packaging/
                     git lfs install
                     git lfs pull
@@ -275,7 +280,8 @@ pipeline {
                             def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
                             def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
                             def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                            runUItests(IMAGE, CLIENT_URL)
+                            def UI_TESTS_BRANCH = sh(returnStdout: true, script: "cat UI_Tests_Branch").trim()
+                            runUItests(UI_TESTS_BRANCH, IMAGE, CLIENT_URL)
                         }
                     }
                 }
