@@ -50,7 +50,6 @@ fi
 
 PMM_SERVER_IP=$(ping -c 1 "${PMM_SERVER/:*/}" | grep PING | sed -e 's/).*//; s/.*(//')
 SRC_ADDR=$(ip route get "${PMM_SERVER_IP}" | grep 'src ' | sed -e 's/.* src //; s/ .*//')
-CLIENT_NAME=${CONTAINER_NAME:-$HOSTNAME}
 
 wait_for_url "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/v1/readyz"
 
@@ -62,12 +61,12 @@ pmm-agent setup \
   --server-address=${PMM_SERVER} \
   --server-insecure-tls \
   --container-id=${HOSTNAME} \
-  --container-name=${CLIENT_NAME} \
+  --container-name=${HOSTNAME} \
   --ports-min=${CLIENT_PORT_MIN:-30100} \
   --ports-max=${CLIENT_PORT_MAX:-30200} \
   --listen-port=${CLIENT_PORT_LISTEN:-7777} \
   ${ARGS} \
-  ${CLIENT_ADDR:-$SRC_ADDR} container ${CLIENT_NAME}
+  ${CLIENT_ADDR:-$SRC_ADDR} container ${HOSTNAME}
 
 if [ -n "${DB_USER}" ]; then
     DB_ARGS+=" --username=${DB_USER}"
@@ -77,9 +76,6 @@ if [ -n "${DB_PASSWORD}" ]; then
 fi
 if [ -n "${DB_CLUSTER}" ]; then
     DB_ARGS+=" --cluster=${DB_CLUSTER}"
-fi
-if [ "${DB_TYPE}" == "mysql" ]; then
-    DB_ARGS+=" --query-source=perfschema"
 fi
 
 if [ -n "${DB_HOST}" -a "${DB_PORT}" ]; then
