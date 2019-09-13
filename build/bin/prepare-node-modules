@@ -78,12 +78,12 @@ update_pmm_server_node_modules() {
         rm -rf BUILD/pmm-server-*
         sudo chown builder:builder SOURCES/qan-app-* SOURCES/pmm-server-*
         rpmbuild --nodeps -bp SOURCES/pmm-server.spec || :
-        pushd BUILD/pmm-server-*/password-page
-            rm -rf node_modules
-            npm install
-            cp package.json node_modules/
-            tar -zcpf ../../../SOURCES/pmm-server-node_modules-${pmm_version}.tar.gz node_modules
-        popd
+        # pushd BUILD/pmm-server-*/password-page
+        #     rm -rf node_modules
+        #     npm install
+        #     cp package.json node_modules/
+        #     tar -zcpf ../../../SOURCES/pmm-server-node_modules-${pmm_version}.tar.gz node_modules
+        # popd
     "
 }
 
