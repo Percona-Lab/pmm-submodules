@@ -47,15 +47,11 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-4459-disable-query-example
-[submodule "pmm-manage"]
-	path = sources/pmm-manage/src/github.com/percona/pmm-manage
-	url = https://github.com/percona/pmm-manage
 	branch = PMM-2.0
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
-	branch = PMM-4459-disable-query-example
+	branch = PMM-2.0
 [submodule "qan-api2"]
 	path = sources/qan-api2/src/github.com/percona/qan-api2
 	url = https://github.com/percona/qan-api2
@@ -63,7 +59,7 @@
 [submodule "qan-app"]
 	path = sources/qan-app/src/github.com/percona/qan-app
 	url = https://github.com/percona/qan-app
-	branch = PMM-4459-disable-query-example
+	branch = PMM-2.0
 [submodule "pmm-update"]
 	path = sources/pmm-update/src/github.com/percona/pmm-update
 	url = https://github.com/percona/pmm-update
@@ -80,10 +76,6 @@
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
 	branch = PMM-2.0
-[submodule "pid-watchdog"]
-	path = sources/pid-watchdog/src/github.com/percona/pid-watchdog
-	url = https://github.com/percona/pid-watchdog
-	branch = master
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images

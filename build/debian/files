@@ -41,4 +41,3 @@ install -m 0660 queries-mysqld.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collec
 install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution/
 install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
 install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
-

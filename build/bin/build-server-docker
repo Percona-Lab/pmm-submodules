@@ -14,7 +14,7 @@ cp -r ${root_dir}/sources/percona-images/ansible ${rpms_dir}/../ansible
 
 # enable 'local' repo in ansible playbooks
 sed -i -e "s/enablerepo: \"pmm2-server\"/enablerepo: local/" ${rpms_dir}/../ansible/roles/pmm2-images/tasks/main.yml
-sed -i -e "s/pmm_client_repo_name: \"percona-testing-x86_64\"/pmm_client_repo_name: local/" ${rpms_dir}/../ansible/roles/pmm2-images/vars/main.yml
+sed -i -e "s/pmm_client_repo_name: \".*\"/pmm_client_repo_name: local/" ${rpms_dir}/../ansible/roles/pmm2-images/vars/main.yml
 
 cp ${root_dir}/build/pmm-server-docker/* ${rpms_dir}/../
 git -C ${root_dir} rev-parse HEAD > ${rpms_dir}/../gitCommit
