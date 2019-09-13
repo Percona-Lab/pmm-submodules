@@ -16,7 +16,6 @@ Source:         pmm2-client-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 Summary:        PMM-agent
 
-Requires: logrotate
 %if 0%{?systemd}
 BuildRequires:  systemd
 BuildRequires:  pkgconfig(systemd)
@@ -27,6 +26,7 @@ Requires(postun): systemd
 Requires(post):   /sbin/chkconfig
 Requires(preun):  /sbin/chkconfig
 Requires(preun):  /sbin/service
+Requires:         logrotate
 %endif
 AutoReq:        no
 Conflicts:      pmm-client
@@ -66,7 +66,6 @@ install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-quer
 install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution
 install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution
 install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution
-install -d  $RPM_BUILD_ROOT/%{_sysconfdir}/logrotate.d
 
 install -m 0755 bin/pmm-admin $RPM_BUILD_ROOT/usr/local/percona/pmm2/bin
 install -m 0755 bin/pmm-agent $RPM_BUILD_ROOT/usr/local/percona/pmm2/bin
@@ -91,8 +90,9 @@ install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/coll
 %else
   install -m 0755 -d $RPM_BUILD_ROOT/etc/rc.d/init.d
   install -m 0750 config/pmm-agent.init $RPM_BUILD_ROOT/etc/rc.d/init.d/pmm-agent
+  install -d  $RPM_BUILD_ROOT/%{_sysconfdir}/logrotate.d
+  install -m 0644 config/pmm-agent.logrotate $RPM_BUILD_ROOT/%{_sysconfdir}/logrotate.d/pmm-agent-logrotate
 %endif
-install -m 0644 config/pmm-agent.logrotate $RPM_BUILD_ROOT/%{_sysconfdir}/logrotate.d/pmm-agent-logrotate
 
 
 %clean
@@ -203,10 +203,10 @@ fi
 %config %{_unitdir}/pmm-agent.service
 %else
 /etc/rc.d/init.d/pmm-agent
+%{_sysconfdir}/logrotate.d/pmm-agent-logrotate
 %endif
 %attr(0660,pmm-agent,pmm-agent) %ghost /usr/local/percona/pmm2/config/pmm-agent.yaml
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/pmm2
-%{_sysconfdir}/logrotate.d/pmm-agent-logrotate
 
 %changelog
 * Thu Aug 29 2019 Evgeniy Patlan <evgeniy.patlan@percona.com>
