@@ -47,8 +47,6 @@ override_dh_strip:
 override_dh_auto_install:
 	@echo "RULES.$@"
 	mkdir -p $(TMP)
-	mkdir -p $(TMP)/etc/logrotate.d
-	cp distro/pmm-agent.logrotate $(TMP)/pmm-agent-logrotate
 	cp distro/pmm-admin $(TMP)/pmm-admin
 	cp distro/pmm-agent $(TMP)/pmm-agent
 	cp -f distro/node_exporter $(TMP)/node_exporter

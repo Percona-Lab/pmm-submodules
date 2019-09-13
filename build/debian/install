@@ -15,4 +15,3 @@ queries-mysqld.yml /usr/local/percona/pmm2/collectors/custom-queries/mysql/high-
 queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution/
 queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
 queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
-pmm-agent-logrotate /etc/logrotate.d/

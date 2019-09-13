@@ -4,7 +4,6 @@ RPM_BUILD_ROOT=$2
 cd $SOURCE_DIR
 
 install -m 0755 -d $RPM_BUILD_ROOT/usr/sbin
-install -m 0755 -d $RPM_BUILD_ROOT/etc/logrotate.d
 install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2
 install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/bin
 install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
@@ -42,4 +41,3 @@ install -m 0660 queries-mysqld.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collec
 install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution/
 install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
 install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
-install -m 0640 config/pmm-agent.logrotate $RPM_BUILD_ROOT/etc/logrotate.d/pmm-agent-logrotate
