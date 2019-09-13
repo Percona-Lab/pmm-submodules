@@ -76,10 +76,6 @@
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
 	branch = PMM-2.0
-[submodule "pid-watchdog"]
-	path = sources/pid-watchdog/src/github.com/percona/pid-watchdog
-	url = https://github.com/percona/pid-watchdog
-	branch = master
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
