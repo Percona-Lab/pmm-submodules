@@ -57,7 +57,7 @@
 [submodule "qan-api2"]
 	path = sources/qan-api2/src/github.com/percona/qan-api2
 	url = https://github.com/percona/qan-api2
-	branch = master
+	branch = PMM-3786-api-cleanups
 [submodule "qan-app"]
 	path = sources/qan-app/src/github.com/percona/qan-app
 	url = https://github.com/percona/qan-app
