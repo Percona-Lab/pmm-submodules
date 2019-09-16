@@ -2,7 +2,8 @@
 
 set -eu
 
-PMM_DIR="$PWD/usr/local/percona/pmm2"
+PMM_DIR=${PMM_DIR:-/usr/local/percona/pmm2}
+echo "Installing into ${PMM_DIR}..."
 
 install -m 0755 -d ${PMM_DIR}
 install -m 0755 -d ${PMM_DIR}/bin
