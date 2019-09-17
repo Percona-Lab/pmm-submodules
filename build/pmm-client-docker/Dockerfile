@@ -10,11 +10,11 @@ RUN curl -Lo /tmp/pmm-client.tar.gz https://www.percona.com/downloads/pmm/1.17.1
     && rm -rf /tmp/pmm-client-*
 
 RUN curl -Lo /usr/bin/pid-watchdog https://github.com/percona/pid-watchdog/releases/download/v0.1.0/pid-watchdog \
-    && chown nobody:nobody /usr/bin/pid-watchdog \
+    && chown nobody:root /usr/bin/pid-watchdog \
     && chmod u+rwx,g+rwx /usr/bin/pid-watchdog \
     && ln -s /usr/bin/pid-watchdog /usr/bin/service
 
-RUN curl -Lo /tmp/pmm2-client.tar.gz https://www.percona.com/downloads/pmm2/2.0.0-rc2/binary/tarball/pmm2-client-2.0.0.tar.gz \
+RUN curl -Lo /tmp/pmm2-client.tar.gz https://www.percona.com/downloads/pmm2/2.0.0-rc3/binary/tarball/pmm2-client-2.0.0.tar.gz \
     && tar -zxpf /tmp/pmm2-client.tar.gz -C /tmp \
     && cd /tmp/pmm2-client-* \
     && bash -x ./install_tarball \

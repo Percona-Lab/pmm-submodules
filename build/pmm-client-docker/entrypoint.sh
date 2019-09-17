@@ -82,15 +82,27 @@ pmm2_start() {
     if [ -n "${DB_TYPE}" ]; then
         case "${DB_TYPE}" in
             mongodb )
-                DB_ARGS=$(echo ${DB_ARGS} | sed -r 's/^(--uri=\w+:(\/?\/?)[^\s]+\s)(--.*)|^(--uri.*$)/\3/g')
+                if [[ "${DB_ARGS}" =~ "--uri" ]]; then
+                    DB_ARGS=$(echo ${DB_ARGS} | cut -d ' ' -f 2-)
+                fi
+                pmm-admin add "${DB_TYPE}" \
+                    --skip-connection-check \
+                    --server-url="https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/" \
+                    --server-insecure-tls \
+                    ${DB_ARGS} \
+                    "${CLIENT_NAME}" \
+                    "${DB_HOST}:${DB_PORT}"
+                ;;
+            * )
+                pmm-admin add "${DB_TYPE}" \
+                    --skip-connection-check \
+                    --server-url="https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/" \
+                    --server-insecure-tls \
+                    ${DB_ARGS} \
+                    "${DB_HOST}:${DB_PORT}"
                 ;;
         esac
-        pmm-admin add "${DB_TYPE}" \
-            --skip-connection-check \
-            --server-url="https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/" \
-            --server-insecure-tls \
-            ${DB_ARGS} \
-            "${DB_HOST}:${DB_PORT}"
+        
     fi
 
     kill %1
