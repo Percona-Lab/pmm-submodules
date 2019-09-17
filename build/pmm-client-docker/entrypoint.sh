@@ -98,6 +98,7 @@ if [ -n "${DB_TYPE}" ]; then
         --server-url="https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/" \
         --server-insecure-tls \
         ${DB_ARGS} \
+        ${DB_CLUSTER} \
         ${DB_HOST}:${DB_PORT}
 fi
 
