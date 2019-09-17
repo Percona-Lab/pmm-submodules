@@ -114,6 +114,8 @@ build() {
                     | sudo tee /etc/yum.repos.d/local.repo
             /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 
+            sudo rm -rf /etc/yum.repos.d/CentOS-Sources.repo
+            sudo yum clean all
 	    if [ \"${spec_name}\" == \"clickhouse\" ]; then
 
 		# Build most libraries using default GCC
