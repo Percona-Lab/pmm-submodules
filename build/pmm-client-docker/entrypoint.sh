@@ -152,6 +152,18 @@ pmm_start() {
                     --skip-root \
                     --dsn "${DB_USER}:${DB_PASSWORD}@tcp(${DB_HOST}:${DB_PORT})/" 
                 ;;
+            mongodb )
+                if [[ "${DB_ARGS}" =~ "--uri" ]]; then
+                    pmm-admin add "${DB_TYPE}" \
+                        --skip-root \
+                        ${DB_ARGS}
+            
+                else
+                    pmm-admin add "${DB_TYPE}" \
+                        --skip-root \
+                        --uri "mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/" 
+                fi
+                ;;
             * )
                 pmm-admin add "${DB_TYPE}" \
                     --skip-root \
