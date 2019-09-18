@@ -61,7 +61,7 @@
 [submodule "qan-app"]
 	path = sources/qan-app/src/github.com/percona/qan-app
 	url = https://github.com/percona/qan-app
-	branch = PMM-4687-fix-infinity-loop
+	branch = PMM-4674-hide-empty-lines
 [submodule "pmm-update"]
 	path = sources/pmm-update/src/github.com/percona/pmm-update
 	url = https://github.com/percona/pmm-update
