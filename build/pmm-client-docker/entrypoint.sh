@@ -99,6 +99,7 @@ pmm2_start() {
                     --server-url="https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/" \
                     --server-insecure-tls \
                     ${DB_ARGS} \
+                    "${CLIENT_NAME}" \
                     "${DB_HOST}:${DB_PORT}"
                 ;;
         esac
