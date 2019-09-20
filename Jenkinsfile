@@ -288,6 +288,8 @@ pipeline {
             script {
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
                     if (env.CHANGE_URL) {
+                        unstash 'IMAGE'
+                        def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {
