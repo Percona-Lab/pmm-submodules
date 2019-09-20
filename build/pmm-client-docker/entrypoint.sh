@@ -43,6 +43,8 @@ pmm2_start() {
     fi
 
     pmm-agent setup \
+        --trace \
+        --debug \
         --force \
         --config-file=${AGENT_CONFIG_FILE} \
         --server-address=${PMM_SERVER} \
@@ -86,6 +88,7 @@ pmm2_start() {
                     DB_ARGS=$(echo ${DB_ARGS} | cut -d ' ' -f 2-)
                 fi
                 pmm-admin add "${DB_TYPE}" \
+                    --debug \
                     --skip-connection-check \
                     --server-url="https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/" \
                     --server-insecure-tls \
