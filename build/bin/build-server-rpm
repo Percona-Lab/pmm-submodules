@@ -33,8 +33,7 @@ is_build_needed() {
     local packages=$(find ${rpms_dir}/${spec_name}-${rpm_version} -name "*.rpm" | wc -l)
 
     # return result as true or flase
-#    [[ ${packages// /} == 0 ]]
-    [[ true ]]
+    [[ ${packages// /} == 0 ]]
 }
 
 prepare_specs() {
