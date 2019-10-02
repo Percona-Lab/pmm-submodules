@@ -45,9 +45,8 @@ gobuild_component() {
 
             if [ -d /tmp/go/src/github.com/percona/percona-toolkit ]; then
                 pushd /tmp/go/src/${extract_path}
-                    rm -rf vendor
                     go get -u github.com/golang/dep/cmd/dep
-                    \$GOPATH/bin/dep ensure -update
+                    \$GOPATH/bin/dep ensure -v
                 popd
             fi
 
