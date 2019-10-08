@@ -3,6 +3,22 @@
 set -o errexit
 set -o xtrace
 
+urlencode() {
+    old_lc_collate=$LC_COLLATE
+    LC_COLLATE=C
+
+    local length="${#1}"
+    for (( i = 0; i < length; i++ )); do
+        local c="${1:i:1}"
+        case $c in
+            [a-zA-Z0-9.~_-]) printf "$c" ;;
+            *) printf '%%%02X' "'$c" ;;
+        esac
+    done
+
+    LC_COLLATE=$old_lc_collate
+}
+
 wait_for_url() {
     local URL=$1
     local RESPONSE=$2
@@ -90,7 +106,7 @@ pmm2_start() {
                 pmm-admin add "${DB_TYPE}" \
                     --debug \
                     --skip-connection-check \
-                    --server-url="https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/" \
+                    --server-url="https://${PMM_USER}:$(urlencode ${PMM_PASSWORD})@${PMM_SERVER}/" \
                     --server-insecure-tls \
                     ${DB_ARGS} \
                     "${CLIENT_NAME}" \
@@ -99,7 +115,7 @@ pmm2_start() {
             * )
                 pmm-admin add "${DB_TYPE}" \
                     --skip-connection-check \
-                    --server-url="https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/" \
+                    --server-url="https://${PMM_USER}:$(urlencode ${PMM_PASSWORD})@${PMM_SERVER}/" \
                     --server-insecure-tls \
                     ${DB_ARGS} \
                     "${CLIENT_NAME}" \
@@ -192,7 +208,7 @@ main() {
     SRC_ADDR=$(ip route get "${PMM_SERVER_IP}" | grep 'src ' | sed -e 's/.* src //; s/ .*//')
     CLIENT_NAME="${CLIENT_NAME:-$HOSTNAME}"
 
-    SERVER_RESPONSE_CODE=$(curl -k -s -o /dev/null -w "%{http_code}" "https://${PMM_USER}:${PMM_PASSWORD}@${PMM_SERVER}/v1/readyz")
+    SERVER_RESPONSE_CODE=$(curl -k -s -o /dev/null -w "%{http_code}" "https://${PMM_USER}:$(urlencode ${PMM_PASSWORD})@${PMM_SERVER}/v1/readyz")
 
     if [[ "${SERVER_RESPONSE_CODE}" == '200' ]]; then
         export PATH="/usr/local/percona/pmm2/bin/:${PATH}"
