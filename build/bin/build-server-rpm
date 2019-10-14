@@ -234,9 +234,18 @@ d }\" \
                 sudo yum -y install nodejs
                 sudo sed -i 's|SRPMS|x86_64|g' /etc/yum.repos.d/nodesource-el7.repo
 
+                wget https://dl.google.com/go/go1.12.10.linux-amd64.tar.gz
+                sudo tar -C /usr/local -xzf go1.12.10.linux-amd64.tar.gz
+                sudo update-alternatives --install \"/usr/bin/go\" \"go\" \"/usr/local/go/bin/go\" 0
+                sudo update-alternatives --set go /usr/local/go/bin/go
+                sudo go version
+
                 sudo yum-builddep -y SOURCES/${spec_name}.spec
 
                 spectool -C SOURCES -g SOURCES/${spec_name}.spec
+
+                sudo npm install @types/react-color
+                sudo npm install @types/react-custom-scrollbars
 
                 rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
                 rm -f SOURCES/${spec_name}.spec*

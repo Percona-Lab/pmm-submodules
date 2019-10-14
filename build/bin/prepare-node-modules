@@ -40,6 +40,13 @@ update_grafana_node_modules() {
         sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -
         sudo yum clean all
         sudo yum -y install nodejs
+
+        wget https://dl.google.com/go/go1.12.10.linux-amd64.tar.gz
+        sudo tar -C /usr/local -xzf go1.12.10.linux-amd64.tar.gz
+        sudo update-alternatives --install \"/usr/bin/go\" \"go\" \"/usr/local/go/bin/go\" 0
+        sudo update-alternatives --set go /usr/local/go/bin/go
+        sudo go version
+
         sudo npm --verbose install -g yarn
         rm -rf BUILD/grafana-*
         sudo chown builder:builder SOURCES/grafana-*
