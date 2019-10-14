@@ -133,7 +133,7 @@ build() {
 		sudo yum install -y epel-release
                 sudo yum install -y cmake3
                 sudo yum install -y centos-release-scl
-                sudo yum install -y devtoolset-7
+                sudo yum install -y devtoolset-8
                 sudo yum install -y tree
 
 		echo \"====> Install CH dev dependencies\"
@@ -209,8 +209,8 @@ d }\" \
 
         	echo \"====> Setup path to compilers\"
                 export CMAKE=cmake3
-                export CC=/opt/rh/devtoolset-7/root/usr/bin/gcc
-                export CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
+                export CC=/opt/rh/devtoolset-8/root/usr/bin/gcc
+                export CXX=/opt/rh/devtoolset-8/root/usr/bin/g++
 
         	echo \"cd into /home/builder/clickhouse-rpm\"
         	cd /home/builder/clickhouse-rpm
