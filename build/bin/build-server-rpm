@@ -234,8 +234,8 @@ d }\" \
                 sudo yum -y install nodejs
                 sudo sed -i 's|SRPMS|x86_64|g' /etc/yum.repos.d/nodesource-el7.repo
 
-                wget https://dl.google.com/go/go1.12.10.linux-amd64.tar.gz
-                sudo tar -C /usr/local -xzf go1.12.10.linux-amd64.tar.gz
+                wget https://dl.google.com/go/go1.12.12.linux-amd64.tar.gz
+                sudo tar -C /usr/local -xzf go1.12.12.linux-amd64.tar.gz
                 sudo update-alternatives --install \"/usr/bin/go\" \"go\" \"/usr/local/go/bin/go\" 0
                 sudo update-alternatives --set go /usr/local/go/bin/go
                 sudo go version
