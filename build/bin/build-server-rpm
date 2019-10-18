@@ -77,6 +77,15 @@ build() {
             printf '[local]\nname=local\nbaseurl=file:///home/builder/rpm/RPMS\ngpgcheck=0\nenabled=1\n' \
                 | sudo tee /etc/yum.repos.d/local.repo
             /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
+
+            if [ \"${spec_name}\" == \"grafana\" ]; then
+                sudo yum remove -y nodejs npm
+                sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+                sudo yum clean all
+                sudo yum -y install nodejs
+                sudo sed -i 's|SRPMS|x86_64|g' /etc/yum.repos.d/nodesource-el7.repo
+            fi
+
             sudo yum-builddep -y SOURCES/${spec_name}.spec
 
             spectool -C SOURCES -g SOURCES/${spec_name}.spec
