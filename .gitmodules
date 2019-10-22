@@ -37,7 +37,7 @@
 [submodule "proxysql_exporter"]
 	path = sources/proxysql_exporter/src/github.com/percona/proxysql_exporter
 	url = https://github.com/percona/proxysql_exporter.git
-	branch = master
+	branch = pmm-2.x
 [submodule "rds_exporter"]
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
