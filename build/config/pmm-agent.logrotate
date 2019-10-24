@@ -4,5 +4,5 @@
         notifempty
         compress
         copytruncate
-        rotate 4 
+        rotate 5 
 }
