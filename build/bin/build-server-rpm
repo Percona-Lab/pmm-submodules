@@ -245,7 +245,9 @@ d }\" \
               spectool -C SOURCES -g SOURCES/${spec_name}.spec
 
               sudo npm install @types/react-color
-              sudo npm install @types/react-custom-scrollbarsrpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
+              sudo npm install @types/react-custom-scrollbars
+
+              rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
               rm -f SOURCES/${spec_name}.spec*
 	    else
             	sudo yum-builddep -y SOURCES/${spec_name}.spec
