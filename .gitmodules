@@ -72,12 +72,12 @@
 	branch = PMM-2.0
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
-	url = https://github.com/percona/pmm-server-packaging
+	url = build-fix
 	branch = PMM-2.0
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-2.0
+	branch = grafana-toolkit-restore
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
