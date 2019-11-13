@@ -1,7 +1,7 @@
 FROM centos:7
 
-# enable EPEL for nodejs
-RUN yum install -y epel-release
+# enable nodesource repo for nodejs
+RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 RUN yum update -y
 RUN yum install -y --setopt=skip_missing_names_on_install=False \
                    gcc gcc-c++ \
@@ -16,6 +16,7 @@ RUN yum install -y --setopt=skip_missing_names_on_install=False \
                    yum-utils rpm-build \
                    wget \
                    glibc-static
+RUN yum -y remove nodesource-release-el7-1.noarch
 RUN yum clean all && rm -rf /var/cache/yum
 
 ENV GO_TARBALL https://dl.google.com/go/go1.12.12.linux-amd64.tar.gz
