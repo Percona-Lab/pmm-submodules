@@ -11,4 +11,4 @@ client:
 	./build/bin/build-client
 
 clean:
-	rm -rf tmp results
+	rm -rf tmp results sources/pmm-submodules
