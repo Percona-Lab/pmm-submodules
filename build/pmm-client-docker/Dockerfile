@@ -14,7 +14,7 @@ RUN curl -Lo /usr/bin/pid-watchdog https://github.com/percona/pid-watchdog/relea
     && chmod u+rwx,g+rwx /usr/bin/pid-watchdog \
     && ln -s /usr/bin/pid-watchdog /usr/bin/service
 
-RUN curl -Lo /tmp/pmm2-client.tar.gz https://www.percona.com/downloads/pmm2/2.0.0/binary/tarball/pmm2-client-2.0.0.tar.gz \
+RUN curl -Lo /tmp/pmm2-client.tar.gz https://www.percona.com/downloads/pmm2/2.1.0/binary/tarball/pmm2-client-2.1.0.tar.gz \
     && tar -zxpf /tmp/pmm2-client.tar.gz -C /tmp \
     && cd /tmp/pmm2-client-* \
     && bash -x ./install_tarball \
