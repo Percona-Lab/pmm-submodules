@@ -76,7 +76,7 @@
 	branch = PMM-2.0
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
-	url = https://github.com/percona/grafana-dashboard
+	url = https://github.com/percona/grafana-dashboards
 	branch = add-instance
 [submodule "percona-images"]
 	path = sources/percona-images
