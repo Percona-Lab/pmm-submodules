@@ -29,10 +29,15 @@ print(tty, version)
 subprocess.check_call("git submodule update", shell=True)
 
 for repo in REPOS:
-    cmd = "git tag --message='Version {version}.' --sign v{version}".format(version=version)
-    print(repo, cmd)
+    print("==>", repo)
+
+    tag = "v" + version
+    cmd = "git tag --message='Version {version}.' --sign {tag}".format(version=version, tag=tag)
+    print(">", cmd)
     subprocess.check_call(cmd, shell=True, cwd=repo, env=env)
 
-    subprocess.check_call("git push --follow-tags", shell=True, cwd=repo)
+    cmd = "git push origin {tag}".format(tag=tag)
+    print(">", cmd)
+    subprocess.check_call(cmd, shell=True, cwd=repo)
 
 subprocess.check_call("git submodule status", shell=True)
