@@ -64,11 +64,11 @@ pipeline {
                     git lfs checkout
                     cd $curdir
                     cd sources/pmm-api
-                    export api_branch=$(git symbolic-ref --short HEAD)
+                    export api_branch=$(git rev-parse --abbrev-ref HEAD)
                     echo $api_branch > apiBranch
                     cd $curdir
                     cd sources/pmm-qa
-                    export pmm_qa_branch=$(git symbolic-ref --short HEAD)
+                    export pmm_qa_branch=$(git rev-parse --abbrev-ref HEAD)
                     echo $pmm_qa_branch > pmmQABranch
                     cd $curdir
                 '''
