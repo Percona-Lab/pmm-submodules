@@ -64,17 +64,18 @@ pipeline {
                     git lfs checkout
                     cd $curdir
                     cd sources/pmm-api
-                    export api_branch=$(git rev-parse --abbrev-ref HEAD)
+                    export api_branch=$(git config -f .gitmodules submodule.sources/pmm-api.branch)
                     echo $api_branch > apiBranch
+                    cat apiBranch
                     cd $curdir
                     cd sources/pmm-qa
-                    export pmm_qa_branch=$(git rev-parse --abbrev-ref HEAD)
+                    export pmm_qa_branch=$(git config -f .gitmodules submodule.sources/pmm-qa.branch)
                     echo $pmm_qa_branch > pmmQABranch
                     cd $curdir
                 '''
                 installDocker()
-                stash includes: 'apiBranch', name: 'apiBranch'
-                stash includes: 'pmmQABranch', name: 'pmmQABranch'
+                stash includes: 'sources/pmm-api/apiBranch', name: 'apiBranch'
+                stash includes: 'sources/pmm-qa/pmmQABranch', name: 'pmmQABranch'
                 slackSend channel: '#pmm-ci', color: '#FFFF00', message: "[${JOB_NAME}]: build started - ${BUILD_URL}"
             }
         }
