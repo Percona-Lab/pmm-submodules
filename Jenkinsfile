@@ -288,7 +288,7 @@ pipeline {
                             def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
                             def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
                             def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                            def UI_BRANCH = sh(returnStdout: true, script: "cat UI_BRANCH").trim()
+                            def UI_BRANCH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
                             runUItests(IMAGE, CLIENT_URL, UI_BRANCH)
                         }
                     }
