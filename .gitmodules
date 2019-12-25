@@ -85,11 +85,11 @@
 
 ## PMM Tests
 
-[submodule "sources/pmm-qa"]
-	path = sources/pmm-qa
+[submodule "pmm-qa"]
+	path = sources/pmm-qa/src/github.com/percona/pmm-qa
 	url = https://github.com/percona/pmm-qa
 	branch = master
-[submodule "sources/pmm-api"]
-	path = sources/pmm-api
+[submodule "pmm-api"]
+	path = sources/pmm-api-tests/src/github.com/Percona-Lab/pmm-api-tests
 	url = https://github.com/Percona-Lab/pmm-api-tests
 	branch = master

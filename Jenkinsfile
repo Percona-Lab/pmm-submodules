@@ -63,10 +63,10 @@ pipeline {
                     git lfs pull
                     git lfs checkout
                     cd $curdir
-                    export api_branch=$(git config -f .gitmodules submodule.sources/pmm-api.branch)
+                    export api_branch=$(git config -f .gitmodules submodule.pmm-api.branch)
                     echo $api_branch > apiBranch
                     cat apiBranch
-                    export pmm_qa_branch=$(git config -f .gitmodules submodule.sources/pmm-qa.branch)
+                    export pmm_qa_branch=$(git config -f .gitmodules submodule.pmm-qa.branch)
                     echo $pmm_qa_branch > pmmQABranch
                     cd $curdir
                 '''
