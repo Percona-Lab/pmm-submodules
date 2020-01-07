@@ -84,7 +84,7 @@
 	branch = master
 
 ## PMM Tests
-[submodule "pmm-api"]
+[submodule "pmm-api-tests"]
 	path = sources/pmm-api-tests/src/github.com/Percona-Lab/pmm-api-tests
 	url = https://github.com/Percona-Lab/pmm-api-tests
 	branch = master
