@@ -36,7 +36,6 @@ update_grafana_node_modules() {
     docker run --rm -v ${rpmbuild_dir}/SOURCES:/home/builder/rpm/SOURCES ${rpmbuild_docker_image} sh -c "
         set -o errexit
         set -o xtrace
-        sudo rpm -ev --nodeps nodejs npm
         sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -
         sudo yum clean all
         sudo yum -y install nodejs
@@ -55,7 +54,7 @@ update_grafana_node_modules() {
         rm -rf node_modules
         yarn install --pure-lockfile --verbose
         cp package.json node_modules/
-        tar -zcpf ../../SOURCES/grafana-node_modules-${pmm_version}.tar.gz node_modules
+        sudo tar -zcpf ../../SOURCES/grafana-node_modules-${pmm_version}.tar.gz node_modules
         for i in `find public/ -name *.rej`;do echo $i;cat $i;done;
         popd
     "
