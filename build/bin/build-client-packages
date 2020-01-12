@@ -19,7 +19,7 @@ Usage: $0 [OPTIONS]
         --build_deb         If it is 1 deb will be built
         --build_tarball     If it is 1 tarball will be built
         --install_deps      Install build dependencies(root previlages are required)
-        --branch            Branch from which submodules should be taken(default master)
+        --branch            Branch from which submodules should be taken(default PMM-2.0)
         --help) usage ;;
 Example $0 --builddir=/tmp/PMM_CLIENT --get_sources=1 --build_src_rpm=1 --build_rpm=1
 EOF
@@ -267,11 +267,7 @@ install_deps() {
         apt-get -y install devscripts equivs
         install_golang
         sed -i 's:apt-get :apt-get -y --force-yes :g' /usr/bin/mk-build-deps
-        link="https://raw.githubusercontent.com/percona/pmm-client/master/build/deb/control"
-        if [ ! -z $BRANCH ]
-        then
-            link=$(echo $link | sed "s:master:$BRANCH:")
-        fi
+        link="https://raw.githubusercontent.com/Percona-Lab/pmm-submodules/${BRANCH}/build/debian/control"
         wget -O $WORKDIR/control $link
         cd $WORKDIR
             mk-build-deps --install $WORKDIR/control
