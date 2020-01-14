@@ -571,3 +571,5 @@ build_srpm
 build_source_deb
 build_rpm
 build_deb
+
+# vim: expandtab shiftwidth=4 tabstop=4

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 set -o errexit
 set -o xtrace
 
@@ -26,3 +27,5 @@ ${bin_dir}/build-server-rpm prometheus
 ${bin_dir}/build-server-rpm grafana
 
 ${bin_dir}/build-server-docker
+
+# vim: expandtab shiftwidth=4 tabstop=4
