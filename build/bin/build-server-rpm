@@ -253,6 +253,26 @@ build() {
 
                 rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
                 rm -f SOURCES/${spec_name}.spec*
+            elif [ \"${spec_name}\" == \"prometheus\" ]; then
+                curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+                sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
+                sudo yum clean all
+                sudo yum -y install yarn
+                yarn --version
+
+                sudo rm -rf /usr/local/go
+                wget https://dl.google.com/go/go1.13.1.linux-amd64.tar.gz
+                sudo tar -C /usr/local -xzf go1.13.1.linux-amd64.tar.gz
+                sudo update-alternatives --install \"/usr/bin/go\" \"go\" \"/usr/local/go/bin/go\" 0
+                sudo update-alternatives --set go /usr/local/go/bin/go
+                sudo go version
+                export PATH=$PATH:/usr/local/go/bin/
+
+                sudo yum-builddep -y SOURCES/${spec_name}.spec
+
+                spectool -C SOURCES -g SOURCES/${spec_name}.spec
+                rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
+                rm -f SOURCES/${spec_name}.spec*
             else
                 sudo yum-builddep -y SOURCES/${spec_name}.spec
 
