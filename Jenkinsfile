@@ -3,11 +3,12 @@ library changelog: false, identifier: 'lib@master', retriever: modernSCM([
     remote: 'https://github.com/Percona-Lab/jenkins-pipelines.git'
 ]) _
 
-void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, CLIENT_VERSION, OWNER) {
+void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, API_COMMIT_SHA, CLIENT_VERSION, OWNER) {
     stagingJob = build job: 'pmm2-api-tests', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'GIT_BRANCH', value: BRANCH_NAME),
         string(name: 'OWNER', value: OWNER),
+        string(name: 'GIT_COMMIT_HASH', value: API_COMMIT_SHA)
     ]
 }
 
@@ -63,7 +64,9 @@ pipeline {
                     git lfs pull
                     git lfs checkout
                     cd $curdir
+                    export api_commit_sha=$(git submodule status | grep 'pmm-api-tests' | awk -F ' ' '{print $1}')
                     export api_branch=$(git config -f .gitmodules submodule.pmm-api-tests.branch)
+                    echo $api_commit_sha > apiCommitSha
                     echo $api_branch > apiBranch
                     cat apiBranch
                     export pmm_qa_branch=$(git config -f .gitmodules submodule.pmm-qa.branch)
@@ -73,6 +76,7 @@ pipeline {
                 installDocker()
                 stash includes: 'apiBranch', name: 'apiBranch'
                 stash includes: 'pmmQABranch', name: 'pmmQABranch'
+                stash includes: 'apiCommitSha', name: 'apiCommitSha'
                 slackSend channel: '#pmm-ci', color: '#FFFF00', message: "[${JOB_NAME}]: build started - ${BUILD_URL}"
             }
         }
@@ -258,12 +262,14 @@ pipeline {
                         script {
                             unstash 'IMAGE'
                             unstash 'apiBranch'
+                            unstash 'apiCommitSha'
                             def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
                             def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
                             def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
                             def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
                             def API_BRANCH = sh(returnStdout: true, script: "cat apiBranch").trim()
-                            runAPItests(IMAGE, API_BRANCH, CLIENT_URL, OWNER)
+                            def API_COMMIT_SHA = sh(returnStdout: true, script: "cat apiCommitSha").trim()
+                            runAPItests(IMAGE, API_BRANCH, API_COMMIT_SHA, CLIENT_URL, OWNER)
                         }
                     }
                 }
