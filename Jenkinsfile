@@ -268,7 +268,7 @@ pipeline {
                             def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
                             def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
                             def API_BRANCH = sh(returnStdout: true, script: "cat apiBranch").trim()
-                            def API_COMMIT_SHA = sh(returnStdout: true, script: "cat apiCommitSha").trim()
+                            def API_COMMIT_SHA = sh(returnStdout: true, script: "cat apiCommitSha").trim() 
                             runAPItests(IMAGE, API_BRANCH, API_COMMIT_SHA, CLIENT_URL, OWNER)
                         }
                     }
