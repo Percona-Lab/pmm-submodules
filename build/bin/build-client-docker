@@ -29,3 +29,5 @@ if [ -n "${SAVE_DOCKER}" ]; then
     mkdir -p $(dirname ${docker_client_tarball})
     docker save ${DOCKER_CLIENT_TAG} | xz > ${docker_client_tarball}
 fi
+
+# vim: expandtab shiftwidth=4 tabstop=4
