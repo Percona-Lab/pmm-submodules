@@ -97,14 +97,14 @@ def pmm_agent_run():
                                name='stderr-watcher',
                                args=('STDERR', pmm_agent_proc.stderr))
         thread_stderr.start()
-        thread_printer = Thread(target=printer(io_q, pmm_agent_proc), name='printer')
+        thread_printer = Thread(target=printer(
+            io_q, pmm_agent_proc), name='printer')
         thread_printer.start()
-    except Exception as e:
+    except (KeyboardInterrupt, SystemExit):
         pmm_agent_proc.wait()
         thread_stdout.join()
         thread_stderr.join()
         thread_printer.join()
-        print('pmm-agent error', e)
 
 
 def main():
