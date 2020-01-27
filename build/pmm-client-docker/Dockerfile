@@ -20,4 +20,6 @@ COPY entrypoint.py /entrypoint.py
 
 USER pmm-agent
 WORKDIR /usr/local/percona/pmm2/
+ENV PATH /usr/local/percona/pmm2/bin/:$PATH
+ENV VERSION 2.x
 ENTRYPOINT ["/entrypoint.py"]
