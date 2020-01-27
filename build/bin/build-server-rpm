@@ -163,8 +163,8 @@ build() {
 
                 cd \"ClickHouse-${rpm_version}\"
 
-                echo \"====> Checkout specific tag v${rpm_version}\"
-                git checkout \"v${rpm_version}\"
+                echo \"====> Checkout specific tag v${CH_VERSION}-stable\"
+                git checkout \"v${CH_VERSION}-stable"
 
                 echo \"====> Update submodules\"
                 git submodule update --init --recursive
