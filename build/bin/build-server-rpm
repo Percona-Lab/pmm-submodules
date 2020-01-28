@@ -187,7 +187,7 @@ build() {
                 sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/srv/g\" \%{_builddir}//ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
                 sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/log\\\/clickhouse-server/srv\\\/logs/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
                 sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/<!-- <listen_host>0.0.0.0<\\\/listen_host> -->/<listen_host>0.0.0.0<\\\/listen_host>/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
-                sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/<size>1000M</size>/<size>100M</size>/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+                sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/<size>1000M<\\\/size>/<size>100M<\\\/size>/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
                 sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/<count>10<\\\/count>/<count>2<\\\/count>/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
                 cat \"/home/builder/clickhouse-rpm/src/clickhouse.spec.in\" | sed \
                 -e \"s|@CH_VERSION@|${CH_VERSION}|\" \
@@ -203,7 +203,7 @@ build() {
 
                 echo \"====> Looking for .spec file\"
                 ls -l \"/home/builder/clickhouse-rpm/rpmbuild/SPECS/clickhouse.spec\"
-
+                cat \"/home/builder/clickhouse-rpm/rpmbuild/SPECS/clickhouse.spec\"
 
                 echo \"====> Setup RPM Macros\"
                 echo '%_topdir '/home/builder/clickhouse-rpm/rpmbuild'
