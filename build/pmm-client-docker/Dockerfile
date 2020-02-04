@@ -1,9 +1,9 @@
 FROM registry.access.redhat.com/ubi7/ubi
 
-RUN yum -y install iproute nc \
+RUN yum -y install iproute iputils nc \
     && rm -rf /var/cache/yum
 
-RUN curl -Lo /tmp/pmm-client.tar.gz https://www.percona.com/downloads/pmm/1.17.1/binary/tarball/pmm-client-1.17.1.tar.gz \
+RUN curl -Lo /tmp/pmm-client.tar.gz https://www.percona.com/downloads/pmm/1.17.3/binary/tarball/pmm-client-1.17.3.tar.gz \
     && tar -zxpf /tmp/pmm-client.tar.gz -C /tmp \
     && cd /tmp/pmm-client-* \
     && bash ./install \
@@ -15,7 +15,7 @@ RUN curl -Lo /usr/bin/pid-watchdog https://github.com/percona/pid-watchdog/relea
     && chmod u+rwx,g+rwx /usr/bin/pid-watchdog \
     && ln -s /usr/bin/pid-watchdog /usr/bin/service
 
-RUN curl -Lo /tmp/pmm2-client.tar.gz https://www.percona.com/downloads/pmm2/2.1.0/binary/tarball/pmm2-client-2.1.0.tar.gz \
+RUN curl -Lo /tmp/pmm2-client.tar.gz https://www.percona.com/downloads/pmm2/2.2.2/binary/tarball/pmm2-client-2.2.2.tar.gz \
     && tar -zxpf /tmp/pmm2-client.tar.gz -C /tmp \
     && cd /tmp/pmm2-client-* \
     && bash -x ./install_tarball \

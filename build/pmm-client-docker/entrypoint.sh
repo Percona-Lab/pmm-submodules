@@ -19,6 +19,16 @@ urlencode() {
     LC_COLLATE=$old_lc_collate
 }
 
+puzzle() {
+    local args="${1}"
+    shift
+    for i in "${@}"
+    do
+        args=${args/$i/xxxxx}
+    done
+    echo ${args}
+}
+
 wait_for_url() {
     local URL=$1
     local RESPONSE=$2
@@ -54,9 +64,27 @@ wait_for_port() {
 pmm2_start() {
     AGENT_CONFIG_FILE=/usr/local/percona/pmm2/config/pmm-agent.yaml
     rm -f ${AGENT_CONFIG_FILE}
+
+    { set +x; } 2> /dev/null
     if [ -n "${PMM_USER}" ]; then
+        echo '+ ARGS+=" --server-username=PMM_USER'
         ARGS+=" --server-username=${PMM_USER}"
     fi
+
+    ARGS_TO_PUZZLE=( ${PMM_USER} ${PMM_PASSWORD} )
+
+    echo '+ pmm-agent setup \
+        --force \
+        --config-file='"'${AGENT_CONFIG_FILE}'"' \
+        --server-address='"'${PMM_SERVER}'"' \
+        --server-insecure-tls \
+        --container-id='"'${HOSTNAME}'"' \
+        --container-name='"'${CLIENT_NAME}'"' \
+        --ports-min='"'${CLIENT_PORT_MIN:-30100}'"' \
+        --ports-max='"'${CLIENT_PORT_MAX:-30200}'"' \
+        --listen-port='"'${CLIENT_PORT_LISTEN:-7777}'"' \
+        '"'$(puzzle "${ARGS}" "${ARGS_TO_PUZZLE[@]}")'"' \
+        '"'${CLIENT_ADDR:-$SRC_ADDR}'"' container '"'${CLIENT_NAME}'"''
 
     pmm-agent setup \
         --force \
@@ -72,11 +100,16 @@ pmm2_start() {
         "${CLIENT_ADDR:-$SRC_ADDR}" container "${CLIENT_NAME}"
 
     if [ -n "${DB_USER}" ]; then
+        echo '+ DB_ARGS+=" --username=DB_USER'
+        ARGS_TO_PUZZLE+=("${DB_USER}")
         DB_ARGS+=" --username=${DB_USER}"
     fi
     if [ -n "${DB_PASSWORD}" ]; then
+        echo '+ DB_ARGS+=" --password=DB_PASSWORD'
+        ARGS_TO_PUZZLE+=("${DB_PASSWORD}")
         DB_ARGS+=" --password=${DB_PASSWORD}"
     fi
+    set -x
     if [ -n "${DB_CLUSTER}" ]; then
         DB_ARGS+=" --cluster=${DB_CLUSTER}"
     fi
@@ -84,8 +117,6 @@ pmm2_start() {
     if [ -n "${DB_HOST}" -a "${DB_PORT}" ]; then
         wait_for_port "${DB_HOST}" "${DB_PORT}"
     fi
-
-    cat "${AGENT_CONFIG_FILE}"
 
     pmm-agent --config-file="${AGENT_CONFIG_FILE}" \
         --ports-min="${CLIENT_PORT_MIN:-30100}" \
@@ -96,29 +127,47 @@ pmm2_start() {
     cat /usr/local/percona/pmm2/pmm-agent-tmp.log
 
     if [ -n "${DB_TYPE}" ]; then
+        { set +x; } 2>/dev/null
         case "${DB_TYPE}" in
             mongodb )
                 if [[ "${DB_ARGS}" =~ "--uri" ]]; then
                     DB_ARGS=$(echo ${DB_ARGS} | cut -d ' ' -f 2-)
                 fi
+                echo '+ pmm-admin add "'"${DB_TYPE}"'" \
+                    --skip-connection-check \
+                    --server-url="https://xxxxx:xxxxx@${PMM_SERVER}/" \
+                    --server-insecure-tls \
+                    '"'$(puzzle "${DB_ARGS}" "${ARGS_TO_PUZZLE[@]}") \
+                    ${CLIENT_NAME} \
+                    ${DB_HOST}:${DB_PORT}'"''
+
                 pmm-admin add "${DB_TYPE}" \
                     --skip-connection-check \
-                    --server-url="https://${PMM_USER}:$(urlencode ${PMM_PASSWORD})@${PMM_SERVER}/" \
+                    --server-url=https://${PMM_USER}:${ENCODED_PASSWORD}@${PMM_SERVER}/ \
                     --server-insecure-tls \
                     ${DB_ARGS} \
                     "${CLIENT_NAME}" \
                     "${DB_HOST}:${DB_PORT}"
                 ;;
             * )
+                echo "+ pmm-admin add "${DB_TYPE}" \
+                    --skip-connection-check \
+                    --server-url="https://xxxxx:xxxxx@${PMM_SERVER}/" \
+                    --server-insecure-tls \
+                    $(puzzle "${DB_ARGS}" "${ARGS_TO_PUZZLE[@]}") \
+                    ${CLIENT_NAME} \
+                    ${DB_HOST}:${DB_PORT}"
+
                 pmm-admin add "${DB_TYPE}" \
                     --skip-connection-check \
-                    --server-url="https://${PMM_USER}:$(urlencode ${PMM_PASSWORD})@${PMM_SERVER}/" \
+                    --server-url="https://${PMM_USER}:${ENCODED_PASSWORD}@${PMM_SERVER}/" \
                     --server-insecure-tls \
                     ${DB_ARGS} \
                     "${CLIENT_NAME}" \
                     "${DB_HOST}:${DB_PORT}"
                 ;;
         esac
+        set -x
         
     fi
 
@@ -131,10 +180,24 @@ pmm2_start() {
 
 pmm_start() {
     cd /usr/local/percona/pmm-client
+    { set +x; } 2>/dev/null
     if [ -n "${PMM_USER}" ]; then
+        echo '+ ARGS+=" --server-user=PMM_USER"'
         ARGS+=" --server-user=${PMM_USER}"
     fi
+
+    ARGS_TO_PUZZLE=( ${PMM_USER} ${PMM_PASSWORD} )
     
+    echo '+ pmm-admin config \
+        --skip-root \
+        --force \
+        --server "'"${PMM_SERVER}"'" \
+        --server-insecure-ssl \
+        --bind-address "'"${SRC_ADDR}"'" \
+        --client-address "'"${SRC_ADDR}"'" \
+        --client-name "'"${CLIENT_NAME}"'" \
+        "'"$(puzzle "${ARGS}" "${ARGS_TO_PUZZLE[@]}")"'"'
+
     pmm-admin config \
         --skip-root \
         --force \
@@ -149,11 +212,16 @@ pmm_start() {
         DB_ARGS+=" --host ${DB_HOST}"
     fi
     if [ -n "${DB_USER}" ]; then
+        echo '+ DB_ARGS+=" --user DB_USER"'
         DB_ARGS+=" --user ${DB_USER}"
+        ARGS_TO_PUZZLE+=("${DB_USER}")
     fi
     if [ -n "${DB_PASSWORD}" ]; then
+        echo '+ DB_ARGS+=" --password DB_PASSWORD"'
         DB_ARGS+=" --password ${DB_PASSWORD}"
+        ARGS_TO_PUZZLE+=("${DB_PASSWORD}")
     fi
+    set -x
     if [ -n "${DB_PORT}" ]; then
         DB_ARGS+=" --port ${DB_PORT}"
     fi
@@ -163,31 +231,43 @@ pmm_start() {
     fi
 
     if [ -n "${DB_TYPE}" ]; then
+        { set +x; } 2>/dev/null
         case "${DB_TYPE}" in
             proxysql )
+                echo '+ pmm-admin add "'"${DB_TYPE}"'" \
+                            --skip-root \
+                            --dsn "'"DB_USER:DB_PASSWORD@tcp(${DB_HOST}:${DB_PORT})/"'"'
                 pmm-admin add "${DB_TYPE}" \
                     --skip-root \
                     --dsn "${DB_USER}:${DB_PASSWORD}@tcp(${DB_HOST}:${DB_PORT})/" 
                 ;;
             mongodb )
                 if [[ "${DB_ARGS}" =~ "--uri" ]]; then
+                    echo 'pmm-admin add "${DB_TYPE}" \
+                        --skip-root \
+                        "'"$(puzzle "${DB_ARGS}" "${ARGS_TO_PUZZLE[@]}")"'"'
                     pmm-admin add "${DB_TYPE}" \
                         --skip-root \
                         ${DB_ARGS}
-            
                 else
+                    echo '+ pmm-admin add "'"${DB_TYPE}"'" \
+                                --skip-root \
+                                --uri "'"mongodb://DB_USER:DB_PASSWORD@${DB_HOST}:${DB_PORT}/"'"'
                     pmm-admin add "${DB_TYPE}" \
                         --skip-root \
                         --uri "mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/" 
                 fi
                 ;;
             * )
+                : echo 'pmm-admin add "${DB_TYPE}" \
+                    --skip-root \
+                    "'"$(puzzle "${DB_ARGS}" "${ARGS_TO_PUZZLE[@]}")"'"'
                 pmm-admin add "${DB_TYPE}" \
                     --skip-root \
                     ${DB_ARGS}
                 ;;
         esac
-
+        set -x
     fi
     exec pid-watchdog
 }
@@ -197,15 +277,22 @@ main() {
         echo PMM_SERVER is not specified. exiting
         exit 1
     fi
+    { set +x; } 2> /dev/null
     if [ -n "${PMM_PASSWORD}" ]; then
+        echo '+ ARGS+="--server-password=PMM_PASSWORD"'
         ARGS+="--server-password=${PMM_PASSWORD}"
     fi
+    ENCODED_PASSWORD=$(urlencode ${PMM_PASSWORD})
+    set -x
+
 
     PMM_SERVER_IP=$(ping -c 1 "${PMM_SERVER/:*/}" | grep PING | sed -e 's/).*//; s/.*(//')
     SRC_ADDR=$(ip route get "${PMM_SERVER_IP}" | grep 'src ' | sed -e 's/.* src //; s/ .*//')
     CLIENT_NAME="${CLIENT_NAME:-$HOSTNAME}"
 
+    { set +x; } 2> /dev/null
     SERVER_RESPONSE_CODE=$(curl -k -s -o /dev/null -w "%{http_code}" "https://${PMM_USER}:$(urlencode ${PMM_PASSWORD})@${PMM_SERVER}/v1/readyz")
+    set -x
 
     if [[ "${SERVER_RESPONSE_CODE}" == '200' ]]; then
         export PATH="/usr/local/percona/pmm2/bin/:${PATH}"
