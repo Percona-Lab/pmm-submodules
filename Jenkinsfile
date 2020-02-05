@@ -12,18 +12,22 @@ void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIE
     ]
 }
 
-void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION) {
+void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH) {
     stagingJob = build job: 'pmm2-testsuite', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
+        string(name: 'PMM_QA_GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
+        string(name: 'PMM_QA_GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH)
     ]
 }
 
-void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, BRANCH_NAME) {
+void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, BRANCH_NAME, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH) {
     stagingJob = build job: 'pmm2-ui-tests', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
-        string(name: 'GIT_BRANCH', value: BRANCH_NAME)
+        string(name: 'GIT_BRANCH', value: BRANCH_NAME),
+        string(name: 'PMM_QA_GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
+        string(name: 'PMM_QA_GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH)
     ]
 }
 
@@ -69,14 +73,17 @@ pipeline {
                     echo $api_tests_commit_sha > apiCommitSha
                     echo $api_tests_branch > apiBranch
                     cat apiBranch
+                    export pmm_qa_commit_sha=$(git submodule status | grep 'pmm-qa' | awk -F ' ' '{print $1}')
                     export pmm_qa_branch=$(git config -f .gitmodules submodule.pmm-qa.branch)
                     echo $pmm_qa_branch > pmmQABranch
+                    echo $pmm_qa_commit_sha > pmmQACommitSha
                     cd $curdir
                 '''
                 installDocker()
                 stash includes: 'apiBranch', name: 'apiBranch'
                 stash includes: 'pmmQABranch', name: 'pmmQABranch'
                 stash includes: 'apiCommitSha', name: 'apiCommitSha'
+                stash includes: 'pmmQACommitSha', name: 'pmmQACommitSha'
                 slackSend channel: '#pmm-ci', color: '#FFFF00', message: "[${JOB_NAME}]: build started - ${BUILD_URL}"
             }
         }
@@ -277,11 +284,15 @@ pipeline {
                     steps {
                         script {
                             unstash 'IMAGE'
+                            unstash 'pmmQABranch'
+                            unstash 'pmmQACommitSha'
                             def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
                             def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
                             def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
                             def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                            runTestSuite(IMAGE, CLIENT_URL)
+                            def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
+                            def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
+                            runTestSuite(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH)
                         }
                     }
                 }
@@ -290,12 +301,14 @@ pipeline {
                         script {
                             unstash 'IMAGE'
                             unstash 'pmmQABranch'
+                            unstash 'pmmQACommitSha'
                             def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
                             def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
                             def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
                             def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                            def UI_BRANCH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
-                            runUItests(IMAGE, CLIENT_URL, UI_BRANCH)
+                            def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
+                            def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
+                            runUItests(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH)
                         }
                     }
                 }
