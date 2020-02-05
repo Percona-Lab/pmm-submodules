@@ -25,7 +25,7 @@ void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, BRANCH_NAME, PMM_QA
     stagingJob = build job: 'pmm2-ui-tests', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
-        string(name: 'GIT_BRANCH', value: BRANCH_NAME),
+        string(name: 'GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
         string(name: 'GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH)
     ]
 }
