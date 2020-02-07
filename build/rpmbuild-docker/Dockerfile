@@ -19,7 +19,7 @@ RUN yum install -y --setopt=skip_missing_names_on_install=False \
 RUN yum -y remove nodesource-release-el7-1.noarch
 RUN yum clean all && rm -rf /var/cache/yum
 
-ENV GO_TARBALL https://dl.google.com/go/go1.12.12.linux-amd64.tar.gz
+ENV GO_TARBALL https://dl.google.com/go/go1.13.7.linux-amd64.tar.gz
 RUN wget --progress=dot:giga ${GO_TARBALL} -O /tmp/golang.tar.gz
 RUN tar -C /usr/local -xzf /tmp/golang.tar.gz; \
     update-alternatives --install "/usr/bin/go" "go" "/usr/local/go/bin/go" 0; \
