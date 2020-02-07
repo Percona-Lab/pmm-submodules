@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# pmm-agent - Startup script for pmm-agent
+
+# chkconfig: 35 85 15
+# processname: pmm-agent
+# config: /usr/local/percona/pmm2/config/pmm-agent.yaml
+
+. /etc/rc.d/init.d/functions
+
+OPTIONS="--config-file=/usr/local/percona/pmm2/config/pmm-agent.yaml"
+pmm_agent=${PMM_AGENT:-/usr/sbin/pmm-agent}
+pmm_log="/var/log/pmm-agent.log"
+
+start()
+{
+  echo -n $"Starting pmm-agent: "
+  daemon --check ${pmm_agent} " $pmm_agent $OPTIONS >> ${pmm_log} 2>&1 &"
+  [ $RETVAL -eq 0 ] && touch /var/lock/subsys/pmm_agent
+  echo
+}
+
+stop()
+{
+  echo -n $"Stopping pmm-agent: "
+  pmm_agent_killproc $pmm_agent
+  RETVAL=$?
+  echo
+  [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/pmm-agent
+}
+
+restart () {
+        stop
+        start
+}
+
+pmm_agent_killproc()
+{
+  local procname=$1
+  local -i delay=300
+  local -i duration=10
+  local pid=`pidof ${procname}`
+
+  kill -TERM $pid >/dev/null 2>&1
+  usleep 100000
+  local -i x=0
+  while [ $x -le $delay ] && checkpid $pid; do
+    sleep $duration
+    x=$(( $x + $duration))
+  done
+
+  kill -KILL $pid >/dev/null 2>&1
+  usleep 100000
+
+
+  checkpid $pid
+  local RC=$?
+  [ "$RC" -eq 0 ] && failure "${procname} shutdown" || success "${procname} shutdown"
+  RC=$((! $RC))
+  return $RC
+}
+
+RETVAL=0
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    restart
+    ;;
+  status)
+    status $pmm_agent
+    RETVAL=$?
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|status|restart}"
+    RETVAL=1
+esac
+
+exit $RETVAL

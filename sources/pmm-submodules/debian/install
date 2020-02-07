@@ -1,0 +1,17 @@
+pmm-agent /usr/local/percona/pmm2/bin/
+pmm-admin /usr/local/percona/pmm2/bin/
+node_exporter /usr/local/percona/pmm2/exporters/
+mysqld_exporter /usr/local/percona/pmm2/exporters/
+postgres_exporter /usr/local/percona/pmm2/exporters/
+mongodb_exporter /usr/local/percona/pmm2/exporters/
+proxysql_exporter /usr/local/percona/pmm2/exporters/
+rds_exporter /usr/local/percona/pmm2/exporters/
+example.prom /usr/local/percona/pmm2/collectors/textfile-collector/low-resolution/
+example.prom /usr/local/percona/pmm2/collectors/textfile-collector/medium-resolution/
+example.prom /usr/local/percona/pmm2/collectors/textfile-collector/high-resolution/
+queries-mysqld.yml /usr/local/percona/pmm2/collectors/custom-queries/mysql/low-resolution/
+queries-mysqld.yml /usr/local/percona/pmm2/collectors/custom-queries/mysql/medium-resolution/
+queries-mysqld.yml /usr/local/percona/pmm2/collectors/custom-queries/mysql/high-resolution/
+queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution/
+queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
+queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
