@@ -9,27 +9,27 @@
 [submodule "pmm-admin"]
 	path = sources/pmm-admin/src/github.com/percona/pmm-admin
 	url = https://github.com/percona/pmm-admin.git
-	branch = PMM-5192-replace-go1.12-with-go1.13
+	branch = master
 [submodule "pmm-agent"]
 	path = sources/pmm-agent/src/github.com/percona/pmm-agent
 	url = https://github.com/percona/pmm-agent.git
-	branch = PMM-5192-replace-go1.12-with-go1.13
+	branch = master
 [submodule "node_exporter"]
 	path = sources/node_exporter/src/github.com/prometheus/node_exporter
 	url = https://github.com/percona/node_exporter.git
-	branch = PMM-5192-replace-go1.12-with-go1.13
+	branch = master
 [submodule "mysqld_exporter"]
 	path = sources/mysqld_exporter/src/github.com/percona/mysqld_exporter
 	url = https://github.com/percona/mysqld_exporter.git
-	branch = PMM-5192-replace-go1.12-with-go1.13
+	branch = master
 [submodule "mongodb_exporter"]
 	path = sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
 	url = https://github.com/percona/mongodb_exporter.git
-	branch = PMM-5192-replace-go1.12-with-go1.13
+	branch = 0.10.0
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
-	branch = PMM-5192-replace-go1.12-with-go1.13
+	branch = master
 [submodule "clickhouse_exporter"]
 	path = sources/clickhouse_exporter/src/github.com/f1yegor/clickhouse_exporter
 	url = https://github.com/f1yegor/clickhouse_exporter
@@ -37,26 +37,27 @@
 [submodule "proxysql_exporter"]
 	path = sources/proxysql_exporter/src/github.com/percona/proxysql_exporter
 	url = https://github.com/percona/proxysql_exporter.git
-	branch = PMM-5192-replace-go1.12-with-go1.13
+	branch = pmm-2.x
 [submodule "rds_exporter"]
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
-	branch = PMM-5192-replace-go1.12-with-go1.13
+	branch = master
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
-	branch = PMM-5192-replace-go1.12-with-go1.13
+	branch = release-3.0.10
+
 
 # PMM Server
 
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
-	branch = PMM-5192-replace-go1.12-with-go1.13
+	branch = PMM-2.0
 [submodule "qan-api2"]
 	path = sources/qan-api2/src/github.com/percona/qan-api2
 	url = https://github.com/percona/qan-api2
-	branch = PMM-5192-replace-go1.12-with-go1.13
+	branch = master
 [submodule "qan-app"]
 	path = sources/qan-app/src/github.com/percona/qan-app
 	url = https://github.com/percona/qan-app
@@ -86,7 +87,7 @@
 [submodule "pmm-api-tests"]
 	path = sources/pmm-api-tests/src/github.com/Percona-Lab/pmm-api-tests
 	url = https://github.com/Percona-Lab/pmm-api-tests
-	branch = PMM-5192-replace-go1.12-with-go1.13
+	branch = master
 [submodule "pmm-qa"]
 	path = sources/pmm-qa/src/github.com/percona/pmm-qa
 	url = https://github.com/percona/pmm-qa
