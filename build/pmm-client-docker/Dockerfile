@@ -14,7 +14,7 @@ RUN tar -zxpf /tmp/pmm2-client.tar.gz -C /tmp \
     && cd /tmp/pmm2-client-* \
     && env PMM_USER=pmm-agent PMM_GROUP=pmm-agent ./install_tarball \
     && cd /tmp \
-    && rm -rf /tmp/pmm2-client-*
+    && rm -rf /tmp/pmm2-client*
 
 COPY entrypoint.py /entrypoint.py
 
