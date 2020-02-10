@@ -18,9 +18,7 @@ The following environment variables are recognized by the Docker entrypoint:
 Additionally, the many environment variables are recognized by pmm-agent itself. The following help text shows them as [PMM_AGENT_XXX].
 """
 
-
 PMM_AGENT_SETUP = strtobool(os.environ.get('PMM_AGENT_SETUP', 'false'))
-PMM_AGENT_CONFIG = '/usr/local/percona/pmm2/config/pmm-agent.yaml'
 
 
 def main():
@@ -31,14 +29,17 @@ def main():
 
     if PMM_AGENT_SETUP:
         print('Starting pmm-agent setup ...')
-        status = os.system('pmm-agent setup --config-file=' + PMM_AGENT_CONFIG)
+        status = os.system('pmm-agent setup')
         if status != os.EX_OK:
             sys.exit(status)
 
     print('Starting pmm-agent ...')
     sys.stdout.flush()
     sys.stderr.flush()
-    os.execlp('pmm-agent', 'run', '--config-file=' + PMM_AGENT_CONFIG)
+
+    # use execlp to replace the current process (this entrypoint)
+    # with pmm-agent with inherited environment
+    os.execlp('pmm-agent', 'run')
 
 
 if __name__ == '__main__':
