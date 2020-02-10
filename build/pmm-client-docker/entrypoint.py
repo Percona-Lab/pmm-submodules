@@ -19,7 +19,7 @@ import sys
 from distutils.util import strtobool
 
 
-PMM_AGENT_SETUP = strtobool(os.environ.get('PMM_AGENT_SETUP', 'false'))
+PMM_AGENT_SETUP = strtobool(os.environ.get('PMM_AGENT_SETUP', 'false').lower())
 
 
 def main():
