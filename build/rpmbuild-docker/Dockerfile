@@ -2,7 +2,8 @@ FROM centos:7
 
 # enable nodesource repo for nodejs
 RUN curl -sL https://rpm.nodesource.com/setup_12.x | bash -
-RUN curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
+RUN curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo \
+ && curl -sL https://rpm.nodesource.com/setup_8.x | bash -
 RUN yum update -y
 RUN yum install -y --setopt=skip_missing_names_on_install=False \
                    gcc gcc-c++ \
