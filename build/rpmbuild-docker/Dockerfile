@@ -1,7 +1,7 @@
 FROM centos:7
 
 # enable nodesource repo for nodejs
-RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+RUN curl -sL https://rpm.nodesource.com/setup_12.x | bash -
 RUN yum update -y
 RUN yum install -y --setopt=skip_missing_names_on_install=False \
                    gcc gcc-c++ \
