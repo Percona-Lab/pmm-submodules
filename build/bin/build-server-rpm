@@ -254,6 +254,7 @@ build() {
                 rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
                 rm -f SOURCES/${spec_name}.spec*
             else
+                export PATH=/usr/local/go/bin/:$PATH
                 sudo yum-builddep -y SOURCES/${spec_name}.spec
 
                 spectool -C SOURCES -g SOURCES/${spec_name}.spec
