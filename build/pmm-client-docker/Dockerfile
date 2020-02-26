@@ -1,20 +1,24 @@
-FROM centos:7
-RUN yum -y install iproute nc \
-    && rm -rf /var/cache/yum
+FROM registry.access.redhat.com/ubi7/ubi
 
 COPY pmm2-client.tar.gz /tmp/pmm2-client.tar.gz
+
+# need to use IDs for openshift
+RUN groupadd -g 1002 pmm-agent
+RUN useradd -u 1002 -r -g pmm-agent -s /sbin/nologin \
+            -d /usr/local/percona/pmm2 \
+            -c "PMM 2.X Client User" pmm-agent
+
+RUN install -d -o pmm-agent -g pmm-agent -m 0775 /usr/local/percona/pmm2
+
 RUN tar -zxpf /tmp/pmm2-client.tar.gz -C /tmp \
     && cd /tmp/pmm2-client-* \
-    && rm -rf /tmp/pmm2-client-*
+    && env PMM_USER=pmm-agent PMM_GROUP=pmm-agent ./install_tarball \
+    && cd /tmp \
+    && rm -rf /tmp/pmm2-client*
 
-RUN install -d -o nobody -g nobody -m 0775 /usr/local/percona \
-    touch /usr/local/percona/pmm2/config/pmm-agent.yaml \
-    && chmod -R g+rwx /usr/local/percona \
-    && chown -R nobody:nobody /usr/local/percona \
-    && install -d -o nobody -g nobody -m 0775 /run /var/log /etc/rc.d/init.d
+COPY entrypoint.py /entrypoint.py
 
-COPY entrypoint.sh /entrypoint.sh
-
-USER nobody
-WORKDIR /usr/local/percona/
-ENTRYPOINT ["/entrypoint.sh"]
+USER pmm-agent
+WORKDIR /usr/local/percona/pmm2/
+ENV PATH /usr/local/percona/pmm2/bin/:$PATH
+ENTRYPOINT ["/entrypoint.py"]

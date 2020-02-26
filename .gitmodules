@@ -82,3 +82,13 @@
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
 	branch = master
+
+## PMM Tests
+[submodule "pmm-api-tests"]
+	path = sources/pmm-api-tests/src/github.com/Percona-Lab/pmm-api-tests
+	url = https://github.com/Percona-Lab/pmm-api-tests
+	branch = master
+[submodule "pmm-qa"]
+	path = sources/pmm-qa/src/github.com/percona/pmm-qa
+	url = https://github.com/percona/pmm-qa
+	branch = master
