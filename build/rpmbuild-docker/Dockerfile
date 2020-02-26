@@ -25,11 +25,13 @@ ENV GO_VERSION 1.13.7
 ENV GO_CHECKSUM b3dd4bd781a0271b33168e627f7f43886b4c5d1c794a4015abf34e99c6526ca3
 
 RUN wget --progress=dot:giga https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz -O /tmp/golang.tar.gz && \
-    echo "${GO_CHECKSUM} /tmp/golang.tar.gz" | sha256sum -c -;
-RUN tar -C /usr/local -xzf /tmp/golang.tar.gz; \
+    echo "${GO_CHECKSUM} /tmp/golang.tar.gz" | sha256sum -c - && \
+    tar -C /usr/local -xzf /tmp/golang.tar.gz; \
     update-alternatives --install "/usr/bin/go" "go" "/usr/local/go/bin/go" 0; \
-    update-alternatives --set go /usr/local/go/bin/go
-RUN rm /tmp/golang.tar.gz
+    update-alternatives --set go /usr/local/go/bin/go; \
+    update-alternatives --install "/usr/bin/gofmt" "gofmt" "/usr/local/go/bin/gofmt" 0; \
+    update-alternatives --set gofmt /usr/local/go/bin/gofmt; \
+    rm /tmp/golang.tar.gz
 
 RUN useradd builder -u 1000 -m -G users,wheel && \
     echo "builder ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers && \
