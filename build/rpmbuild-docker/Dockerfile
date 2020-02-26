@@ -21,17 +21,18 @@ RUN yum install -y --setopt=skip_missing_names_on_install=False \
 RUN yum -y remove nodesource-release-el7-1.noarch
 RUN yum clean all && rm -rf /var/cache/yum
 
-ENV GO_VERSION 1.13.7
-ENV GO_CHECKSUM b3dd4bd781a0271b33168e627f7f43886b4c5d1c794a4015abf34e99c6526ca3
+ENV GO_VERSION 1.13.8
+ENV GO_CHECKSUM 0567734d558aef19112f2b2873caa0c600f1b4a5827930eb5a7f35235219e9d8
 
-RUN wget --progress=dot:giga https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz -O /tmp/golang.tar.gz && \
-    echo "${GO_CHECKSUM} /tmp/golang.tar.gz" | sha256sum -c - && \
-    tar -C /usr/local -xzf /tmp/golang.tar.gz; \
-    update-alternatives --install "/usr/bin/go" "go" "/usr/local/go/bin/go" 0; \
-    update-alternatives --set go /usr/local/go/bin/go; \
-    update-alternatives --install "/usr/bin/gofmt" "gofmt" "/usr/local/go/bin/gofmt" 0; \
-    update-alternatives --set gofmt /usr/local/go/bin/gofmt; \
-    rm /tmp/golang.tar.gz
+RUN wget --progress=dot:giga https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz -O /tmp/golang.tar.gz
+RUN sha256sum /tmp/golang.tar.gz
+RUN echo "${GO_CHECKSUM} /tmp/golang.tar.gz" | sha256sum -c -
+RUN tar -C /usr/local -xzf /tmp/golang.tar.gz
+RUN update-alternatives --install "/usr/bin/go" "go" "/usr/local/go/bin/go" 0
+RUN update-alternatives --set go /usr/local/go/bin/go
+RUN update-alternatives --install "/usr/bin/gofmt" "gofmt" "/usr/local/go/bin/gofmt" 0
+RUN update-alternatives --set gofmt /usr/local/go/bin/gofmt
+RUN rm /tmp/golang.tar.gz
 
 RUN useradd builder -u 1000 -m -G users,wheel && \
     echo "builder ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers && \
