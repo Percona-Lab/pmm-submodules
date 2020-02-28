@@ -77,7 +77,7 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-5446-Resolution-fix-for-Compare-Dashboards 
+	branch = PMM-5446-Resolution-fix-for-Compare-Dashboards-fix 
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
