@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-5099-Add_Fingerprint_to_Metrics_response
+	branch = PMM-2.0
 
 
 # PMM Client
