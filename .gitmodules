@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-2.0
+	branch = PMM-4145-rds-disable-metric-collection
 
 
 # PMM Client
@@ -9,7 +9,7 @@
 [submodule "pmm-admin"]
 	path = sources/pmm-admin/src/github.com/percona/pmm-admin
 	url = https://github.com/percona/pmm-admin.git
-	branch = master
+	branch = PMM-4145-rds-disable-metric-collection
 [submodule "pmm-agent"]
 	path = sources/pmm-agent/src/github.com/percona/pmm-agent
 	url = https://github.com/percona/pmm-agent.git
@@ -41,7 +41,7 @@
 [submodule "rds_exporter"]
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
-	branch = master
+	branch = PMM-4145-rds-disable-metric-collection
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
@@ -53,7 +53,7 @@
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
-	branch = PMM-2.0
+	branch = PMM-4145-rds-disable-metric-collection
 [submodule "qan-api2"]
 	path = sources/qan-api2/src/github.com/percona/qan-api2
 	url = https://github.com/percona/qan-api2
@@ -77,7 +77,7 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-2.0
+	branch = PMM-4145-rds-disable-metric-collection
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
