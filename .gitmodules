@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-4145-rds-disable-metric-collection
+	branch = PMM-2.0
 
 
 # PMM Client
