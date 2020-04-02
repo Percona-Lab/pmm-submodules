@@ -81,7 +81,7 @@
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
-	branch = PMM-5655-Collect-additional-logs 
+	branch = master 
 
 ## PMM Tests
 [submodule "pmm-api-tests"]
