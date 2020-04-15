@@ -24,6 +24,7 @@ ${bin_dir}/build-server-rpm pmm-update
 # 3rd-party
 ${bin_dir}/build-server-rpm clickhouse
 ${bin_dir}/build-server-rpm prometheus
+${bin_dir}/build-server-rpm alertmanager
 ${bin_dir}/build-server-rpm grafana
 
 ${bin_dir}/build-server-docker
