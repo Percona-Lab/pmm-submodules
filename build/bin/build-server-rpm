@@ -237,13 +237,6 @@ build() {
                 sudo yum -y install nodejs
                 sudo sed -i 's|SRPMS|x86_64|g' /etc/yum.repos.d/nodesource-el7.repo
 
-                sudo rm -rf /usr/local/go
-                wget https://dl.google.com/go/go1.13.1.linux-amd64.tar.gz
-                sudo tar -C /usr/local -xzf go1.13.1.linux-amd64.tar.gz
-                sudo update-alternatives --install \"/usr/bin/go\" \"go\" \"/usr/local/go/bin/go\" 0
-                sudo update-alternatives --set go /usr/local/go/bin/go
-                sudo go version
-
                 sudo yum-builddep -y SOURCES/${spec_name}.spec
 
                 spectool -C SOURCES -g SOURCES/${spec_name}.spec
