@@ -14,26 +14,18 @@ main() {
         set -o errexit
         set -o xtrace
 
-        # Install missing packages for Ubuntu 20.04
-        if [ -f /etc/os-release ] \
-        && grep -q 'Focal Fossa' /etc/os-release; then
-            export DEBIAN_FRONTEND=noninteractive
-            apt update
-            apt install -y sudo lsb-release
-        fi
-
         export pmm_version=$pmm_version
         export pmm_release=$pmm_release
         export sudo_path=\$(ls /usr/bin/sudo)
         mkdir -p /tmp/pmm
-        cd /home/builder/results
+        pushd /home/builder/results
             \$sudo_path /home/builder/bin/build-client-packages \
                 --builddir=/tmp/pmm \
                 --install_deps=1
             /home/builder/bin/build-client-packages \
                 --builddir=/tmp/pmm \
                 --build_rpm=1
-        cd -
+        popd
         \$sudo_path chown -R $(id -u):$(id -g) /home/builder/results/rpm
     "
 }
