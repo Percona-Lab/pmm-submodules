@@ -10,7 +10,9 @@ tmp_dir=${root_dir}/tmp
 
 main() {
     local IMAGE=${1:-debian:wheezy}
-    docker run --rm -v ${bin_dir}:/home/builder/bin -v ${root_dir}/results:/home/builder/results ${IMAGE} sh -c "
+    docker run --rm -e DEBIAN_FRONTEND=noninteractive \
+                    -v ${bin_dir}:/home/builder/bin \
+                    -v ${root_dir}/results:/home/builder/results ${IMAGE} sh -c "
         set -o errexit
         set -o xtrace
 
