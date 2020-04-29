@@ -260,7 +260,6 @@ install_deps() {
         yum -y install git wget rpmdevtools bison yum-utils rpm-build
         install_golang
     else
-        #add_percona_apt_repo
         apt-get update
         apt-get -y install devscripts equivs
         install_golang
