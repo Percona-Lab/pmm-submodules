@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-2.0
+	branch = revert-522-revert-516-PMM-5777-inventory-add-external-exporter
 
 
 # PMM Client
