@@ -230,22 +230,6 @@ build() {
                 cp -r /home/builder/clickhouse-rpm/rpmbuild/RPMS/* /home/builder/rpm/RPMS/${spec_name}-${rpm_version}
                 ls -la /home/builder/clickhouse-rpm/rpmbuild/SOURCES
                 cp -r /home/builder/clickhouse-rpm/rpmbuild/SOURCES/* /home/builder/rpm/SOURCES
-            elif [ \"${spec_name}\" == \"grafana\" ] || [ \"${spec_name}\" == \"percona-qan-app\" ]; then
-                sudo yum remove -y nodejs npm
-                sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -
-                sudo yum clean all
-                sudo yum -y install nodejs
-                sudo sed -i 's|SRPMS|x86_64|g' /etc/yum.repos.d/nodesource-el7.repo
-
-                sudo yum-builddep -y SOURCES/${spec_name}.spec
-
-                spectool -C SOURCES -g SOURCES/${spec_name}.spec
-
-                sudo npm install @types/react-color
-                sudo npm install @types/react-custom-scrollbars
-
-                rpmbuild --define '_rpmdir %{_topdir}/RPMS/${spec_name}-${rpm_version}' --define 'dist .el7' -ba SOURCES/${spec_name}.spec
-                rm -f SOURCES/${spec_name}.spec*
             else
                 sudo yum-builddep -y SOURCES/${spec_name}.spec
 
