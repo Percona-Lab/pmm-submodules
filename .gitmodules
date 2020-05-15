@@ -76,8 +76,8 @@
 	branch = PMM-2.0
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
-	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-2.0
+	url = https://github.com/adivinho/grafana-dashboards
+	branch = PMM-5125-qan-app-migration
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
