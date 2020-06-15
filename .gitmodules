@@ -45,7 +45,7 @@
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
-	branch = PT-1822_pt-mongodb-summary.fails.on.standalone
+	branch = 3.0
 
 
 # PMM Server
