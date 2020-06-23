@@ -76,6 +76,10 @@ pipeline {
                     export pmm_qa_branch=$(git config -f .gitmodules submodule.pmm-qa.branch)
                     echo $pmm_qa_branch > pmmQABranch
                     echo $pmm_qa_commit_sha > pmmQACommitSha
+                    export pmm_ui_tests_commit_sha=$(git submodule status | grep 'grafana-dashboards' | awk -F ' ' '{print $1}')
+                    export pmm_ui_tests_branch=$(git config -f .gitmodules submodule.grafana-dashboards.branch)
+                    echo $pmm_ui_tests_branch > pmmUITestBranch
+                    echo $pmm_ui_tests_commit_sha > pmmUITestsCommitSha
                     cd $curdir
                 '''
                 installDocker()
@@ -83,6 +87,8 @@ pipeline {
                 stash includes: 'pmmQABranch', name: 'pmmQABranch'
                 stash includes: 'apiCommitSha', name: 'apiCommitSha'
                 stash includes: 'pmmQACommitSha', name: 'pmmQACommitSha'
+                stash includes: 'pmmUITestBranch', name: 'pmmUITestBranch'
+                stash includes: 'pmmUITestsCommitSha', name: 'pmmUITestsCommitSha'
                 slackSend channel: '#pmm-ci', color: '#FFFF00', message: "[${JOB_NAME}]: build started - ${BUILD_URL}"
             }
         }
@@ -206,6 +212,7 @@ pipeline {
                             # 3rd-party
                             build-server-rpm clickhouse
                             build-server-rpm prometheus
+                            build-server-rpm alertmanager
                             build-server-rpm grafana
                         "
                     '''
@@ -299,14 +306,14 @@ pipeline {
                     steps {
                         script {
                             unstash 'IMAGE'
-                            unstash 'pmmQABranch'
-                            unstash 'pmmQACommitSha'
+                            unstash 'pmmUITestBranch'
+                            unstash 'pmmUITestsCommitSha'
                             def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
                             def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
                             def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
                             def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                            def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
-                            def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmQACommitSha").trim()
+                            def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmUITestBranch").trim()
+                            def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmUITestsCommitSha").trim()
                             runUItests(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH)
                         }
                     }

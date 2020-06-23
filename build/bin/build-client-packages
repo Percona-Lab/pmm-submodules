@@ -260,7 +260,6 @@ install_deps() {
         yum -y install git wget rpmdevtools bison yum-utils rpm-build
         install_golang
     else
-        add_percona_apt_repo
         apt-get update
         apt-get -y install devscripts equivs
         install_golang
@@ -538,7 +537,7 @@ if [ -n "$pmm_release" ]; then
 fi
 
 REVISION=0
-GO_TARBALL="https://dl.google.com/go/go1.12.12.linux-amd64.tar.gz"
+GO_TARBALL="https://dl.google.com/go/go1.13.10.linux-amd64.tar.gz"
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
 get_system
 install_deps
