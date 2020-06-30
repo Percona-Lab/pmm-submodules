@@ -21,8 +21,8 @@ RUN yum install -y --setopt=skip_missing_names_on_install=False \
 RUN yum -y remove nodesource-release-el7-1.noarch
 RUN yum clean all && rm -rf /var/cache/yum
 
-ENV GO_VERSION 1.13.10
-ENV GO_CHECKSUM 8a4cbc9f2b95d114c38f6cbe94a45372d48c604b707db2057c787398dfbf8e7f
+ENV GO_VERSION 1.14.4
+ENV GO_CHECKSUM aed845e4185a0b2a3c3d5e1d0a35491702c55889192bb9c30e67a3de6849c067
 
 RUN wget --progress=dot:giga https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz -O /tmp/golang.tar.gz
 RUN sha256sum /tmp/golang.tar.gz
