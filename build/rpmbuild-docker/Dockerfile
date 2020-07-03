@@ -4,7 +4,8 @@ COPY golang/* ./
 
 RUN yum install -y \
                    yum-utils rpm-build rpmdevtools \
-                   golang pcre-devel glibc-static
+                   epel-release pcre-devel glibc-static \
+ && yum install -y golang
 RUN spectool -g  go-srpm-macros.spec
 RUN rpmbuild -ba go-srpm-macros.spec
 RUN spectool -g  golang.spec
@@ -23,7 +24,8 @@ RUN yum install -y gcc gcc-c++ \
                    yum-utils rpm-build \
                    wget \
                    epel-release
-RUN yum install -y nodejs
+RUN curl --silent --location https://rpm.nodesource.com/setup_8.x | bash - \
+&& yum install -y nodejs
 
 COPY --from=0 /root/rpmbuild/RPMS /var/cache/yum/RPMS
 RUN yum install -y \
