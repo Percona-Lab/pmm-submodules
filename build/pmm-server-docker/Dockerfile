@@ -15,5 +15,6 @@ RUN ansible-playbook -vvv -i 'localhost,' -c local /opt/playbook-install.yml
 COPY playbook-init.yml /opt/playbook-init.yml
 RUN ansible-playbook -vvv -i 'localhost,' -c local /opt/playbook-init.yml
 RUN cp /usr/share/pmm-server/entrypoint.sh /opt/entrypoint.sh
+RUN touch /.pmm-docker
 
 CMD ["/opt/entrypoint.sh"]
