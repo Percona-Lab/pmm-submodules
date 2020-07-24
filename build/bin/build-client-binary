@@ -88,6 +88,10 @@ main() {
     gobuild_component "pmm-admin" "" "" "github.com/percona/pmm-agent/bin/pmm-admin"
     gobuild_component "pmm-agent" "" "" "github.com/percona/pmm-agent/bin/pmm-agent"
 
+    # added for build build purposes only
+    # will be commited as separate PR
+    gobuild_component "dbaas-controller"
+
     echo ${version} > ${binary_dir}/VERSION
 
     copy_component "pmm-submodules" "config"
