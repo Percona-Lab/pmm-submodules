@@ -21,7 +21,6 @@ git -C ${root_dir} rev-parse HEAD > ${rpms_dir}/../gitCommit
 docker run --rm -v ${rpms_dir}:/home/builder/rpm/RPMS ${rpmbuild_docker_image} sh -c "
     sudo chown -R builder /home/builder/rpm/RPMS
     /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
-    find /home/builder/rpm/RPMS -type f -name '*.rpm'
 "
 
 if [ -z "${DOCKER_TAG}" ]; then

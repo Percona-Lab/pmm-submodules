@@ -12,8 +12,7 @@ COPY gitCommit /tmp/gitCommit
 
 COPY ansible /opt/ansible
 RUN cp -r /opt/ansible/roles /opt/ansible/pmm2-docker/roles
-RUN find /tmp/RPMS -type f \
-    && ansible-playbook -vvv -i 'localhost,' -c local /opt/ansible/pmm2-docker/main.yml \
+RUN ansible-playbook -vvv -i 'localhost,' -c local /opt/ansible/pmm2-docker/main.yml \
     && ansible-playbook -vvv -i 'localhost,' -c local /usr/share/pmm-update/ansible/playbook/tasks/update.yml \
     && ansible-playbook -vvv -i 'localhost,' -c local /opt/ansible/pmm2/post-build-actions.yml
 
