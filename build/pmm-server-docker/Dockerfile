@@ -8,10 +8,6 @@ RUN useradd -s /bin/false pmm
 RUN yum -y install epel-release \
     && yum -y install ansible
 
-# For testing purposes only
-RUN yum install -y yum-plugin-priorities \
- && echo "priority = 90" >> /etc/yum.repos.d/local.repo
-
 COPY RPMS /tmp/RPMS
 COPY gitCommit /tmp/gitCommit
 
