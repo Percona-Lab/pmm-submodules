@@ -6,7 +6,7 @@ WORKDIR /opt
 
 RUN useradd -s /bin/false pmm
 RUN yum -y install epel-release \
-    && yum -y install ansible yum-plugin-priorities
+    && yum -y install ansible
 
 COPY RPMS /tmp/RPMS
 COPY gitCommit /tmp/gitCommit
