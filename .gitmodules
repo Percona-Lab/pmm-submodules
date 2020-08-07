@@ -53,11 +53,11 @@
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
-	branch = PMM-2.0
+	branch = PMM-6270-test-with-grafana-7
 [submodule "dbaas-controller"]
 	path = sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
 	url = https://github.com/percona-platform/dbaas-controller
-	branch = release/0.1.1
+	branch = release/0.1.0
 [submodule "qan-api2"]
 	path = sources/qan-api2/src/github.com/percona/qan-api2
 	url = https://github.com/percona/qan-api2
@@ -77,11 +77,11 @@
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
-	branch = PMM-2.0
+	branch = PMM-6270_grafana_7_upgrade
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-2.0
+	branch = PMM-6436-qan-styles-fix
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
