@@ -198,6 +198,9 @@ pipeline {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh '''
                         sg docker -c "
+                            set -o errexit
+                            set -o xtrace
+
                             export RPM_EPOCH=1
                             export PATH=$PATH:$(pwd -P)/build/bin
 
