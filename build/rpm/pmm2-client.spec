@@ -84,6 +84,7 @@ install -m 0660 queries-mysqld.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collec
 install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution/
 install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
 install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
+install -m 0660 queries-postgres-uptime.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
 %if 0%{?systemd}
   install -m 0755 -d $RPM_BUILD_ROOT/%{_unitdir}
   install -m 0644 config/pmm-agent.service %{buildroot}/%{_unitdir}/pmm-agent.service
@@ -209,5 +210,8 @@ fi
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/pmm2
 
 %changelog
+* Fri Jul 31 2020 Vadim Yalovets <vadim.yalovets@percona.com>
+- PMM-5701 DB_Uptime in Home Dashboard shows wrong metric.
+
 * Thu Aug 29 2019 Evgeniy Patlan <evgeniy.patlan@percona.com>
 - Rework file structure.

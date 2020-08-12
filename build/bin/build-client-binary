@@ -97,6 +97,7 @@ main() {
     copy_component "node_exporter" "example.prom"
     copy_component "mysqld_exporter" "queries-mysqld.yml"
     copy_component "postgres_exporter" "queries-postgres.yml"
+    copy_component "postgres_exporter" "queries-postgres-uptime.yml"
 
     rm -rf ${binary_tarball}
     mkdir -p $(dirname ${binary_tarball}) || :
