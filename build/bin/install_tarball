@@ -42,7 +42,7 @@ for FILE in $( ls ${PWD}/bin ); do
         ${INSTALL_COMMAND} -m 0755 ${PWD}/bin/${FILE} ${PMM_DIR}/exporters
     fi
 done
-for FILE in example.prom queries-mysqld.yml queries-postgres.yml queries-postgres-uptime.yml; do
+for FILE in example.prom queries-mysqld.yml queries-postgres.yml; do
     for RESOLUTION in low medium high; do
         if [ "x${FILE}" = "xexample.prom" ]; then
             ${INSTALL_COMMAND} -m 0755 ${FILE} ${PMM_DIR}/collectors/textfile-collector/${RESOLUTION}-resolution
