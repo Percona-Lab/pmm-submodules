@@ -33,6 +33,7 @@ ${INSTALL_COMMAND} -m 0755 -d ${PMM_DIR}/collectors/custom-queries/postgresql
 ${INSTALL_COMMAND} -m 0755 -d ${PMM_DIR}/collectors/custom-queries/postgresql/low-resolution
 ${INSTALL_COMMAND} -m 0755 -d ${PMM_DIR}/collectors/custom-queries/postgresql/medium-resolution
 ${INSTALL_COMMAND} -m 0755 -d ${PMM_DIR}/collectors/custom-queries/postgresql/high-resolution
+${INSTALL_COMMAND} -m 0755 queries-postgres-uptime.yml ${PMM_DIR}/collectors/custom-queries/postgresql/high-resolution
 
 for FILE in $( ls ${PWD}/bin ); do
     if [ "x${FILE}" = "xpmm-admin" -o "x${FILE}" = "xpmm-agent" ]; then
@@ -41,7 +42,7 @@ for FILE in $( ls ${PWD}/bin ); do
         ${INSTALL_COMMAND} -m 0755 ${PWD}/bin/${FILE} ${PMM_DIR}/exporters
     fi
 done
-for FILE in example.prom queries-mysqld.yml queries-postgres.yml; do
+for FILE in example.prom queries-mysqld.yml queries-postgres.yml queries-postgres-uptime.yml; do
     for RESOLUTION in low medium high; do
         if [ "x${FILE}" = "xexample.prom" ]; then
             ${INSTALL_COMMAND} -m 0755 ${FILE} ${PMM_DIR}/collectors/textfile-collector/${RESOLUTION}-resolution
