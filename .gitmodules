@@ -29,7 +29,7 @@
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
-	branch = PMM-5701-DB_Uptime-in-Home-Dashboard-shows-wrong-metric 
+	branch = PMM-2.0
 [submodule "clickhouse_exporter"]
 	path = sources/clickhouse_exporter/src/github.com/f1yegor/clickhouse_exporter
 	url = https://github.com/f1yegor/clickhouse_exporter
@@ -81,7 +81,7 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-5701-DB_Uptime-in-Home-Dashboard-shows-wrong-metric 
+	branch = PMM-2.0
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
