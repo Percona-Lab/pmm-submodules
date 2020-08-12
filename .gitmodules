@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = SAAS-237-Check-Results-API
+	branch = PMM-2.0
 
 
 # PMM Client
