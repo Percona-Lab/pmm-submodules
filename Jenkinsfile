@@ -155,7 +155,6 @@ pipeline {
                 sh '''
                     sg docker -c "
                         ./build/bin/build-client-rpm centos:7
-
                         mkdir -p tmp/pmm-server/RPMS/
                         cp results/rpm/pmm2-client-*.rpm tmp/pmm-server/RPMS/
                     "
@@ -180,7 +179,6 @@ pipeline {
                     sg docker -c "
                         export PUSH_DOCKER=1
                         export DOCKER_CLIENT_TAG=perconalab/pmm-client-fb:${BRANCH_NAME}-${GIT_COMMIT:0:7}
-
                         ./build/bin/build-client-docker
                     "
                 '''
@@ -194,31 +192,42 @@ pipeline {
                     !isBranchBuild
                 }
             }
-            steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                    sh '''
-                        sg docker -c "
-                            export RPM_EPOCH=1
-                            export PATH=$PATH:$(pwd -P)/build/bin
-
-                            # 1st-party
-                            build-server-rpm percona-dashboards grafana-dashboards
-                            build-server-rpm pmm-managed
-                            build-server-rpm percona-qan-api2 qan-api2
-                            build-server-rpm percona-qan-app qan-app
-                            build-server-rpm pmm-server
-                            build-server-rpm pmm-update
-                            build-server-rpm dbaas-controller
-
-                            # 3rd-party
-                            build-server-rpm clickhouse
-                            build-server-rpm prometheus
-                            build-server-rpm alertmanager
-                            build-server-rpm grafana
-                        "
-                    '''
+            parallel {
+                steps {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                        sh '''
+                            sg docker -c "
+                                export RPM_EPOCH=1
+                                export PATH=$PATH:$(pwd -P)/build/bin
+                                # 1st-party
+                                build-server-rpm percona-dashboards grafana-dashboards
+                                build-server-rpm pmm-managed
+                                build-server-rpm percona-qan-api2 qan-api2
+                                build-server-rpm percona-qan-app qan-app
+                                build-server-rpm pmm-server
+                                build-server-rpm pmm-update
+                                build-server-rpm dbaas-controller
+                            "
+                        '''
+                    }
                 }
-            }
+                steps {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                        sh '''
+                            sg docker -c "
+                                export RPM_EPOCH=1
+                                export PATH=$PATH:$(pwd -P)/build/bin
+                                # 3rd-party
+                                build-server-rpm clickhouse
+                                build-server-rpm prometheus
+                                build-server-rpm alertmanager
+                                build-server-rpm grafana
+                            "
+                        '''
+                    }
+                }
+                 }
+             }
         }
         stage('Build server docker') {
             when {
@@ -238,7 +247,6 @@ pipeline {
                     sg docker -c "
                         export PUSH_DOCKER=1
                         export DOCKER_TAG=perconalab/pmm-server-fb:${BRANCH_NAME}-${GIT_COMMIT:0:7}
-
                         ./build/bin/build-server-docker
                     "
                 '''
