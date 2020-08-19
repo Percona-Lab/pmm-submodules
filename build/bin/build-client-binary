@@ -84,7 +84,7 @@ main() {
     gobuild_component "proxysql_exporter"
     gobuild_component "rds_exporter"
     gobuild_component "clickhouse_exporter"     "github.com/f1yegor/clickhouse_exporter"
-    gobuild_component "mnogo_exporter"
+    gobuild_component "mnogo_exporter"          "github.com/Percona-Lab/mnogo_exporter"
 
     gobuild_component "pmm-admin" "" "" "github.com/percona/pmm-agent/bin/pmm-admin"
     gobuild_component "pmm-agent" "" "" "github.com/percona/pmm-agent/bin/pmm-agent"
