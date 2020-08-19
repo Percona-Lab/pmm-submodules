@@ -52,8 +52,9 @@ gobuild_component() {
         pushd /tmp/go
             export GOPATH=\$(pwd -P)
             if [ "${component}" == "mnogo_exporter" ]; then
-                cd ${extract_path}
-                make build
+                pushd ${extract_path}
+                    make build
+                popd
             else
                 ${build_command}
             fi
