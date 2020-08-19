@@ -46,7 +46,10 @@
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
 	branch = release-3.0.10
-
+[submodule "mnogo_exporter"]
+	path = sources/mnogo_exporter/src/github.com/Percona-Lab/mnogo_exporter
+	url = https://github.com/Percona-Lab/mnogo_exporter
+	branch = master
 
 # PMM Server
 
@@ -97,3 +100,4 @@
 	path = sources/pmm-qa/src/github.com/percona/pmm-qa
 	url = https://github.com/percona/pmm-qa
 	branch = master
+
