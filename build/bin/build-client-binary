@@ -102,7 +102,6 @@ main() {
     copy_component "mysqld_exporter" "queries-mysqld.yml"
     copy_component "postgres_exporter" "queries-postgres.yml"
     copy_component "postgres_exporter" "queries-postgres-uptime.yml"
-    copy_component "mnogo_exporter" "mnogo_exporter"
 
     rm -rf ${binary_tarball}
     mkdir -p $(dirname ${binary_tarball}) || :
