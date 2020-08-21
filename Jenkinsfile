@@ -48,6 +48,7 @@ pipeline {
             }
             steps {
                 sh '''
+                    set -o errexit
                     curdir=$(pwd)
                     cd ../
                     wget https://github.com/git-lfs/git-lfs/releases/download/v2.7.1/git-lfs-linux-amd64-v2.7.1.tar.gz
@@ -142,7 +143,11 @@ pipeline {
                 }
             }
             steps {
-                sh 'sg docker -c "./build/bin/build-client-srpm centos:6"'
+                sh '''
+                    sg docker -c "
+                        ./build/bin/build-client-srpm centos:6
+                    "
+                '''
             }
         }
         stage('Build client binary rpm') {
@@ -154,6 +159,9 @@ pipeline {
             steps {
                 sh '''
                     sg docker -c "
+                        set -o errexit
+                        set -o xtrace
+
                         ./build/bin/build-client-rpm centos:7
 
                         mkdir -p tmp/pmm-server/RPMS/
@@ -198,6 +206,9 @@ pipeline {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh '''
                         sg docker -c "
+                            set -o errexit
+                            set -o xtrace
+
                             export RPM_EPOCH=1
                             export PATH=$PATH:$(pwd -P)/build/bin
 
