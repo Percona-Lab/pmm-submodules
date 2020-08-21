@@ -189,6 +189,11 @@ pipeline {
             }
         }
         stage('Build server packages') {
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
             parallel {
                 stage('1st party') {
                     steps {
