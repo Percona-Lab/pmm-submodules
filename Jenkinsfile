@@ -194,29 +194,45 @@ pipeline {
                     !isBranchBuild
                 }
             }
-            steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                    sh '''
-                        sg docker -c "
-                            export RPM_EPOCH=1
-                            export PATH=$PATH:$(pwd -P)/build/bin
+            parallel {
+                stage('1st party') {
+                    steps {
+                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                            sh '''
+                                sg docker -c "
+                                    export RPM_EPOCH=1
+                                    export PATH=$PATH:$(pwd -P)/build/bin
 
-                            # 1st-party
-                            build-server-rpm percona-dashboards grafana-dashboards
-                            build-server-rpm pmm-managed
-                            build-server-rpm percona-qan-api2 qan-api2
-                            build-server-rpm percona-qan-app qan-app
-                            build-server-rpm pmm-server
-                            build-server-rpm pmm-update
-                            build-server-rpm dbaas-controller
+                                    # 1st-party
+                                    build-server-rpm percona-dashboards grafana-dashboards
+                                    build-server-rpm pmm-managed
+                                    build-server-rpm percona-qan-api2 qan-api2
+                                    build-server-rpm percona-qan-app qan-app
+                                    build-server-rpm pmm-server
+                                    build-server-rpm pmm-update
+                                    build-server-rpm dbaas-controller
+                                "
+                            '''
+                        }
+                    }
+                }
+                stage('3rd party') {
+                    steps {
+                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                            sh '''
+                                sg docker -c "
+                                    export RPM_EPOCH=1
+                                    export PATH=$PATH:$(pwd -P)/build/bin
 
-                            # 3rd-party
-                            build-server-rpm clickhouse
-                            build-server-rpm prometheus
-                            build-server-rpm alertmanager
-                            build-server-rpm grafana
-                        "
-                    '''
+                                    # 3rd-party
+                                    build-server-rpm clickhouse
+                                    build-server-rpm prometheus
+                                    build-server-rpm alertmanager
+                                    build-server-rpm grafana
+                                "
+                            '''
+                        }
+                    }
                 }
             }
         }
