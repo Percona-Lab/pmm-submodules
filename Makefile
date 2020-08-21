@@ -16,4 +16,4 @@ clean:
 purge:
 	git reset --hard && git clean -xdff
 	git submodule update
-	git submodules foreach 'git reset --hard && git clean -xdff'
+	git submodule foreach 'git reset --hard && git clean -xdff'
