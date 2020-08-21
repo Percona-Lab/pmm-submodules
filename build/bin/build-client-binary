@@ -51,6 +51,12 @@ gobuild_component() {
         tar -C /tmp/go/src/${extract_path} --strip-components=1 -zxpf \${source_dir}/${component}-*.tar.gz
         pushd /tmp/go
             export GOPATH=\$(pwd -P)
+            if [ -d /tmp/go/src/github.com/percona/percona-toolkit ]; then
+                pushd /tmp/go/src/${extract_path}
+                    go get -u github.com/golang/dep/cmd/dep
+                    \$GOPATH/bin/dep ensure -v
+                popd
+            fi
             ${build_command}
         popd
         sudo chown -R $(id -u):$(id -g) /home/builder/tmp
@@ -98,6 +104,10 @@ main() {
     copy_component "mysqld_exporter" "queries-mysqld.yml"
     copy_component "postgres_exporter" "queries-postgres.yml"
     copy_component "postgres_exporter" "queries-postgres-uptime.yml"
+
+    copy_component "percona-toolkit" "bin/pt-summary"
+    copy_component "percona-toolkit" "bin/pt-mysql-summary"
+    gobuild_component "percona-toolkit" "github.com/percona/percona-toolkit" "src/go/pt-mongodb-summary"
 
     rm -rf ${binary_tarball}
     mkdir -p $(dirname ${binary_tarball}) || :
