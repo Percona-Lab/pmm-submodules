@@ -102,6 +102,9 @@ pipeline {
             steps {
                 sh '''
                     sg docker -c "
+                        set -o errexit
+                        set -o xtrace
+
                         env
                         ./build/bin/build-client-source
                     "
@@ -117,12 +120,17 @@ pipeline {
             steps {
                 sh '''
                     sg docker -c "
+                        set -o errexit
+                        set -o xtrace
+
                         env
                         ./build/bin/build-client-binary
                     "
                 '''
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh '''
+                        set -o errexit
+
                         aws s3 cp \
                             --acl public-read \
                             results/tarball/pmm2-client-*.tar.gz \
@@ -145,6 +153,7 @@ pipeline {
             steps {
                 sh '''
                     sg docker -c "
+                        set -o errexit
                         ./build/bin/build-client-srpm centos:6
                     "
                 '''
@@ -186,6 +195,9 @@ pipeline {
                 }
                 sh '''
                     sg docker -c "
+                        set -o errexit
+                        set -o xtrace
+
                         export PUSH_DOCKER=1
                         export DOCKER_CLIENT_TAG=perconalab/pmm-client-fb:${BRANCH_NAME}-${GIT_COMMIT:0:7}
 
@@ -247,6 +259,9 @@ pipeline {
                 }
                 sh '''
                     sg docker -c "
+                        set -o errexit
+                        set -o xtrace
+
                         export PUSH_DOCKER=1
                         export DOCKER_TAG=perconalab/pmm-server-fb:${BRANCH_NAME}-${GIT_COMMIT:0:7}
 
