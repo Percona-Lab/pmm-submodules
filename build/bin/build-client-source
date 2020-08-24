@@ -60,8 +60,9 @@ repack_toolkit() {
             export GOPATH=/home/builder/go
             sudo chown -R builder:builder \$GOPATH
             pushd /home/builder/go/src/percona-toolkit
-                go get -u github.com/golang/dep/cmd/dep
-                \$GOPATH/bin/dep ensure -v
+                wget --directory-prefix \$GOPATH/bin https://github.com/golang/dep/releases/download/v0.5.4/dep-linux-amd64
+                chmod +x \$GOPATH/bin/dep-linux-amd64
+                \$GOPATH/bin/dep-linux-amd64 ensure -v
             popd
             sudo chown -R $(id -u):$(id -g) \$GOPATH
         "
