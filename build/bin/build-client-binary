@@ -109,6 +109,7 @@ main() {
     copy_component "percona-toolkit" "bin/pt-summary"
     copy_component "percona-toolkit" "bin/pt-mysql-summary"
     gobuild_component "percona-toolkit" "github.com/percona/percona-toolkit" "src/go/pt-mongodb-summary"
+    gobuild_component "percona-toolkit" "github.com/percona/percona-toolkit" "src/go/pt-pg-summary"
 
     rm -rf ${binary_tarball}
     mkdir -p $(dirname ${binary_tarball}) || :
