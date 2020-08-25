@@ -56,8 +56,10 @@ prepare_specs() {
         local full_commit=$(git -C "${git_dir}" rev-parse HEAD)
         local short_commit=${full_commit:0:7}
 
-        sed -i -e "s/global commit.*/global commit ${full_commit}/" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
-        sed -i -e "s/Version:.*/Version: ${pmm_version}/"           ${rpmbuild_dir}/SOURCES/${spec_name}.spec
+        if [ "${spec_name}" != 'dbaas-kubectls' ]; then
+            sed -i -e "s/global commit.*/global commit ${full_commit}/" ${rpmbuild_dir}/SOURCES/${spec_name}.spec
+            sed -i -e "s/Version:.*/Version: ${pmm_version}/"           ${rpmbuild_dir}/SOURCES/${spec_name}.spec
+        fi
 
         if [ -z "${full_pmm_version}" ]; then
             echo 'A full_pmm_version is not specified.'
