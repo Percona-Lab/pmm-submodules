@@ -58,6 +58,10 @@ override_dh_auto_install:
 	cp -f distro/example.prom $(TMP)/example.prom
 	cp -f distro/queries-mysqld.yml $(TMP)/queries-mysqld.yml
 	cp -f distro/queries-postgres.yml $(TMP)/queries-postgres.yml
+	cp -f distro/pt-summary $(TMP)/pt-summary
+	cp -f distro/pt-mysql-summary $(TMP)/pt-mysql-summary
+	cp -f distro/pt-mongodb-summary $(TMP)/pt-mongodb-summary
+	cp -f distro/pt-pg-summary $(TMP)/pt-pg-summary
 
 override_dh_installinit:
 	dh_systemd_start --restart-after-upgrade

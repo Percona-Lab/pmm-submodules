@@ -1,5 +1,9 @@
 pmm-agent /usr/local/percona/pmm2/bin/
 pmm-admin /usr/local/percona/pmm2/bin/
+pt-summary /usr/local/percona/pmm2/tools/
+pt-mysql-summary /usr/local/percona/pmm2/tools/
+pt-mongodb-summary /usr/local/percona/pmm2/tools/
+pt-pg-summary /usr/local/percona/pmm2/tools/
 node_exporter /usr/local/percona/pmm2/exporters/
 mysqld_exporter /usr/local/percona/pmm2/exporters/
 postgres_exporter /usr/local/percona/pmm2/exporters/
