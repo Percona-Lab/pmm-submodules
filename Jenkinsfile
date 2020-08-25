@@ -103,7 +103,6 @@ pipeline {
                 sh '''
                     sg docker -c "
                         set -o errexit
-                        set -o xtrace
 
                         env
                         ./build/bin/build-client-source
@@ -121,7 +120,6 @@ pipeline {
                 sh '''
                     sg docker -c "
                         set -o errexit
-                        set -o xtrace
 
                         env
                         ./build/bin/build-client-binary
@@ -169,7 +167,6 @@ pipeline {
                 sh '''
                     sg docker -c "
                         set -o errexit
-                        set -o xtrace
 
                         ./build/bin/build-client-rpm centos:7
 
@@ -196,7 +193,6 @@ pipeline {
                 sh '''
                     sg docker -c "
                         set -o errexit
-                        set -o xtrace
 
                         export PUSH_DOCKER=1
                         export DOCKER_CLIENT_TAG=perconalab/pmm-client-fb:${BRANCH_NAME}-${GIT_COMMIT:0:7}
@@ -219,7 +215,6 @@ pipeline {
                     sh '''
                         sg docker -c "
                             set -o errexit
-                            set -o xtrace
 
                             export RPM_EPOCH=1
                             export PATH=$PATH:$(pwd -P)/build/bin
@@ -260,7 +255,6 @@ pipeline {
                 sh '''
                     sg docker -c "
                         set -o errexit
-                        set -o xtrace
 
                         export PUSH_DOCKER=1
                         export DOCKER_TAG=perconalab/pmm-server-fb:${BRANCH_NAME}-${GIT_COMMIT:0:7}
@@ -287,7 +281,6 @@ pipeline {
                                 def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
                                 def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
                                 sh """
-                                    set -o xtrace
                                     curl -v -X POST \
                                         -H "Authorization: token ${GITHUB_API_TOKEN}" \
                                         -d "{\\"body\\":\\"server docker - ${IMAGE}\\nclient docker - ${CLIENT_IMAGE}\\nclient - https://s3.us-east-2.amazonaws.com/pmm-build-cache/PR-BUILDS/pmm2-client/pmm2-client-${BRANCH_NAME}-\${GIT_COMMIT:0:7}.tar.gz\\"}" \
