@@ -17,6 +17,7 @@ echo "Installing into ${PMM_DIR}..."
 
 ${INSTALL_COMMAND} -m 0755 -d ${PMM_DIR}
 ${INSTALL_COMMAND} -m 0755 -d ${PMM_DIR}/bin
+${INSTALL_COMMAND} -m 0755 -d ${PMM_DIR}/tools
 ${INSTALL_COMMAND} -m 0755 -d ${PMM_DIR}/exporters
 ${INSTALL_COMMAND} -m 0755 -d ${PMM_DIR}/config
 ${INSTALL_COMMAND} -m 0755 -d ${PMM_DIR}/collectors
@@ -38,6 +39,8 @@ ${INSTALL_COMMAND} -m 0755 queries-postgres-uptime.yml ${PMM_DIR}/collectors/cus
 for FILE in $( ls ${PWD}/bin ); do
     if [ "x${FILE}" = "xpmm-admin" -o "x${FILE}" = "xpmm-agent" ]; then
         ${INSTALL_COMMAND} -m 0755 ${PWD}/bin/${FILE} ${PMM_DIR}/bin
+    elif [ "x${FILE}" = "xpt-summary" -o "x${FILE}" = "xpt-mysql-summary" -o "x${FILE}" = "xpt-pg-summary" -o "x${FILE}" = "xpt-mongodb-summary" ]; then
+        ${INSTALL_COMMAND} -m 0755 ${PWD}/bin/${FILE} ${PMM_DIR}/tools
     else
         ${INSTALL_COMMAND} -m 0755 ${PWD}/bin/${FILE} ${PMM_DIR}/exporters
     fi
