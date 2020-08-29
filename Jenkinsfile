@@ -195,7 +195,7 @@ pipeline {
                 }
             }
             parallel {
-                stage('1st party') {
+                stage('Build grafana UI') {
                     steps {
                         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                             sh '''
@@ -205,6 +205,20 @@ pipeline {
 
                                     # 1st-party
                                     build-server-rpm percona-dashboards grafana-dashboards
+                                "
+                            '''
+                        }
+                    }
+                }
+                stage('Build backend') {
+                    steps {
+                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                            sh '''
+                                sg docker -c "
+                                    export RPM_EPOCH=1
+                                    export PATH=$PATH:$(pwd -P)/build/bin
+
+                                    # 1st-party
                                     build-server-rpm pmm-managed
                                     build-server-rpm percona-qan-api2 qan-api2
                                     build-server-rpm percona-qan-app qan-app
@@ -216,7 +230,7 @@ pipeline {
                         }
                     }
                 }
-                stage('3rd party') {
+                stage('Build Clickhouse') {
                     steps {
                         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                             sh '''
@@ -226,8 +240,50 @@ pipeline {
 
                                     # 3rd-party
                                     build-server-rpm clickhouse
+                                "
+                            '''
+                        }
+                    }
+                }
+                stage('Build Prometheus') {
+                    steps {
+                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                            sh '''
+                                sg docker -c "
+                                    export RPM_EPOCH=1
+                                    export PATH=$PATH:$(pwd -P)/build/bin
+
+                                    # 3rd-party
                                     build-server-rpm prometheus
+                                "
+                            '''
+                        }
+                    }
+                }
+                stage('Build alertmanager') {
+                    steps {
+                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                            sh '''
+                                sg docker -c "
+                                    export RPM_EPOCH=1
+                                    export PATH=$PATH:$(pwd -P)/build/bin
+
+                                    # 3rd-party
                                     build-server-rpm alertmanager
+                                "
+                            '''
+                        }
+                    }
+                }
+                stage('Build grafana') {
+                    steps {
+                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                            sh '''
+                                sg docker -c "
+                                    export RPM_EPOCH=1
+                                    export PATH=$PATH:$(pwd -P)/build/bin
+
+                                    # 3rd-party
                                     build-server-rpm grafana
                                 "
                             '''
