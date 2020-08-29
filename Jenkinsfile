@@ -30,7 +30,7 @@ void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, 
     ]
 }
 
-def isBranchBuild = true
+def isBranchBuild = false
 if ( env.CHANGE_URL ) {
     isBranchBuild = false
 }
