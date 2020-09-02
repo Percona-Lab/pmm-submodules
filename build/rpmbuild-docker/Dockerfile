@@ -23,16 +23,23 @@ RUN yum clean all && rm -rf /var/cache/yum
 
 ENV GO_VERSION 1.14.8
 ENV GO_CHECKSUM 5504e077a29d0bd6649ca7b66e317f1a4b264e960f74115d6f0f405c49a8e738
+ENV GO_RELEASER_CHECKSUM db351ae63bdb9f3834a9a76caa5845b4de4c403855a6524afb1d2a97f82e627f
 
 RUN wget --progress=dot:giga https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz -O /tmp/golang.tar.gz
+RUN wget --progress=dot:giga https://github.com/goreleaser/goreleaser/releases/download/v0.142.0/goreleaser_amd64.rpm -O /tmp/goreleaser.rpm
 RUN sha256sum /tmp/golang.tar.gz
 RUN echo "${GO_CHECKSUM} /tmp/golang.tar.gz" | sha256sum -c -
+RUN sha256sum /tmp/goreleaser.rpm
+RUN echo "${GO_RELEASER_CHECKSUM} /tmp/goreleaser.rpm" | sha256sum -c -
 RUN tar -C /usr/local -xzf /tmp/golang.tar.gz
+RUN yum install -y /tmp/goreleaser.rpm
 RUN update-alternatives --install "/usr/bin/go" "go" "/usr/local/go/bin/go" 0
 RUN update-alternatives --set go /usr/local/go/bin/go
 RUN update-alternatives --install "/usr/bin/gofmt" "gofmt" "/usr/local/go/bin/gofmt" 0
 RUN update-alternatives --set gofmt /usr/local/go/bin/gofmt
-RUN rm /tmp/golang.tar.gz
+RUN update-alternatives --install "/usr/bin/goreleaser" "goreleaser" "/usr/local/goreleaser" 0
+RUN update-alternatives --set goreleaser /usr/local/goreleaser
+RUN rm /tmp/golang.tar.gz /tmp/goreleaser.rpm
 
 RUN useradd builder -u 1000 -m -G users,wheel && \
     echo "builder ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers && \
