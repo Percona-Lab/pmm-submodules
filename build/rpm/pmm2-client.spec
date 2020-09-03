@@ -86,6 +86,7 @@ install -m 0660 example.prom $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/t
 install -m 0660 queries-mysqld.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/mysql/low-resolution/
 install -m 0660 queries-mysqld.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/mysql/medium-resolution/
 install -m 0660 queries-mysqld.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/mysql/high-resolution/
+install -m 0660 queries-mysqld-group-replication.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/mysql/high-resolution/
 install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution/
 install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
 install -m 0660 queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
@@ -215,6 +216,9 @@ fi
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/pmm2
 
 %changelog
+* Tue Aug 25 2020 Vadim Yalovets <vadim.yalovets@percona.com>
+- PMM-2045 MySQL Group Replication Dashboard.
+
 * Fri Jul 31 2020 Vadim Yalovets <vadim.yalovets@percona.com>
 - PMM-5701 DB_Uptime in Home Dashboard shows wrong metric.
 
