@@ -107,6 +107,7 @@ main() {
     copy_component "pmm-submodules" "install_tarball"
     copy_component "node_exporter" "example.prom"
     copy_component "mysqld_exporter" "queries-mysqld.yml"
+    copy_component "mysqld_exporter" "queries-mysqld-group-replication.yml"
     copy_component "postgres_exporter" "queries-postgres.yml"
     copy_component "postgres_exporter" "queries-postgres-uptime.yml"
 
