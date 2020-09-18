@@ -3,6 +3,27 @@ library changelog: false, identifier: 'lib@master', retriever: modernSCM([
     remote: 'https://github.com/Percona-Lab/jenkins-pipelines.git'
 ]) _
 
+
+void runStaging(String DOCKER_VERSION, CLIENT_VERSION) {
+    stagingJob = build job: 'aws-staging-start', parameters: [
+        string(name: 'DOCKER_VERSION', value: DOCKER_VERSION),
+        string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
+        string(name: 'CLIENTS', value: ''),
+        string(name: 'DOCKER_ENV_VARIABLE', value: '-e PMM_DEBUG=1 -e PERCONA_TEST_CHECKS_INTERVAL=10s -e PERCONA_TEST_AUTH_HOST=check-dev.percona.com:443 -e PERCONA_TEST_CHECKS_HOST=check-dev.percona.com:443 -e PERCONA_TEST_CHECKS_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX'),
+        string(name: 'NOTIFY', value: 'false'),
+        string(name: 'DAYS', value: '1')
+    ]
+    env.VM_IP = stagingJob.buildVariables.IP
+    env.VM_NAME = stagingJob.buildVariables.VM_NAME
+}
+
+
+void destroyStaging(IP) {
+    build job: 'aws-staging-stop', parameters: [
+        string(name: 'VM', value: IP),
+    ]
+}
+
 void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIENT_VERSION, OWNER) {
     stagingJob = build job: 'pmm2-api-tests', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
@@ -21,12 +42,14 @@ void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH
     ]
 }
 
-void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH) {
+void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_SERVER_IP) {
     stagingJob = build job: 'pmm2-ui-tests', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
-        string(name: 'GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH)
+        string(name: 'GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH),
+        string(name: 'SERVER_IP', value: PMM_SERVER_IP),
+        string(name: 'CLIENT_INSTANCE', value: 'yes')
     ]
 }
 
@@ -268,7 +291,8 @@ pipeline {
                 archiveArtifacts 'results/docker/TAG'
             }
         }
-        stage('Tests Execution') {
+        stage('Create Instance for Tests & FB tags')
+        {
             when {
                 expression {
                     !isBranchBuild
@@ -292,6 +316,27 @@ pipeline {
                         }
                     }
                 }
+                stage('Launch Instance for Testing'){
+                    steps {
+                        script {
+                            unstash 'IMAGE'
+                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                            runStaging(IMAGE, CLIENT_URL)
+                        }
+                    }
+                }
+            }
+        }
+        stage('Tests Execution') {
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
+            parallel {
                 stage('Test: API') {
                     steps {
                         script {
@@ -336,9 +381,21 @@ pipeline {
                             def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
                             def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmUITestBranch").trim()
                             def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmUITestsCommitSha").trim()
-                            runUItests(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH)
+                            runUItests(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, env.VM_IP)
                         }
                     }
+                }
+            }
+        }
+        stage('Destroy Test Instance'){
+            when {
+                expression {
+                    !isBranchBuild
+                }
+            }
+            steps {
+                script {
+                    destroyStaging(env.VM_IP)
                 }
             }
         }
