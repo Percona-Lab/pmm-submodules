@@ -387,22 +387,13 @@ pipeline {
                 }
             }
         }
-        stage('Destroy Test Instance'){
-            when {
-                expression {
-                    !isBranchBuild
-                }
-            }
-            steps {
-                script {
-                    destroyStaging(env.VM_IP)
-                }
-            }
-        }
     }
     post {
         always {
             script {
+                if (env.VM_IP) {
+                    destroyStaging(env.VM_IP)
+                }
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
                     if (env.CHANGE_URL) {
                         unstash 'IMAGE'
