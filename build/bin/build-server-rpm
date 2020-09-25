@@ -79,6 +79,8 @@ build() {
                 | sudo tee /etc/yum.repos.d/local.repo
             /usr/bin/createrepo_c --update /home/builder/rpm/RPMS
 
+            sudo sed -i 's|SRPMS|x86_64|g' /etc/yum.repos.d/nodesource-el7.repo
+
             if [ \"${spec_name}\" == \"grafana\" ]; then
                 sudo yum remove -y nodejs npm
                 sudo /usr/bin/curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
