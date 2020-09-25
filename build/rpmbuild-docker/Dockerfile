@@ -24,7 +24,7 @@ RUN yum install -y gcc gcc-c++ \
                    yum-utils rpm-build \
                    wget \
                    epel-release
-RUN curl --silent --location https://rpm.nodesource.com/setup_8.x | bash - \
+RUN curl --silent --location https://rpm.nodesource.com/setup_10.x | bash - \
 && yum install -y nodejs
 
 COPY --from=0 /root/rpmbuild/RPMS /var/cache/yum/RPMS
