@@ -8,7 +8,8 @@ void runStaging(String DOCKER_VERSION, CLIENT_VERSION) {
     stagingJob = build job: 'aws-staging-start', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
-        string(name: 'CLIENTS', value: ''),
+        string(name: 'PS_VERSION', value: '5.6'),
+        string(name: 'CLIENTS', value: '--addclient=ps,1'),
         string(name: 'DOCKER_ENV_VARIABLE', value: '-e PMM_DEBUG=1 -e PERCONA_TEST_CHECKS_INTERVAL=10s -e PERCONA_TEST_DBAAS=1 -e PERCONA_TEST_AUTH_HOST=check-dev.percona.com:443 -e PERCONA_TEST_CHECKS_HOST=check-dev.percona.com:443 -e PERCONA_TEST_CHECKS_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX'),
         string(name: 'NOTIFY', value: 'false'),
         string(name: 'DAYS', value: '1')
@@ -24,21 +25,23 @@ void destroyStaging(IP) {
     ]
 }
 
-void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIENT_VERSION, OWNER) {
-    stagingJob = build job: 'pmm2-api-tests', parameters: [
+void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIENT_VERSION, OWNER, PMM_SERVER_IP) {
+    stagingJob = build job: 'pmm2-api-tests-temp', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'GIT_BRANCH', value: BRANCH_NAME),
         string(name: 'OWNER', value: OWNER),
         string(name: 'GIT_COMMIT_HASH', value: GIT_COMMIT_HASH)
+        string(name: 'SERVER_IP', value: PMM_SERVER_IP)
     ]
 }
 
-void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH) {
-    stagingJob = build job: 'pmm2-testsuite', parameters: [
+void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_SERVER_IP) {
+    stagingJob = build job: 'pmm2-testsuite-temp', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'PMM_QA_GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
         string(name: 'PMM_QA_GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH)
+        string(name: 'SERVER_IP', value: PMM_SERVER_IP)
     ]
 }
 
@@ -336,53 +339,51 @@ pipeline {
                     !isBranchBuild
                 }
             }
-            parallel {
-                stage('Test: API') {
-                    steps {
-                        script {
-                            unstash 'IMAGE'
-                            unstash 'apiBranch'
-                            unstash 'apiCommitSha'
-                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
-                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
-                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                            def API_TESTS_BRANCH = sh(returnStdout: true, script: "cat apiBranch").trim()
-                            def GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat apiCommitSha").trim()
-                            runAPItests(IMAGE, API_TESTS_BRANCH, GIT_COMMIT_HASH, CLIENT_URL, OWNER)
-                        }
+            stage('Test: API') {
+                steps {
+                    script {
+                        unstash 'IMAGE'
+                        unstash 'apiBranch'
+                        unstash 'apiCommitSha'
+                        def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                        def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                        def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                        def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                        def API_TESTS_BRANCH = sh(returnStdout: true, script: "cat apiBranch").trim()
+                        def GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat apiCommitSha").trim()
+                        runAPItests(IMAGE, API_TESTS_BRANCH, GIT_COMMIT_HASH, CLIENT_URL, OWNER, env.VM_IP)
                     }
                 }
-                stage('Test: PMM-Testsuite') {
-                    steps {
-                        script {
-                            unstash 'IMAGE'
-                            unstash 'pmmQABranch'
-                            unstash 'pmmQACommitSha'
-                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
-                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
-                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                            def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
-                            def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmQACommitSha").trim()
-                            runTestSuite(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH)
-                        }
+            }
+            stage('Test: PMM-Testsuite') {
+                steps {
+                    script {
+                        unstash 'IMAGE'
+                        unstash 'pmmQABranch'
+                        unstash 'pmmQACommitSha'
+                        def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                        def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                        def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                        def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                        def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
+                        def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmQACommitSha").trim()
+                        runTestSuite(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, env.VM_IP)
                     }
                 }
-                stage('Test: UI') {
-                    steps {
-                        script {
-                            unstash 'IMAGE'
-                            unstash 'pmmUITestBranch'
-                            unstash 'pmmUITestsCommitSha'
-                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
-                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
-                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                            def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmUITestBranch").trim()
-                            def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmUITestsCommitSha").trim()
-                            runUItests(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, env.VM_IP)
-                        }
+            }
+            stage('Test: UI') {
+                steps {
+                    script {
+                        unstash 'IMAGE'
+                        unstash 'pmmUITestBranch'
+                        unstash 'pmmUITestsCommitSha'
+                        def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                        def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                        def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
+                        def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                        def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmUITestBranch").trim()
+                        def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmUITestsCommitSha").trim()
+                        runUItests(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, env.VM_IP)
                     }
                 }
             }
