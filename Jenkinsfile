@@ -30,7 +30,7 @@ void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIE
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'GIT_BRANCH', value: BRANCH_NAME),
         string(name: 'OWNER', value: OWNER),
-        string(name: 'GIT_COMMIT_HASH', value: GIT_COMMIT_HASH)
+        string(name: 'GIT_COMMIT_HASH', value: GIT_COMMIT_HASH),
         string(name: 'SERVER_IP', value: PMM_SERVER_IP)
     ]
 }
@@ -40,7 +40,7 @@ void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'PMM_QA_GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
-        string(name: 'PMM_QA_GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH)
+        string(name: 'PMM_QA_GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH),
         string(name: 'SERVER_IP', value: PMM_SERVER_IP)
     ]
 }
