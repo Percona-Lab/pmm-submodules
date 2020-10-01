@@ -368,6 +368,7 @@ pipeline {
                             def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
                             def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
                             def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmQACommitSha").trim()
+                            sleep 180
                             runTestSuite(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, env.VM_IP)
                         }
                     }
