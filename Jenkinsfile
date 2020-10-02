@@ -372,11 +372,6 @@ pipeline {
                 }
             }
         }
-        stage("Env Variables") {
-            steps {
-                sh "printenv"
-            }
-        }
     }
     post {
         always {
@@ -391,6 +386,7 @@ pipeline {
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {
+                    sh "printenv"
                     if(env.API_TESTS_PASSED.toBoolean() == false)
                     {
                         addComment("Link to Failed API tests Job: ${API_TESTS_URL}")
