@@ -26,27 +26,30 @@ void destroyStaging(IP) {
 }
 
 void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIENT_VERSION, OWNER, PMM_SERVER_IP) {
-    stagingJob = build job: 'pmm2-api-tests-temp', parameters: [
+    apiTestJob = build job: 'pmm2-api-tests-temp', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'GIT_BRANCH', value: BRANCH_NAME),
         string(name: 'OWNER', value: OWNER),
         string(name: 'GIT_COMMIT_HASH', value: GIT_COMMIT_HASH),
         string(name: 'SERVER_IP', value: PMM_SERVER_IP)
     ]
+    env.API_TESTS_URL = apiTestJob.buildVariables.BUILD_URL
+    env.API_TESTS_PASSED = apiTestJob.buildVariables.PASSED
 }
 
 void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_SERVER_IP) {
-    stagingJob = build job: 'pmm2-testsuite-temp', parameters: [
+    testSuiteJob = build job: 'pmm2-testsuite-temp', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'PMM_QA_GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
         string(name: 'PMM_QA_GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH),
         string(name: 'SERVER_IP', value: PMM_SERVER_IP)
     ]
+    env.testSuiteJobUrl = testSuiteJob.buildVariables.BUILD_URL
 }
 
 void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_SERVER_IP) {
-    stagingJob = build job: 'pmm2-ui-tests', parameters: [
+    e2eTestJob = build job: 'pmm2-ui-tests', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
@@ -54,6 +57,17 @@ void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, 
         string(name: 'SERVER_IP', value: PMM_SERVER_IP),
         string(name: 'CLIENT_INSTANCE', value: 'yes')
     ]
+    env.e2eTestJobUrl = e2eTestJob.buildVariables.BUILD_URL
+}
+
+void addComment(String COMMENT) {
+    withCredentials([string(credentialsId: 'GITHUB_API_TOKEN', variable: 'GITHUB_API_TOKEN')]) {
+        sh """
+            curl -v -X POST \
+                -H "Authorization: token ${GITHUB_API_TOKEN}" \
+                -d "{\\"body\\":\\"${COMMENT}"
+        """
+    }
 }
 
 def isBranchBuild = true
@@ -405,6 +419,10 @@ pipeline {
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {
+                    if(env.API_TESTS_PASSED.toBoolean() == false)
+                    {
+                        addComment("Link to Failed API tests Job: ${API_TESTS_URL}")
+                    }
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result}"
                 }
             }
