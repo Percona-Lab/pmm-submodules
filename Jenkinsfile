@@ -34,7 +34,7 @@ void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIE
         string(name: 'SERVER_IP', value: PMM_SERVER_IP)
     ]
     env.API_TESTS_URL = apiTestJob.buildVariables.BUILD_URL
-    env.API_TESTS_PASSED = apiTestJob.buildVariables.PASSED
+    env.API_TESTS_PASSED = apiTestJob.buildVariables.BUILD_PASSED
 }
 
 void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_SERVER_IP) {
@@ -370,39 +370,11 @@ pipeline {
                         }
                     }
                 }
-                stage('Test: PMM-Testsuite') {
-                    steps {
-                        script {
-                            unstash 'IMAGE'
-                            unstash 'pmmQABranch'
-                            unstash 'pmmQACommitSha'
-                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
-                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
-                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                            def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
-                            def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmQACommitSha").trim()
-                            sleep 180
-                            runTestSuite(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, env.VM_IP)
-                        }
-                    }
-                }
-                stage('Test: UI') {
-                    steps {
-                        script {
-                            unstash 'IMAGE'
-                            unstash 'pmmUITestBranch'
-                            unstash 'pmmUITestsCommitSha'
-                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
-                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
-                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                            def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmUITestBranch").trim()
-                            def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmUITestsCommitSha").trim()
-                            runUItests(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, env.VM_IP)
-                        }
-                    }
-                }
+            }
+        }
+        stage("Env Variables") {
+            steps {
+                sh "printenv"
             }
         }
     }
