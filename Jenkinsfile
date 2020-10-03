@@ -26,8 +26,7 @@ void destroyStaging(IP) {
 }
 
 void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIENT_VERSION, OWNER, PMM_SERVER_IP) {
-    println "Inside"
-    apiTestJob = build job: 'pmm2-api-tests-temp', wait: true, parameters: [
+    def apiTestJob = build job: 'pmm2-api-tests-temp', wait: true, parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'GIT_BRANCH', value: BRANCH_NAME),
         string(name: 'OWNER', value: OWNER),
@@ -180,8 +179,9 @@ pipeline {
                     }
                 } else {
                     sh "printenv"
+                    println apiTestJob
                     sh "echo ${env.API_TESTS_URL}"
-                    if(apiTestsFailed)
+                    if(!apiTestsFailed)
                     {
                         addComment("Link to Failed API tests Job: ${API_TESTS_URL}")
                     }
