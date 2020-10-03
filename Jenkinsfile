@@ -65,7 +65,7 @@ void addComment(String COMMENT) {
         sh """
             curl -v -X POST \
                 -H "Authorization: token ${GITHUB_API_TOKEN}" \
-                -d "{\\"body\\":\\"${COMMENT}" \
+                -d "{\\"body\\":\\"${COMMENT}\\"}" \
                 "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
         """
     }
