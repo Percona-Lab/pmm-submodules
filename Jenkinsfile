@@ -143,16 +143,12 @@ pipeline {
                 stage('Test: API') {
                     steps {
                         script {
-                            unstash 'IMAGE'
                             unstash 'apiBranch'
                             unstash 'apiCommitSha'
-                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
                             def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
-                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
                             def API_TESTS_BRANCH = sh(returnStdout: true, script: "cat apiBranch").trim()
                             def GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat apiCommitSha").trim()
-                            runAPItests(IMAGE, API_TESTS_BRANCH, GIT_COMMIT_HASH, CLIENT_URL, OWNER, '3.137.218.245')
+                            runAPItests('dev-latest', API_TESTS_BRANCH, GIT_COMMIT_HASH, 'dev-latest', OWNER, '3.137.218.245')
                         }
                     }
                 }
