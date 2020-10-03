@@ -40,6 +40,8 @@ void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIE
             buildNumber: apiTestJob.id
         ]
     ]);
+    checklog = Jenkins.getInstance().getItemByFullName('pmm2-api-tests-temp').getBuildByNumber(apiTestJob.getNumber()).logFile.text
+    println checklog
     env.API_TESTS_URL = sh(returnStdout: true, script: "cat API_TESTS_JOB_URL").trim()
 }
 
