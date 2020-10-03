@@ -33,7 +33,14 @@ void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIE
         string(name: 'GIT_COMMIT_HASH', value: GIT_COMMIT_HASH),
         string(name: 'SERVER_IP', value: PMM_SERVER_IP)
     ]
-    env.API_TESTS_URL = apiTestJob.buildVariables.JOB_URL
+    step ([$class: 'CopyArtifact',
+        projectName: 'pmm2-api-tests-temp',
+        filter: 'API_TESTS_JOB_URL',
+        selector: [$class: 'SpecificBuildSelector',
+            buildNumber: apiTestJob.id
+        ]
+    ]);
+    env.API_TESTS_URL = sh(returnStdout: true, script: "cat API_TESTS_JOB_URL").trim()
 }
 
 void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_SERVER_IP) {
