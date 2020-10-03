@@ -34,7 +34,6 @@ void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIE
         string(name: 'SERVER_IP', value: PMM_SERVER_IP)
     ]
     env.API_TESTS_URL = apiTestJob.buildVariables.BUILD_URL
-    env.API_TESTS_PASSED = apiTestJob.buildVariables.BUILD_PASSED
 }
 
 void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_SERVER_IP) {
@@ -71,6 +70,7 @@ void addComment(String COMMENT) {
 }
 
 def isBranchBuild = true
+def apiTestsFailed = false
 if ( env.CHANGE_URL ) {
     isBranchBuild = false
 }
@@ -149,6 +149,7 @@ pipeline {
                             def API_TESTS_BRANCH = sh(returnStdout: true, script: "cat apiBranch").trim()
                             def GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat apiCommitSha").trim()
                             runAPItests('dev-latest', API_TESTS_BRANCH, GIT_COMMIT_HASH, 'dev-latest', OWNER, '3.137.218.245')
+                            apiTestsFailed = true
                         }
                     }
                 }
@@ -169,9 +170,8 @@ pipeline {
                     }
                 } else {
                     sh "printenv"
-                    sh "echo ${API_TESTS_PASSED}"
                     sh "echo ${API_TESTS_URL}"
-                    if(env.API_TESTS_PASSED.toBoolean() == false)
+                    if(apiTestsFailed)
                     {
                         addComment("Link to Failed API tests Job: ${API_TESTS_URL}")
                     }
