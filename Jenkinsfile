@@ -26,23 +26,15 @@ void destroyStaging(IP) {
 }
 
 void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIENT_VERSION, OWNER, PMM_SERVER_IP) {
-    def apiTestJob = build job: 'pmm2-api-tests-temp', wait: true, parameters: [
+    def apiTestJob = build job: 'pmm2-api-tests-temp', wait: true, propagate: false, parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'GIT_BRANCH', value: BRANCH_NAME),
         string(name: 'OWNER', value: OWNER),
         string(name: 'GIT_COMMIT_HASH', value: GIT_COMMIT_HASH),
         string(name: 'SERVER_IP', value: PMM_SERVER_IP)
     ]
-    // step ([$class: 'CopyArtifact',
-    //     projectName: 'pmm2-api-tests-temp',
-    //     filter: 'API_TESTS_JOB_URL',
-    //     selector: [$class: 'SpecificBuildSelector',
-    //         buildNumber: apiTestJob.id
-    //     ]
-    // ]);
-    checklog = Jenkins.getInstance().getItemByFullName('pmm2-api-tests-temp').getBuildByNumber(apiTestJob.getNumber()).logFile.text
-    println checklog
-    env.API_TESTS_URL = sh(returnStdout: true, script: "cat API_TESTS_JOB_URL").trim()
+    env.API_TESTS_URL = apiTestJob.buildVariables.JOB_RUN_URL
+    env.API_TESTS_RESULT = apiTestJob.result
 }
 
 void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_SERVER_IP) {
@@ -178,10 +170,8 @@ pipeline {
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {
-                    sh "printenv"
-                    println apiTestJob
-                    sh "echo ${env.API_TESTS_URL}"
-                    if(!apiTestsFailed)
+                    sh 'echo ${API_TESTS_URL}'
+                    if(env.API_TESTS_RESULT == "FAILURE")
                     {
                         addComment("Link to Failed API tests Job: ${API_TESTS_URL}")
                     }
