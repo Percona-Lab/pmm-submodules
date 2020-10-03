@@ -33,7 +33,7 @@ void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIE
         string(name: 'GIT_COMMIT_HASH', value: GIT_COMMIT_HASH),
         string(name: 'SERVER_IP', value: PMM_SERVER_IP)
     ]
-    env.API_TESTS_URL = apiTestJob.buildVariables.JOB_RUN_URL
+    env.API_TESTS_URL = apiTestJob.buildVariables.BUILD_URL
     env.API_TESTS_RESULT = apiTestJob.result
 }
 
@@ -150,6 +150,10 @@ pipeline {
                             def API_TESTS_BRANCH = sh(returnStdout: true, script: "cat apiBranch").trim()
                             def GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat apiCommitSha").trim()
                             runAPItests('dev-latest', API_TESTS_BRANCH, GIT_COMMIT_HASH, 'dev-latest', OWNER, '3.137.218.245')
+                            if (env.API_TESTS_RESULT.equals("SUCCESS")) {
+                            } else {
+                                sh "exit 1"
+                            }
                         }
                     }
                 }
@@ -163,15 +167,9 @@ pipeline {
                     destroyStaging(env.VM_IP)
                 }
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
-                    sh 'echo ${API_TESTS_URL}'
-                    sh 'echo ${API_TESTS_RESULT}'
-                    if(env.API_TESTS_RESULT == "FAILURE")
-                    {
-                        addComment("Link to Failed API tests Job: ${API_TESTS_URL}")
-                    }
                 } else {
                     sh 'echo ${API_TESTS_URL}'
-                    if(env.API_TESTS_RESULT == "FAILURE")
+                    if(env.API_TESTS_RESULT == "FAILURE" || env.API_TESTS_RESULT == "UNSTABLE")
                     {
                         addComment("Link to Failed API tests Job: ${API_TESTS_URL}")
                     }
