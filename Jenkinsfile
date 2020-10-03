@@ -169,6 +169,8 @@ pipeline {
                     }
                 } else {
                     sh "printenv"
+                    sh "echo ${API_TESTS_PASSED}"
+                    sh "echo ${API_TESTS_URL}"
                     if(env.API_TESTS_PASSED.toBoolean() == false)
                     {
                         addComment("Link to Failed API tests Job: ${API_TESTS_URL}")
