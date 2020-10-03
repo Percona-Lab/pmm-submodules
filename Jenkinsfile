@@ -33,7 +33,7 @@ void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIE
         string(name: 'GIT_COMMIT_HASH', value: GIT_COMMIT_HASH),
         string(name: 'SERVER_IP', value: PMM_SERVER_IP)
     ]
-    env.API_TESTS_URL = apiTestJob.buildVariables.BUILD_URL
+    env.API_TESTS_URL = apiTestJob.buildVariables.JOB_URL
 }
 
 void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_SERVER_IP) {
