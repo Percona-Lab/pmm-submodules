@@ -164,14 +164,10 @@ pipeline {
                 }
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
                     sh 'echo ${API_TESTS_URL}'
+                    sh 'echo ${API_TESTS_RESULT}'
                     if(env.API_TESTS_RESULT == "FAILURE")
                     {
                         addComment("Link to Failed API tests Job: ${API_TESTS_URL}")
-                    }
-                    if (env.CHANGE_URL) {
-                        unstash 'IMAGE'
-                        def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                        slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {
                     sh 'echo ${API_TESTS_URL}'
