@@ -150,7 +150,6 @@ pipeline {
                             def API_TESTS_BRANCH = sh(returnStdout: true, script: "cat apiBranch").trim()
                             def GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat apiCommitSha").trim()
                             runAPItests('dev-latest', API_TESTS_BRANCH, GIT_COMMIT_HASH, 'dev-latest', OWNER, '3.137.218.245')
-                            apiTestsFailed = true
                         }
                     }
                 }
@@ -164,6 +163,11 @@ pipeline {
                     destroyStaging(env.VM_IP)
                 }
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
+                    sh 'echo ${API_TESTS_URL}'
+                    if(env.API_TESTS_RESULT == "FAILURE")
+                    {
+                        addComment("Link to Failed API tests Job: ${API_TESTS_URL}")
+                    }
                     if (env.CHANGE_URL) {
                         unstash 'IMAGE'
                         def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
