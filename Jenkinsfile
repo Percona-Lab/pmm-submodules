@@ -8,7 +8,8 @@ void runStaging(String DOCKER_VERSION, CLIENT_VERSION) {
     stagingJob = build job: 'aws-staging-start', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
-        string(name: 'CLIENTS', value: ''),
+        string(name: 'PS_VERSION', value: '5.6'),
+        string(name: 'CLIENTS', value: '--addclient=ps,1'),
         string(name: 'DOCKER_ENV_VARIABLE', value: '-e PMM_DEBUG=1 -e PERCONA_TEST_CHECKS_INTERVAL=10s -e PERCONA_TEST_DBAAS=1 -e PERCONA_TEST_AUTH_HOST=check-dev.percona.com:443 -e PERCONA_TEST_CHECKS_HOST=check-dev.percona.com:443 -e PERCONA_TEST_CHECKS_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX'),
         string(name: 'NOTIFY', value: 'false'),
         string(name: 'DAYS', value: '1')
@@ -25,25 +26,29 @@ void destroyStaging(IP) {
 }
 
 void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIENT_VERSION, OWNER) {
-    stagingJob = build job: 'pmm2-api-tests', parameters: [
+    apiTestJob = build job: 'pmm2-api-tests', propagate: false, parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'GIT_BRANCH', value: BRANCH_NAME),
         string(name: 'OWNER', value: OWNER),
         string(name: 'GIT_COMMIT_HASH', value: GIT_COMMIT_HASH)
     ]
+    env.API_TESTS_URL = apiTestJob.absoluteUrl
+    env.API_TESTS_RESULT = apiTestJob.result
 }
 
 void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH) {
-    stagingJob = build job: 'pmm2-testsuite', parameters: [
+    testSuiteJob = build job: 'pmm2-testsuite', propagate: false, parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'PMM_QA_GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
         string(name: 'PMM_QA_GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH)
     ]
+    env.BATS_TESTS_URL = testSuiteJob.absoluteUrl
+    env.BATS_TESTS_RESULT = testSuiteJob.result
 }
 
 void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_SERVER_IP) {
-    stagingJob = build job: 'pmm2-ui-tests', parameters: [
+    e2eTestJob = build job: 'pmm2-ui-tests', propagate: false, parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
@@ -51,6 +56,19 @@ void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, 
         string(name: 'SERVER_IP', value: PMM_SERVER_IP),
         string(name: 'CLIENT_INSTANCE', value: 'yes')
     ]
+    env.UI_TESTS_URL = e2eTestJob.absoluteUrl
+    env.UI_TESTS_RESULT = e2eTestJob.result
+}
+
+void addComment(String COMMENT) {
+    withCredentials([string(credentialsId: 'GITHUB_API_TOKEN', variable: 'GITHUB_API_TOKEN')]) {
+        sh """
+            curl -v -X POST \
+                -H "Authorization: token ${GITHUB_API_TOKEN}" \
+                -d "{\\"body\\":\\"${COMMENT}\\"}" \
+                "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
+        """
+    }
 }
 
 def isBranchBuild = true
@@ -350,6 +368,9 @@ pipeline {
                             def API_TESTS_BRANCH = sh(returnStdout: true, script: "cat apiBranch").trim()
                             def GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat apiCommitSha").trim()
                             runAPItests(IMAGE, API_TESTS_BRANCH, GIT_COMMIT_HASH, CLIENT_URL, OWNER)
+                            if (!env.API_TESTS_RESULT.equals("SUCCESS")) {
+                                sh "exit 1"
+                            }
                         }
                     }
                 }
@@ -366,6 +387,9 @@ pipeline {
                             def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
                             def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmQACommitSha").trim()
                             runTestSuite(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH)
+                            if (!env.BATS_TESTS_RESULT.equals("SUCCESS")) {
+                                sh "exit 1"
+                            }
                         }
                     }
                 }
@@ -382,6 +406,9 @@ pipeline {
                             def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmUITestBranch").trim()
                             def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmUITestsCommitSha").trim()
                             runUItests(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, env.VM_IP)
+                            if (!env.UI_TESTS_RESULT.equals("SUCCESS")) {
+                                sh "exit 1"
+                            }
                         }
                     }
                 }
@@ -401,7 +428,11 @@ pipeline {
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {
-                    slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result}"
+                    if(env.API_TESTS_RESULT != "SUCCESS" || env.BATS_TESTS_RESULT != "SUCCESS" || env.UI_TESTS_RESULT != "SUCCESS")
+                    {
+                        addComment("Some Tests have Failed Please check: API: ${API_TESTS_URL} BATS: ${BATS_TESTS_URL} & UI: ${UI_TESTS_URL}")
+                    }
+                    slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result} build job link: ${BUILD_URL}"
                 }
             }
             sh 'sudo make clean'
