@@ -10,6 +10,7 @@ postgres_exporter /usr/local/percona/pmm2/exporters/
 mongodb_exporter /usr/local/percona/pmm2/exporters/
 proxysql_exporter /usr/local/percona/pmm2/exporters/
 rds_exporter /usr/local/percona/pmm2/exporters/
+vmagent /usr/local/percona/pmm2/exporters/
 example.prom /usr/local/percona/pmm2/collectors/textfile-collector/low-resolution/
 example.prom /usr/local/percona/pmm2/collectors/textfile-collector/medium-resolution/
 example.prom /usr/local/percona/pmm2/collectors/textfile-collector/high-resolution/
