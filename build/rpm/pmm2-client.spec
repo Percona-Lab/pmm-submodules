@@ -217,7 +217,7 @@ fi
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/pmm2
 
 %changelog
-* Tue Aug 09 2020 Nikolay Khramchikhin <nik@victoriametrics.com>
+* Tue Oct 13 2020 Nikolay Khramchikhin <nik@victoriametrics.com>
 - PMM-6396 added vmagent binary.
 
 * Tue Aug 25 2020 Vadim Yalovets <vadim.yalovets@percona.com>
