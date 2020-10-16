@@ -9,6 +9,7 @@ It is configured entirely by environment variables. Arguments or flags are not u
 The following environment variables are recognized by the Docker entrypoint:
 * PMM_AGENT_ENTRYPOINT_DELAY - if non-zero, entrypoint execution is delayed for a given number of seconds.
 * PMM_AGENT_SETUP            - if true, `pmm-agent setup` is called before `pmm-agent run`.
+* PMM_AGENT_PRERUN_SCRIPT    - if non-empty, runs given script file with `pmm-agent run` running in the background.
 
 Additionally, the many environment variables are recognized by pmm-agent itself.
 The following help text shows them as [PMM_AGENT_XXX].
@@ -16,6 +17,7 @@ The following help text shows them as [PMM_AGENT_XXX].
 
 from __future__ import print_function, unicode_literals
 import os
+import subprocess
 import sys
 import time
 from distutils.util import strtobool
@@ -23,6 +25,7 @@ from distutils.util import strtobool
 
 PMM_AGENT_ENTRYPOINT_DELAY = int(os.environ.get('PMM_AGENT_ENTRYPOINT_DELAY', '0'))
 PMM_AGENT_SETUP            = strtobool(os.environ.get('PMM_AGENT_SETUP', 'false'))
+PMM_AGENT_PRERUN_SCRIPT    = os.environ.get('PMM_AGENT_PRERUN_SCRIPT', '')
 
 
 def main():
@@ -32,7 +35,7 @@ def main():
 
     if len(sys.argv) > 1:
         print(__doc__, file=sys.stderr)
-        os.system('pmm-agent setup --help')
+        subprocess.call(['pmm-agent', 'setup', '--help'])
         sys.exit(1)
 
     if PMM_AGENT_ENTRYPOINT_DELAY:
@@ -41,15 +44,39 @@ def main():
 
     if PMM_AGENT_SETUP:
         print('Starting pmm-agent setup ...', file=sys.stderr)
-        status = os.system('pmm-agent setup')
-        if status != os.EX_OK:
+        status = subprocess.call(['pmm-agent', 'setup'])
+        print('pmm-agent setup exited with {}.'.format(status), file=sys.stderr)
+        if status != 0:
             sys.exit(status)
 
-    print('Starting pmm-agent ...', file=sys.stderr)
-    sys.stderr.flush()
+    if PMM_AGENT_PRERUN_SCRIPT:
+        print('Starting pmm-agent for prerun script ...', file=sys.stderr)
+        agent = subprocess.Popen(['pmm-agent', 'run'])
+
+        print('Running {} ...'.format(PMM_AGENT_PRERUN_SCRIPT), file=sys.stderr)
+        status = subprocess.call([PMM_AGENT_PRERUN_SCRIPT])
+
+        print('Stopping pmm-agent ...', file=sys.stderr)
+        agent.terminate()
+
+        # kill pmm-agent after 10 seconds if it did not exit gracefully
+        for _ in range(10):
+            if agent.poll() is not None:
+                break
+            time.sleep(1)
+        if agent.returncode is None:
+            print('Killing pmm-agent ...', file=sys.stderr)
+            agent.kill()
+
+        agent.wait()
+
+        print('{} exited with {}.'.format(PMM_AGENT_PRERUN_SCRIPT, status), file=sys.stderr)
+        if status != 0:
+            sys.exit(status)
 
     # use execlp to replace the current process (this entrypoint)
     # with pmm-agent with inherited environment
+    print('Starting pmm-agent ...', file=sys.stderr)
     os.execlp('pmm-agent', 'run')
 
 
