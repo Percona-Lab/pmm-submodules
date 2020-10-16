@@ -62,7 +62,7 @@ def main():
 
         if PMM_AGENT_PRERUN_SCRIPT:
             print("Running prerun shell script ...", file=sys.stderr)
-            status = subprocess.call([PMM_AGENT_PRERUN_SCRIPT], shell=True)
+            status = subprocess.call(PMM_AGENT_PRERUN_SCRIPT, shell=True)
             print('Prerun shell script exited with {}.'.format(status), file=sys.stderr)
 
         print('Stopping pmm-agent ...', file=sys.stderr)
