@@ -40,6 +40,10 @@ def main():
         subprocess.call(['pmm-agent', 'setup', '--help'])
         sys.exit(1)
 
+    if PMM_AGENT_PRERUN_FILE and PMM_AGENT_PRERUN_SCRIPT:
+        print('Both PMM_AGENT_PRERUN_FILE and PMM_AGENT_PRERUN_SCRIPT cannot be set.', file=sys.stderr)
+        sys.exit(1)
+
     if PMM_AGENT_ENTRYPOINT_DELAY:
         print('Sleeping {} second(s) ...'.format(PMM_AGENT_ENTRYPOINT_DELAY), file=sys.stderr)
         time.sleep(PMM_AGENT_ENTRYPOINT_DELAY)
