@@ -82,7 +82,7 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = release/2.12
+	branch = PMM-6730-Fix-showing-twice-service-type-on-element-DB-Service-Connections 
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
