@@ -13,7 +13,6 @@ REPOS = [
     "sources/pmm-update/src/github.com/percona/pmm-update",
     "sources/pmm/src/github.com/percona/pmm",
     "sources/qan-api2/src/github.com/percona/qan-api2",
-    "sources/qan-app/src/github.com/percona/qan-app",
     ".",
 ]
 
