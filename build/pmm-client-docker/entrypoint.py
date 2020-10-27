@@ -7,7 +7,6 @@ It runs pmm-agent as a process with PID 1.
 It is configured entirely by environment variables. Arguments or flags are not used.
 
 The following environment variables are recognized by the Docker entrypoint:
-* PMM_AGENT_ENTRYPOINT_DELAY - if non-zero, entrypoint execution is delayed for a given number of seconds.
 * PMM_AGENT_SETUP            - if true, `pmm-agent setup` is called before `pmm-agent run`.
 * PMM_AGENT_PRERUN_FILE      - if non-empty, runs given file with `pmm-agent run` running in the background.
 * PMM_AGENT_PRERUN_SCRIPT    - if non-empty, runs given shell script content with `pmm-agent run` running in the background.
@@ -24,7 +23,6 @@ import time
 from distutils.util import strtobool
 
 
-PMM_AGENT_ENTRYPOINT_DELAY = int(os.environ.get('PMM_AGENT_ENTRYPOINT_DELAY', '0'))
 PMM_AGENT_SETUP            = strtobool(os.environ.get('PMM_AGENT_SETUP', 'false'))
 PMM_AGENT_PRERUN_FILE      = os.environ.get('PMM_AGENT_PRERUN_FILE', '')
 PMM_AGENT_PRERUN_SCRIPT    = os.environ.get('PMM_AGENT_PRERUN_SCRIPT', '')
@@ -43,10 +41,6 @@ def main():
     if PMM_AGENT_PRERUN_FILE and PMM_AGENT_PRERUN_SCRIPT:
         print('Both PMM_AGENT_PRERUN_FILE and PMM_AGENT_PRERUN_SCRIPT cannot be set.', file=sys.stderr)
         sys.exit(1)
-
-    if PMM_AGENT_ENTRYPOINT_DELAY:
-        print('Sleeping {} second(s) ...'.format(PMM_AGENT_ENTRYPOINT_DELAY), file=sys.stderr)
-        time.sleep(PMM_AGENT_ENTRYPOINT_DELAY)
 
     if PMM_AGENT_SETUP:
         print('Starting pmm-agent setup ...', file=sys.stderr)
