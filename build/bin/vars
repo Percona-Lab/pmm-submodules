@@ -40,3 +40,4 @@ docker_tarball=${root_dir}/results/docker/pmm-server-${pmm_version}.docker
 docker_client_tarball=${root_dir}/results/docker/pmm2-client-${pmm_version}.docker
 source_tarball=${root_dir}/results/source_tarball/pmm2-client-${pmm_version}.tar.gz
 binary_tarball=${root_dir}/results/tarball/pmm2-client-${pmm_version}.tar.gz
+vmagent_commit_hash=cf5f2874cd0c0e13dab44210c1f6a3230a29ddc5
