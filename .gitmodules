@@ -53,7 +53,7 @@
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
-	branch = PMM-2.0
+	branch = PMM-6401-drop-prometheus
 [submodule "dbaas-controller"]
 	path = sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
 	url = https://github.com/percona-platform/dbaas-controller
@@ -74,11 +74,11 @@
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = PMM-2.0
+	branch = revert-237-revert-235-PMM-6403-replaces-prometheus-configuration
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
-	branch = PMM-2.0
+	branch = PMM-6401-updates-victoria-metrics-version
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
@@ -92,7 +92,7 @@
 [submodule "pmm-api-tests"]
 	path = sources/pmm-api-tests/src/github.com/Percona-Lab/pmm-api-tests
 	url = https://github.com/Percona-Lab/pmm-api-tests
-	branch = master
+	branch = PMM-6401-fixes-prometheus-log-test
 [submodule "pmm-qa"]
 	path = sources/pmm-qa/src/github.com/percona/pmm-qa
 	url = https://github.com/percona/pmm-qa
