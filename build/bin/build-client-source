@@ -99,7 +99,7 @@ prepare_vmagent_tarball() {
     echo "${repo_var}=$commit_short" >> ${client_properties}
 
     if [ -f "${tarball}" ]; then
-        echo ${tarball} already exists, skipping build
+        echo ${tarball} already exists, skipping download
     else
         wget https://github.com/VictoriaMetrics/VictoriaMetrics/archive/${commit_hash}.tar.gz -O ${tarball}
     fi
