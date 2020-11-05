@@ -76,6 +76,7 @@ install -m 0755 bin/postgres_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exp
 install -m 0755 bin/mongodb_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
 install -m 0755 bin/proxysql_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
 install -m 0755 bin/rds_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
+install -m 0755 bin/vmagent $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
 install -m 0755 bin/pt-summary $RPM_BUILD_ROOT/usr/local/percona/pmm2/tools
 install -m 0755 bin/pt-mysql-summary $RPM_BUILD_ROOT/usr/local/percona/pmm2/tools
 install -m 0755 bin/pt-mongodb-summary $RPM_BUILD_ROOT/usr/local/percona/pmm2/tools
@@ -216,6 +217,9 @@ fi
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/pmm2
 
 %changelog
+* Tue Oct 13 2020 Nikolay Khramchikhin <nik@victoriametrics.com>
+- PMM-6396 added vmagent binary.
+
 * Tue Aug 25 2020 Vadim Yalovets <vadim.yalovets@percona.com>
 - PMM-2045 MySQL Group Replication Dashboard.
 
