@@ -324,10 +324,11 @@ pipeline {
                                 unstash 'IMAGE'
                                 def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
                                 def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                                def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
                                 sh """
                                     curl -v -X POST \
                                         -H "Authorization: token ${GITHUB_API_TOKEN}" \
-                                        -d "{\\"body\\":\\"server docker - ${IMAGE}\\nclient docker - ${CLIENT_IMAGE}\\nclient - https://s3.us-east-2.amazonaws.com/pmm-build-cache/PR-BUILDS/pmm2-client/pmm2-client-${BRANCH_NAME}-\${GIT_COMMIT:0:7}.tar.gz\\"}" \
+                                        -d "{\\"body\\":\\"server docker - ${IMAGE}\\nclient docker - ${CLIENT_IMAGE}\\nclient - ${CLIENT_URL}\\nCreate Staging Instance: https://pmm.cd.percona.com/job/aws-staging-start/parambuild/?DOCKER_VERSION=${IMAGE}&CLIENT_VERSION=${CLIENT_URL}\\"}" \
                                         "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
                                 """
                             }
