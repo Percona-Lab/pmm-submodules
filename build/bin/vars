@@ -42,4 +42,5 @@ source_tarball=${root_dir}/results/source_tarball/pmm2-client-${pmm_version}.tar
 binary_tarball=${root_dir}/results/tarball/pmm2-client-${pmm_version}.tar.gz
 
 # https://github.com/VictoriaMetrics/VictoriaMetrics/releases/tag/pmm-6401-v1.44.0
-vmagent_commit_hash=4dc13754d882fe2d6b4ba446b21febbea12b1f73
+#vmagent_commit_hash=4dc13754d882fe2d6b4ba446b21febbea12b1f73
+vmagent_commit_hash=v1.46.0
