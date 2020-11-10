@@ -58,4 +58,4 @@ for FILE in example.prom queries-mysqld.yml queries-postgres.yml; do
     done
 done
 
-${INSTALL_COMMAND} -m 0640 /dev/null ${PMM_DIR}/config/pmm-agent.yaml
+${INSTALL_COMMAND} -m 0660 /dev/null ${PMM_DIR}/config/pmm-agent.yaml
