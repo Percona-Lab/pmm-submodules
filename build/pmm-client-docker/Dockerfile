@@ -12,7 +12,7 @@ RUN install -d -o pmm-agent -g pmm-agent -m 0775 /usr/local/percona/pmm2
 
 RUN tar -zxpf /tmp/pmm2-client.tar.gz -C /tmp \
     && cd /tmp/pmm2-client-* \
-    && env PMM_USER=pmm-agent PMM_GROUP=pmm-agent ./install_tarball \
+    && env PMM_USER=pmm-agent PMM_GROUP=root ./install_tarball \
     && cd /tmp \
     && rm -rf /tmp/pmm2-client*
 
