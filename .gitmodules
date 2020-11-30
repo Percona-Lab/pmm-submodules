@@ -73,8 +73,8 @@
 	branch = PMM-2.0
 [submodule "pmm-server"]
 	path = sources/pmm-server
-	url = https://github.com/percona/pmm-server
-	branch = PMM-2.0
+	url = https://github.com/cezmunsta/pmm-server
+	branch = x-forwarded-for 
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
