@@ -52,7 +52,7 @@ pipeline {
         }
         stage('Build client source rpm') {
             steps {
-                sh 'sg docker -c "./build/bin/build-client-srpm centos:6"'
+                sh 'sg docker -c "./build/bin/build-client-srpm centos:7"'
             }
         }
         stage('Build client binary rpm') {
