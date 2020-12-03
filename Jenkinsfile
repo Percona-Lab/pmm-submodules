@@ -193,7 +193,7 @@ pipeline {
                 sh '''
                     sg docker -c "
                         set -o errexit
-                        ./build/bin/build-client-srpm centos:6
+                        ./build/bin/build-client-srpm centos:7
                     "
                 '''
             }
