@@ -82,7 +82,7 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-6860-add-suspend-resume
+	branch = PMM-7032-add-postfix-to-pxc-clusters
 # [submodule "grafana"]
 # 	path = sources/grafana/src/github.com/grafana/grafana
 # 	url = https://github.com/percona-platform/grafana
