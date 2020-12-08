@@ -5,7 +5,7 @@ library changelog: false, identifier: 'lib@master', retriever: modernSCM([
 
 
 void runStaging(String DOCKER_VERSION, CLIENT_VERSION) {
-    stagingJob = build job: 'aws-staging-start', parameters: [
+    stagingJob = build job: 'aws-staging-test-job', parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'PS_VERSION', value: '5.6'),
