@@ -78,7 +78,7 @@
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
-	branch = PMM-6994-add-alerts-table
+	branch = integrated-alerting-mvp
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
