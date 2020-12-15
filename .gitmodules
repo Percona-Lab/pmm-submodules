@@ -81,7 +81,7 @@
 	branch = release/2.13
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
-	url = https://github.com/percona/PMM-7156-style-improvementsgrafana-dashboards
+	url = https://github.com/percona/grafana-dashboards
 	branch = PMM-7156-style-improvements
 # [submodule "grafana"]
 # 	path = sources/grafana/src/github.com/grafana/grafana
