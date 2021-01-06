@@ -83,10 +83,10 @@
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
 	branch = PMM-2.0
-[submodule "grafana"]
- 	path = sources/grafana/src/github.com/grafana/grafana
- 	url = https://github.com/percona-platform/grafana
- 	branch = PMM-7150-poc
+# [submodule "grafana"]
+# 	path = sources/grafana/src/github.com/grafana/grafana
+# 	url = https://github.com/percona-platform/grafana
+# 	branch = master
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
