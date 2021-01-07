@@ -96,7 +96,7 @@
 [submodule "pmm-api-tests"]
 	path = sources/pmm-api-tests/src/github.com/Percona-Lab/pmm-api-tests
 	url = https://github.com/Percona-Lab/pmm-api-tests
-	branch = release/2.14
+	branch = PMM-5765-add-external-service-on-remote-node
 [submodule "pmm-qa"]
 	path = sources/pmm-qa/src/github.com/percona/pmm-qa
 	url = https://github.com/percona/pmm-qa
