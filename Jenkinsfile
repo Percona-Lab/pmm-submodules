@@ -431,7 +431,7 @@ pipeline {
                 } else {
                     if(env.API_TESTS_RESULT != "SUCCESS" || env.BATS_TESTS_RESULT != "SUCCESS" || env.UI_TESTS_RESULT != "SUCCESS")
                     {
-                        addComment("Some Tests have Failed Please check:\nAPI: ${API_TESTS_URL}\nBATS: ${BATS_TESTS_URL}\nUI: ${UI_TESTS_URL}")
+                        addComment("Some tests have failed, please check:\nAPI: ${API_TESTS_URL}\nBATS: ${BATS_TESTS_URL}\nUI: ${UI_TESTS_URL}")
                     }
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result} build job link: ${BUILD_URL}"
                 }
