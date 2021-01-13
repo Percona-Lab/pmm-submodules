@@ -78,7 +78,7 @@
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
-	branch = PMM-2.0
+	branch = PMM-7308-VM-update-to-1.52.0-from-1.51.0
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
