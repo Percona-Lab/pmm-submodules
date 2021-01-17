@@ -90,7 +90,7 @@
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
-	branch = master
+	branch = PMM-7103-remove-pmm-bootstrap-logs
 
 ## PMM Tests
 [submodule "pmm-api-tests"]
