@@ -21,3 +21,4 @@ queries-mysqld-group-replication.yml /usr/local/percona/pmm2/collectors/custom-q
 queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution/
 queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
 queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
+queries-postgres-user-tables.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
