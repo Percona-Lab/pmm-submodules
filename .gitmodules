@@ -33,7 +33,7 @@
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
-	branch = master
+	branch = PMM-7119-template-request-name
 [submodule "qan-api"]
 	path = sources/qan-api/src/github.com/percona/qan-api
 	url = https://github.com/percona/qan-api
@@ -49,7 +49,7 @@
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = master
+	branch = PMM-7119-template-request-name
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
