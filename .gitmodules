@@ -31,8 +31,8 @@
 	url = https://github.com/percona/postgres_exporter
 	branch = master
 [submodule "clickhouse_exporter"]
-	path = sources/clickhouse_exporter/src/github.com/f1yegor/clickhouse_exporter
-	url = https://github.com/f1yegor/clickhouse_exporter
+	path = sources/clickhouse_exporter/src/github.com/Percona-Lab/clickhouse_exporter
+	url = https://github.com/Percona-Lab/clickhouse_exporter
 	branch = master
 [submodule "proxysql_exporter"]
 	path = sources/proxysql_exporter/src/github.com/percona/proxysql_exporter
