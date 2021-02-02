@@ -30,10 +30,6 @@
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
 	branch = master
-[submodule "clickhouse_exporter"]
-	path = sources/clickhouse_exporter/src/github.com/f1yegor/clickhouse_exporter
-	url = https://github.com/f1yegor/clickhouse_exporter
-	branch = master
 [submodule "proxysql_exporter"]
 	path = sources/proxysql_exporter/src/github.com/percona/proxysql_exporter
 	url = https://github.com/percona/proxysql_exporter.git
@@ -101,3 +97,6 @@
 	path = sources/pmm-qa/src/github.com/percona/pmm-qa
 	url = https://github.com/percona/pmm-qa
 	branch = master
+[submodule "sources/clickhouse_exporter"]
+	path = sources/clickhouse_exporter
+	url = https://github.com/Percona-Lab/clickhouse_exporter
