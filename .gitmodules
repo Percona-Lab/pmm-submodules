@@ -100,3 +100,4 @@
 [submodule "sources/clickhouse_exporter"]
 	path = sources/clickhouse_exporter
 	url = https://github.com/Percona-Lab/clickhouse_exporter
+	branch = master
