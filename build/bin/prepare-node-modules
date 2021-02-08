@@ -47,7 +47,8 @@ update_grafana_node_modules() {
         cp package.json node_modules/
         tar -zcpf ../../SOURCES/grafana-node_modules-${pmm_version}.tar.gz node_modules
         for i in `find public/ -name *.rej`
-            do echo $i
+        do
+            echo $i
         done
         popd
     "
