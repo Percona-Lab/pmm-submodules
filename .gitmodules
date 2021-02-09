@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-2.0
+	branch = release/2.15
 
 
 # PMM Client
@@ -53,7 +53,7 @@
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
-	branch = PMM-2.0
+	branch = release/2.15
 [submodule "dbaas-controller"]
 	path = sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
 	url = https://github.com/percona-platform/dbaas-controller
@@ -74,7 +74,7 @@
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = PMM-2.0
+	branch = release/2.15
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
@@ -82,7 +82,7 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-2.0
+	branch = PMM-7331-details-on-failed-checks
 # [submodule "grafana"]
 # 	path = sources/grafana/src/github.com/grafana/grafana
 # 	url = https://github.com/percona-platform/grafana
