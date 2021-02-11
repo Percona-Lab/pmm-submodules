@@ -123,14 +123,24 @@ pipeline {
                     echo $pmm_ui_tests_branch > pmmUITestBranch
                     echo $pmm_ui_tests_commit_sha > pmmUITestsCommitSha
                     cd $curdir
+                    if grep -q false run_test; then
+                          export trigger_tests=0
+                    else
+                          export trigger_tests=1
+                    fi
+                    echo $trigger_tests > triggerTests
                 '''
                 installDocker()
+                script {
+                    env.RUN_TESTS = sh(returnStdout: true, script: "cat triggerTests").trim()
+                }
                 stash includes: 'apiBranch', name: 'apiBranch'
                 stash includes: 'pmmQABranch', name: 'pmmQABranch'
                 stash includes: 'apiCommitSha', name: 'apiCommitSha'
                 stash includes: 'pmmQACommitSha', name: 'pmmQACommitSha'
                 stash includes: 'pmmUITestBranch', name: 'pmmUITestBranch'
                 stash includes: 'pmmUITestsCommitSha', name: 'pmmUITestsCommitSha'
+                stash includes: 'triggerTests', name: 'triggerTests'
                 slackSend channel: '#pmm-ci', color: '#FFFF00', message: "[${JOB_NAME}]: build started - ${BUILD_URL}"
             }
         }
@@ -336,6 +346,9 @@ pipeline {
                     }
                 }
                 stage('Launch Instance for Testing'){
+                    when {
+                        expression { env.RUN_TESTS == "1" }
+                    }
                     steps {
                         script {
                             unstash 'IMAGE'
@@ -352,7 +365,7 @@ pipeline {
         stage('Tests Execution') {
             when {
                 expression {
-                    !isBranchBuild
+                    !isBranchBuild && env.RUN_TESTS == "1"
                 }
             }
             parallel {
