@@ -140,7 +140,6 @@ pipeline {
                 stash includes: 'pmmQACommitSha', name: 'pmmQACommitSha'
                 stash includes: 'pmmUITestBranch', name: 'pmmUITestBranch'
                 stash includes: 'pmmUITestsCommitSha', name: 'pmmUITestsCommitSha'
-                stash includes: 'triggerTests', name: 'triggerTests'
                 slackSend channel: '#pmm-ci', color: '#FFFF00', message: "[${JOB_NAME}]: build started - ${BUILD_URL}"
             }
         }
