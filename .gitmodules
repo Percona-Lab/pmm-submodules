@@ -82,7 +82,7 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = release/2.15
+	branch = PMM-7433-update-ui-test
 # [submodule "grafana"]
 # 	path = sources/grafana/src/github.com/grafana/grafana
 # 	url = https://github.com/percona-platform/grafana
