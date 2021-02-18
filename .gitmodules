@@ -63,6 +63,10 @@
 	path = sources/qan-api2/src/github.com/percona/qan-api2
 	url = https://github.com/percona/qan-api2
 	branch = master
+[submodule "qan-app"]
+	path = sources/qan-app/src/github.com/percona/qan-app
+	url = https://github.com/percona/qan-app
+	branch = PMM-2.0
 [submodule "pmm-update"]
 	path = sources/pmm-update/src/github.com/percona/pmm-update
 	url = https://github.com/percona/pmm-update
@@ -82,7 +86,7 @@
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
-	branch = master
+	branch = PMM-7550-fix-request-urls
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
