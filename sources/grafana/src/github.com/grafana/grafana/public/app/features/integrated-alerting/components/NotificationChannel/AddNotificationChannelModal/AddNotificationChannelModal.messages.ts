@@ -1,0 +1,21 @@
+export const Messages = {
+  title: 'Add Notification Channel',
+  fields: {
+    name: 'Name',
+    type: 'Type',
+    addresses: 'Addresses',
+    addressesPlaceholder: 'example1@percona.com\nexample2@percona.com\nexample3@percona.com',
+    routingKey: 'Routing key',
+    serviceKey: 'Service key',
+    channel: 'Channel',
+  },
+  addAction: 'Add',
+  editAction: 'Save',
+  cancelAction: 'Cancel',
+  emailOption: 'Email',
+  pagerDutyOption: 'Pager Duty',
+  slackOption: 'Slack',
+  addSuccess: 'Notification channel was successfully added',
+  editSuccess: 'Notification channel was successfully edited',
+  invalidChannelName: "Channel shouldn't have # character.",
+};

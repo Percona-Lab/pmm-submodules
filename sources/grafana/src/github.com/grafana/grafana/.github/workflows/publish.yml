@@ -1,0 +1,38 @@
+name: publish_docs
+
+on:
+  push:
+    branches:
+    - master
+    paths:
+    - 'docs/sources/**'
+    - 'packages/grafana-*/**'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: generate-packages-docs
+      uses: actions/setup-node@v1
+      id: generate-docs
+      with:
+        node-version: '12'
+    - run: yarn install --pure-lockfile --no-progress
+    - run: ./scripts/ci-reference-docs-build.sh
+    - name: publish-to-git
+      uses: ./.github/actions/gha-publish-to-git
+      id: publish
+      with:
+        repository: grafana/website
+        branch: master
+        host: github.com
+        github_pat: '${{ secrets.GH_BOT_ACCESS_TOKEN }}'
+        source_folder: docs/sources
+        target_folder: content/docs/grafana/latest
+    - shell: bash
+      run: |
+        test -n "${{ steps.publish.outputs.commit_hash }}"
+        test -n "${{ steps.publish.outputs.working_directory }}"
