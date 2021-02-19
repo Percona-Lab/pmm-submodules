@@ -9,7 +9,7 @@
 [submodule "pmm-admin"]
 	path = sources/pmm-admin/src/github.com/percona/pmm-admin
 	url = https://github.com/percona/pmm-admin.git
-	branch = master
+	branch = PMM-7473_review_flags
 [submodule "pmm-agent"]
 	path = sources/pmm-agent/src/github.com/percona/pmm-agent
 	url = https://github.com/percona/pmm-agent.git
@@ -25,7 +25,7 @@
 [submodule "mongodb_exporter"]
 	path = sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
 	url = https://github.com/percona/mongodb_exporter.git
-	branch = release-0.20.1
+	branch = master
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
