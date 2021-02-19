@@ -10,7 +10,7 @@ void runStaging(String DOCKER_VERSION, CLIENT_VERSION) {
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'PS_VERSION', value: '5.6'),
         string(name: 'CLIENTS', value: '--addclient=ps,1'),
-        string(name: 'DOCKER_ENV_VARIABLE', value: '-e PMM_DEBUG=1 -e ENABLE_ALERTING=1 -e PERCONA_TEST_SAAS_HOST=check-dev.percona.com:443 -e PERCONA_TEST_CHECKS_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX -e PERCONA_TEST_CHECKS_INTERVAL=10s -e PERCONA_TEST_DBAAS=1'),
+        string(name: 'DOCKER_ENV_VARIABLE', value: '-e PMM_DEBUG=1 -e PERCONA_TEST_SAAS_HOST=check-dev.percona.com:443 -e PERCONA_TEST_CHECKS_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX -e PERCONA_TEST_CHECKS_INTERVAL=10s -e PERCONA_TEST_DBAAS=1'),
         string(name: 'NOTIFY', value: 'false'),
         string(name: 'DAYS', value: '1')
     ]
@@ -264,7 +264,6 @@ pipeline {
                             build-server-rpm percona-dashboards grafana-dashboards
                             build-server-rpm pmm-managed
                             build-server-rpm percona-qan-api2 qan-api2
-                            build-server-rpm percona-qan-app qan-app
                             build-server-rpm pmm-server
                             build-server-rpm pmm-update
                             build-server-rpm dbaas-controller
