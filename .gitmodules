@@ -74,7 +74,7 @@
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
-	branch = release/2.16
+	branch = PMM-7584-Update-VictoriaMetrics-1.53.1-to-1.54.1
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
