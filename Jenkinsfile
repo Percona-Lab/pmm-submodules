@@ -36,12 +36,13 @@ void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIE
     env.API_TESTS_RESULT = apiTestJob.result
 }
 
-void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH) {
-    testSuiteJob = build job: 'pmm2-testsuite', propagate: false, parameters: [
+void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_VERSION) {
+    testSuiteJob = build job: 'pmm2-testsuite-temp', propagate: false, parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'PMM_QA_GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
         string(name: 'PMM_QA_GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH)
+        string(name: 'PMM_VERSION', PMM_VERSION)
     ]
     env.BATS_TESTS_URL = testSuiteJob.absoluteUrl
     env.BATS_TESTS_RESULT = testSuiteJob.result
@@ -125,6 +126,9 @@ pipeline {
                     cd $curdir
                 '''
                 installDocker()
+                script {
+                    env.PMM_VERSION = sh(returnStdout: true, script: "cat VERSION").trim()
+                }
                 stash includes: 'apiBranch', name: 'apiBranch'
                 stash includes: 'pmmQABranch', name: 'pmmQABranch'
                 stash includes: 'apiCommitSha', name: 'apiCommitSha'
@@ -386,7 +390,7 @@ pipeline {
                             def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
                             def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
                             def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmQACommitSha").trim()
-                            runTestSuite(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH)
+                            runTestSuite(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, env.PMM_VERSION)
                             if (!env.BATS_TESTS_RESULT.equals("SUCCESS")) {
                                 sh "exit 1"
                             }
