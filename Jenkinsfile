@@ -432,9 +432,14 @@ pipeline {
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {
-                    if(env.API_TESTS_RESULT != "SUCCESS" || env.BATS_TESTS_RESULT != "SUCCESS" || env.UI_TESTS_RESULT != "SUCCESS")
-                    {
-                        addComment("Some Tests have Failed Please check: API: ${API_TESTS_URL} BATS: ${BATS_TESTS_URL} & UI: ${UI_TESTS_URL}")
+                    if(env.API_TESTS_RESULT != "SUCCESS") {
+                        addComment("API tests have failed, Please check: API: ${API_TESTS_URL}")
+                    }
+                    if(env.BATS_TESTS_RESULT != "SUCCESS") {
+                        addComment("pmm2-client testsuite has failed, Please check: BATS: ${BATS_TESTS_URL}")
+                    }
+                    if(env.UI_TESTS_RESULT != "SUCCESS") {
+                        addComment("UI tests have failed, Please check: UI: ${UI_TESTS_URL}")
                     }
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result} build job link: ${BUILD_URL}"
                 }
