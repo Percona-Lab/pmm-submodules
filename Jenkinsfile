@@ -42,7 +42,7 @@ void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'PMM_QA_GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
         string(name: 'PMM_QA_GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH),
-        string(name: 'PMM_VERSION', PMM_VERSION)
+        string(name: 'PMM_VERSION', value: PMM_VERSION)
     ]
     env.BATS_TESTS_URL = testSuiteJob.absoluteUrl
     env.BATS_TESTS_RESULT = testSuiteJob.result
