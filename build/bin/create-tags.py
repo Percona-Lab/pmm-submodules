@@ -4,6 +4,7 @@ from __future__ import print_function, unicode_literals
 import os, subprocess, time
 
 REPOS = [
+    "sources/grafana/src/github.com/grafana/grafana",
     "sources/grafana-dashboards",
     "sources/pmm-admin/src/github.com/percona/pmm-admin",
     "sources/pmm-agent/src/github.com/percona/pmm-agent",
