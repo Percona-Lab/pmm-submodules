@@ -96,4 +96,4 @@
 [submodule "pmm-qa"]
 	path = sources/pmm-qa/src/github.com/percona/pmm-qa
 	url = https://github.com/percona/pmm-qa
-	branch = master
+	branch = Make_version_Parameterized
