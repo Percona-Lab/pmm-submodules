@@ -439,7 +439,7 @@ pipeline {
                         addComment("pmm2-client testsuite has failed, Please check: BATS: ${BATS_TESTS_URL}")
                     }
                     if(env.UI_TESTS_RESULT != "SUCCESS") {
-                        addComment("UI tests have failed, Please check: UI: ${UI_TESTS_URL}")
+                        addComment("UI tests have failed, Please check:UI: ${UI_TESTS_URL}")
                     }
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result} build job link: ${BUILD_URL}"
                 }
