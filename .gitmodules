@@ -74,7 +74,7 @@
 [submodule "pmm-server-packaging"]
 	path = sources/pmm-server-packaging
 	url = https://github.com/percona/pmm-server-packaging
-	branch = PMM-2.0
+	branch = update-victoria-metrics-to-1.55.0
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
