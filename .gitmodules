@@ -45,7 +45,7 @@
 [submodule "azure_metrics_exporter"]
     path = sources/azure_metrics_exporter/src/github.com/percona/azure_metrics_exporter
     url = https://github.com/percona/azure_metrics_exporter
-    branch = master
+    branch = PMM-7691-add-azure_exporter-into-pmm2-client
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
