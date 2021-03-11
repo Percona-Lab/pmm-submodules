@@ -97,3 +97,7 @@
 	path = sources/pmm-qa/src/github.com/percona/pmm-qa
 	url = https://github.com/percona/pmm-qa
 	branch = master
+[submodule "azure_exporter"]
+	path = sources/azure_exporter/src/github.com/percona/azure_exporter
+	url = https://github.com/RobustPerception/azure_metrics_exporter
+	branch = master
