@@ -561,8 +561,8 @@ if [ x"$TARBALL" = x'1' -o x"$SOURCE" = x'1' ]; then
     NodeExp_REPO=$(get_repos "node_exporter")
     ClickhouseExp_BRANCH_NAME=$(get_branches "clickhouse_exporter")
     ClickhouseExp_REPO=$(get_repos "clickhouse_exporter")
-    AzureExp_BRANCH_NAME=$(get_branches "azure_exporter")
-    AzureExp_REPO=$(get_repos "azure_exporter")
+    AzureExp_BRANCH_NAME=$(get_branches "azure_metrics_exporter")
+    AzureExp_REPO=$(get_repos "azure_metrics_exporter")
 fi
 
 check_workdir

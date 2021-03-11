@@ -121,7 +121,7 @@ main() {
     prepare_tarball node_exporter
     prepare_tarball clickhouse_exporter
     prepare_tarball rds_exporter
-    prepare_tarball azure_exporter
+    prepare_tarball azure_metrics_exporter
 
     prepare_tarball percona-toolkit
     repack_toolkit

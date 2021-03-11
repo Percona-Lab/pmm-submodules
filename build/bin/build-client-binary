@@ -15,7 +15,6 @@ extract_source_tarball() {
 gobuild_component() {
     local component=$1
     local extract_path=${2:-"github.com/percona/$component"}
-    local extract_path_azure=${2:-"github.com/RobustPerception/azure_metrics_exporter"}
     local component_path=$3
     local result_file=${4:-bin/$(basename ${component_path:-$extract_path})}
 
@@ -27,8 +26,6 @@ gobuild_component() {
         build_command="cd /tmp/go/src/${extract_path} && make release"
     elif [ ${component} = 'mongodb_exporter' ]; then
         build_command="cd /tmp/go/src/${extract_path} && make build"
-    elif [ ${component} = 'azure_exporter' ]; then
-        build_command="go build -o \${binary_dir}/${result_file} ./src/${extract_path_azure}/${component_path}"
     else
         build_command="go build -o \${binary_dir}/${result_file} ./src/${extract_path}/${component_path}"
     fi
@@ -100,7 +97,7 @@ main() {
     gobuild_component "mongodb_exporter"
     gobuild_component "proxysql_exporter"
     gobuild_component "rds_exporter"
-    gobuild_component "azure_exporter"
+    gobuild_component "azure_metrics_exporter"
     gobuild_component "clickhouse_exporter"     "github.com/Percona-Lab/clickhouse_exporter"
 
     gobuild_component "pmm-admin" "" "" "github.com/percona/pmm-agent/bin/pmm-admin"
