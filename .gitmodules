@@ -42,6 +42,10 @@
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
 	branch = master
+[submodule "azure_exporter"]
+    path = sources/azure_exporter/src/github.com/percona/azure_exporter
+    url = https://github.com/RobustPerception/azure_metrics_exporter
+    branch = master
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
@@ -96,8 +100,4 @@
 [submodule "pmm-qa"]
 	path = sources/pmm-qa/src/github.com/percona/pmm-qa
 	url = https://github.com/percona/pmm-qa
-	branch = master
-[submodule "azure_exporter"]
-	path = sources/azure_exporter/src/github.com/percona/azure_exporter
-	url = https://github.com/RobustPerception/azure_metrics_exporter
 	branch = master
