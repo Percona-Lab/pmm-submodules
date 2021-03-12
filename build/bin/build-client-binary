@@ -20,6 +20,7 @@ gobuild_component() {
 
     if [ ${component} = 'azure_metrics_exporter' ]; then
         result_file=${result_file/_metrics/}
+    fi
 
     if [ -x "${binary_dir}/${result_file}" ]; then
         echo skip build
