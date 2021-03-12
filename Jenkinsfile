@@ -10,7 +10,7 @@ void runStaging(String DOCKER_VERSION, CLIENT_VERSION) {
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'PS_VERSION', value: '5.6'),
         string(name: 'CLIENTS', value: '--addclient=ps,1'),
-        string(name: 'DOCKER_ENV_VARIABLE', value: '-e PMM_DEBUG=1 -e ENABLE_ALERTING=1 -e PERCONA_TEST_SAAS_HOST=check-dev.percona.com:443 -e PERCONA_TEST_CHECKS_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX -e PERCONA_TEST_CHECKS_INTERVAL=10s -e PERCONA_TEST_DBAAS=1'),
+        string(name: 'DOCKER_ENV_VARIABLE', value: '-e PMM_DEBUG=1 -e PERCONA_TEST_SAAS_HOST=check-dev.percona.com:443 -e PERCONA_TEST_CHECKS_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX -e PERCONA_TEST_CHECKS_INTERVAL=10s -e PERCONA_TEST_DBAAS=1'),
         string(name: 'NOTIFY', value: 'false'),
         string(name: 'DAYS', value: '1')
     ]
@@ -36,12 +36,13 @@ void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIE
     env.API_TESTS_RESULT = apiTestJob.result
 }
 
-void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH) {
+void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_VERSION) {
     testSuiteJob = build job: 'pmm2-testsuite', propagate: false, parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'PMM_QA_GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
-        string(name: 'PMM_QA_GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH)
+        string(name: 'PMM_QA_GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH),
+        string(name: 'PMM_VERSION', value: PMM_VERSION)
     ]
     env.BATS_TESTS_URL = testSuiteJob.absoluteUrl
     env.BATS_TESTS_RESULT = testSuiteJob.result
@@ -133,6 +134,7 @@ pipeline {
                 installDocker()
                 script {
                     env.RUN_TESTS = sh(returnStdout: true, script: "cat triggerTests").trim()
+                    env.PMM_VERSION = sh(returnStdout: true, script: "cat VERSION").trim()
                 }
                 stash includes: 'apiBranch', name: 'apiBranch'
                 stash includes: 'pmmQABranch', name: 'pmmQABranch'
@@ -273,7 +275,6 @@ pipeline {
                             build-server-rpm percona-dashboards grafana-dashboards
                             build-server-rpm pmm-managed
                             build-server-rpm percona-qan-api2 qan-api2
-                            build-server-rpm percona-qan-app qan-app
                             build-server-rpm pmm-server
                             build-server-rpm pmm-update
                             build-server-rpm dbaas-controller
@@ -399,7 +400,7 @@ pipeline {
                             def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
                             def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmQABranch").trim()
                             def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmQACommitSha").trim()
-                            runTestSuite(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH)
+                            runTestSuite(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, env.PMM_VERSION)
                             if (!env.BATS_TESTS_RESULT.equals("SUCCESS")) {
                                 sh "exit 1"
                             }
@@ -441,9 +442,14 @@ pipeline {
                         slackSend channel: '#pmm-ci', color: '#00FF00', message: "[${JOB_NAME}]: build finished - ${IMAGE}"
                     }
                 } else {
-                    if(env.API_TESTS_RESULT != "SUCCESS" || env.BATS_TESTS_RESULT != "SUCCESS" || env.UI_TESTS_RESULT != "SUCCESS")
-                    {
-                        addComment("Some Tests have Failed Please check: API: ${API_TESTS_URL} BATS: ${BATS_TESTS_URL} & UI: ${UI_TESTS_URL}")
+                    if(env.API_TESTS_RESULT != "SUCCESS") {
+                        addComment("API tests have failed, Please check: API: ${API_TESTS_URL}")
+                    }
+                    if(env.BATS_TESTS_RESULT != "SUCCESS") {
+                        addComment("pmm2-client testsuite has failed, Please check: BATS: ${BATS_TESTS_URL}")
+                    }
+                    if(env.UI_TESTS_RESULT != "SUCCESS") {
+                        addComment("UI tests have failed, Please check: UI: ${UI_TESTS_URL}")
                     }
                     slackSend channel: '#pmm-ci', color: '#FF0000', message: "[${JOB_NAME}]: build ${currentBuild.result} build job link: ${BUILD_URL}"
                 }
