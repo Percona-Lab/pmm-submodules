@@ -18,6 +18,10 @@ gobuild_component() {
     local component_path=$3
     local result_file=${4:-bin/$(basename ${component_path:-$extract_path})}
 
+    if [ ${component} = 'azure_metrics_exporter' ]; then
+        result_file=${result_file/_metrics/}
+    fi
+
     if [ -x "${binary_dir}/${result_file}" ]; then
         echo skip build
         return
@@ -95,6 +99,7 @@ main() {
     gobuild_component "mongodb_exporter"
     gobuild_component "proxysql_exporter"
     gobuild_component "rds_exporter"
+    gobuild_component "azure_metrics_exporter"
     gobuild_component "clickhouse_exporter"     "github.com/Percona-Lab/clickhouse_exporter"
 
     gobuild_component "pmm-admin" "" "" "github.com/percona/pmm-agent/bin/pmm-admin"
