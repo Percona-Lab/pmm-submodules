@@ -70,7 +70,7 @@
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = PMM-6017-merge-pmm-server-packaging3
+	branch = PMM-6017-merge-pmm-server-packaging
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
