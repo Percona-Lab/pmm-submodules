@@ -130,6 +130,8 @@ pipeline {
                           export trigger_tests=1
                     fi
                     echo $trigger_tests > triggerTests
+                    sudo yum -y install jq
+                    curl -s https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID} | jq -r '.labels[].name' | awk -v def="not_ready" '{print} END { if(NR==0) {print def} }'
                 '''
                 installDocker()
                 script {
