@@ -123,15 +123,15 @@ pipeline {
                     export pmm_ui_tests_branch=$(git config -f .gitmodules submodule.grafana-dashboards.branch)
                     echo $pmm_ui_tests_branch > pmmUITestBranch
                     echo $pmm_ui_tests_commit_sha > pmmUITestsCommitSha
+                    sudo yum -y install jq
+                    curl -s https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID} | jq -r '.labels[].name' | awk -v def="not_ready" '{print} END { if(NR==0) {print def} }' > labels
                     cd $curdir
-                    if grep -q false run_test; then
-                          export trigger_tests=0
-                    else
+                    if grep -qi ready_for_review labels; then
                           export trigger_tests=1
+                    else
+                          export trigger_tests=0
                     fi
                     echo $trigger_tests > triggerTests
-                    sudo yum -y install jq
-                    curl -s https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID} | jq -r '.labels[].name' | awk -v def="not_ready" '{print} END { if(NR==0) {print def} }'
                 '''
                 installDocker()
                 script {
