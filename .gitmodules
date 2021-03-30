@@ -73,8 +73,8 @@
 	branch = PMM-2.0
 [submodule "pmm-server"]
 	path = sources/pmm-server
-	url = https://github.com/percona/pmm-server
-	branch = PMM-2.0
+	url = https://github.com/cezmunsta/pmm-server
+	branch = PMM-7464
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
