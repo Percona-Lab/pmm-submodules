@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-2.0
+	branch = release-2.16
 
 
 # PMM Client
@@ -61,7 +61,7 @@
 [submodule "dbaas-controller"]
 	path = sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
 	url = https://github.com/percona-platform/dbaas-controller
-	branch = main
+	branch = pmm-2.16
 	# branch = release/0.1.2
 [submodule "qan-api2"]
 	path = sources/qan-api2/src/github.com/percona/qan-api2
@@ -82,11 +82,11 @@
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
-	branch = master
+	branch = pmm-2.16
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
-	branch = master
+	branch = pmm-2.16
 
 ## PMM Tests
 [submodule "pmm-api-tests"]
