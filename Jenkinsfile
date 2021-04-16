@@ -26,7 +26,7 @@ void destroyStaging(IP) {
 }
 
 void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIENT_VERSION, OWNER) {
-    apiTestJob = build job: 'pmm2-api-tests', propagate: false, parameters: [
+    apiTestJob = build job: 'pmm2-api-tests-temp', propagate: false, parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'GIT_BRANCH', value: BRANCH_NAME),
         string(name: 'OWNER', value: OWNER),
@@ -110,8 +110,8 @@ pipeline {
                     git lfs pull
                     git lfs checkout
                     cd $curdir
-                    export api_tests_commit_sha=$(git submodule status | grep 'pmm-api-tests' | awk -F ' ' '{print $1}')
-                    export api_tests_branch=$(git config -f .gitmodules submodule.pmm-api-tests.branch)
+                    export api_tests_commit_sha=$(git submodule status | grep 'pmm-managed' | awk -F ' ' '{print $1}')
+                    export api_tests_branch=$(git config -f .gitmodules submodule.pmm-managed.branch)
                     echo $api_tests_commit_sha > apiCommitSha
                     echo $api_tests_branch > apiBranch
                     cat apiBranch
