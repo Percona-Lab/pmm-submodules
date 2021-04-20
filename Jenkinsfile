@@ -119,8 +119,8 @@ pipeline {
                     export pmm_qa_branch=$(git config -f .gitmodules submodule.pmm-qa.branch)
                     echo $pmm_qa_branch > pmmQABranch
                     echo $pmm_qa_commit_sha > pmmQACommitSha
-                    export pmm_ui_tests_commit_sha=$(git submodule status | grep 'grafana-dashboards' | awk -F ' ' '{print $1}')
-                    export pmm_ui_tests_branch=$(git config -f .gitmodules submodule.grafana-dashboards.branch)
+                    export pmm_ui_tests_commit_sha=$(git submodule status | grep 'pmm-ui-tests' | awk -F ' ' '{print $1}')
+                    export pmm_ui_tests_branch=$(git config -f .gitmodules submodule.pmm-ui-tests.branch)
                     echo $pmm_ui_tests_branch > pmmUITestBranch
                     echo $pmm_ui_tests_commit_sha > pmmUITestsCommitSha
                     cd $curdir
