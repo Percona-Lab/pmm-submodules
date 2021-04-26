@@ -69,4 +69,4 @@
 [submodule "pid-watchdog"]
 	path = sources/pid-watchdog/src/github.com/percona/pid-watchdog
 	url = https://github.com/percona/pid-watchdog
-	branch = master
+	branch = main
