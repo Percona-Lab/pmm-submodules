@@ -10,13 +10,13 @@ tmp_dir=${root_dir}/tmp
 # * pmm_release to contain only pre-release part (may be empty): 'alpha3'.
 pmm_branch=$(git rev-parse --abbrev-ref HEAD)
 full_pmm_version=$(cat ${root_dir}/VERSION)
-if [[ ${pmm_branch} != 'PMM-2.0' ]]; then
+if [[ ${pmm_branch} != "release"* ]]; then
     full_pmm_version=${full_pmm_version}-${pmm_branch}-$(git rev-parse --short HEAD)
 fi
 new_pmm_version=$(cat ${root_dir}/VERSION | awk -F'-' '{print $1}')
 new_pmm_release=$(cat ${root_dir}/VERSION | awk -F'-' '{print $2}')
 
-# Failsafe during refactoring - check that we did not redifine pmm_version in some other script
+# Failsafe during refactoring - check that we did not redefine pmm_version in some other script
 if [ -n "${pmm_version}" ] && [ "${new_pmm_version}" != "${pmm_version}" ]; then
     echo "pmm_version is already defined: ${pmm_version}"
     exit 1
