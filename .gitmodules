@@ -36,8 +36,8 @@
 	branch = master
 [submodule "proxysql_exporter"]
 	path = sources/proxysql_exporter/src/github.com/percona/proxysql_exporter
-	url = https://github.com/percona/proxysql_exporter.git
-	branch = pmm-2.x
+	url = https://github.com/spaceform/proxysql_exporter.git
+	branch = add-backend-server-state-SHUNNED_REPLICATION_LAG 
 [submodule "rds_exporter"]
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
@@ -78,7 +78,7 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-2.0
+	branch = PMM-8081-Add-backend-server-state-SHUNNED_REPLICATION_LAG
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
