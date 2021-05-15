@@ -188,8 +188,11 @@ build() {
 
                 # Create spec file from template
                 sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/lib/srv/g\" \%{_builddir}//ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
-                sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/var\\\/log\\\/clickhouse-server/srv\\\/logs/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
                 sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/<!-- <listen_host>0.0.0.0<\\\/listen_host> -->/<listen_host>0.0.0.0<\\\/listen_host>/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+                sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"/<errorlog>.*<\\\/errorlog>/d\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+                sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"/<size>.*<\\\/size>/d\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+                sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"/<count>.*<\\\/count>/d\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
+                sed -i '\/dbms\/programs\/server\/config.xml/i sed -i \"s/<!-- <console>1<\\\/console> -->/<console>1<\\\/console>/g\" \%{_builddir}/ClickHouse-${rpm_version}/dbms/programs/server/config.xml' /home/builder/clickhouse-rpm/src/clickhouse.spec.in
                 cat \"/home/builder/clickhouse-rpm/src/clickhouse.spec.in\" | sed \
                 -e \"s|@CH_VERSION@|${CH_VERSION}|\" \
                 -e \"s|@CH_TAG@|${CH_TAG}|\" \
