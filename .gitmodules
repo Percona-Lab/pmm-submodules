@@ -9,7 +9,7 @@
 [submodule "pmm-admin"]
 	path = sources/pmm-admin/src/github.com/percona/pmm-admin
 	url = https://github.com/percona/pmm-admin.git
-	branch = PMM-7278_mongodb_auth_mechanism
+	branch = PMM-7278_mongodb_auth_mechanism_v2
 [submodule "pmm-agent"]
 	path = sources/pmm-agent/src/github.com/percona/pmm-agent
 	url = https://github.com/percona/pmm-agent.git
@@ -82,7 +82,7 @@
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
-	branch = PMM-7848-add-tls
+	branch = PMM-7477-tls-remote-mongo
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
