@@ -3,28 +3,6 @@ library changelog: false, identifier: 'lib@master', retriever: modernSCM([
     remote: 'https://github.com/Percona-Lab/jenkins-pipelines.git'
 ]) _
 
-
-void runStaging(String DOCKER_VERSION, CLIENT_VERSION) {
-    stagingJob = build job: 'aws-staging-start', parameters: [
-        string(name: 'DOCKER_VERSION', value: DOCKER_VERSION),
-        string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
-        string(name: 'PS_VERSION', value: '5.7.30'),
-        string(name: 'CLIENTS', value: '--addclient=haproxy,1 --addclient=ps,1'),
-        string(name: 'DOCKER_ENV_VARIABLE', value: '-e PMM_DEBUG=1 -e PERCONA_TEST_SAAS_HOST=check-dev.percona.com:443 -e PERCONA_TEST_CHECKS_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX -e PERCONA_TEST_CHECKS_INTERVAL=10s -e ENABLE_DBAAS=1'),
-        string(name: 'NOTIFY', value: 'false'),
-        string(name: 'DAYS', value: '1')
-    ]
-    env.VM_IP = stagingJob.buildVariables.IP
-    env.VM_NAME = stagingJob.buildVariables.VM_NAME
-}
-
-
-void destroyStaging(IP) {
-    build job: 'aws-staging-stop', parameters: [
-        string(name: 'VM', value: IP),
-    ]
-}
-
 void runAPItests(String DOCKER_IMAGE_VERSION, BRANCH_NAME, GIT_COMMIT_HASH, CLIENT_VERSION, OWNER) {
     apiTestJob = build job: 'pmm2-api-tests', propagate: false, parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
@@ -48,14 +26,12 @@ void runTestSuite(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH
     env.BATS_TESTS_RESULT = testSuiteJob.result
 }
 
-void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, PMM_SERVER_IP) {
+void runUItests(String DOCKER_IMAGE_VERSION, CLIENT_VERSION, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH) {
     e2eTestJob = build job: 'pmm2-ui-tests', propagate: false, parameters: [
         string(name: 'DOCKER_VERSION', value: DOCKER_IMAGE_VERSION),
         string(name: 'CLIENT_VERSION', value: CLIENT_VERSION),
         string(name: 'GIT_BRANCH', value: PMM_QA_GIT_BRANCH),
-        string(name: 'GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH),
-        string(name: 'SERVER_IP', value: PMM_SERVER_IP),
-        string(name: 'CLIENT_INSTANCE', value: 'yes')
+        string(name: 'GIT_COMMIT_HASH', value: PMM_QA_GIT_COMMIT_HASH)
     ]
     env.UI_TESTS_URL = e2eTestJob.absoluteUrl
     env.UI_TESTS_RESULT = e2eTestJob.result
@@ -312,42 +288,26 @@ pipeline {
                 archiveArtifacts 'results/docker/TAG'
             }
         }
-        stage('Create Instance for Tests & FB tags')
+        stage('Create FB tags')
         {
             when {
                 expression {
                     !isBranchBuild
                 }
             }
-            parallel {
-                stage ('Generate FB tags'){
-                    steps{
-                        script{
-                            withCredentials([string(credentialsId: 'GITHUB_API_TOKEN', variable: 'GITHUB_API_TOKEN')]) {
-                                unstash 'IMAGE'
-                                def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                                def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
-                                def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                                sh """
-                                    curl -v -X POST \
-                                        -H "Authorization: token ${GITHUB_API_TOKEN}" \
-                                        -d "{\\"body\\":\\"server docker - ${IMAGE}\\nclient docker - ${CLIENT_IMAGE}\\nclient - ${CLIENT_URL}\\nCreate Staging Instance: https://pmm.cd.percona.com/job/aws-staging-start/parambuild/?DOCKER_VERSION=${IMAGE}&CLIENT_VERSION=${CLIENT_URL}\\"}" \
-                                        "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
-                                """
-                            }
-                        }
-                    }
-                }
-                stage('Launch Instance for Testing'){
-                    steps {
-                        script {
-                            unstash 'IMAGE'
-                            def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
-                            def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
-                            def OWNER = sh(returnStdout: true, script: "cat OWNER").trim()
-                            def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
-                            runStaging(IMAGE, CLIENT_URL)
-                        }
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'GITHUB_API_TOKEN', variable: 'GITHUB_API_TOKEN')]) {
+                        unstash 'IMAGE'
+                        def IMAGE = sh(returnStdout: true, script: "cat results/docker/TAG").trim()
+                        def CLIENT_IMAGE = sh(returnStdout: true, script: "cat results/docker/CLIENT_TAG").trim()
+                        def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
+                        sh """
+                            curl -v -X POST \
+                                -H "Authorization: token ${GITHUB_API_TOKEN}" \
+                                -d "{\\"body\\":\\"server docker - ${IMAGE}\\nclient docker - ${CLIENT_IMAGE}\\nclient - ${CLIENT_URL}\\nCreate Staging Instance: https://pmm.cd.percona.com/job/aws-staging-start/parambuild/?DOCKER_VERSION=${IMAGE}&CLIENT_VERSION=${CLIENT_URL}\\"}" \
+                                "https://api.github.com/repos/\$(echo $CHANGE_URL | cut -d '/' -f 4-5)/issues/${CHANGE_ID}/comments"
+                        """
                     }
                 }
             }
@@ -409,7 +369,7 @@ pipeline {
                             def CLIENT_URL = sh(returnStdout: true, script: "cat CLIENT_URL").trim()
                             def PMM_QA_GIT_BRANCH = sh(returnStdout: true, script: "cat pmmUITestBranch").trim()
                             def PMM_QA_GIT_COMMIT_HASH = sh(returnStdout: true, script: "cat pmmUITestsCommitSha").trim()
-                            runUItests(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH, env.VM_IP)
+                            runUItests(IMAGE, CLIENT_URL, PMM_QA_GIT_BRANCH, PMM_QA_GIT_COMMIT_HASH)
                             if (!env.UI_TESTS_RESULT.equals("SUCCESS")) {
                                 sh "exit 1"
                             }
@@ -422,9 +382,6 @@ pipeline {
     post {
         always {
             script {
-                if (env.VM_IP) {
-                    destroyStaging(env.VM_IP)
-                }
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
                     if (env.CHANGE_URL) {
                         unstash 'IMAGE'
