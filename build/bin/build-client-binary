@@ -41,6 +41,7 @@ gobuild_component() {
         export GOOS=${GOOS:-linux}
         export GOARCH=${GOARCH:-amd64}
         export CGO_ENABLED=0
+        export GO111MODULE=auto
 
         # for 'make release'
         export PMM_RELEASE_VERSION=${full_pmm_version}
