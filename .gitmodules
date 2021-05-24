@@ -13,7 +13,7 @@
 [submodule "pmm-agent"]
 	path = sources/pmm-agent/src/github.com/percona/pmm-agent
 	url = https://github.com/percona/pmm-agent.git
-	branch = master
+ 	branch = PMM_6278-Explain_dml
 [submodule "node_exporter"]
 	path = sources/node_exporter/src/github.com/prometheus/node_exporter
 	url = https://github.com/percona/node_exporter.git
@@ -78,7 +78,7 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-2.0
+	branch = PMM-8059-add-dml-queries
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
