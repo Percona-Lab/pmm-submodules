@@ -27,7 +27,7 @@ purge:                      ## Clean cache and leftovers. Please run this when s
 	git submodule update
 	git submodule foreach 'git reset --hard && git clean -xdff'
 
-fb:													## Creates feature build branch.
+fb:                         ## Creates feature build branch.
   # Usage: make fb mainBranch=PMM-2.0 featureBranch=PMM-XXXX-name submodules="pmm pmm-managed"
 	git checkout $(mainBranch)
 	make purge
