@@ -33,7 +33,7 @@ fb:													## Creates feature build branch.
 	make purge
 	git pull origin $(mainBranch)
 	git checkout -b $(featureBranch)
-	$(foreach submodule,$(submodules),git submodule set-branch -b $(featureBranch) $(submodule);)
+	$(foreach submodule,$(submodules),git config -f .gitmodules submodule.$(submodule).branch $(featureBranch);)
 	make submodules
 	git add .gitmodules
 	$(foreach submodule,$(submodules),git add sources/$(submodule);)
