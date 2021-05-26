@@ -1,4 +1,4 @@
-.PHONY: all submodules server client clean purge test help default
+.PHONY: all submodules server client clean purge test help default fb
 
 default: help
 
@@ -26,3 +26,16 @@ purge:                      ## Clean cache and leftovers. Please run this when s
 	git reset --hard && git clean -xdff
 	git submodule update
 	git submodule foreach 'git reset --hard && git clean -xdff'
+
+fb:													## Creates feature build branch.
+  # Usage: make fb mainBranch=PMM-2.0 featureBranch=PMM-XXXX-name submodules="pmm pmm-managed"
+	git checkout $(mainBranch)
+	make purge
+	git pull origin $(mainBranch)
+	git checkout -b $(featureBranch)
+	$(foreach submodule,$(submodules),git submodule set-branch -b $(featureBranch) $(submodule);)
+	make submodules
+	git add .gitmodules
+	$(foreach submodule,$(submodules),git add sources/$(submodule);)
+	git commit -m "$(shell awk -F- '{print $$1 FS $$2}' <<< $(featureBranch)) Update submodules"
+	git push origin $(featureBranch)
