@@ -29,7 +29,8 @@ purge:                      ## Clean cache and leftovers. Please run this when s
 
 fb:                         ## Creates feature build branch.
   # Usage: make fb mainBranch=PMM-2.0 featureBranch=PMM-XXXX-name submodules="pmm pmm-managed"
-	git checkout $(mainBranch)
+	$(eval MAIN_BRANCH = $(or $(mainBranch),PMM-2.0))
+	git checkout $(MAIN_BRANCH)
 	make purge
 	git pull origin $(mainBranch)
 	git checkout -b $(featureBranch)
@@ -38,4 +39,3 @@ fb:                         ## Creates feature build branch.
 	git add .gitmodules
 	$(foreach submodule,$(submodules),git add sources/$(submodule);)
 	git commit -m "$(shell awk -F- '{print $$1 FS $$2}' <<< $(featureBranch)) Update submodules"
-	git push origin $(featureBranch)
