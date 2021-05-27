@@ -29,7 +29,7 @@
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
-	branch = PMM-8145_RDS_PostgreSQL_not_displayed
+	branch = master
 [submodule "clickhouse_exporter"]
 	path = sources/clickhouse_exporter/src/github.com/Percona-Lab/clickhouse_exporter
 	url = https://github.com/Percona-Lab/clickhouse_exporter
@@ -57,7 +57,7 @@
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
-	branch = PMM-2.0
+	branch = PMM-8145_RDS_PostgreSQL_not_displayed
 [submodule "dbaas-controller"]
 	path = sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
 	url = https://github.com/percona-platform/dbaas-controller
