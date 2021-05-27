@@ -32,7 +32,7 @@ fb:                         ## Creates feature build branch.
 	$(eval MAIN_BRANCH = $(or $(mainBranch),PMM-2.0))
 	git checkout $(MAIN_BRANCH)
 	make purge
-	git pull origin $(mainBranch)
+	git pull origin $(MAIN_BRANCH)
 	git checkout -b $(featureBranch)
 	$(foreach submodule,$(submodules),git config -f .gitmodules submodule.$(submodule).branch $(featureBranch);)
 	make submodules
