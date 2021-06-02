@@ -30,8 +30,10 @@ gobuild_component() {
         build_command="cd /tmp/go/src/${extract_path} && make release"
     elif [ ${component} = 'mongodb_exporter' ]; then
         build_command="cd /tmp/go/src/${extract_path} && make build"
-    elif [ ${component} = 'postgres_exporter' ]; then
-        build_command="cd /tmp/go/src/${extract_path} && go mod download && go build -o \${binary_dir}/${result_file} ./${component_path}"
+    elif [ ${component} = 'node_exporter' ] || [ ${component} = 'mysqld_exporter' ] || \
+         [ ${component} = 'proxysql_exporter' ] || [ ${component} = 'rds_exporter' ] || \
+         [ ${component} = 'postgres_exporter' ]; then
+        build_command="cd /tmp/go/src/${extract_path} && go build -o \${binary_dir}/${result_file} ./${component_path}"
     else
         build_command="go build -o \${binary_dir}/${result_file} ./src/${extract_path}/${component_path}"
     fi
