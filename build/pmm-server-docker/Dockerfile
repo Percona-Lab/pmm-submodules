@@ -22,8 +22,8 @@ RUN yum -y install epel-release && yum -y install ansible
 
 COPY RPMS /tmp/RPMS
 COPY gitCommit /tmp/gitCommit
-COPY ansible /opt/ansible
 
+COPY ansible /opt/ansible
 RUN cp -r /opt/ansible/roles /opt/ansible/pmm2-docker/roles
 RUN ansible-playbook -vvv -i 'localhost,' -c local /opt/ansible/pmm2-docker/main.yml \
     && ansible-playbook -vvv -i 'localhost,' -c local /usr/share/pmm-update/ansible/playbook/tasks/update.yml \
