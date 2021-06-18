@@ -231,7 +231,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'hub.docker.com', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh """
                         sg docker -c "
-                            docker login -u "${USER}" -p "${PASS}"
+                            echo "${PASS}" | docker login -u "${USER}" --password-stdin
                         "
                     """
                 }
@@ -294,7 +294,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'hub.docker.com', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh """
                         sg docker -c "
-                            docker login -u "${USER}" -p "${PASS}"
+                            echo "${PASS}" | docker login -u "${USER}" --password-stdin
                         "
                     """
                 }
