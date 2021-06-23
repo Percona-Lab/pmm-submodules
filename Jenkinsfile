@@ -48,22 +48,12 @@ void addComment(String COMMENT) {
     }
 }
 
-def isBranchBuild = true
-if ( env.CHANGE_URL ) {
-    isBranchBuild = false
-}
-
 pipeline {
     agent {
         label 'large-amazon'
     }
     stages {
         stage('Prepare') {
-            when {
-                expression {
-                    !isBranchBuild
-                }
-            }
             steps {
                 sh '''
                     set -o errexit
@@ -115,11 +105,6 @@ pipeline {
             }
         }
         stage('Build client source') {
-            when {
-                expression {
-                    !isBranchBuild
-                }
-            }
             steps {
                 sh '''
                     sg docker -c "
@@ -132,11 +117,6 @@ pipeline {
             }
         }
         stage('Build client binary') {
-            when {
-                expression {
-                    !isBranchBuild
-                }
-            }
             steps {
                 sh '''
                     sg docker -c "
@@ -164,11 +144,6 @@ pipeline {
             }
         }
         stage('Build client source rpm') {
-            when {
-                expression {
-                    !isBranchBuild
-                }
-            }
             steps {
                 sh '''
                     sg docker -c "
@@ -179,11 +154,6 @@ pipeline {
             }
         }
         stage('Build client binary rpm') {
-            when {
-                expression {
-                    !isBranchBuild
-                }
-            }
             steps {
                 sh '''
                     sg docker -c "
@@ -198,11 +168,6 @@ pipeline {
             }
         }
         stage('Build client docker') {
-            when {
-                expression {
-                    !isBranchBuild
-                }
-            }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'hub.docker.com', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh """
@@ -226,11 +191,6 @@ pipeline {
             }
         }
         stage('Build server packages') {
-            when {
-                expression {
-                    !isBranchBuild
-                }
-            }
             steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AMI/OVF', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh '''
@@ -261,11 +221,6 @@ pipeline {
             }
         }
         stage('Build server docker') {
-            when {
-                expression {
-                    !isBranchBuild
-                }
-            }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'hub.docker.com', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh """
@@ -290,11 +245,6 @@ pipeline {
         }
         stage('Create FB tags')
         {
-            when {
-                expression {
-                    !isBranchBuild
-                }
-            }
             steps{
                 script{
                     withCredentials([string(credentialsId: 'GITHUB_API_TOKEN', variable: 'GITHUB_API_TOKEN')]) {
@@ -313,11 +263,6 @@ pipeline {
             }
         }
         stage('Tests Execution') {
-            when {
-                expression {
-                    !isBranchBuild
-                }
-            }
             parallel {
                 stage('Test: API') {
                     steps {
