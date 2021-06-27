@@ -210,7 +210,6 @@ pipeline {
                             build-server-rpm dbaas-tools
 
                             # 3rd-party
-                            build-server-rpm clickhouse
                             build-server-rpm prometheus
                             build-server-rpm victoriametrics
                             build-server-rpm alertmanager
