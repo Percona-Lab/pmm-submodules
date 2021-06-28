@@ -70,11 +70,11 @@
 [submodule "pmm-update"]
 	path = sources/pmm-update/src/github.com/percona/pmm-update
 	url = https://github.com/percona/pmm-update
-	branch = PMM-8266-remove-prometheus-from-image
+	branch = PMM-2.0
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = PMM-8266-remove-prometheus-from-image
+	branch = PMM-2.0
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
@@ -86,7 +86,7 @@
 [submodule "percona-images"]
 	path = sources/percona-images
 	url = https://github.com/Percona-Lab/percona-images
-	branch = PMM-8266-remove-prometheus-from-image
+	branch = master
 
 ## PMM Tests
 [submodule "pmm-api-tests"]
