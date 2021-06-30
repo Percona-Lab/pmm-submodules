@@ -61,7 +61,7 @@
 [submodule "dbaas-controller"]
 	path = sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
 	url = https://github.com/percona-platform/dbaas-controller
-	branch = main
+	branch = PMM-8329-test-new-operator
 	# branch = release/0.1.2
 [submodule "qan-api2"]
 	path = sources/qan-api2/src/github.com/percona/qan-api2
