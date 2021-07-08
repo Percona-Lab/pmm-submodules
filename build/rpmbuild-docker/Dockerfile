@@ -1,23 +1,23 @@
 FROM centos:7
 
 # enable nodesource repo for nodejs
-RUN curl -sL https://rpm.nodesource.com/setup_12.x | bash -
+RUN curl -sL https://rpm.nodesource.com/setup_14.x | bash -
 RUN curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
 RUN yum update -y
 RUN yum install -y --setopt=skip_missing_names_on_install=False \
-                   gcc gcc-c++ \
-                   nodejs \
-                   libtool libtool-ltdl \
-                   make cmake \
-                   git \
-                   pkgconfig \
-                   sudo \
-                   automake autoconf \
-                   rpmdevtools createrepo_c epel-release \
-                   yum-utils rpm-build \
-                   wget \
-                   glibc-static \
-                   yarn
+    gcc gcc-c++ \
+    nodejs \
+    libtool libtool-ltdl \
+    make cmake \
+    git \
+    pkgconfig \
+    sudo \
+    automake autoconf \
+    rpmdevtools createrepo_c epel-release \
+    yum-utils rpm-build \
+    wget \
+    glibc-static \
+    yarn
 RUN yum -y remove nodesource-release-el7-1.noarch
 RUN yum clean all && rm -rf /var/cache/yum
 
