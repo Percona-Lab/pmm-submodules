@@ -234,7 +234,7 @@ build() {
                 ls -la /home/builder/clickhouse-rpm/rpmbuild/SOURCES
                 cp -r /home/builder/clickhouse-rpm/rpmbuild/SOURCES/* /home/builder/rpm/SOURCES
             else
-                sudo yum-config-manager --disable epel-source
+                sudo echo 'exclude=steadfastnet.com' >> /etc/yum/pluginconf.d/fastestmirror.conf
                 sudo yum clean metadata
                 sudo yum-builddep -y SOURCES/${spec_name}.spec
 
