@@ -234,6 +234,7 @@ build() {
                 ls -la /home/builder/clickhouse-rpm/rpmbuild/SOURCES
                 cp -r /home/builder/clickhouse-rpm/rpmbuild/SOURCES/* /home/builder/rpm/SOURCES
             else
+                yum clean metadata
                 sudo yum-builddep -y SOURCES/${spec_name}.spec
 
                 spectool -C SOURCES -g SOURCES/${spec_name}.spec

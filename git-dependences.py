@@ -54,11 +54,10 @@ def main():
 
     for submodule in submodules:
         path = os.path.join(rootdir, submodule["path"])
-        if init:
-            if not os.path.exists(os.path.join(rootdir, path)):
-                check_call(['git', 'clone', '--depth', '3', '--no-single-branch', submodule["url"], path])
-            else:
-                print('Path for {} already exist'.format(submodule["name"]))
+        if not os.path.exists(os.path.join(rootdir, path)):
+            check_call(['git', 'clone', '--depth', '3', '--no-single-branch', submodule["url"], path])
+        else:
+            print('Path for {} already exist'.format(submodule["name"]))
         call(["git", "pull", "--ff-only"], cwd=path)
         switch_or_create_branch(path, submodule['branch'])
         if submodule.get('default_branch', DEFAULT_BRANCH) != submodule['branch'] and submodule['component'] == 'client':
@@ -66,6 +65,8 @@ def main():
 
     if not build_client:
         print('we don\'t need to rebuild client. We\'ll use dev-latest ')
+
+    
     
 
 main()
