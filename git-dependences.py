@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import configparser
@@ -65,7 +65,7 @@ def main():
             build_client = True
 
     if not build_client:
-        print('It don\'t need to rebuild client. We\'ll use dev-latest ')
+        print('we don\'t need to rebuild client. We\'ll use dev-latest ')
     
 
 main()
