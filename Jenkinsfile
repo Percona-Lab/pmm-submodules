@@ -66,9 +66,8 @@ pipeline {
                     sudo rm -rf results tmp || :
                     git reset --hard
                     git clean -fdx
-                    git submodule foreach --recursive git reset --hard
-                    git submodule foreach --recursive git clean -fdx
-                    git submodule status
+                    yum install -y python3
+                    python3 git-dependences.py
                     export commit_sha=$(git submodule status | grep 'pmm-managed' | awk -F ' ' '{print $1}')
                     curl -s https://api.github.com/repos/percona/pmm-managed/commits/${commit_sha} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
                     cd sources/pmm-server/
