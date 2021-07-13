@@ -48,8 +48,6 @@ def main():
     rootdir = check_output(["git", "rev-parse", "--show-toplevel"]).decode('utf-8').strip()
     submodules = get_list_of_submodules(config)
     
-
-    init = True
     build_client = False
 
     for submodule in submodules:
