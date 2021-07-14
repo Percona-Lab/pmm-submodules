@@ -53,7 +53,7 @@ def main():
     for submodule in submodules:
         path = os.path.join(rootdir, submodule["path"])
         if not os.path.exists(os.path.join(rootdir, path)):
-            check_call(['git', 'clone', '--depth', '3', '--no-single-branch', submodule["url"], path])
+            check_call(['git', 'clone', '--depth', '1', '--no-single-branch', submodule["url"], path])
         else:
             print('Path for {} already exist'.format(submodule["name"]))
         call(["git", "pull", "--ff-only"], cwd=path)
