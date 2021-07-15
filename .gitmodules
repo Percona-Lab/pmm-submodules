@@ -83,10 +83,6 @@
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
 	branch = master
-[submodule "percona-images"]
-	path = sources/percona-images
-	url = https://github.com/Percona-Lab/percona-images
-	branch = PMM-5291-update-clickhouse
 
 ## PMM Tests
 [submodule "pmm-api-tests"]
