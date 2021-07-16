@@ -9,10 +9,17 @@ tmp_dir=${root_dir}/tmp
 # * pmm_version to contain only MAJOR.MINOR.PATCH: '2.0.0';
 # * pmm_release to contain only pre-release part (may be empty): 'alpha3'.
 pmm_branch=$(git rev-parse --abbrev-ref HEAD)
-full_pmm_version=$(cat ${root_dir}/VERSION)
-if [[ ${pmm_branch} != "release"* && ${pmm_branch} != "PMM-2.0" && ${pmm_branch} != "main" ]]; then
-    full_pmm_version=${full_pmm_version}-${pmm_branch}-$(git rev-parse --short HEAD)
+
+full_pmm_version=${full_pmm_version}-${pmm_branch}-$(git rev-parse --short HEAD)
+
+# TODO Maybe it makes sense to use variable from job here
+if [[ ${pmm_branch} =~ release-* || \
+      ${pmm_branch} =~ pmm-2.* || \
+      ${pmm_branch} == "main" || \
+      ${pmm_branch} == "PMM-2.0" ]]; then
+    full_pmm_version=$(cat ${root_dir}/VERSION)
 fi
+
 new_pmm_version=$(cat ${root_dir}/VERSION | awk -F'-' '{print $1}')
 new_pmm_release=$(cat ${root_dir}/VERSION | awk -F'-' '{print $2}')
 
