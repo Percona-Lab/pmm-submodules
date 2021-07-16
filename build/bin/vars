@@ -14,9 +14,7 @@ full_pmm_version=${full_pmm_version}-${pmm_branch}-$(git rev-parse --short HEAD)
 
 # TODO Maybe it makes sense to use variable from job here
 if [[ ${pmm_branch} =~ release-* || \
-      ${pmm_branch} =~ pmm-2.* || \
-      ${pmm_branch} == "main" || \
-      ${pmm_branch} == "PMM-2.0" ]]; then
+      ${pmm_branch} =~ pmm-2.* ]]; then
     full_pmm_version=$(cat ${root_dir}/VERSION)
 fi
 
