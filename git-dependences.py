@@ -6,6 +6,7 @@ import os
 import sys
 from subprocess import check_output, check_call, call, CalledProcessError
 
+import yaml
 
 DEFAULT_BRANCH = 'main' # we can rewrite it in config
 CONFIG_NAME = '.gitmodules-new'
@@ -24,9 +25,6 @@ def get_list_of_submodules(c):
         submodules.append(submodules_info)
     return submodules
 
-
-
-
 def switch_or_create_branch(path, branch):
     cur_branch = check_output(["git", "symbolic-ref", "--short", "HEAD"],
                                 cwd=path)
@@ -42,11 +40,17 @@ def switch_or_create_branch(path, branch):
             check_call(["git", "checkout", "-b", branch,
                         "origin/" + branch], cwd=path)
 
+def convert_gitmodules_to_yaml(submodules):
+    print(yaml.dump(yaml.load(submodules), default_flow_style=False))
+    sys.exit(1)
+
 def main():
     parser = argparse.ArgumentParser()
 
     rootdir = check_output(["git", "rev-parse", "--show-toplevel"]).decode('utf-8').strip()
     submodules = get_list_of_submodules(config)
+
+    convert_gitmodules_to_yaml(submodules)
     
     build_client = False
 
