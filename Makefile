@@ -9,9 +9,10 @@ help:                       ## Display this help message.
 
 all: client server          ## Build client and server.
 
-submodules:                 ## Update all sumodules .
-	git submodule update --init --remote --jobs 10
-	git submodule status
+submodules: deps
+
+deps:
+    python
 
 server:                     ## Build the server.
 	./build/bin/build-server
