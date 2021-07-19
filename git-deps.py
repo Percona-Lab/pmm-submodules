@@ -105,6 +105,8 @@ def switch_or_create_branch(path, branch):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--convert', help='convert .gitmodules to .git-deps.yml', type=bool, default=False)
+    parser.add_argument('--single-branch', help='get only one branch from repos')
+
 
     args = parser.parse_args()
 
@@ -115,7 +117,7 @@ def main():
 
     depper = Builder()
 
-    depper.get_deps()
+    depper.get_deps(True)
 
     if not build_client:
         print('we don\'t need to rebuild client. We\'ll use dev-latest ')
