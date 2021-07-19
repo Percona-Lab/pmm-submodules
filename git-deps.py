@@ -91,21 +91,23 @@ def switch_or_create_branch(path, branch):
                                 cwd=path)
     cur_branch = cur_branch.decode().strip()
     if cur_branch != branch:
-        branches = check_output(["git", "show-ref", "--heads"], cwd=path)
+        branches = check_output(['git', 'ls-remote', '--heads', 'origin'], cwd=path)
         branches = [line.split("/")[-1]
                     for line in branches.decode().strip().split("\n")]
         if branch in branches:
-            print(f"  Switch to branch: {branch} (from {cur_branch})")
+            print(f"Switch to branch: {branch} (from {cur_branch})")
+            check_call('git remote set-branches origin {}'.format(branch).split(' '), cwd=path)
+            check_call('git fetch --depth 1 origin {}'.format(branch).split(' '), cwd=path)
+            check_call('git checkout {}'.format(branch).split(' '), cwd=path)
         else:
             print(f"  Switch and create branch: {branch} (from {cur_branch}")
-            check_call(["git", "checkout", "-b", branch,
-                        "origin/" + branch], cwd=path)
+            check_call(['git', 'checkout', '-b', branch, 'origin/' + branch], cwd=path)
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--convert', help='convert .gitmodules to .git-deps.yml', type=bool, default=False)
-    parser.add_argument('--single-branch', help='get only one branch from repos')
+    parser.add_argument('--convert', help='convert .gitmodules to .git-deps.yml', action='store_true')
+    parser.add_argument('--single-branch', help='get only one branch from repos', action='store_true')
 
 
     args = parser.parse_args()
@@ -116,8 +118,9 @@ def main():
     build_client = False
 
     depper = Builder()
+    print('args.single_branch', args.single_branch)
 
-    depper.get_deps(True)
+    depper.get_deps(args.single_branch)
 
     if not build_client:
         print('we don\'t need to rebuild client. We\'ll use dev-latest ')

@@ -68,7 +68,7 @@ pipeline {
                     git clean -fdx
                     sudo yum install -y python3
                     sudo pip3 install -r requirements.txt
-                    python3 git-deps.py
+                    python3 git-deps.py --single-branch
                     export commit_sha=$(git submodule status | grep 'pmm-managed' | awk -F ' ' '{print $1}')
                     curl -s https://api.github.com/repos/percona/pmm-managed/commits/${commit_sha} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
                     cd sources/pmm-server/
