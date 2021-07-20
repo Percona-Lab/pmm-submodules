@@ -3,6 +3,6 @@ build/pmm-server-docker/RPMS/
 *~
 tmp/
 results/
-.kitchen/
 .DS_Store
 sources/
+.git-sources

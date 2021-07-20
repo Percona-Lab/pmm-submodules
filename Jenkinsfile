@@ -69,26 +69,19 @@ pipeline {
                     sudo yum install -y python3
                     sudo pip3 install -r requirements.txt
                     python3 git-deps.py --single-branch
-                    export commit_sha=$(git submodule status | grep 'pmm-managed' | awk -F ' ' '{print $1}')
-                    curl -s https://api.github.com/repos/percona/pmm-managed/commits/${commit_sha} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
+                    source .git-sources
+                    curl -s https://api.github.com/repos/percona/pmm-managed/commits/${pmm_managed_commit} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
                     cd sources/pmm-server/
                     git lfs install
                     git lfs pull
                     git lfs checkout
                     cd $curdir
-                    export api_tests_commit_sha=$(git submodule status | grep 'pmm-api-tests' | awk -F ' ' '{print $1}')
-                    export api_tests_branch=$(git config -f .gitmodules submodule.pmm-api-tests.branch)
-                    echo $api_tests_commit_sha > apiCommitSha
-                    echo $api_tests_branch > apiBranch
-                    cat apiBranch
-                    export pmm_qa_commit_sha=$(git submodule status | grep 'pmm-qa' | awk -F ' ' '{print $1}')
-                    export pmm_qa_branch=$(git config -f .gitmodules submodule.pmm-qa.branch)
+                    echo $pmm_api_tests_commit > apiCommitSha
+                    echo $pmm_api_tests_branch > apiBranch
                     echo $pmm_qa_branch > pmmQABranch
-                    echo $pmm_qa_commit_sha > pmmQACommitSha
-                    export pmm_ui_tests_commit_sha=$(git submodule status | grep 'pmm-ui-tests' | awk -F ' ' '{print $1}')
-                    export pmm_ui_tests_branch=$(git config -f .gitmodules submodule.pmm-ui-tests.branch)
+                    echo $pmm_qa_commit > pmmQACommitSha
                     echo $pmm_ui_tests_branch > pmmUITestBranch
-                    echo $pmm_ui_tests_commit_sha > pmmUITestsCommitSha
+                    echo $pmm_ui_tests_commit > pmmUITestsCommitSha
                     cd $curdir
                 '''
                 installDocker()

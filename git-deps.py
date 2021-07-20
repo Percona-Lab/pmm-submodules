@@ -14,6 +14,7 @@ DEFAULT_BRANCH = 'main' # we can rewrite it in config
 CONFIG_NAME = '.gitmodules-new'
 YAML_CONFIG = '.git-deps.yml'
 SUBMODULES_CONFIG = '.gitmodules'
+GIT_SOURCES_FILE = '.git-sources'
 
 
 class Builder():
@@ -29,19 +30,28 @@ class Builder():
             return yaml.load(f)
     
     def get_deps(self, single_branch=False):
-        for dep in self.deps:
-            path = os.path.join(self.rootdir, dep["path"])
-            if not os.path.exists(os.path.join(self.rootdir, path)):
-                if single_branch:
-                    check_call(['git', 'clone', '--depth', '1', '--single-branch', '--branch', dep['branch'], dep["url"], path])
+        with open(GIT_SOURCES_FILE, 'w+') as f:
+            f.truncate()
+
+        with open(GIT_SOURCES_FILE, 'a') as f:
+            for dep in self.deps:
+                path = os.path.join(self.rootdir, dep["path"])
+                if not os.path.exists(os.path.join(self.rootdir, path)):
+                    if single_branch:
+                        check_call(['git', 'clone', '--depth', '1', '--single-branch', '--branch', dep['branch'], dep["url"], path])
+                    else:
+                        check_call(['git', 'clone', '--depth', '1', '--no-single-branch', dep["url"], path])
                 else:
-                    check_call(['git', 'clone', '--depth', '1', '--no-single-branch', dep["url"], path])
-            else:
-                print('Path for {} already exist'.format(dep["name"]))
-            call(["git", "pull", "--ff-only"], cwd=path)
-            switch_or_create_branch(path, dep['branch'])
-            if dep.get('default_branch', DEFAULT_BRANCH) != dep['branch'] and dep['component'] == 'client':
-                build_client = True
+                    print('Path for {} already exist'.format(dep["name"]))
+                call(["git", "pull", "--ff-only"], cwd=path)
+                commit_id = switch_or_create_branch(path, dep['branch'])
+
+                f.write(f'export {dep["name"]}_commit={commit_id}'.replace('-', '_'))
+                f.write(f'export {dep["name"]}_branch={dep["branch"]}\n'.replace('-', '_'))
+                
+
+            # if dep.get('default_branch', DEFAULT_BRANCH) != dep['branch'] and dep['component'] == 'client':
+            #     build_client = True
 
 
 class Converter():
@@ -87,27 +97,29 @@ class Repository():
         self.default_branch= default_branch
 
 def switch_or_create_branch(path, branch):
-    cur_branch = check_output(["git", "symbolic-ref", "--short", "HEAD"],
-                                cwd=path)
+    cur_branch = check_output('git symbolic-ref --short HEAD'.split(), cwd=path)
     cur_branch = cur_branch.decode().strip()
     if cur_branch != branch:
-        branches = check_output(['git', 'ls-remote', '--heads', 'origin'], cwd=path)
+        branches = check_output('git ls-remote --heads origin'.split(), cwd=path)
         branches = [line.split("/")[-1]
                     for line in branches.decode().strip().split("\n")]
         if branch in branches:
             print(f"Switch to branch: {branch} (from {cur_branch})")
-            check_call('git remote set-branches origin {}'.format(branch).split(' '), cwd=path)
-            check_call('git fetch --depth 1 origin {}'.format(branch).split(' '), cwd=path)
-            check_call('git checkout {}'.format(branch).split(' '), cwd=path)
+            check_call(f'git remote set-branches origin {branch}'.split(), cwd=path)
+            check_call(f'git fetch --depth 1 origin {branch}'.split(), cwd=path)
+            check_call(f'git checkout {branch}'.split(), cwd=path)
         else:
-            print(f"  Switch and create branch: {branch} (from {cur_branch}")
-            check_call(['git', 'checkout', '-b', branch, 'origin/' + branch], cwd=path)
+            print(f"Switch and create branch: {branch} (from {cur_branch}")
+            check_call(f'git checkout -b {branch} origin/{branch}'.split(), cwd=path)
+
+    return check_output('git rev-parse HEAD'.split(), cwd=path).decode("utf-8") 
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--convert', help='convert .gitmodules to .git-deps.yml', action='store_true')
     parser.add_argument('--single-branch', help='get only one branch from repos', action='store_true')
+    parser.add_argument('--get_branch', help='get branch name for repo')
 
 
     args = parser.parse_args()
