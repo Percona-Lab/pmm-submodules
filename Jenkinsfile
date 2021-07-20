@@ -69,7 +69,7 @@ pipeline {
                     sudo yum install -y python3
                     sudo pip3 install -r requirements.txt
                     python3 git-deps.py --single-branch
-                    . .git-sources
+                    . ${curdir}/.git-sources
                     curl -s https://api.github.com/repos/percona/pmm-managed/commits/${pmm_managed_commit} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
                     cd sources/pmm-server/
                     git lfs install
