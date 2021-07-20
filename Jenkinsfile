@@ -82,6 +82,7 @@ pipeline {
                     echo $pmm_qa_commit > pmmQACommitSha
                     echo $pmm_ui_tests_branch > pmmUITestBranch
                     echo $pmm_ui_tests_commit > pmmUITestsCommitSha
+                    git status
                 '''
                 installDocker()
                 script {
