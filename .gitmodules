@@ -76,8 +76,8 @@
 	branch = PMM-2.0
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
-	url = https://github.com/percona/grafana-dashboards
-	branch = PMM-2.0
+	url = https://github.com/guriandoro/grafana-dashboards
+	branch = PMM-8386_include_postgres_in_overview_text 
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
