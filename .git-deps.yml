@@ -4,19 +4,16 @@ deps:
   path: sources/pmm/src/github.com/percona/pmm
   url: https://github.com/percona/pmm
   component: common
-  default_branch: PMM-2.0
 - name: pmm-admin
   branch: master
   path: sources/pmm-admin/src/github.com/percona/pmm-admin
   url: https://github.com/percona/pmm-admin.git
   component: client
-  default_branch: master
 - name: pmm-agent
   branch: master
   path: sources/pmm-agent/src/github.com/percona/pmm-agent
   url: https://github.com/percona/pmm-agent.git
   component: client
-  default_branch: master
 - name: node_exporter
   branch: main
   path: sources/node_exporter/src/github.com/prometheus/node_exporter
@@ -27,31 +24,26 @@ deps:
   path: sources/mysqld_exporter/src/github.com/percona/mysqld_exporter
   url: https://github.com/percona/mysqld_exporter.git
   component: client
-  default_branch: master
 - name: mongodb_exporter
   branch: release-0.20.5
   path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
   url: https://github.com/percona/mongodb_exporter.git
   component: client
-  default_branch: release-0.20.5
 - name: postgres_exporter
   branch: master
   path: sources/postgres_exporter/src/github.com/percona/postgres_exporter
   url: https://github.com/percona/postgres_exporter
   component: client
-  default_branch: master
 - name: clickhouse_exporter
   branch: master
   path: sources/clickhouse_exporter/src/github.com/Percona-Lab/clickhouse_exporter
   url: https://github.com/Percona-Lab/clickhouse_exporter
   component: client
-  default_branch: master
 - name: proxysql_exporter
   branch: main
   path: sources/proxysql_exporter/src/github.com/percona/proxysql_exporter
   url: https://github.com/percona/proxysql_exporter.git
   component: client
-  default_branch: main
 - name: rds_exporter
   branch: master
   path: sources/rds_exporter/src/github.com/percona/rds_exporter

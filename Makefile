@@ -12,7 +12,7 @@ all: client server          ## Build client and server.
 submodules: deps
 
 deps:
-    python
+    python3 
 
 server:                     ## Build the server.
 	./build/bin/build-server

@@ -48,6 +48,7 @@ class Builder():
 
                 f.write(f'export {dep["name"]}_commit={commit_id}'.replace('-', '_'))
                 f.write(f'export {dep["name"]}_branch={dep["branch"]}\n'.replace('-', '_'))
+                print(dep)
                 
 
             # if dep.get('default_branch', DEFAULT_BRANCH) != dep['branch'] and dep['component'] == 'client':
@@ -134,10 +135,8 @@ def main():
 
     depper.get_deps(args.single_branch)
 
-    if not build_client:
-        print('we don\'t need to rebuild client. We\'ll use dev-latest ')
+    #if not build_client:
+    #    print('we don\'t need to rebuild client. We\'ll use dev-latest ')
 
     
-    
-
 main()
