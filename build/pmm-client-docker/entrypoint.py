@@ -24,6 +24,7 @@ from distutils.util import strtobool
 
 
 PMM_AGENT_SETUP            = strtobool(os.environ.get('PMM_AGENT_SETUP', 'false'))
+PMM_AGENT_SIDECAR          = strtobool(os.environ.get('PMM_AGENT_SIDECAR', 'true'))
 PMM_AGENT_PRERUN_FILE      = os.environ.get('PMM_AGENT_PRERUN_FILE', '')
 PMM_AGENT_PRERUN_SCRIPT    = os.environ.get('PMM_AGENT_PRERUN_SCRIPT', '')
 
@@ -46,7 +47,7 @@ def main():
         print('Starting pmm-agent setup ...', file=sys.stderr)
         status = subprocess.call(['pmm-agent', 'setup'])
         print('pmm-agent setup exited with {}.'.format(status), file=sys.stderr)
-        if status != 0:
+        if status != 0 and not PMM_AGENT_SIDECAR:
             sys.exit(status)
 
     if PMM_AGENT_PRERUN_FILE or PMM_AGENT_PRERUN_SCRIPT:
@@ -77,13 +78,19 @@ def main():
 
         agent.wait()
 
-        if status != 0:
+        if status != 0 and not PMM_AGENT_SIDECAR:
             sys.exit(status)
 
-    # use execlp to replace the current process (this entrypoint)
-    # with pmm-agent with inherited environment
-    print('Starting pmm-agent ...', file=sys.stderr)
-    os.execlp('pmm-agent', 'run')
+    # restart pmm-agent if PMM_AGENT_SIDECAR flag is provided
+    while True:
+        # use execlp to replace the current process (this entrypoint)
+        # with pmm-agent with inherited environment.
+        print('Starting pmm-agent ...', file=sys.stderr)
+        os.execlp('pmm-agent', 'run')
+        if PMM_AGENT_SIDECAR:
+            time.sleep(1)
+            continue
+        break
 
 
 if __name__ == '__main__':
