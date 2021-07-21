@@ -24,7 +24,7 @@ from distutils.util import strtobool
 
 
 PMM_AGENT_SETUP            = strtobool(os.environ.get('PMM_AGENT_SETUP', 'false'))
-PMM_AGENT_SIDECAR          = strtobool(os.environ.get('PMM_AGENT_SIDECAR', 'true'))
+PMM_AGENT_SIDECAR          = strtobool(os.environ.get('PMM_AGENT_SIDECAR', 'false'))
 PMM_AGENT_PRERUN_FILE      = os.environ.get('PMM_AGENT_PRERUN_FILE', '')
 PMM_AGENT_PRERUN_SCRIPT    = os.environ.get('PMM_AGENT_PRERUN_SCRIPT', '')
 
