@@ -88,6 +88,7 @@ def main():
         print('Starting pmm-agent ...', file=sys.stderr)
         os.execlp('pmm-agent', 'run')
         if PMM_AGENT_SIDECAR:
+            print('Restarting pmm-agent because PMM_AGENT_SIDECAR is enabled ...', file=sys.stderr)
             time.sleep(1)
             continue
         break
