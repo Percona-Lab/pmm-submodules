@@ -48,6 +48,13 @@ void addComment(String COMMENT) {
     }
 }
 
+def apiTestsCommit
+def apiTestsBranch
+def qaBranch
+def qaCommit
+def uiTestsCommit
+def uiTestsBranch
+
 pipeline {
     agent {
         label 'large-amazon'

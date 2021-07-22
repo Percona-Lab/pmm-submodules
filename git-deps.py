@@ -23,7 +23,6 @@ class Builder():
     def __init__(self):
         config = self.read_config_file()
         self.deps = config['deps']
-        build_client = False
 
     def read_config_file(self):
         with open(YAML_CONFIG, 'r') as f:
@@ -48,11 +47,6 @@ class Builder():
 
                 f.write(f'export {dep["name"]}_commit={commit_id}'.replace('-', '_'))
                 f.write(f'export {dep["name"]}_branch={dep["branch"]}\n'.replace('-', '_'))
-                
-
-            # if dep.get('default_branch', DEFAULT_BRANCH) != dep['branch'] and dep['component'] == 'client':
-            #     build_client = True
-
 
 class Converter():
     def __init__(self, origin=SUBMODULES_CONFIG, target=YAML_CONFIG):
@@ -121,21 +115,13 @@ def main():
     parser.add_argument('--single-branch', help='get only one branch from repos', action='store_true')
     parser.add_argument('--get_branch', help='get branch name for repo')
 
-
     args = parser.parse_args()
 
     if args.convert:
         Converter()
 
-    build_client = False
-
-    depper = Builder()
-    print('args.single_branch', args.single_branch)
-
-    depper.get_deps(args.single_branch)
-
-    #if not build_client:
-    #    print('we don\'t need to rebuild client. We\'ll use dev-latest ')
+    builder = Builder()
+    builder.get_deps(args.single_branch)
 
     
 main()
