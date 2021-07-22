@@ -86,7 +86,8 @@ def main():
         # use execlp to replace the current process (this entrypoint)
         # with pmm-agent with inherited environment.
         print('Starting pmm-agent ...', file=sys.stderr)
-        os.execlp('pmm-agent', 'run')
+        status = subprocess.call(['pmm-agent', 'run'])
+        print('pmm-agent run exited with {}.'.format(status), file=sys.stderr)
         if PMM_AGENT_SIDECAR:
             print('Restarting pmm-agent because PMM_AGENT_SIDECAR is enabled ...', file=sys.stderr)
             time.sleep(1)
