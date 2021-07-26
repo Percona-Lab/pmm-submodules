@@ -25,6 +25,7 @@ from distutils.util import strtobool
 
 PMM_AGENT_SETUP            = strtobool(os.environ.get('PMM_AGENT_SETUP', 'false'))
 PMM_AGENT_SIDECAR          = strtobool(os.environ.get('PMM_AGENT_SIDECAR', 'true'))
+PMM_AGENT_SIDECAR_SLEEP    = int(os.environ.get('PMM_AGENT_SIDECAR_SLEEP', '1'))
 PMM_AGENT_PRERUN_FILE      = os.environ.get('PMM_AGENT_PRERUN_FILE', '')
 PMM_AGENT_PRERUN_SCRIPT    = os.environ.get('PMM_AGENT_PRERUN_SCRIPT', '')
 
@@ -89,7 +90,8 @@ def main():
         status = subprocess.call(['pmm-agent', 'run'])
         print('pmm-agent run exited with {}.'.format(status), file=sys.stderr)
         if PMM_AGENT_SIDECAR:
-            time.sleep(1)
+            print('Restarting pmm-agent in {} seconds because PMM_AGENT_SIDECAR is enabled ...'.format(PMM_AGENT_SIDECAR_SLEEP), file=sys.stderr)
+            time.sleep(PMM_AGENT_SIDECAR_SLEEP)
             continue
         break
 
