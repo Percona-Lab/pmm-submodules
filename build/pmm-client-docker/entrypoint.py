@@ -18,10 +18,10 @@ The following help text shows them as [PMM_AGENT_XXX].
 from __future__ import print_function, unicode_literals
 import os
 import subprocess
+import signal
 import sys
 import time
 from distutils.util import strtobool
-
 
 PMM_AGENT_SETUP            = strtobool(os.environ.get('PMM_AGENT_SETUP', 'false'))
 PMM_AGENT_SIDECAR          = strtobool(os.environ.get('PMM_AGENT_SIDECAR', 'true'))
@@ -30,11 +30,24 @@ PMM_AGENT_PRERUN_FILE      = os.environ.get('PMM_AGENT_PRERUN_FILE', '')
 PMM_AGENT_PRERUN_SCRIPT    = os.environ.get('PMM_AGENT_PRERUN_SCRIPT', '')
 
 
+class GracefulKiller:
+    process = None
+
+    def __init__(self):
+        signal.signal(signal.SIGINT, self.exit_gracefully)
+        signal.signal(signal.SIGTERM, self.exit_gracefully)
+
+    def exit_gracefully(self, signal, frame):
+        if self.process is not None:
+            self.process.send_signal(signal)
+            self.process.wait()
+        sys.exit(1)
+
+
 def main():
     """
     Entrypoint.
     """
-
     if len(sys.argv) > 1:
         print(__doc__, file=sys.stderr)
         subprocess.call(['pmm-agent', 'setup', '--help'])
@@ -82,10 +95,13 @@ def main():
         if status != 0 and not PMM_AGENT_SIDECAR:
             sys.exit(status)
 
+    killer = GracefulKiller()
     # restart pmm-agent if PMM_AGENT_SIDECAR flag is provided
     while True:
         print('Starting pmm-agent ...', file=sys.stderr)
-        status = subprocess.call(['pmm-agent', 'run'])
+        agent = subprocess.Popen(['pmm-agent', 'run'])
+        killer.process = agent
+        status = agent.wait()
         print('pmm-agent run exited with {}.'.format(status), file=sys.stderr)
         if PMM_AGENT_SIDECAR:
             print('Restarting pmm-agent in {} seconds because PMM_AGENT_SIDECAR is enabled ...'.format(PMM_AGENT_SIDECAR_SLEEP), file=sys.stderr)
