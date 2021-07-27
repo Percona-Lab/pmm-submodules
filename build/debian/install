@@ -19,6 +19,6 @@ queries-mysqld.yml /usr/local/percona/pmm2/collectors/custom-queries/mysql/low-r
 queries-mysqld.yml /usr/local/percona/pmm2/collectors/custom-queries/mysql/medium-resolution/
 queries-mysqld.yml /usr/local/percona/pmm2/collectors/custom-queries/mysql/high-resolution/
 queries-mysqld-group-replication.yml /usr/local/percona/pmm2/collectors/custom-queries/mysql/high-resolution/
-queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution/
-queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
-queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
+example-queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution/
+example-queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
+example-queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
