@@ -64,7 +64,6 @@ pipeline {
             steps {
                 sh '''
                     set -o errexit
-                    curdir=$(pwd)
                     sudo rm -rf results tmp || :
                     git reset --hard
                     git clean -fdx
