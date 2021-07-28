@@ -65,33 +65,20 @@ pipeline {
                 sh '''
                     set -o errexit
                     curdir=$(pwd)
-                    cd ../
-                    wget https://github.com/git-lfs/git-lfs/releases/download/v2.7.1/git-lfs-linux-amd64-v2.7.1.tar.gz
-                    tar -zxvf git-lfs-linux-amd64-v2.7.1.tar.gz
-                    sudo ./install.sh
-                    cd $curdir
                     sudo rm -rf results tmp || :
                     git reset --hard
                     git clean -fdx
                     sudo yum install -y python3
                     sudo pip3 install -r requirements.txt
-                    git status
                     python3 git-deps.py --single-branch
-                    git status
                     . ./.git-sources
                     curl -s https://api.github.com/repos/percona/pmm-managed/commits/${pmm_managed_commit} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
-                    cd sources/pmm-server/
-                    git lfs install
-                    git lfs pull
-                    git lfs checkout
-                    cd $curdir
                     echo $pmm_api_tests_commit > apiCommitSha
                     echo $pmm_api_tests_branch > apiBranch
                     echo $pmm_qa_branch > pmmQABranch
                     echo $pmm_qa_commit > pmmQACommitSha
                     echo $pmm_ui_tests_branch > pmmUITestBranch
                     echo $pmm_ui_tests_commit > pmmUITestsCommitSha
-                    git status
                 '''
                 installDocker()
                 script {
