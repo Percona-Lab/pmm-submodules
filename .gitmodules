@@ -1,0 +1,98 @@
+[submodule "pmm"]
+	path = sources/pmm/src/github.com/percona/pmm
+	url = https://github.com/percona/pmm
+	branch = PMM-2.0
+
+
+# PMM Client
+
+[submodule "pmm-admin"]
+	path = sources/pmm-admin/src/github.com/percona/pmm-admin
+	url = https://github.com/percona/pmm-admin.git
+	branch = master
+[submodule "pmm-agent"]
+	path = sources/pmm-agent/src/github.com/percona/pmm-agent
+	url = https://github.com/percona/pmm-agent.git
+	branch = master
+[submodule "node_exporter"]
+	path = sources/node_exporter/src/github.com/prometheus/node_exporter
+	url = https://github.com/percona/node_exporter.git
+	branch = main
+[submodule "mysqld_exporter"]
+	path = sources/mysqld_exporter/src/github.com/percona/mysqld_exporter
+	url = https://github.com/percona/mysqld_exporter.git
+	branch = master
+[submodule "mongodb_exporter"]
+	path = sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
+	url = https://github.com/percona/mongodb_exporter.git
+	branch = release-0.20.6
+[submodule "postgres_exporter"]
+	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
+	url = https://github.com/percona/postgres_exporter
+	branch = master
+[submodule "clickhouse_exporter"]
+	path = sources/clickhouse_exporter/src/github.com/Percona-Lab/clickhouse_exporter
+	url = https://github.com/Percona-Lab/clickhouse_exporter
+	branch = master
+[submodule "proxysql_exporter"]
+	path = sources/proxysql_exporter/src/github.com/percona/proxysql_exporter
+	url = https://github.com/percona/proxysql_exporter.git
+	branch = main
+[submodule "rds_exporter"]
+	path = sources/rds_exporter/src/github.com/percona/rds_exporter
+	url = https://github.com/percona/rds_exporter
+	branch = master
+[submodule "azure_metrics_exporter"]
+	path = sources/azure_metrics_exporter/src/github.com/percona/azure_metrics_exporter
+	url = https://github.com/percona/azure_metrics_exporter
+	branch = master
+[submodule "percona-toolkit"]
+	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
+	url = https://github.com/percona/percona-toolkit.git
+	branch = release-3.2.1
+
+
+# PMM Server
+
+[submodule "pmm-managed"]
+	path = sources/pmm-managed/src/github.com/percona/pmm-managed
+	url = https://github.com/percona/pmm-managed
+	branch = PMM-2.0
+[submodule "dbaas-controller"]
+	path = sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
+	url = https://github.com/percona-platform/dbaas-controller
+	branch = main
+[submodule "qan-api2"]
+	path = sources/qan-api2/src/github.com/percona/qan-api2
+	url = https://github.com/percona/qan-api2
+	branch = master
+[submodule "pmm-update"]
+	path = sources/pmm-update/src/github.com/percona/pmm-update
+	url = https://github.com/percona/pmm-update
+	branch = PMM-2.0
+[submodule "pmm-server"]
+	path = sources/pmm-server
+	url = https://github.com/percona/pmm-server
+	branch = PMM-2.0
+[submodule "grafana-dashboards"]
+	path = sources/grafana-dashboards
+	url = https://github.com/percona/grafana-dashboards
+	branch = main
+[submodule "grafana"]
+	path = sources/grafana/src/github.com/grafana/grafana
+	url = https://github.com/percona-platform/grafana
+	branch = master
+
+## PMM Tests
+[submodule "pmm-api-tests"]
+	path = sources/pmm-api-tests/src/github.com/Percona-Lab/pmm-api-tests
+	url = https://github.com/Percona-Lab/pmm-api-tests
+	branch = master
+[submodule "pmm-qa"]
+	path = sources/pmm-qa/src/github.com/percona/pmm-qa
+	url = https://github.com/percona/pmm-qa
+	branch = master
+[submodule "pmm-ui-tests"]
+	path = sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
+	url = https://github.com/percona/pmm-ui-tests
+	branch = main

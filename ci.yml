@@ -96,7 +96,7 @@ deps:
   component: server
   default_branch: PMM-2.0
 - name: grafana-dashboards
-  branch: PMM-2.0
+  branch: main
   path: sources/grafana-dashboards
   url: https://github.com/percona/grafana-dashboards
   component: server
