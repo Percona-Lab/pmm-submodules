@@ -100,7 +100,8 @@ class Builder():
         repo.git.add(all=True)
         repo.index.commit('Create fuature build')
         origin = repo.remote(name='origin')
-        origin.push()
+        print(origin.push())
+        logging.info('Branch was created. Need to create PR now: ')
 
 
 
