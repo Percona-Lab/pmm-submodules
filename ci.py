@@ -100,8 +100,8 @@ class Builder():
         repo.git.add(all=True)
         repo.index.commit('Create fuature build')
         origin = repo.remote(name='origin')
-        print(origin.push())
-        logging.info(f"Branch was created. Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}')")
+        logging.info('Branch was created')
+        logging.info(f'Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}')
 
 
 
