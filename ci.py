@@ -101,11 +101,7 @@ class Builder():
         repo.index.commit('Create fuature build')
         origin = repo.remote(name='origin')
         logging.info('Branch was created')
-        logging.info(f'Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}')
-
-
-
-
+        logging.info(f'Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}?expand=1')
 
     def get_deps(self, single_branch=False):
         with open(GIT_SOURCES_FILE, 'w+') as f:
@@ -200,8 +196,5 @@ def main():
         sys.exit(0)
 
     builder.get_deps(args.single_branch)
-
-
-
 
 main()
