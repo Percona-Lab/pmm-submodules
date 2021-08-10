@@ -62,7 +62,8 @@ class ProcessRunner:
                 return status
 
     def exit_gracefully(self, signal, frame):
-        if self.process is not None:
+        if self.process is not None and self.process.returncode is None:
+            print("Stopping process with signal {}".format(signal))
             self.process.send_signal(signal)
             self.process.wait()
         sys.exit(1)
