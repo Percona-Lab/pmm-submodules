@@ -102,7 +102,7 @@ class Builder():
         origin = repo.remote(name='origin')
         print(origin.push())
         logging.info(f"""Branch was created. Need to create PR now:\n
-         https://github.com/Percona-Lab/pmm-submodules/compare/{branch}?expand=1')""")
+         https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}?expand=1')""")
 
 
 
