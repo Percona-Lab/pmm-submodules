@@ -97,8 +97,13 @@ class Builder():
             self.custom_config = {'deps': [global_branch,]}
 
         self.write_custom_config(self.custom_config)
+        repo.git.add(all=True)
+        repo.index.commit('Create fuature build')
+        origin = repo.remote(name='origin')
+        origin.push()
 
-        
+
+
 
 
     def get_deps(self, single_branch=False):
