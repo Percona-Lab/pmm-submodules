@@ -7,7 +7,6 @@ deps:
   component: common
 
 # CLIENT
-
 - name: pmm-admin
   branch: master
   path: sources/pmm-admin/src/github.com/percona/pmm-admin
