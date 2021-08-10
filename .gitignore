@@ -6,3 +6,4 @@ results/
 .DS_Store
 sources/
 .git-sources
+.vscode

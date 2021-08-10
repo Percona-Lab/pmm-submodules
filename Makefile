@@ -1,5 +1,13 @@
 .PHONY: all deps migrate server client prepare build clean purge fb help default
 
+# Ugly hack... 2021 year and we still use make...God forgive us
+ifeq (create,$(firstword $(MAKECMDGOALS)))
+  # use the rest as arguments for "create"
+  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  # ...and turn them into do-nothing targets
+  $(eval $(RUN_ARGS):;@:)
+endif
+
 default: help
 
 help:                       ## Display this help message.
@@ -16,8 +24,8 @@ submodules:                 ## Update all sumodules .
 deps:						## Get deps from repos
 	python3 ci.py --single-branch
 
-migrate:
-
+create:						## Create new FB (new style)
+	python3 ci.py --create $(RUN_ARGS)
 
 server:                     ## Build the server.
 	./build/bin/build-server
