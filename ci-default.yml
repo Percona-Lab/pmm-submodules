@@ -28,7 +28,7 @@ deps:
   url: https://github.com/percona/mysqld_exporter.git
   component: client
 - name: mongodb_exporter
-  branch: release-0.20.5
+  branch: release-0.20.6
   path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
   url: https://github.com/percona/mongodb_exporter.git
   component: client
