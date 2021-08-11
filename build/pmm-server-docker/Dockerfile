@@ -18,7 +18,6 @@ EXPOSE 80 443
 
 WORKDIR /opt
 
-RUN useradd -s /bin/false pmm
 RUN yum -y install epel-release && yum -y install ansible
 
 COPY RPMS /tmp/RPMS
