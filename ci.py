@@ -6,7 +6,6 @@ import configparser
 import logging
 import os
 import sys
-import pprint
 from subprocess import check_output, check_call, call, CalledProcessError
 
 import yaml
@@ -100,6 +99,7 @@ class Builder():
         repo.git.add(all=True)
         repo.index.commit('Create fuature build')
         origin = repo.remote(name='origin')
+        origin.push()
         logging.info('Branch was created')
         logging.info(f'Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}?expand=1')
 
@@ -124,6 +124,11 @@ class Builder():
 
                 f.write(f'export {dep["name"]}_commit={commit_id}'.replace('-', '_'))
                 f.write(f'export {dep["name"]}_branch={dep["branch"]}\n'.replace('-', '_'))
+
+    def create_release(self):
+        pass
+    def create_tags(self):
+        pass
 
 class Converter():
     def __init__(self, origin=SUBMODULES_CONFIG, target=YAML_CONFIG):
@@ -181,8 +186,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--create', help='create feature build')
     parser.add_argument('--convert', help='convert .gitmodules to .git-deps.yml', action='store_true')
+    parser.add_argument('--release', help='create release candidate')
+    parser.add_argument('--tags', help='create tag')
     parser.add_argument('--single-branch', help='get only one branch from repos', action='store_true')
     parser.add_argument('--get_branch', help='get branch name for repo')
+
 
     args = parser.parse_args()
 

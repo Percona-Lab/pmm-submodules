@@ -1,4 +1,4 @@
-.PHONY: all deps migrate server client prepare build clean purge fb help default
+.PHONY: all submodules deps create server client create build clean purge fb help default
 
 # Ugly hack... 2021 year and we still use make...God forgive us
 ifeq (create,$(firstword $(MAKECMDGOALS)))
