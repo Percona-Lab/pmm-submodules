@@ -10,6 +10,7 @@ import sys
 
 from subprocess import check_output, check_call, call, CalledProcessError
 from pathlib import Path
+from github import Github
 
 import yaml
 import git
@@ -69,13 +70,15 @@ class Builder():
 
     def set_global_branches(self):
         for dep in self.config['deps']:
-            url = dep['url']
-            git_cmd = git.cmd.Git()
-            # TODO maybe it'll be faster to use local data
-            output = git_cmd.ls_remote("--heads", url, self.global_branch_name)
-            if self.global_branch_name in output:
-                logging.info(f'Use branch {self.global_branch_name} for {dep["name"]}')
-                dep['branch'] = self.global_branch_name
+            repo_path = '/'.join(dep['url'].split('/')[-2:])
+
+            github_api = Github()
+            repo = github_api.get_repo(repo_path)
+
+            for branch in repo.get_branches():
+                if self.global_branch_name == branch.name:
+                    logging.info(f'Use branch {self.global_branch_name} for {dep["name"]}')
+                    dep['branch'] = self.global_branch_name
 
     def create_fb(self, branch_name):
         import git
@@ -120,7 +123,7 @@ class Builder():
                     else:
                         check_call(f'git clone --depth 1 --no-single-branch {target_url} {path}')
                 else:
-                    print('Path for {} already exist'.format(dep["name"]))
+                    print('Files in the path for {} is already exist'.format(dep["name"]))
                 call(["git", "pull", "--ff-only"], cwd=path)
                 commit_id = switch_or_create_branch(path, dep['branch'])
 

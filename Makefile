@@ -1,6 +1,5 @@
 .PHONY: all submodules deps prepare server client build clean purge fb help default
 
-# Ugly hack... 2021 year and we still use make...God forgive us
 ifeq (create,$(firstword $(MAKECMDGOALS)))
   # use the rest as arguments for "create"
   RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
