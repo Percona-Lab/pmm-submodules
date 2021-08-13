@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
-from pathlib import Path
-
+"""
+Tool for getting dependent repository and other operations for build PMM
+"""
 import argparse
 import configparser
 import logging
 import os
 import sys
+
 from subprocess import check_output, check_call, call, CalledProcessError
+from pathlib import Path
 
 import yaml
 import git
 
 logging.basicConfig(stream=sys.stdout, format='[%(levelname)s] %(asctime)s: %(message)s', level=logging.INFO)
 
-DEFAULT_BRANCH = 'main' # we can rewrite it in config
 YAML_CONFIG = 'ci-default.yml'
 YAML_CONFIG_CUSTOM = 'ci.yml'
 SUBMODULES_CONFIG = '.gitmodules'
@@ -25,25 +27,25 @@ class Builder():
 
     def __init__(self):
         self.global_branch_name = None
-        self.config = {}
-        self.custom_config = {}
-        self.read_custom_config()
-        self.read_config()
-        self.deps = self.config['deps']
+        self.custom_config = self.read_custom_config()
+        self.config = self.read_config()
+
+        self.merge_configs()
+
 
     def read_custom_config(self):
         with open(YAML_CONFIG_CUSTOM, 'r') as f:
-            self.custom_config = yaml.load(f, Loader=yaml.FullLoader)
+            return yaml.load(f, Loader=yaml.FullLoader)
+
+    def read_config(self):
+        with open(YAML_CONFIG, 'r') as f:
+            return yaml.load(f, Loader=yaml.FullLoader)
 
     def write_custom_config(self, config):
         with open(YAML_CONFIG_CUSTOM, 'w') as f:
             yaml.dump(config, f, sort_keys=False)
 
-
-    def read_config(self):
-        with open(YAML_CONFIG, 'r') as f:
-            self.config = yaml.load(f, Loader=yaml.FullLoader)
-
+    def merge_configs(self):
         if self.custom_config is not None:
             # first we want to find global branch
             for conf in self.custom_config['deps']:
@@ -62,15 +64,15 @@ class Builder():
                         dep['branch'] = conf['branch']
                         break
                 else:
-                    logging.error(f'Can"t find {conf["name"]} repo. We have list of repos in ci-default.yml')
+                    logging.error(f'Can"t find {conf["name"]} repo from ci.yml in the list of repos in ci-default.yml')
                     sys.exit(1)
 
     def set_global_branches(self):
         for dep in self.config['deps']:
             url = dep['url']
-            g = git.cmd.Git()
+            git_cmd = git.cmd.Git()
             # TODO maybe it'll be faster to use local data
-            output = g.ls_remote("--heads", url, self.global_branch_name)
+            output = git_cmd.ls_remote("--heads", url, self.global_branch_name)
             if self.global_branch_name in output:
                 logging.info(f'Use branch {self.global_branch_name} for {dep["name"]}')
                 dep['branch'] = self.global_branch_name
@@ -97,7 +99,7 @@ class Builder():
 
         self.write_custom_config(self.custom_config)
         repo.git.add(all=True)
-        repo.index.commit('Create fuature build')
+        repo.index.commit(f'Create feature build: {branch_name}')
         origin = repo.remote(name='origin')
         origin.push()
         logging.info('Branch was created')
@@ -108,7 +110,7 @@ class Builder():
             f.truncate()
 
         with open(GIT_SOURCES_FILE, 'a') as f:
-            for dep in self.deps:
+            for dep in self.config['deps']:
                 path = os.path.join(self.rootdir, dep["path"])
                 if not os.path.exists(os.path.join(self.rootdir, path)):
                     target_branch = dep['branch']
@@ -161,11 +163,11 @@ class Converter():
         sys.exit(0)
 
 def switch_or_create_branch(path, branch):
-    # it's a small hack for migration from submodules
+    # symbolic-ref works only if we on branch. If we use commit we use rev-parse instead
     try:
         cur_branch = check_output('git symbolic-ref --short HEAD'.split(), cwd=path).decode().strip()
     except CalledProcessError:
-        cur_branch = ''
+        cur_branch = check_output('git rev-parse HEAD'.split(), cwd=path).decode().strip()
     if cur_branch != branch:
         branches = check_output('git ls-remote --heads origin'.split(), cwd=path)
         branches = [line.split("/")[-1]
