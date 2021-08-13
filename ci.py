@@ -80,7 +80,7 @@ class Builder():
                     logging.info(f'Use branch {self.global_branch_name} for {dep["name"]}')
                     dep['branch'] = self.global_branch_name
 
-    def create_fb(self, branch_name):
+    def create_fb_branch(self, branch_name):
         import git
         repo = git.Repo('.')
 
@@ -205,7 +205,7 @@ def main():
 
     builder = Builder()
     if args.create:
-        builder.create_fb(args.create)
+        builder.create_fb_branch(args.create)
         sys.exit(0)
 
     builder.get_deps(args.single_branch)
