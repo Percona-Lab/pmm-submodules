@@ -81,16 +81,15 @@ class Builder():
                     dep['branch'] = self.global_branch_name
 
     def create_fb_branch(self, branch_name):
-        import git
         repo = git.Repo('.')
 
-        git = repo.git
+        git_cmd = repo.git
         for ref in repo.references:
             if branch_name == ref.name:
-                git.checkout(branch_name)
+                git_cmd.checkout(branch_name)
                 break
         else:
-            git.checkout('HEAD', b=branch_name)
+            git_cmd.checkout('HEAD', b=branch_name)
 
         if self.custom_config is not None:
             for dep in self.custom_config['deps']:
