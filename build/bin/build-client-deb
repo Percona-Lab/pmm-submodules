@@ -20,12 +20,10 @@ main() {
         OS_VERSION=\$(cat /etc/os-release | grep VERSION_ID | awk -F'\"' '{print \$2}')
 
         apt-get update
-        if [ \$OS_VERSION == 11 ]
-        then
-            apt-get -y install git lsb-release devscripts dh-make
-        else
-            apt-get -y install git lsb-release devscripts dh-make dh-systemd
-        fi
+        case "\$OS_VERSION" in
+            10) apt-get -y install git lsb-release devscripts dh-make dh-systemd;;
+            11) apt-get -y install git lsb-release devscripts dh-make;
+        esac
         mkdir -p /tmp/pmm
         cd /home/builder/results
             bash /home/builder/bin/build-client-packages \
