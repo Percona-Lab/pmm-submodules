@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Percona LLC
 Version: %{version}
 Homepage: https://percona.com
-Build-Depends: debhelper, dh-systemd
+Build-Depends: debhelper
 
 Package: pmm2-client
 Architecture: amd64
