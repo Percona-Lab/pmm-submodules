@@ -117,12 +117,6 @@ deps:
   component: server
 
 # QA
-- name: pmm-api-tests
-  branch: master
-  path: sources/pmm-api-tests/src/github.com/Percona-Lab/pmm-api-tests
-  url: https://github.com/Percona-Lab/pmm-api-tests
-  component: qa
-
 - name: pmm-qa
   branch: master
   path: sources/pmm-qa/src/github.com/percona/pmm-qa
