@@ -76,8 +76,8 @@ pipeline {
                     git lfs pull
                     git lfs checkout
                     cd $curdir
-                    export api_tests_commit_sha=$(git submodule status | grep 'pmm-api-tests' | awk -F ' ' '{print $1}')
-                    export api_tests_branch=$(git config -f .gitmodules submodule.pmm-api-tests.branch)
+                    export api_tests_commit_sha=$(git submodule status | grep 'pmm-managed' | awk -F ' ' '{print $1}')
+                    export api_tests_branch=$(git config -f .gitmodules submodule.pmm-managed.branch)
                     echo $api_tests_commit_sha > apiCommitSha
                     echo $api_tests_branch > apiBranch
                     cat apiBranch
