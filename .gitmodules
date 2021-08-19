@@ -95,4 +95,4 @@
 [submodule "pmm-ui-tests"]
 	path = sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
 	url = https://github.com/percona/pmm-ui-tests
-	branch = main
+	branch = PMM-7690-iam-roles
