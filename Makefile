@@ -24,7 +24,7 @@ deps:						## Get deps from repos
 	python3 ci.py --single-branch
 
 prepare:					## Create new FB (new style)
-	python3 ci.py --create $(RUN_ARGS)
+	python3 ci.py --create $(RUN_ARGS) -g
 
 server:                     ## Build the server.
 	./build/bin/build-server

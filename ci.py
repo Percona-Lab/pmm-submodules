@@ -27,7 +27,6 @@ class Builder():
     rootdir = check_output(["git", "rev-parse", "--show-toplevel"]).decode('utf-8').strip()
 
     def __init__(self):
-        self.global_branch_name = None
         self.custom_config = self.read_custom_config()
         self.config = self.read_config()
 
@@ -48,17 +47,8 @@ class Builder():
 
     def merge_configs(self):
         if self.custom_config is not None:
-            # first we want to find global branch
-            for conf in self.custom_config['deps']:
-                if conf['name'] == 'global':
-                    self.global_branch_name = conf['branch']
-                    self.set_global_branches()
-                    break
-
             # Yep we have high complexity here but list is short
             for conf in self.custom_config['deps']:
-                if conf['name'] == 'global':
-                    continue
                 for dep in self.config['deps']:
                     if dep['name'] == conf['name']:
                         # TODO add support for other fields
@@ -68,7 +58,8 @@ class Builder():
                     logging.error(f'Can"t find {conf["name"]} repo from ci.yml in the list of repos in ci-default.yml')
                     sys.exit(1)
 
-    def set_global_branches(self):
+    def get_global_branches(self, target_branch_name):
+        found_bracnhes = {}
         for dep in self.config['deps']:
             repo_path = '/'.join(dep['url'].split('/')[-2:])
 
@@ -76,11 +67,12 @@ class Builder():
             repo = github_api.get_repo(repo_path)
 
             for branch in repo.get_branches():
-                if self.global_branch_name == branch.name:
-                    logging.info(f'Use branch {self.global_branch_name} for {dep["name"]}')
-                    dep['branch'] = self.global_branch_name
+                if self.target_branch_name == branch.name:
+                    logging.info(f'Found branch {self.target_branch_name} for {dep["name"]}')
+                    dep['branch'] = self.target_branch_name
 
-    def create_fb_branch(self, branch_name):
+
+    def create_fb_branch(self, branch_name, global_repo=None):
         repo = git.Repo('.')
 
         git_cmd = repo.git
@@ -90,6 +82,8 @@ class Builder():
                 break
         else:
             git_cmd.checkout('HEAD', b=branch_name)
+
+        found_branches =
 
         if self.custom_config is not None:
             for dep in self.custom_config['deps']:
@@ -180,8 +174,8 @@ def switch_or_create_branch(path, branch):
             check_call(f'git fetch --depth 1 origin {branch}'.split(), cwd=path)
             check_call(f'git checkout {branch}'.split(), cwd=path)
         else:
-            print(f"Switch and create branch: {branch} (from {cur_branch}")
-            check_call(f'git checkout -b {branch} origin/{branch}'.split(), cwd=path)
+            logging.error(f'Can\' find branch: {branch} in {path}')
+            sys.exit(1)
 
     return check_output('git rev-parse HEAD'.split(), cwd=path).decode("utf-8")
 
@@ -189,10 +183,10 @@ def switch_or_create_branch(path, branch):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--create', help='create feature build')
+    parser.add_argument('--global', '-g', dest='global_repo', help='find and use all bracnhes with this name', action='store_true')
     parser.add_argument('--convert', help='convert .gitmodules to .git-deps.yml', action='store_true')
     parser.add_argument('--release', help='create release candidate')
     parser.add_argument('--tags', help='create tag')
-    parser.add_argument('--single-branch', help='get only one branch from repos', action='store_true')
     parser.add_argument('--get_branch', help='get branch name for repo')
 
 
@@ -204,9 +198,9 @@ def main():
 
     builder = Builder()
     if args.create:
-        builder.create_fb_branch(args.create)
+        builder.create_fb_branch(args.create, args.global_repo)
         sys.exit(0)
 
-    builder.get_deps(args.single_branch)
+    builder.get_deps()
 
 main()
