@@ -136,9 +136,6 @@ class Builder():
 
     def get_deps(self):
         with open(GIT_SOURCES_FILE, 'w+') as f:
-            f.truncate()
-
-        with open(GIT_SOURCES_FILE, 'a') as f:
             for dep in self.config['deps']:
                 path = os.path.join(self.rootdir, dep["path"])
                 if not os.path.exists(os.path.join(self.rootdir, path)):
