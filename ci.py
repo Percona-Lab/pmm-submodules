@@ -125,7 +125,7 @@ class Builder():
                 else:
                     print('Files in the path for {} is already exist'.format(dep["name"]))
                 call(["git", "pull", "--ff-only"], cwd=path)
-                commit_id = switch_or_create_branch(path, dep['branch'])
+                commit_id = switch_branch(path, dep['branch'])
 
                 f.write(f'export {dep["name"]}_commit={commit_id}'.replace('-', '_'))
                 f.write(f'export {dep["name"]}_branch={dep["branch"]}\n'.replace('-', '_'))
@@ -165,7 +165,7 @@ class Converter():
             yaml.dump(self.submodules, f, sort_keys=False)
         sys.exit(0)
 
-def switch_or_create_branch(path, branch):
+def switch_branch(path, branch):
     # symbolic-ref works only if we on branch. If we use commit we use rev-parse instead
     try:
         cur_branch = check_output('git symbolic-ref --short HEAD'.split(), cwd=path).decode().strip()
