@@ -64,7 +64,7 @@ pipeline {
                         git clean -fdx
                         sudo yum install -y python3
                         sudo pip3 install -r requirements.txt
-                        python3 ci.py --single-branch
+                        python3 ci.py
                         . ./.git-sources
                         curl -s https://api.github.com/repos/percona/pmm-managed/commits/${pmm_managed_commit} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
                         echo $pmm_api_tests_commit > apiCommitSha
