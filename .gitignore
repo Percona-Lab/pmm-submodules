@@ -4,6 +4,5 @@ build/pmm-server-docker/RPMS/
 tmp/
 results/
 .DS_Store
-sources/
 .git-sources
 .vscode
