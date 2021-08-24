@@ -1,1 +1,3 @@
-deps: []
+deps:
+- name: pmm-server
+  branch: PMM-0000-1
