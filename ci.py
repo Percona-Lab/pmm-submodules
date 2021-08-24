@@ -108,7 +108,10 @@ class Builder():
         if GITHUB_TOKEN:
             github_api = Github(GITHUB_TOKEN)
             repo = github_api.get_repo('Percona-Lab/pmm-submodules')
-            pr = repo.get_pulls(base='PMM-2.0', head=branch_name)
+            pr = repo.get_pulls(base='PMM-2.0', head='*:{branch_name}')
+            for i in pr:
+                print(i)
+            print('TOTAL: ', pr.totalCount)
             if pr.totalCount <= 1:
                 body = 'Custom branches: \n'
                 for dep in self.custom_config['deps']:
