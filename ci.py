@@ -123,7 +123,7 @@ class Builder():
                                 )
                 logging.info(f'Pull Request was created: https://github.com/Percona-Lab/pmm-submodules/pull/{pr.number}')
             else:
-                logging.info('Pull request already exist')
+                logging.info(f'Pull request already exist: https://github.com/Percona-Lab/pmm-submodules/pull/{pr[0].number}')
         else:
             logging.info('Branch was created')
             logging.info(f'Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}?expand=1')
