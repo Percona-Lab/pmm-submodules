@@ -112,7 +112,13 @@ class Builder():
             body = 'Custom branches: \n'
             for dep in self.custom_config['deps']:
                 body = body + dep['name'] + '\n'
-            repo.create_pull(title=f'Feature Build: {branch_name}', body=body, head=branch_name, base='PMM-2.0')
+            pr = repo.create_pull(title=f'Feature Build: {branch_name}',
+                             body=body,
+                             head=branch_name,
+                             base='PMM-2.0',
+                             draft=True
+                            )
+            logging.info(f'Pull Request was created: https://github.com/Percona-Lab/pmm-submodules/pull/{pr.number}')
         else:
             logging.info('Branch was created')
             logging.info(f'Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}?expand=1')
