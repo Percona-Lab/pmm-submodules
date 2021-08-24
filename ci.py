@@ -107,17 +107,21 @@ class Builder():
         if GITHUB_TOKEN:
             github_api = Github(GITHUB_TOKEN)
             repo = github_api.get_repo('Percona-Lab/pmm-submodules')
-            body = 'Custom branches: \n'
-            for dep in self.custom_config['deps']:
-                # TODO we need to have link to PR here
-                body = body + dep['name'] + '\n'
-            pr = repo.create_pull(
-                            title=f'Feature Build: {branch_name}',
-                            body=body,
-                            head=branch_name,
-                            base='PMM-2.0',
-                            draft=True
-                            )
+            pr = repo.get_pulls(base='PMM-2.0', head=branch_name)
+            if len(pr) <= 1:
+                body = 'Custom branches: \n'
+                for dep in self.custom_config['deps']:
+                    # TODO we need to have link to PR here
+                    body = body + dep['name'] + '\n'
+                pr = repo.create_pull(
+                                title=f'Feature Build: {branch_name}',
+                                body=body,
+                                head=branch_name,
+                                base='PMM-2.0',
+                                draft=True
+                                )
+            else:
+                logging.info('Pull request already exist')
             logging.info(f'Pull Request was created: https://github.com/Percona-Lab/pmm-submodules/pull/{pr.number}')
         else:
             logging.info('Branch was created')
