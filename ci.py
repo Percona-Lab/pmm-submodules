@@ -68,7 +68,6 @@ class Builder():
             repo = github_api.get_repo(repo_path)
 
             for branch in repo.get_branches():
-                print(target_branch_name, branch.name)
                 if target_branch_name == branch.name:
                     logging.info(f'Found branch {target_branch_name} for {dep["name"]}')
                     found_bracnhes.append(dep["name"])
@@ -100,7 +99,6 @@ class Builder():
 
         for dep_name in found_branches:
             self.custom_config['deps'].append({ 'name': dep_name, 'branch': branch_name})
-        print(self.custom_config)
         self.write_custom_config(self.custom_config)
         repo.git.add(['ci.yml', ])
         repo.index.commit(f'Create feature build: {branch_name}')
@@ -111,12 +109,14 @@ class Builder():
             repo = github_api.get_repo('Percona-Lab/pmm-submodules')
             body = 'Custom branches: \n'
             for dep in self.custom_config['deps']:
+                # TODO we need to have link to PR here
                 body = body + dep['name'] + '\n'
-            pr = repo.create_pull(title=f'Feature Build: {branch_name}',
-                             body=body,
-                             head=branch_name,
-                             base='PMM-2.0',
-                             draft=True
+            pr = repo.create_pull(
+                            title=f'Feature Build: {branch_name}',
+                            body=body,
+                            head=branch_name,
+                            base='PMM-2.0',
+                            draft=True
                             )
             logging.info(f'Pull Request was created: https://github.com/Percona-Lab/pmm-submodules/pull/{pr.number}')
         else:
@@ -135,7 +135,7 @@ class Builder():
                     target_url = dep["url"]
                     check_call(f'git clone --depth 1 --single-branch --branch {target_branch} {target_url} {path}'.split())
                 else:
-                    print('Files in the path for {} is already exist'.format(dep["name"]))
+                    logging.info(f'Files in the path for {dep["name"]} is already exist')
                 call(["git", "pull", "--ff-only"], cwd=path)
                 commit_id = switch_branch(path, dep['branch'])
 
