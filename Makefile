@@ -1,6 +1,6 @@
 .PHONY: all submodules deps prepare server client build clean purge fb help default
 
-ifeq (create,$(firstword $(MAKECMDGOALS)))
+ifeq (prepare,$(firstword $(MAKECMDGOALS)))
   # use the rest as arguments for "create"
   RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
   # ...and turn them into do-nothing targets
@@ -21,10 +21,10 @@ submodules:                 ## Update all sumodules .
 	git submodule status
 
 deps:						## Get deps from repos
-	python3 ci.py --single-branch
+	python3 ci.py
 
 prepare:					## Create new FB (new style)
-	python3 ci.py --create $(RUN_ARGS) -g
+	python3 ci.py -g --prepare $(RUN_ARGS)
 
 server:                     ## Build the server.
 	./build/bin/build-server

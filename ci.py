@@ -59,20 +59,22 @@ class Builder():
                     sys.exit(1)
 
     def get_global_branches(self, target_branch_name):
-        found_bracnhes = {}
+        found_bracnhes = []
         for dep in self.config['deps']:
-            repo_path = '/'.join(dep['url'].split('/')[-2:])
+            repo_path = '/'.join(dep['url'].split('/')[-2:]).replace('.git', '')
 
-            github_api = Github()
+            github_api = Github(os.environ.get('GITHUB_TOKEN', ''))
             repo = github_api.get_repo(repo_path)
 
             for branch in repo.get_branches():
-                if self.target_branch_name == branch.name:
-                    logging.info(f'Found branch {self.target_branch_name} for {dep["name"]}')
-                    dep['branch'] = self.target_branch_name
+                print(target_branch_name, branch.name)
+                if target_branch_name == branch.name:
+                    logging.info(f'Found branch {target_branch_name} for {dep["name"]}')
+                    found_bracnhes.append(dep["name"])
 
+        return found_bracnhes
 
-    def create_fb_branch(self, branch_name, global_repo=None):
+    def create_fb_branch(self, branch_name, global_repo=False):
         repo = git.Repo('.')
 
         git_cmd = repo.git
@@ -83,18 +85,23 @@ class Builder():
         else:
             git_cmd.checkout('HEAD', b=branch_name)
 
-        found_branches =
+        if global_repo:
+            found_branches = self.get_global_branches(branch_name)
 
-        if self.custom_config is not None:
-            for dep in self.custom_config['deps']:
-                if dep['name'] == 'global':
-                    dep['branch'] = branch_name
-        else:
-            global_branch = {'name': 'global', 'branch': branch_name}
-            self.custom_config = {'deps': [global_branch,]}
+        if self.custom_config is None:
+            self.custom_config = {'deps': []}
 
+        # change old records
+        for dep in self.custom_config['deps']:
+            if dep['name'] in found_branches:
+                dep['branch'] = branch_name
+                found_branches.remove(dep['name'])
+
+        for dep_name in found_branches:
+            self.custom_config['deps'].append({ 'name': dep_name, 'branch': branch_name})
+        print(self.custom_config)
         self.write_custom_config(self.custom_config)
-        repo.git.add(all=True)
+        repo.git.add(['ci.yml', ])
         repo.index.commit(f'Create feature build: {branch_name}')
         origin = repo.remote(name='origin')
         origin.push()
@@ -182,7 +189,7 @@ def switch_or_create_branch(path, branch):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--create', help='create feature build')
+    parser.add_argument('--prepare', help='prepare feature build')
     parser.add_argument('--global', '-g', dest='global_repo', help='find and use all bracnhes with this name', action='store_true')
     parser.add_argument('--convert', help='convert .gitmodules to .git-deps.yml', action='store_true')
     parser.add_argument('--release', help='create release candidate')
@@ -197,8 +204,8 @@ def main():
         sys.exit(0)
 
     builder = Builder()
-    if args.create:
-        builder.create_fb_branch(args.create, args.global_repo)
+    if args.prepare:
+        builder.create_fb_branch(args.prepare, args.global_repo)
         sys.exit(0)
 
     builder.get_deps()
