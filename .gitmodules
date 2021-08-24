@@ -96,6 +96,3 @@
 	path = sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
 	url = https://github.com/percona/pmm-ui-tests
 	branch = main
-[submodule "sources/pmm-api-tests/src/github.com/Percona-Lab/pmm-api-tests"]
-	path = sources/pmm-api-tests/src/github.com/Percona-Lab/pmm-api-tests
-	url = https://github.com/Percona-Lab/pmm-api-tests
