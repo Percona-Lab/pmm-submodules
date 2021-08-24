@@ -4,9 +4,21 @@ This repository serves the purpose of creating and updating the feature build fo
 
 ## How to create a feature build
 
+It's a good idea to use your personal github token. You can create perconal token in [Github settings](https://github.com/settings/tokens). Generate New Token -> Click on repo ->  You need create environment variable GITHUB_TOKEN with your token.
+if you use zsh:
+```console
+echo 'export GITHUB_TOKEN=********' >> ~/.zshrc
+source ~/.zshrc
+```
+if you use bash:
+```console
+echo 'export GITHUB_TOKEN=********' >> ~/.bash_profile
+source ~/.bash_profile
+```
+
 If you use the same branch name in all repos then you can run:
 ```console
-make create <you branch name>
+make prepare <you branch name>
 ```
 Branches with "you branch name" will be used for all repos or default branch if the branch with this name isn't found in repo.
 
@@ -17,7 +29,7 @@ Branches with "you branch name" will be used for all repos or default branch if 
 You can edit ci.yml by hand. For example:
 ```yaml
 deps:
-  - name: global
+  - name: pmm-server
     branch: PMM-0000-fix-everything
   - name: pmm-agent
     branch: PMM-0000-fix-everything-and-even-more

@@ -21,6 +21,7 @@ YAML_CONFIG = 'ci-default.yml'
 YAML_CONFIG_CUSTOM = 'ci.yml'
 SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
+GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
 
 
 class Builder():
@@ -59,20 +60,21 @@ class Builder():
                     sys.exit(1)
 
     def get_global_branches(self, target_branch_name):
-        found_bracnhes = {}
+        found_bracnhes = []
         for dep in self.config['deps']:
-            repo_path = '/'.join(dep['url'].split('/')[-2:])
+            repo_path = '/'.join(dep['url'].split('/')[-2:]).replace('.git', '')
 
-            github_api = Github()
+            github_api = Github(GITHUB_TOKEN)
             repo = github_api.get_repo(repo_path)
 
             for branch in repo.get_branches():
-                if self.target_branch_name == branch.name:
-                    logging.info(f'Found branch {self.target_branch_name} for {dep["name"]}')
-                    dep['branch'] = self.target_branch_name
+                if target_branch_name == branch.name:
+                    logging.info(f'Found branch {target_branch_name} for {dep["name"]}')
+                    found_bracnhes.append(dep["name"])
 
+        return found_bracnhes
 
-    def create_fb_branch(self, branch_name, global_repo=None):
+    def create_fb_branch(self, branch_name, global_repo=False):
         repo = git.Repo('.')
 
         git_cmd = repo.git
@@ -83,25 +85,50 @@ class Builder():
         else:
             git_cmd.checkout('HEAD', b=branch_name)
 
-        found_branches =
+        if global_repo:
+            found_branches = self.get_global_branches(branch_name)
 
-        if self.custom_config is not None:
-            for dep in self.custom_config['deps']:
-                if dep['name'] == 'global':
-                    dep['branch'] = branch_name
-        else:
-            global_branch = {'name': 'global', 'branch': branch_name}
-            self.custom_config = {'deps': [global_branch,]}
+        if self.custom_config is None:
+            self.custom_config = {'deps': []}
 
+        # change old records
+        for dep in self.custom_config['deps']:
+            if dep['name'] in found_branches:
+                dep['branch'] = branch_name
+                found_branches.remove(dep['name'])
+
+        for dep_name in found_branches:
+            self.custom_config['deps'].append({ 'name': dep_name, 'branch': branch_name})
         self.write_custom_config(self.custom_config)
-        repo.git.add(all=True)
+        repo.git.add(['ci.yml', ])
         repo.index.commit(f'Create feature build: {branch_name}')
         origin = repo.remote(name='origin')
         origin.push()
-        logging.info('Branch was created')
-        logging.info(f'Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}?expand=1')
+        logging.info('Last ci.yml was pushed')
+        if GITHUB_TOKEN:
+            github_api = Github(GITHUB_TOKEN)
+            repo = github_api.get_repo('Percona-Lab/pmm-submodules')
+            pr = repo.get_pulls(base='PMM-2.0', head=branch_name)
+            if pr.totalCount <= 1:
+                body = 'Custom branches: \n'
+                for dep in self.custom_config['deps']:
+                    # TODO we need to have link to PR here
+                    body = body + dep['name'] + '\n'
+                pr = repo.create_pull(
+                                title=f'Feature Build: {branch_name}',
+                                body=body,
+                                head=branch_name,
+                                base='PMM-2.0',
+                                draft=True
+                                )
+                logging.info(f'Pull Request was created: https://github.com/Percona-Lab/pmm-submodules/pull/{pr.number}')
+            else:
+                logging.info('Pull request already exist')
+        else:
+            logging.info('Branch was created')
+            logging.info(f'Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}?expand=1')
 
-    def get_deps(self, single_branch=False):
+    def get_deps(self):
         with open(GIT_SOURCES_FILE, 'w+') as f:
             f.truncate()
 
@@ -111,14 +138,11 @@ class Builder():
                 if not os.path.exists(os.path.join(self.rootdir, path)):
                     target_branch = dep['branch']
                     target_url = dep["url"]
-                    if single_branch:
-                        check_call(f'git clone --depth 1 --single-branch --branch {target_branch} {target_url} {path}'.split())
-                    else:
-                        check_call(f'git clone --depth 1 --no-single-branch {target_url} {path}')
+                    check_call(f'git clone --depth 1 --single-branch --branch {target_branch} {target_url} {path}'.split())
                 else:
-                    print('Files in the path for {} is already exist'.format(dep["name"]))
+                    logging.info(f'Files in the path for {dep["name"]} is already exist')
                 call(["git", "pull", "--ff-only"], cwd=path)
-                commit_id = switch_or_create_branch(path, dep['branch'])
+                commit_id = switch_branch(path, dep['branch'])
 
                 f.write(f'export {dep["name"]}_commit={commit_id}'.replace('-', '_'))
                 f.write(f'export {dep["name"]}_branch={dep["branch"]}\n'.replace('-', '_'))
@@ -158,7 +182,7 @@ class Converter():
             yaml.dump(self.submodules, f, sort_keys=False)
         sys.exit(0)
 
-def switch_or_create_branch(path, branch):
+def switch_branch(path, branch):
     # symbolic-ref works only if we on branch. If we use commit we use rev-parse instead
     try:
         cur_branch = check_output('git symbolic-ref --short HEAD'.split(), cwd=path).decode().strip()
@@ -182,7 +206,7 @@ def switch_or_create_branch(path, branch):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--create', help='create feature build')
+    parser.add_argument('--prepare', help='prepare feature build')
     parser.add_argument('--global', '-g', dest='global_repo', help='find and use all bracnhes with this name', action='store_true')
     parser.add_argument('--convert', help='convert .gitmodules to .git-deps.yml', action='store_true')
     parser.add_argument('--release', help='create release candidate')
@@ -197,8 +221,8 @@ def main():
         sys.exit(0)
 
     builder = Builder()
-    if args.create:
-        builder.create_fb_branch(args.create, args.global_repo)
+    if args.prepare:
+        builder.create_fb_branch(args.prepare, args.global_repo)
         sys.exit(0)
 
     builder.get_deps()
