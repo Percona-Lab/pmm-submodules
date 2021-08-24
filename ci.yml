@@ -1,3 +1,5 @@
 deps:
 - name: pmm-server
   branch: PMM-0000-1
+- name: pmm-qa
+  branch: PMM-0000-1
