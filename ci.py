@@ -21,6 +21,7 @@ YAML_CONFIG = 'ci-default.yml'
 YAML_CONFIG_CUSTOM = 'ci.yml'
 SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
+GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
 
 
 class Builder():
@@ -63,7 +64,7 @@ class Builder():
         for dep in self.config['deps']:
             repo_path = '/'.join(dep['url'].split('/')[-2:]).replace('.git', '')
 
-            github_api = Github(os.environ.get('GITHUB_TOKEN', ''))
+            github_api = Github(GITHUB_TOKEN)
             repo = github_api.get_repo(repo_path)
 
             for branch in repo.get_branches():
@@ -105,10 +106,18 @@ class Builder():
         repo.index.commit(f'Create feature build: {branch_name}')
         origin = repo.remote(name='origin')
         origin.push()
-        logging.info('Branch was created')
-        logging.info(f'Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}?expand=1')
+        if GITHUB_TOKEN:
+            github_api = Github(GITHUB_TOKEN)
+            repo = github_api.get_repo('Percona-Lab/pmm-submodules')
+            body = 'Custom branches: \n'
+            for dep in self.custom_config['deps']:
+                body = body + dep['name'] + '\n'
+            repo.create_pull(title=f'Feature Build: {branch_name}', body=body, head=branch_name, base='PMM-2.0')
+        else:
+            logging.info('Branch was created')
+            logging.info(f'Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}?expand=1')
 
-    def get_deps(self, single_branch=False):
+    def get_deps(self):
         with open(GIT_SOURCES_FILE, 'w+') as f:
             f.truncate()
 
@@ -118,10 +127,7 @@ class Builder():
                 if not os.path.exists(os.path.join(self.rootdir, path)):
                     target_branch = dep['branch']
                     target_url = dep["url"]
-                    if single_branch:
-                        check_call(f'git clone --depth 1 --single-branch --branch {target_branch} {target_url} {path}'.split())
-                    else:
-                        check_call(f'git clone --depth 1 --no-single-branch {target_url} {path}')
+                    check_call(f'git clone --depth 1 --single-branch --branch {target_branch} {target_url} {path}'.split())
                 else:
                     print('Files in the path for {} is already exist'.format(dep["name"]))
                 call(["git", "pull", "--ff-only"], cwd=path)
