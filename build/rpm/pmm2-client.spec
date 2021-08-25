@@ -219,6 +219,9 @@ fi
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/pmm2
 
 %changelog
+* Tue Aug 24 2021 Vadim Yalovets <vadim.yalovets@percona.com> 
+- PMM-8618 ship default PG queries in PMM.
+
 * Tue Oct 13 2020 Nikolay Khramchikhin <nik@victoriametrics.com>
 - PMM-6396 added vmagent binary.
 
