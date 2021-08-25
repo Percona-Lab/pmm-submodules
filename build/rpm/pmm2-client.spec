@@ -93,7 +93,7 @@ install -m 0660 example-queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/p
 install -m 0660 example-queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
 install -m 0660 example-queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
 install -m 0660 queries-postgres-uptime.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
-install -m 0660 queries.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
+install -m 0660 queries.yaml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
 %if 0%{?systemd}
   install -m 0755 -d $RPM_BUILD_ROOT/%{_unitdir}
   install -m 0644 config/pmm-agent.service %{buildroot}/%{_unitdir}/pmm-agent.service
