@@ -20,7 +20,10 @@ main() {
         OS_VERSION=\$(cat /etc/os-release | grep VERSION_ID | awk -F'\"' '{print \$2}')
 
         apt-get update
-        apt-get -y install git lsb-release devscripts dh-make dh-systemd
+        case "\$OS_VERSION" in
+            11) apt-get -y install git lsb-release devscripts dh-make;;
+            *) apt-get -y install git lsb-release devscripts dh-make dh-systemd;;
+        esac
         mkdir -p /tmp/pmm
         cd /home/builder/results
             bash /home/builder/bin/build-client-packages \
