@@ -57,39 +57,57 @@ pipeline {
             steps {
                 sh '''
                     set -o errexit
-                    curdir=$(pwd)
-                    cd ../
-                    wget https://github.com/git-lfs/git-lfs/releases/download/v2.7.1/git-lfs-linux-amd64-v2.7.1.tar.gz
-                    tar -zxvf git-lfs-linux-amd64-v2.7.1.tar.gz
-                    sudo ./install.sh
-                    cd $curdir
-                    sudo rm -rf results tmp || :
-                    git reset --hard
-                    git clean -fdx
-                    git submodule foreach --recursive git reset --hard
-                    git submodule foreach --recursive git clean -fdx
-                    git submodule status
-                    export commit_sha=$(git submodule status | grep 'pmm-managed' | awk -F ' ' '{print $1}')
-                    curl -s https://api.github.com/repos/percona/pmm-managed/commits/${commit_sha} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
-                    cd sources/pmm-server/
-                    git lfs install
-                    git lfs pull
-                    git lfs checkout
-                    cd $curdir
-                    export api_tests_commit_sha=$(git submodule status | grep 'pmm-managed' | awk -F ' ' '{print $1}')
-                    export api_tests_branch=$(git config -f .gitmodules submodule.pmm-managed.branch)
-                    echo $api_tests_commit_sha > apiCommitSha
-                    echo $api_tests_branch > apiBranch
-                    cat apiBranch
-                    export pmm_qa_commit_sha=$(git submodule status | grep 'pmm-qa' | awk -F ' ' '{print $1}')
-                    export pmm_qa_branch=$(git config -f .gitmodules submodule.pmm-qa.branch)
-                    echo $pmm_qa_branch > pmmQABranch
-                    echo $pmm_qa_commit_sha > pmmQACommitSha
-                    export pmm_ui_tests_commit_sha=$(git submodule status | grep 'pmm-ui-tests' | awk -F ' ' '{print $1}')
-                    export pmm_ui_tests_branch=$(git config -f .gitmodules submodule.pmm-ui-tests.branch)
-                    echo $pmm_ui_tests_branch > pmmUITestBranch
-                    echo $pmm_ui_tests_commit_sha > pmmUITestsCommitSha
-                    cd $curdir
+                    if [ -s ci.yml ]
+                    then
+                        sudo rm -rf results tmp || :
+                        git reset --hard
+                        git clean -fdx
+                        sudo yum install -y python3
+                        sudo pip3 install -r requirements.txt
+                        python3 ci.py
+                        . ./.git-sources
+                        curl -s https://api.github.com/repos/percona/pmm-managed/commits/${pmm_managed_commit} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
+                        echo $pmm_api_tests_commit > apiCommitSha
+                        echo $pmm_api_tests_branch > apiBranch
+                        echo $pmm_qa_branch > pmmQABranch
+                        echo $pmm_qa_commit > pmmQACommitSha
+                        echo $pmm_ui_tests_branch > pmmUITestBranch
+                        echo $pmm_ui_tests_commit > pmmUITestsCommitSha
+                    else
+                        curdir=$(pwd)
+                        cd ../
+                        wget https://github.com/git-lfs/git-lfs/releases/download/v2.7.1/git-lfs-linux-amd64-v2.7.1.tar.gz
+                        tar -zxvf git-lfs-linux-amd64-v2.7.1.tar.gz
+                        sudo ./install.sh
+                        cd $curdir
+                        sudo rm -rf results tmp || :
+                        git reset --hard
+                        git clean -fdx
+                        git submodule foreach --recursive git reset --hard
+                        git submodule foreach --recursive git clean -fdx
+                        git submodule status
+                        export commit_sha=$(git submodule status | grep 'pmm-managed' | awk -F ' ' '{print $1}')
+                        curl -s https://api.github.com/repos/percona/pmm-managed/commits/${commit_sha} | grep 'name' | awk -F '"' '{print $4}' | head -1 > OWNER
+                        cd sources/pmm-server/
+                        git lfs install
+                        git lfs pull
+                        git lfs checkout
+                        cd $curdir
+                        export api_tests_commit_sha=$(git submodule status | grep 'pmm-managed' | awk -F ' ' '{print $1}')
+                        export api_tests_branch=$(git config -f .gitmodules submodule.pmm-managed.branch)
+                        echo $api_tests_commit_sha > apiCommitSha
+                        echo $api_tests_branch > apiBranch
+                        cat apiBranch
+                        export pmm_qa_commit_sha=$(git submodule status | grep 'pmm-qa' | awk -F ' ' '{print $1}')
+                        export pmm_qa_branch=$(git config -f .gitmodules submodule.pmm-qa.branch)
+                        echo $pmm_qa_branch > pmmQABranch
+                        echo $pmm_qa_commit_sha > pmmQACommitSha
+                        export pmm_ui_tests_commit_sha=$(git submodule status | grep 'pmm-ui-tests' | awk -F ' ' '{print $1}')
+                        export pmm_ui_tests_branch=$(git config -f .gitmodules submodule.pmm-ui-tests.branch)
+                        echo $pmm_ui_tests_branch > pmmUITestBranch
+                        echo $pmm_ui_tests_commit_sha > pmmUITestsCommitSha
+                        cd $curdir
+                    fi
                 '''
                 installDocker()
                 script {
