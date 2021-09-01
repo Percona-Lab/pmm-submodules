@@ -62,7 +62,7 @@ repack_toolkit() {
             pushd /home/builder/go/src/percona-toolkit
                 wget --directory-prefix \$GOPATH/bin https://github.com/golang/dep/releases/download/v0.5.4/dep-linux-amd64
                 chmod +x \$GOPATH/bin/dep-linux-amd64
-                \$GOPATH/bin/dep-linux-amd64 ensure -v
+                go get ./...
             popd
             sudo chown -R $(id -u):$(id -g) \$GOPATH
         "
