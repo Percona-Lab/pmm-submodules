@@ -1,0 +1,7 @@
+deps:
+- name: pmm-managed
+  branch: PMM-8711
+- name: pmm-update
+  branch: PMM-8711
+- name: pmm-server
+  branch: PMM-8711
