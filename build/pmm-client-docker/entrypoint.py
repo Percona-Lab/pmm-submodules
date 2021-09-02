@@ -87,9 +87,14 @@ def main():
         restart_policy = DoNotRestart
         if PMM_AGENT_SIDECAR:
             restart_policy = RestartOnFail
+            print('Starting pmm-agent for liveness probe ...', file=sys.stderr)
+            agent = subprocess.Popen(['pmm-agent', 'run'])
         status = runner.run(['pmm-agent', 'setup'], restart_policy)
         if status != 0:
             sys.exit(status)
+        if PMM_AGENT_SIDECAR:
+            print('Stopping pmm-agent ...', file=sys.stderr)
+            agent.terminate()
 
     if PMM_AGENT_PRERUN_FILE or PMM_AGENT_PRERUN_SCRIPT:
         print('Starting pmm-agent for prerun ...', file=sys.stderr)
