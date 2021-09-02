@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Tool for getting dependent repository and other operations for build PMM
+Tool for pulling dependent repositories and performing other operations when building PMM
 """
 import argparse
 import configparser
@@ -60,7 +60,7 @@ class Builder():
                     sys.exit(1)
 
     def get_global_branches(self, target_branch_name):
-        found_bracnhes = []
+        found_branches = []
         for dep in self.config['deps']:
             repo_path = '/'.join(dep['url'].split('/')[-2:]).replace('.git', '')
 
@@ -70,9 +70,9 @@ class Builder():
             for branch in repo.get_branches():
                 if target_branch_name == branch.name:
                     logging.info(f'Found branch {target_branch_name} for {dep["name"]}')
-                    found_bracnhes.append(dep["name"])
+                    found_branches.append(dep["name"])
 
-        return found_bracnhes
+        return found_branches
 
     def create_fb_branch(self, branch_name, global_repo=False):
         repo = git.Repo('.')
@@ -99,12 +99,14 @@ class Builder():
 
         for dep_name in found_branches:
             self.custom_config['deps'].append({ 'name': dep_name, 'branch': branch_name})
+
         self.write_custom_config(self.custom_config)
         repo.git.add(['ci.yml', ])
         repo.index.commit(f'Create feature build: {branch_name}')
         origin = repo.remote(name='origin')
         origin.push()
         logging.info('Last ci.yml was pushed')
+
         if GITHUB_TOKEN:
             github_api = Github(GITHUB_TOKEN)
             repo = github_api.get_repo('Percona-Lab/pmm-submodules')
