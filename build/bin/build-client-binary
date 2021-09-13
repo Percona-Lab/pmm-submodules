@@ -35,7 +35,7 @@ gobuild_component() {
          [ ${component} = 'postgres_exporter' ]; then
         build_command="cd /tmp/go/src/${extract_path} && go build -o \${binary_dir}/${result_file} ./${component_path}"
     else
-        build_command="cd /tmp/go/src/${extract_path}/${component_path} && go build -o \${binary_dir}/${result_file}"
+        build_command="cd /tmp/go/src/${extract_path}/${component_path} && go build -o \${binary_dir}/${result_file} ."
     fi
     docker run --rm -v ${tmp_dir}:/home/builder/tmp ${rpmbuild_docker_image} sh -c "
         set -o errexit
