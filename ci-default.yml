@@ -68,7 +68,7 @@ deps:
   component: client
 
 - name: percona-toolkit
-  branch: PMM-8575_migrate_toolkit_to_modules
+  branch: 3.x
   path: sources/percona-toolkit/src/github.com/percona/percona-toolkit
   url: https://github.com/percona/percona-toolkit.git
   component: client
