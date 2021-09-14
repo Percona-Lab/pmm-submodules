@@ -1,0 +1,5 @@
+deps:
+- name: pmm
+  branch: PMM-7811-add-azure-and-do
+- name: pmm-managed
+  branch: PMM-7811-add-azure-and-do
