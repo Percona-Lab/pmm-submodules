@@ -1,0 +1,5 @@
+deps:
+- name: pmm-update
+  branch: PMM-8721-merge-ansible
+- name: pmm-server
+  branch: PMM-8721-merge-ansible
