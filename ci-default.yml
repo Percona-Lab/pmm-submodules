@@ -99,7 +99,7 @@ deps:
   component: server
 
 - name: pmm-server
-  branch: PMM-2.0
+  branch: main
   path: sources/pmm-server
   url: https://github.com/percona/pmm-server
   component: server
