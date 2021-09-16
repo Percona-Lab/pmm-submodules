@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-8160-versions-compatibility
+  - name: pmm-managed
+    branch: PMM-8160-versions-compatibility
+  - name: grafana
+    branch: PMM-8103-mysql-compatible-services
