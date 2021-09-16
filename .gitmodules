@@ -69,15 +69,15 @@
 [submodule "pmm-update"]
 	path = sources/pmm-update/src/github.com/percona/pmm-update
 	url = https://github.com/percona/pmm-update
-	branch = PMM-2.0
+	branch = PMM-7985-Custom-Grafana-Plugins-are-not-available-after-Docker-Way-Upgrade
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = main
+	branch = PMM-7985-Custom-Grafana-Plugins-are-not-available-after-Docker-Way-Upgrade
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = main
+	branch = PMM-7985-Custom-Grafana-Plugins-are-not-available-after-Docker-Way-Upgrade
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
