@@ -1,0 +1,8 @@
+deps:
+# COMMON
+- name: mongodb_exporter
+  branch: PMM-8489_topology_labels_on_mongos
+  path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
+  url: https://github.com/percona/mongodb_exporter.git
+  component: client
+
