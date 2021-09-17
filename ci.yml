@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-8265-fix-typo-in-grafana-menu
