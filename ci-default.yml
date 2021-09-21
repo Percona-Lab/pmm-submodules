@@ -93,7 +93,7 @@ deps:
   component: server
 
 - name: pmm-update
-  branch: PMM-2.0
+  branch: main
   path: sources/pmm-update/src/github.com/percona/pmm-update
   url: https://github.com/percona/pmm-update
   component: server
