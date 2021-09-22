@@ -73,7 +73,7 @@
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = main
+	branch = PMM-8767-Copied-dashboards-with-tags-ended-up-in-unexpected-folder-after-upgrade 
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
