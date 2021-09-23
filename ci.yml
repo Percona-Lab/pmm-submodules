@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-8644-textual-tls-config
+  - name: pmm-managed
+    branch: PMM-8644-textual-tls-config
+  - name: grafana
+    branch: PMM-8027-webhook-ia
