@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-8269-mongodb-pitr-backups
+  - name: pmm-agent
+    branch: PMM-8269-mongodb-pitr-backups
+  - name: pmm-managed
+    branch: PMM-8269-mongodb-pitr-backups
