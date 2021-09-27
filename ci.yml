@@ -1,0 +1,5 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-5669-hardcoded-paths
+  - name: pmm-agent
+    branch: PMM-5669-hardcoded-paths
