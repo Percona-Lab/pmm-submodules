@@ -149,8 +149,9 @@ class Builder():
                 call(["git", "pull", "--ff-only"], cwd=path)
                 commit_id = switch_branch(path, dep['branch'])
 
-                f.write(f'export {dep["name"]}_commit={commit_id}'.replace('-', '_'))
-                f.write(f'export {dep["name"]}_branch={dep["branch"]}\n'.replace('-', '_'))
+                dep_name_underscore = dep["name"].replace('-', '_')
+                f.write(f'export {dep_name_underscore}_commit={commit_id}')
+                f.write(f'export {dep_name_underscore}_branch={dep["branch"]}\n')
 
     def create_release(self):
         pass
@@ -217,7 +218,6 @@ def main():
     parser.add_argument('--release', help='create release candidate')
     parser.add_argument('--tags', help='create tag')
     parser.add_argument('--get_branch', help='get branch name for repo')
-
 
     args = parser.parse_args()
 
