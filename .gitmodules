@@ -77,11 +77,11 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = main
+	branch = PMM-8366-replace-data-qa
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
-	branch = master
+	branch = PMM-8366-replace-data-qa
 
 ## PMM Tests
 [submodule "pmm-qa"]
@@ -91,4 +91,4 @@
 [submodule "pmm-ui-tests"]
 	path = sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
 	url = https://github.com/percona/pmm-ui-tests
-	branch = main
+	branch = PMM-8366-replace-data-qa
