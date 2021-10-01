@@ -1,0 +1,4 @@
+deps:
+  - name: postgres-exporter
+    branch: PMM-8787-concurrency-fix
+    
