@@ -118,7 +118,7 @@ deps:
 
 # QA
 - name: pmm-qa
-  branch: master
+  branch: main
   path: sources/pmm-qa/src/github.com/percona/pmm-qa
   url: https://github.com/percona/pmm-qa
   component: qa
