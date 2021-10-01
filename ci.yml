@@ -5,3 +5,5 @@ deps:
     branch: PMM-8269-mongodb-pitr-backups
   - name: pmm-managed
     branch: PMM-8269-mongodb-pitr-backups
+  - name: pmm-ui-tests
+    branch: PMM-8269-tests
