@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-managed
+    branch: reorganize-api-tests
