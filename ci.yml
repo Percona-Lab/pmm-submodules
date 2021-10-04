@@ -7,3 +7,5 @@ deps:
     branch: PMM-8269-mongodb-pitr-backups
   - name: grafana
     branch: PMM-8271-mongo-pitr
+  - name: pmm-qa
+    branch: main
