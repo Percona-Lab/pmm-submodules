@@ -93,6 +93,7 @@ install -m 0660 example-queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/p
 install -m 0660 example-queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
 install -m 0660 example-queries-postgres.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
 install -m 0660 queries-postgres-uptime.yml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
+install -m 0660 queries.yaml $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
 %if 0%{?systemd}
   install -m 0755 -d $RPM_BUILD_ROOT/%{_unitdir}
   install -m 0644 config/pmm-agent.service %{buildroot}/%{_unitdir}/pmm-agent.service
@@ -218,6 +219,9 @@ fi
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/pmm2
 
 %changelog
+* Tue Aug 24 2021 Vadim Yalovets <vadim.yalovets@percona.com> 
+- PMM-8618 ship default PG queries in PMM.
+
 * Tue Oct 13 2020 Nikolay Khramchikhin <nik@victoriametrics.com>
 - PMM-6396 added vmagent binary.
 
