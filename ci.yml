@@ -1,0 +1,9 @@
+deps:
+  - name: pmm
+    branch: PMM-8673-mongodb-logs
+  - name: pmm-managed
+    branch: PMM-8673-mongodb-logs
+  - name: pmm-agent
+    branch: PMM-8673-mongodb-logs
+  - name: grafana
+    branch: PMM-8762-mongo-backup-logs
