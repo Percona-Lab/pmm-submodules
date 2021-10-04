@@ -7,3 +7,5 @@ deps:
     branch: PMM-8673-mongodb-logs
   - name: grafana
     branch: PMM-8762-mongo-backup-logs
+  - name: pmm-qa
+    branch: main
