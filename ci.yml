@@ -1,3 +1,5 @@
 deps:
   - name: grafana-dashboards
     branch: PMM-8541-home-checks-link
+  - name: pmm-qa
+    branch: main
