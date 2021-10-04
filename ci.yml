@@ -3,3 +3,5 @@ deps:
     branch: PMM-8883-ia-always-on
   - name: pmm-ui-tests
     branch: PMM-8883-ia-always-on
+  - name: pmm-qa
+    branch: main
