@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-8884-missing-mysql-postres-node-metrics
