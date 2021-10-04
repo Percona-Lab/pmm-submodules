@@ -1,5 +1,5 @@
 deps:
-  - name: grafana-dashboards
+  - name: grafana
     branch: PMM-8883-ia-always-on
   - name: pmm-ui-tests
     branch: PMM-8883-ia-always-on
