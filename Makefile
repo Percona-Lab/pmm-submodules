@@ -1,4 +1,11 @@
-.PHONY: all submodules server client clean purge test help default fb
+.PHONY: all submodules deps prepare server client build clean purge fb help default
+
+ifeq (prepare,$(firstword $(MAKECMDGOALS)))
+  # use the rest as arguments for "create"
+  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  # ...and turn them into do-nothing targets
+  $(eval $(RUN_ARGS):;@:)
+endif
 
 default: help
 
@@ -12,6 +19,12 @@ all: client server          ## Build client and server.
 submodules:                 ## Update all sumodules .
 	git submodule update --init --remote --jobs 10
 	git submodule status
+
+deps:						## Get deps from repos
+	python3 ci.py
+
+prepare:					## Create new FB (new style)
+	python3 ci.py -g --prepare $(RUN_ARGS)
 
 server:                     ## Build the server.
 	./build/bin/build-server
