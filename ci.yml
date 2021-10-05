@@ -9,3 +9,5 @@ deps:
     branch: PMM-8271-mongo-pitr
   - name: pmm-qa
     branch: main
+  - name: pmm-ui-tests
+    branch: PMM-8269-tests
