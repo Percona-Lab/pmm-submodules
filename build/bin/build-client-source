@@ -124,7 +124,6 @@ main() {
     prepare_tarball azure_metrics_exporter
 
     prepare_tarball percona-toolkit
-    repack_toolkit
 
     tar -C $(dirname ${source_dir}) -zcpf ${source_tarball} $(basename ${source_dir})
 }
