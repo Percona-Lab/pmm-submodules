@@ -5,3 +5,10 @@ deps:
   path: sources/pmm-managed/src/github.com/percona/pmm-managed
   url: https://github.com/percona/pmm-managed
   component: server
+
+- name: percona-toolkit
+  branch: release-3.3.2
+  path: sources/percona-toolkit/src/github.com/percona/percona-toolkit
+  url: https://github.com/percona/percona-toolkit.git
+  component: client
+
