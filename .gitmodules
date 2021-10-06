@@ -73,15 +73,15 @@
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = main
+	branch = PMM-8967-v7.5.11
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = main
+	branch = PMM-8967-v7.5.11
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
-	branch = main
+	branch = PMM-8967-v7.5.11
 
 ## PMM Tests
 [submodule "pmm-qa"]
