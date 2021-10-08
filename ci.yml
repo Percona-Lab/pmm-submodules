@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-8393-generate-alert-rules-on-startup
