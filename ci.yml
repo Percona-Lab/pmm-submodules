@@ -1,0 +1,7 @@
+deps:
+  - name: grafana
+    branch: PMM-8670-new-alerting-menu
+  - name: pmm-ui-tests
+    branch: PMM-8670-new-alerting-menu
+  - name: pmm-qa
+    branch: main
