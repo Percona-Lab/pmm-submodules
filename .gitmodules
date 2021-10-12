@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-2.0
+	branch = PMM-8704-8894-8895
 
 
 # PMM Client
@@ -13,7 +13,7 @@
 [submodule "pmm-agent"]
 	path = sources/pmm-agent/src/github.com/percona/pmm-agent
 	url = https://github.com/percona/pmm-agent.git
-	branch = main
+	branch = PMM-8704-8894-8895
 [submodule "node_exporter"]
 	path = sources/node_exporter/src/github.com/prometheus/node_exporter
 	url = https://github.com/percona/node_exporter.git
@@ -57,7 +57,7 @@
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
-	branch = main
+	branch = PMM-8704-8894-8895
 [submodule "dbaas-controller"]
 	path = sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
 	url = https://github.com/percona-platform/dbaas-controller
@@ -65,7 +65,7 @@
 [submodule "qan-api2"]
 	path = sources/qan-api2/src/github.com/percona/qan-api2
 	url = https://github.com/percona/qan-api2
-	branch = main
+	branch = PMM-8704-8894-8895
 [submodule "pmm-update"]
 	path = sources/pmm-update/src/github.com/percona/pmm-update
 	url = https://github.com/percona/pmm-update
@@ -77,7 +77,7 @@
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
-	branch = main
+	branch = PMM-8589-PMM-8626-PMM-8590
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
