@@ -34,6 +34,8 @@ gobuild_component() {
          [ ${component} = 'proxysql_exporter' ] || [ ${component} = 'rds_exporter' ] || \
          [ ${component} = 'postgres_exporter' ]; then
         build_command="cd /tmp/go/src/${extract_path} && go build -o \${binary_dir}/${result_file} ./${component_path}"
+    elif [ ${component} = 'percona-toolkit' ]; then
+        build_command="cd /tmp/go/src/${extract_path}/${component_path} && go build -o \${binary_dir}/${result_file} ."
     else
         build_command="go build -o \${binary_dir}/${result_file} ./src/${extract_path}/${component_path}"
     fi
@@ -64,13 +66,6 @@ gobuild_component() {
         tar -C /tmp/go/src/${extract_path} --strip-components=1 -zxpf \${source_dir}/${component}-*.tar.gz
         pushd /tmp/go
             export GOPATH=\$(pwd -P)
-            if [ -d /tmp/go/src/github.com/percona/percona-toolkit ]; then
-                pushd /tmp/go/src/${extract_path}
-                    wget --directory-prefix \$GOPATH/bin https://github.com/golang/dep/releases/download/v0.5.4/dep-linux-amd64
-                    chmod +x \$GOPATH/bin/dep-linux-amd64
-                    \$GOPATH/bin/dep-linux-amd64 ensure -v
-                popd
-            fi
             ${build_command}
         popd
         sudo chown -R $(id -u):$(id -g) /home/builder/tmp
