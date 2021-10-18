@@ -1,0 +1,11 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-8894-query-plan
+  - name: pmm-agent
+    branch: PMM-8894-query-plan
+  - name: pmm
+    branch: PMM-8894-query-plan
+  - name: qan-api2
+    branch: PMM-8894-query-plan
+  - name: grafana-dashboards
+    branch: PMM-8590-plan
