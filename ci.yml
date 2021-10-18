@@ -1,0 +1,5 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-2.0
+  - name: pmm-agent
+    branch: main
