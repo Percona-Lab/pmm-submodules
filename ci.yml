@@ -7,3 +7,5 @@ deps:
     branch: PMM-8894-query-plan
   - name: qan-api2
     branch: PMM-8894-query-plan
+  - name: grafana-dashboards
+    branch: PMM-8590-plan
