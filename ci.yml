@@ -1,0 +1,11 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-8704-pg-monitor-dimensions
+  - name: pmm-agent
+    branch: PMM-8704-pg-monitor-dimensions
+  - name: pmm
+    branch: PMM-8704-pg-monitor-dimensions
+  - name: qan-api2
+    branch: PMM-8704-pg-monitor-dimensions
+  - name: grafana-dashboards
+    branch: PMM-8589-application-name
