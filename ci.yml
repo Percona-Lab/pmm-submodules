@@ -7,3 +7,5 @@ deps:
     branch: PMM-8895-top-query-details
   - name: qan-api2
     branch: PMM-8895-top-query-details
+  - name: grafana-dashboards
+    branch: PMM-8626-top-query
