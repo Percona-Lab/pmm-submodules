@@ -1,0 +1,9 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-8895-top-query-details
+  - name: pmm-agent
+    branch: PMM-8895-top-query-details
+  - name: pmm
+    branch: PMM-8895-top-query-details
+  - name: qan-api2
+    branch: PMM-8895-top-query-details
