@@ -1,5 +1,5 @@
 deps:
   - name: pmm-managed
-    branch: PMM-8981-email-alert-message
+    branch: PMM-8981-alert-message-email
   - name: pmm-ui-tests
     branch: PMM-8981-email-alert-message
