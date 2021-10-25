@@ -23,3 +23,5 @@ deps:
   path: sources/grafana-dashboards
   url: https://github.com/percona/grafana-dashboards
   component: server
+
+## force rebuild #5
