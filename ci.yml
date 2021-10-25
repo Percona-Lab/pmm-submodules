@@ -1,0 +1,25 @@
+deps:
+- name: mongodb_exporter
+  branch: PMM-7116_incorrect_STARTUP_state
+  path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
+  url: https://github.com/percona/mongodb_exporter.git
+  component: client
+
+- name: percona-toolkit
+  branch: PMM-7116_incorrect_STARTUP_state
+  path: sources/percona-toolkit/src/github.com/percona/percona-toolkit
+  url: https://github.com/percona/percona-toolkit.git
+  component: client
+
+# SERVER
+- name: pmm-managed
+  branch: PMM-7116_incorrect_STARTUP_state
+  path: sources/pmm-managed/src/github.com/percona/pmm-managed
+  url: https://github.com/percona/pmm-managed
+  component: server
+
+- name: grafana-dashboards
+  branch: PMM-7116_incorrect_STARTUP_state
+  path: sources/grafana-dashboards
+  url: https://github.com/percona/grafana-dashboards
+  component: server
