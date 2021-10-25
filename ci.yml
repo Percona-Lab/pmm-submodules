@@ -1,0 +1,7 @@
+deps:
+  - name: grafana
+    branch: PMM-8803-friendly-backup-error
+  - name: pmm
+    branch: PMM-8706-improve-incompatible-error
+  - name: pmm-managed
+    branch: PMM-8706-improve-incompatible-error
