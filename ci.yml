@@ -1,3 +1,5 @@
 deps:
   - name: grafana
     branch: PMM-8122-smtp-port-hint
+  - name: pmm-ui-tests
+    branch: PMM-8122-smtp-port-hint
