@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-7845-refactoring-inside-add-instance-folder-2
