@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-8122-smtp-port-hint
