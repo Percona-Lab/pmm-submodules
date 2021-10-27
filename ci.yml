@@ -1,3 +1,4 @@
+deps:
 - name: mongodb_exporter
   branch: release-0.20.9
   path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
