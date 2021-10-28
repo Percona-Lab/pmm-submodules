@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-8387-add-InnoDB-Details-dashboard-to-the-left-menu
