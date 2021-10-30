@@ -5,3 +5,10 @@ deps:
   path: sources/pmm-admin/src/github.com/percona/pmm-admin
   url: https://github.com/percona/pmm-admin.git
   component: client
+
+# QA
+- name: pmm-qa
+  branch: PMM-8259-improve-error-message
+  path: sources/pmm-qa/src/github.com/percona/pmm-qa
+  url: https://github.com/percona/pmm-qa
+  component: qa
