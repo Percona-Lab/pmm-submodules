@@ -1,0 +1,7 @@
+deps:
+# CLIENT
+- name: pmm-admin
+  branch: PMM-8259-improve-error-message
+  path: sources/pmm-admin/src/github.com/percona/pmm-admin
+  url: https://github.com/percona/pmm-admin.git
+  component: client
