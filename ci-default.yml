@@ -1,7 +1,7 @@
 deps:
 # COMMON
 - name: pmm
-  branch: PMM-2.0
+  branch: main
   path: sources/pmm/src/github.com/percona/pmm
   url: https://github.com/percona/pmm
   component: common
