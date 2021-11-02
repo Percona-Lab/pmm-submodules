@@ -7,5 +7,3 @@ deps:
     branch: PMM-8877-turn-on-ia-by-default
   - name: pmm-managed
     branch: PMM-8877-turn-on-ia-by-default
-  - name: pmm-qa
-    branch: PMM-8883-ia-always-on
