@@ -3,3 +3,9 @@ deps:
     branch: PMM-8680-rename-alerting
   - name: pmm-ui-tests
     branch: PMM-8883-ia-always-on
+  - name: pmm
+    branch: PMM-8877-turn-on-ia-by-default
+  - name: pmm-managed
+    branch: PMM-8877-turn-on-ia-by-default
+  - name: pmm-qa
+    branch: PMM-8883-ia-always-on
