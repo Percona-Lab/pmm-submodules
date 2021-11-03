@@ -1,0 +1,12 @@
+deps:
+- name: percona-toolkit
+  branch: PMM-7116_incorrect_STARTUP_state
+  path: sources/percona-toolkit/src/github.com/percona/percona-toolkit
+  url: https://github.com/percona/percona-toolkit.git
+  component: client
+
+- name: grafana-dashboards
+  branch: PMM-7116_incorrect_STARTUP_state
+  path: sources/grafana-dashboards
+  url: https://github.com/percona/grafana-dashboards
+  component: server
