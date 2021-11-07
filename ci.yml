@@ -3,3 +3,5 @@ deps:
   branch: PMM-4466-migrate-database-to-postgres
 - name: pmm-server
   branch: PMM-8962-migrate-database-to-postgres
+- name: pmm-managed
+  branch: PMM-4466-migrate-database-to-postgres
