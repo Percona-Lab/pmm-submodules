@@ -1,0 +1,7 @@
+deps:
+- name: pmm-update
+  branch: PMM-9107-plugins-provisioning
+- name: pmm-server
+  branch: PMM-9107-plugins-provisioning
+- name: grafana-dashboards
+  branch: PMM-9107-plugins-provisioning
