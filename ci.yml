@@ -1,0 +1,10 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-6937
+    url: https://github.com/ritbl/pmm-managed
+  - name: pmm
+    branch: PMM-6937
+    url: https://github.com/ritbl/pmm
+  - name: grafana
+    branch: PMM-7669
+    url: https://github.com/ritbl/grafana
