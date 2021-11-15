@@ -25,13 +25,14 @@ GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
 
 
 class Builder():
-    rootdir = check_output(["git", "rev-parse", "--show-toplevel"]).decode('utf-8').strip()
+    rootdir = check_output(['git', 'rev-parse', '--show-toplevel']).decode('utf-8').strip()
 
     def __init__(self):
         self.config_override = self.read_config_override()
         self.config = self.read_config()
 
         self.merge_configs()
+        self.validate_config()
 
     def read_config_override(self):
         with open(YAML_CONFIG_OVERRIDE, 'r') as f:
@@ -51,6 +52,8 @@ class Builder():
 
                 for dep in self.config['deps']:
                     if dep['name'] == override_dep['name']:
+                        if override_dep['url'] and override_dep['url'] != dep['url']:
+                            dep['repo_url_changed'] = True
                         for (k, v) in override_dep.items():
                             dep[k] = v
                         break
@@ -70,7 +73,7 @@ class Builder():
             for branch in repo.get_branches():
                 if target_branch_name == branch.name:
                     logging.info(f'Found branch {target_branch_name} for {dep["name"]}')
-                    found_branches.append(dep["name"])
+                    found_branches.append(dep['name'])
 
         return found_branches
 
@@ -142,18 +145,25 @@ class Builder():
     def get_deps(self):
         with open(GIT_SOURCES_FILE, 'w+') as f:
             for dep in self.config['deps']:
-                path = os.path.join(self.rootdir, dep["path"])
-                if not os.path.exists(os.path.join(self.rootdir, path)):
+                path = os.path.join(self.rootdir, dep['path'])
+
+                def repo_cloned():
+                    return os.path.exists(os.path.join(self.rootdir, path))
+
+                if dep.get('repo_url_changed') and repo_cloned():
+                    check_call(f'rm -rf {path}'.split())
+
+                if not repo_cloned():
                     target_branch = dep['branch']
-                    target_url = dep["url"]
+                    target_url = dep['url']
                     check_call(
                         f'git clone --depth 1 --single-branch --branch {target_branch} {target_url} {path}'.split())
                 else:
                     logging.info(f'Files in the path for {dep["name"]} is already exist')
-                call(["git", "pull", "--ff-only"], cwd=path)
+                call(['git', 'pull', '--ff-only'], cwd=path)
                 commit_id = switch_branch(path, dep['branch'])
 
-                dep_name_underscore = dep["name"].replace('-', '_')
+                dep_name_underscore = dep['name'].replace('-', '_')
                 f.write(f'export {dep_name_underscore}_commit={commit_id}')
                 f.write(f'export {dep_name_underscore}_branch={dep["branch"]}\n')
 
@@ -162,6 +172,13 @@ class Builder():
 
     def create_tags(self):
         pass
+
+    def validate_config(self):
+        for dep in self.config['deps']:
+            if not os.path.abspath(dep['path']).startswith(os.getcwd()):
+                logging.error(f'For dependency [{dep["name"]} -> {os.path.abspath(dep["path"])}] '
+                              f'path must be in working directory [{os.getcwd()}]')
+                sys.exit(1)
 
 
 class Converter:
@@ -205,7 +222,7 @@ def switch_branch(path, branch):
         branches = [line.split("/")[-1]
                     for line in branches.decode().strip().split("\n")]
         if branch in branches:
-            print(f"Switch to branch: {branch} (from {cur_branch})")
+            print(f'Switch to branch: {branch} (from {cur_branch})')
             check_call(f'git remote set-branches origin {branch}'.split(), cwd=path)
             check_call(f'git fetch --depth 1 origin {branch}'.split(), cwd=path)
             check_call(f'git checkout {branch}'.split(), cwd=path)
