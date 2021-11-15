@@ -1,0 +1,7 @@
+deps:
+# COMMON
+- name: mongodb_exporter
+  branch: PMM-7802_arbiter_auth
+  path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
+  url: https://github.com/percona/mongodb_exporter.git
+  component: client
