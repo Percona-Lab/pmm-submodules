@@ -1,0 +1,3 @@
+deps:
+  - name: core-ui
+    branch: PMM-9081-create-copyToClipboard-component
