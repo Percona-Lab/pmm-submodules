@@ -15,6 +15,16 @@ deps:
     branch: PMM-0000-fix-everything-and-even-more
 ```
 
+To build from a fork, you need to specify `url` for the dependency, for example:
+
+```yaml
+deps:
+  - name: pmm-server
+    url: https://github.com/<your-account>/pmm-server
+    branch: PMM-0000-fix-everything
+```
+
+
 Next, you will commit changes to git and push them to the repo:
 
 ```

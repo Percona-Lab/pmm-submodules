@@ -18,7 +18,7 @@ import git
 logging.basicConfig(stream=sys.stdout, format='[%(levelname)s] %(asctime)s: %(message)s', level=logging.INFO)
 
 YAML_CONFIG = 'ci-default.yml'
-YAML_CONFIG_CUSTOM = 'ci.yml'
+YAML_CONFIG_OVERRIDE = 'ci.yml'
 SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
@@ -28,14 +28,13 @@ class Builder():
     rootdir = check_output(["git", "rev-parse", "--show-toplevel"]).decode('utf-8').strip()
 
     def __init__(self):
-        self.custom_config = self.read_custom_config()
+        self.config_override = self.read_config_override()
         self.config = self.read_config()
 
         self.merge_configs()
 
-
-    def read_custom_config(self):
-        with open(YAML_CONFIG_CUSTOM, 'r') as f:
+    def read_config_override(self):
+        with open(YAML_CONFIG_OVERRIDE, 'r') as f:
             return yaml.load(f, Loader=yaml.FullLoader)
 
     def read_config(self):
@@ -43,20 +42,21 @@ class Builder():
             return yaml.load(f, Loader=yaml.FullLoader)
 
     def write_custom_config(self, config):
-        with open(YAML_CONFIG_CUSTOM, 'w') as f:
+        with open(YAML_CONFIG_OVERRIDE, 'w') as f:
             yaml.dump(config, f, sort_keys=False)
 
     def merge_configs(self):
-        if self.custom_config is not None:
-            # Yep we have high complexity here but list is short
-            for conf in self.custom_config['deps']:
+        if self.config_override is not None:
+            for override_dep in self.config_override['deps']:
+
                 for dep in self.config['deps']:
-                    if dep['name'] == conf['name']:
-                        # TODO add support for other fields
-                        dep['branch'] = conf['branch']
+                    if dep['name'] == override_dep['name']:
+                        for (k, v) in override_dep.items():
+                            dep[k] = v
                         break
                 else:
-                    logging.error(f'Can"t find {conf["name"]} repo from ci.yml in the list of repos in ci-default.yml')
+                    logging.error(
+                        f'Can"t find {override_dep["name"]} repo from ci.yml in the list of repos in ci-default.yml')
                     sys.exit(1)
 
     def get_global_branches(self, target_branch_name):
@@ -88,19 +88,19 @@ class Builder():
         if global_repo:
             found_branches = self.get_global_branches(branch_name)
 
-        if self.custom_config is None:
-            self.custom_config = {'deps': []}
+        if self.config_override is None:
+            self.config_override = {'deps': []}
 
         # change old records
-        for dep in self.custom_config['deps']:
+        for dep in self.config_override['deps']:
             if dep['name'] in found_branches:
                 dep['branch'] = branch_name
                 found_branches.remove(dep['name'])
 
         for dep_name in found_branches:
-            self.custom_config['deps'].append({ 'name': dep_name, 'branch': branch_name})
+            self.config_override['deps'].append({'name': dep_name, 'branch': branch_name})
 
-        self.write_custom_config(self.custom_config)
+        self.write_custom_config(self.config_override)
         repo.git.add(['ci.yml', ])
         repo.index.commit(f'Create feature build: {branch_name}')
         origin = repo.remote(name='origin')
@@ -119,22 +119,25 @@ class Builder():
                 break
             if not hasPR:
                 body = 'Custom branches: \n'
-                for dep in self.custom_config['deps']:
+                for dep in self.config_override['deps']:
                     # TODO we need to have link to PR here
                     body = body + dep['name'] + '\n'
                 pr = repo.create_pull(
-                                title=f'Feature Build: {branch_name}',
-                                body=body,
-                                head=branch_name,
-                                base='PMM-2.0',
-                                draft=True
-                                )
-                logging.info(f'Pull Request was created: https://github.com/Percona-Lab/pmm-submodules/pull/{pr.number}')
+                    title=f'Feature Build: {branch_name}',
+                    body=body,
+                    head=branch_name,
+                    base='PMM-2.0',
+                    draft=True
+                )
+                logging.info(
+                    f'Pull Request was created: https://github.com/Percona-Lab/pmm-submodules/pull/{pr.number}')
             else:
-                logging.info(f'Pull request already exist: https://github.com/Percona-Lab/pmm-submodules/pull/{pr[0].number}')
+                logging.info(
+                    f'Pull request already exist: https://github.com/Percona-Lab/pmm-submodules/pull/{pr[0].number}')
         else:
             logging.info('Branch was created')
-            logging.info(f'Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}?expand=1')
+            logging.info(
+                f'Need to create PR now: https://github.com/Percona-Lab/pmm-submodules/compare/{branch_name}?expand=1')
 
     def get_deps(self):
         with open(GIT_SOURCES_FILE, 'w+') as f:
@@ -143,7 +146,8 @@ class Builder():
                 if not os.path.exists(os.path.join(self.rootdir, path)):
                     target_branch = dep['branch']
                     target_url = dep["url"]
-                    check_call(f'git clone --depth 1 --single-branch --branch {target_branch} {target_url} {path}'.split())
+                    check_call(
+                        f'git clone --depth 1 --single-branch --branch {target_branch} {target_url} {path}'.split())
                 else:
                     logging.info(f'Files in the path for {dep["name"]} is already exist')
                 call(["git", "pull", "--ff-only"], cwd=path)
@@ -155,16 +159,17 @@ class Builder():
 
     def create_release(self):
         pass
+
     def create_tags(self):
         pass
 
-class Converter():
+
+class Converter:
     def __init__(self, origin=SUBMODULES_CONFIG, target=YAML_CONFIG):
         self.origin = origin
         self.target = target
         self.submodules = self.get_list_of_submodules()
         self.convert_gitmodules_to_yaml()
-
 
     def get_list_of_submodules(self):
         config = configparser.ConfigParser()
@@ -177,7 +182,7 @@ class Converter():
             submodules_info['name'] = submodules_name
 
             submodules.append(submodules_info)
-        return {'deps': submodules }
+        return {'deps': submodules}
 
     def convert_gitmodules_to_yaml(self):
         yaml_config = Path(self.target)
@@ -187,6 +192,7 @@ class Converter():
         with open(self.target, 'w') as f:
             yaml.dump(self.submodules, f, sort_keys=False)
         sys.exit(0)
+
 
 def switch_branch(path, branch):
     # symbolic-ref works only if we on branch. If we use commit we use rev-parse instead
@@ -213,7 +219,8 @@ def switch_branch(path, branch):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--prepare', help='prepare feature build')
-    parser.add_argument('--global', '-g', dest='global_repo', help='find and use all bracnhes with this name', action='store_true')
+    parser.add_argument('--global', '-g', dest='global_repo', help='find and use all bracnhes with this name',
+                        action='store_true')
     parser.add_argument('--convert', help='convert .gitmodules to .git-deps.yml', action='store_true')
     parser.add_argument('--release', help='create release candidate')
     parser.add_argument('--tags', help='create tag')
@@ -231,5 +238,6 @@ def main():
         sys.exit(0)
 
     builder.get_deps()
+
 
 main()
