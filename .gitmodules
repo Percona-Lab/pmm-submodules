@@ -56,8 +56,8 @@
 
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
-	url = https://github.com/percona/pmm-managed
-	branch = main
+	url = https://github.com/ritbl/pmm-managed
+	branch = PMM-9155-fix-failing-tests
 [submodule "dbaas-controller"]
 	path = sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
 	url = https://github.com/percona-platform/dbaas-controller
