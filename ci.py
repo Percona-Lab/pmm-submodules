@@ -51,7 +51,6 @@ class Builder():
             for override_dep in self.config_override['deps']:
 
                 for dep in self.config['deps']:
-                    print(dep['name'], override_dep['name'])
                     if dep['name'] == override_dep['name']:
                         if 'url' in override_dep and override_dep['url'] != dep['url']:
                             dep['repo_url_changed'] = True
