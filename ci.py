@@ -52,7 +52,7 @@ class Builder():
 
                 for dep in self.config['deps']:
                     if dep['name'] == override_dep['name']:
-                        if override_dep['url'] and override_dep['url'] != dep['url']:
+                        if 'url' in override_dep and override_dep['url'] != dep['url']:
                             dep['repo_url_changed'] = True
                         for (k, v) in override_dep.items():
                             dep[k] = v
