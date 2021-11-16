@@ -1,0 +1,7 @@
+deps:
+- name: pmm-update
+  branch: PMM-4486-provisioning-dashboards
+- name: pmm-server
+  branch: PMM-4486-provisioning-dashboards
+- name: grafana-dashboards
+  branch: PMM-4486-provisioning-dashboards
