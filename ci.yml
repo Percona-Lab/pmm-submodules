@@ -1,0 +1,7 @@
+deps:
+  - name: grafana
+    branch: PMM-9117-require-tls-smtp
+  - name: pmm
+    branch: PMM-8993-smtp-tls
+  - name: pmm-managed
+    branch: PMM-8993-smtp-tls
