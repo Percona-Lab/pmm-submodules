@@ -2,3 +2,4 @@ deps:
   - name: pmm-managed
     branch: PMM-9155-fix-failing-tests
     url: https://github.com/ritbl/pmm-managed
+
