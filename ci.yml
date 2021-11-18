@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-8461-access-disabled-dbaas
