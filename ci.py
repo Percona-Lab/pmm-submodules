@@ -234,6 +234,9 @@ def switch_branch(path, branch):
 
 
 def main():
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> test")
+    return
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--prepare', help='prepare feature build')
     parser.add_argument('--global', '-g', dest='global_repo', help='find and use all bracnhes with this name',
