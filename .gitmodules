@@ -81,7 +81,7 @@
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
-	branch = main
+	branch = PMM-9101-connect-portal
 
 ## PMM Tests
 [submodule "pmm-qa"]
@@ -91,4 +91,4 @@
 [submodule "pmm-ui-tests"]
 	path = sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
 	url = https://github.com/percona/pmm-ui-tests
-	branch = main
+	branch = PMM-9101-connect-portal
