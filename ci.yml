@@ -1,3 +1,5 @@
 deps:
   - name: grafana
-    branch: PMM-8461-access-disabled-dbaas
+    branch: PMM-9101-connect-portal
+  - name: pmm-ui-tests
+    branch: PMM-9101-connect-portal
