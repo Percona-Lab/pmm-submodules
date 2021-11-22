@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-7669-use-service-db
