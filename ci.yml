@@ -1,0 +1,130 @@
+deps:
+# COMMON
+- name: pmm
+  branch: PMM-8770_enable_safe_metrics_collection
+  path: sources/pmm/src/github.com/percona/pmm
+  url: https://github.com/percona/pmm
+  component: common
+
+# CLIENT
+- name: pmm-admin
+  branch: main
+  path: sources/pmm-admin/src/github.com/percona/pmm-admin
+  url: https://github.com/percona/pmm-admin.git
+  component: client
+
+- name: pmm-agent
+  branch: main
+  path: sources/pmm-agent/src/github.com/percona/pmm-agent
+  url: https://github.com/percona/pmm-agent.git
+  component: client
+
+- name: node_exporter
+  branch: main
+  path: sources/node_exporter/src/github.com/prometheus/node_exporter
+  url: https://github.com/percona/node_exporter.git
+  component: client
+
+- name: mysqld_exporter
+  branch: main
+  path: sources/mysqld_exporter/src/github.com/percona/mysqld_exporter
+  url: https://github.com/percona/mysqld_exporter.git
+  component: client
+
+- name: mongodb_exporter
+  branch: release-0.20.8
+  path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
+  url: https://github.com/percona/mongodb_exporter.git
+  component: client
+
+- name: postgres_exporter
+  branch: main
+  path: sources/postgres_exporter/src/github.com/percona/postgres_exporter
+  url: https://github.com/percona/postgres_exporter
+  component: client
+
+- name: clickhouse_exporter
+  branch: main
+  path: sources/clickhouse_exporter/src/github.com/Percona-Lab/clickhouse_exporter
+  url: https://github.com/Percona-Lab/clickhouse_exporter
+  component: client
+
+- name: proxysql_exporter
+  branch: main
+  path: sources/proxysql_exporter/src/github.com/percona/proxysql_exporter
+  url: https://github.com/percona/proxysql_exporter.git
+  component: client
+
+- name: rds_exporter
+  branch: main
+  path: sources/rds_exporter/src/github.com/percona/rds_exporter
+  url: https://github.com/percona/rds_exporter
+  component: client
+
+- name: azure_metrics_exporter
+  branch: main
+  path: sources/azure_metrics_exporter/src/github.com/percona/azure_metrics_exporter
+  url: https://github.com/percona/azure_metrics_exporter
+  component: client
+
+- name: percona-toolkit
+  branch: release-3.3.2
+  path: sources/percona-toolkit/src/github.com/percona/percona-toolkit
+  url: https://github.com/percona/percona-toolkit.git
+  component: client
+
+# SERVER
+- name: pmm-managed
+  branch: main
+  path: sources/pmm-managed/src/github.com/percona/pmm-managed
+  url: https://github.com/percona/pmm-managed
+  component: server
+
+- name: dbaas-controller
+  branch: main
+  path: sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
+  url: https://github.com/percona-platform/dbaas-controller
+  component: server
+
+- name: qan-api2
+  branch: main
+  path: sources/qan-api2/src/github.com/percona/qan-api2
+  url: https://github.com/percona/qan-api2
+  component: server
+
+- name: pmm-update
+  branch: main
+  path: sources/pmm-update/src/github.com/percona/pmm-update
+  url: https://github.com/percona/pmm-update
+  component: server
+
+- name: pmm-server
+  branch: main
+  path: sources/pmm-server
+  url: https://github.com/percona/pmm-server
+  component: server
+
+- name: grafana-dashboards
+  branch: main
+  path: sources/grafana-dashboards
+  url: https://github.com/percona/grafana-dashboards
+  component: server
+
+- name: grafana
+  branch: main
+  path: sources/grafana/src/github.com/grafana/grafana
+  url: https://github.com/percona-platform/grafana
+  component: server
+
+# QA
+- name: pmm-qa
+  branch: main
+  path: sources/pmm-qa/src/github.com/percona/pmm-qa
+  url: https://github.com/percona/pmm-qa
+  component: qa
+
+- name: pmm-ui-tests
+  branch: main
+  path: sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
+  url: https://github.com/percona/pmm-ui-tests
+  component: qa
