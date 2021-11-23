@@ -5,7 +5,7 @@ to our build system managed by Jenkins as it helps pull the right branches from 
 
 # Installation dependencies
 
-If you build with Python's script first of all install requirements:
+If you build with Python's script then you need install requirements:
 
 ```
 pip install -r requirements.txt
