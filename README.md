@@ -3,6 +3,14 @@
 This repository serves the purpose of creating and/or updating the feature builds for PMM Server and PMM Client. It is auxiliary
 to our build system managed by Jenkins as it helps pull the right branches from different repositories that PMM [consists of](https://github.com/percona/pmm).
 
+# Installation dependencies
+
+If you build with Python's script first of all install requirements:
+
+```
+pip install -r requirements.txt
+```
+
 ## How to create a feature build
 
 To create a feature build (FB) you have to edit `ci.yml` and specify the branches that you want the system to pull when building a feature. For example:
@@ -62,9 +70,15 @@ If you use the same branch name in all repos then you can run:
 ```console
 make prepare <you branch name>
 ```
-
 Branches with "you branch name" will be used for all repos or default branch if the branch with this name isn't found in repo.
 
+### I got error "...branch has no upstream branch"
+
+This happens because of your newly created branch. Your Git is not configured to create that same branch on remote. You can run:
+
+```console
+git config --global push.default current
+```
 ### What's a `global` repo in ci.yml?
 
 It's a branch name that this script will try to find in a repo instead of the default branch (usually called `main` or `PMM-2.0`).
