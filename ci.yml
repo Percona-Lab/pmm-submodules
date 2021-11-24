@@ -1,3 +1,5 @@
 deps:
   - name: pmm-managed
     branch: PMM-7669-use-service-db
+  - name: pmm-admin
+    branch: PMM-6937-db-name-for-postgres
