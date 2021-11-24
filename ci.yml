@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-8282-add-tooltips-to-tls-options
