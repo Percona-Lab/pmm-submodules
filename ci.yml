@@ -1,0 +1,4 @@
+deps:
+  - name: pmm-ui-tests
+    branch: PMM-0000-update-deps
+    component: qa
