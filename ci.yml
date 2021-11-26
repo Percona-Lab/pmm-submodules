@@ -3,3 +3,5 @@ deps:
     branch: PMM-7781-unwind-rules-and-tempates
   - name: pmm-managed
     branch: PMM-7781-unwind-rules-and-tempates
+  - name: grafana
+    branch: PMM-9152
