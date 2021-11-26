@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-9193-add-collectios-metrics-fields-to-mongo
