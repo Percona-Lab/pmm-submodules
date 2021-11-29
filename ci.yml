@@ -12,3 +12,16 @@ deps:
   url: https://github.com/percona/mongodb_exporter.git
   component: client
 
+- name: pmm-admin
+  branch: PMM-8770_enable_safe_metrics_collection
+  path: sources/pmm-admin/src/github.com/percona/pmm-admin
+  url: https://github.com/percona/pmm-admin.git
+  component: client
+
+# SERVER
+- name: pmm-managed
+  branch: PMM-8770_enable_safe_metrics_collection
+  path: sources/pmm-managed/src/github.com/percona/pmm-managed
+  url: https://github.com/percona/pmm-managed
+  component: server
+
