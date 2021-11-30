@@ -23,7 +23,7 @@ SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
 GITHUB_TOKEN_FOR_COMMENT = os.environ.get('GITHUB_API_TOKEN', '')
-PR_URL = os.environ.get('CHANGE_URL', '')
+PR_URL = os.environ.get('CHANGE_URL', 'https://github.com/Percona-Lab/pmm-submodules/pull/2167')
 
 
 class Builder():
