@@ -175,10 +175,10 @@ class Builder():
         pull_number = PR_URL.split('/')[-1:][0]
         
         if GITHUB_TOKEN_FOR_COMMENT == '':
-            sys.exit(1)
+            print('there is no GITHUB_TOKEN_FOR_COMMENT')
         
         if GITHUB_TOKEN == '':
-            sys.exit(1)
+            print('there is no GITHUB_TOKEN')
 
         github_api = Github(GITHUB_TOKEN_FOR_COMMENT)
 
