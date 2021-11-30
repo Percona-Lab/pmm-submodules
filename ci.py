@@ -174,6 +174,10 @@ class Builder():
         submodules_url = '/'.join(PR_URL.split('/')[3:-2])
         pull_number = PR_URL.split('/')[-1:][0]
         
+        print(f'PR URL {PR_URL}')
+        print(f'pull number {pull_number}')
+        print(f'submodules_url {submodules_url}')
+        
         if GITHUB_TOKEN_FOR_COMMENT == '':
             print('there is no GITHUB_TOKEN_FOR_COMMENT ')
         
@@ -192,6 +196,7 @@ class Builder():
             if pull.mergeable_state not in ['clean', 'draft']:
                 outdated_branches_message = f'{outdated_branches_message}\n {pull.html_url}'
 
+        print(f'message is {outdated_branches_message}')
         r = github_api.get_repo(submodules_url)
         pull = r.get_pull(int(pull_number))
         pull.create_issue_comment(outdated_branches_message)
