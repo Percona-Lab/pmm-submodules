@@ -1,0 +1,6 @@
+deps:
+  - name: pmm-ui-tests
+    branch: PMM-8091-tests
+    path: sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
+    url: https://github.com/percona/pmm-ui-tests
+    component: qa
