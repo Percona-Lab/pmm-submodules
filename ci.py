@@ -173,6 +173,12 @@ class Builder():
         outdated_branches_message = 'Looks like there are outdated source branches.\n Here is the list:'
         submodules_url = '/'.join(PR_URL.split('/')[3:-2])
         pull_number = PR_URL.split('/')[-1:][0]
+        
+        if GITHUB_TOKEN_FOR_COMMENT == '':
+            sys.exit(1)
+        
+        if GITHUB_TOKEN == '':
+            sys.exit(1)
 
         github_api = Github(GITHUB_TOKEN_FOR_COMMENT)
 
