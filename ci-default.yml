@@ -111,7 +111,7 @@ deps:
   component: server
 
 - name: grafana
-  branch: main
+  branch: PMM-9193-add-collectios-metrics-fields-to-mongo
   path: sources/grafana/src/github.com/grafana/grafana
   url: https://github.com/percona-platform/grafana
   component: server
