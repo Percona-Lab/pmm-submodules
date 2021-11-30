@@ -22,6 +22,7 @@ YAML_CONFIG_OVERRIDE = 'ci.yml'
 SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
+CHANGE_URL = os.environ.get('CHANGE_URL', '')
 
 
 class Builder():
