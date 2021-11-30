@@ -22,7 +22,7 @@ YAML_CONFIG_OVERRIDE = 'ci.yml'
 SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
-CHANGE_URL = os.environ.get('CHANGE_URL', '')
+PR_URL = os.environ.get('CHANGE_URL', '')
 
 
 class Builder():
@@ -168,6 +168,27 @@ class Builder():
                 f.write(f'export {dep_name_underscore}_commit={commit_id}')
                 f.write(f'export {dep_name_underscore}_branch={dep["branch"]}\n')
 
+    def check_deps(self):
+        outdated_branches_message = 'Looks like there are outdated source branches.\n Here is the list:'
+        submodules_url = '/'.join(PR_URL.split('/')[3:-2])
+        pull_number = PR_URL.split('/')[-1:][0]
+
+        github_api = Github(GITHUB_TOKEN)
+
+        for dep in self.custom_config['deps']:
+            target_url = dep['url']
+            repo_path = '/'.join(target_url.split('/')[-2:])
+            target_branch = dep['branch']
+            r = github_api.get_repo(repo_path)
+            head = f'{r.name}/{target_branch}'
+            pull = r.get_pull(r.get_pulls('open', 'updated', 'asc', 'main', head)[0].number)
+            if pull.mergeable_state not in ['clean', 'draft']:
+                outdated_branches_message = f'{outdated_branches_message}\n {pull.html_url}'
+
+        r = github_api.get_repo(submodules_url)
+        pull = r.get_pull(int(pull_number))
+        pull.create_issue_comment(outdated_branches_message)
+    
     def create_release(self):
         pass
 
@@ -255,6 +276,7 @@ def main():
         builder.create_fb_branch(args.prepare, args.global_repo)
         sys.exit(0)
 
+    builder.check_deps()
     builder.get_deps()
 
 
