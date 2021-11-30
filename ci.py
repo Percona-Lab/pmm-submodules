@@ -175,7 +175,7 @@ class Builder():
 
         github_api = Github(GITHUB_TOKEN)
 
-        for dep in self.custom_config['deps']:
+        for dep in self.config_override['deps']:
             target_url = dep['url']
             repo_path = '/'.join(target_url.split('/')[-2:])
             target_branch = dep['branch']
