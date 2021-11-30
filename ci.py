@@ -22,6 +22,7 @@ YAML_CONFIG_OVERRIDE = 'ci.yml'
 SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
+GITHUB_TOKEN_FOR_COMMENT = os.environ.get('GITHUB_API_TOKEN', '')
 PR_URL = os.environ.get('CHANGE_URL', '')
 
 
@@ -173,7 +174,7 @@ class Builder():
         submodules_url = '/'.join(PR_URL.split('/')[3:-2])
         pull_number = PR_URL.split('/')[-1:][0]
 
-        github_api = Github(GITHUB_TOKEN)
+        github_api = Github(GITHUB_TOKEN_FOR_COMMENT)
 
         for dep in self.config_override['deps']:
             target_url = dep['url']
