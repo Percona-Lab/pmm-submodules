@@ -1,3 +1,4 @@
+deps:
 # SERVER
 - name: pmm-managed
   branch: PMM-9156-pmm-agent-base-path-fix
