@@ -21,9 +21,8 @@ YAML_CONFIG = 'ci-default.yml'
 YAML_CONFIG_OVERRIDE = 'ci.yml'
 SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
-GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
-GITHUB_TOKEN_FOR_COMMENT = os.environ.get('GITHUB_API_TOKEN', '')
-PR_URL = os.environ.get('CHANGE_URL', 'https://github.com/Percona-Lab/pmm-submodules/pull/2167')
+GITHUB_TOKEN = os.environ.get('GITHUB_API_TOKEN', '')
+PR_URL = os.environ.get('CHANGE_URL', '')
 
 
 class Builder():
@@ -170,21 +169,16 @@ class Builder():
                 f.write(f'export {dep_name_underscore}_branch={dep["branch"]}\n')
 
     def check_deps(self):
-        outdated_branches_message = 'Looks like there are outdated source branches.\n Here is the list:'
+        outdated_branches_message = 'Looks like there are outdated source branches.\n Please update them and restart ' \
+                                    'the job'
+        outdated_branches = []
         submodules_url = '/'.join(PR_URL.split('/')[3:-2])
         pull_number = PR_URL.split('/')[-1:][0]
         
-        print(f'PR URL {PR_URL}')
-        print(f'pull number {pull_number}')
-        print(f'submodules_url {submodules_url}')
-        
-        if GITHUB_TOKEN_FOR_COMMENT == '':
-            print('there is no GITHUB_TOKEN_FOR_COMMENT ')
-        
         if GITHUB_TOKEN == '':
-            print('there is no GITHUB_TOKEN ')
+            print('there is no GITHUB_TOKEN')
 
-        github_api = Github(GITHUB_TOKEN_FOR_COMMENT)
+        github_api = Github(GITHUB_TOKEN)
 
         for dep in self.config_override['deps']:
             target_url = dep['url']
@@ -194,12 +188,17 @@ class Builder():
             head = f'{r.organization.name}:{target_branch}'
             pull = r.get_pull(r.get_pulls('open', 'updated', 'asc', 'main', head)[0].number)
             if pull.mergeable_state not in ['clean', 'draft']:
-                outdated_branches_message = f'{outdated_branches_message}\n {pull.html_url}'
+                outdated_branches.append(pull.html_url)
 
-        print(f'message is {outdated_branches_message}')
-        r = github_api.get_repo(submodules_url)
-        pull = r.get_pull(int(pull_number))
-        pull.create_issue_comment(outdated_branches_message)
+        if outdated_branches:
+            for branch_url in outdated_branches:
+                outdated_branches_message = f'{outdated_branches_message}\n {branch_url}'
+            outdated_branches_message = f'{outdated_branches_message}\n Corresponding artifacts will be produced but ' \
+                                        f'without executing tests'
+            r = github_api.get_repo(submodules_url)
+            pull = r.get_pull(int(pull_number))
+            pull.create_issue_comment(outdated_branches_message)
+            os.environ['EXECUTE_TESTS'] = 'false'
     
     def create_release(self):
         pass
