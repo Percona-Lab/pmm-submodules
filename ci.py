@@ -193,12 +193,11 @@ class Builder():
         if outdated_branches:
             for branch_url in outdated_branches:
                 outdated_branches_message = f'{outdated_branches_message}\n {branch_url}'
-            outdated_branches_message = f'{outdated_branches_message}\n Corresponding artifacts will be produced but ' \
-                                        f'without executing tests'
+                
             r = github_api.get_repo(submodules_url)
             pull = r.get_pull(int(pull_number))
             pull.create_issue_comment(outdated_branches_message)
-            os.environ['EXECUTE_TESTS'] = 'false'
+            sys.exit(1)
     
     def create_release(self):
         pass
