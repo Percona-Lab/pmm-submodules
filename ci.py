@@ -186,8 +186,12 @@ class Builder():
             target_branch = dep['branch']
             r = github_api.get_repo(repo_path)
             head = f'{r.organization.name}:{target_branch}'
-            pull = r.get_pull(r.get_pulls('open', 'updated', 'asc', 'main', head)[0].number)
-            if pull.mergeable_state not in ['clean', 'draft']:
+            pulls_list = r.get_pulls('open', 'updated', 'asc', 'main', head)
+            if not pulls_list.totalCount:
+                continue
+
+            pull = r.get_pull(pulls_list[0].number)
+            if pull.mergeable_state in ['behind', 'dirty']:
                 outdated_branches.append(pull.html_url)
 
         if outdated_branches:
