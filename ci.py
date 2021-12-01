@@ -191,7 +191,7 @@ class Builder():
             repo_path = '/'.join(target_url.split('/')[-2:])
             target_branch = dep['branch']
             r = github_api.get_repo(repo_path)
-            head = f'{r.name}/{target_branch}'
+            head = f'{r.organization.name}:{target_branch}'
             pull = r.get_pull(r.get_pulls('open', 'updated', 'asc', 'main', head)[0].number)
             if pull.mergeable_state not in ['clean', 'draft']:
                 outdated_branches_message = f'{outdated_branches_message}\n {pull.html_url}'
