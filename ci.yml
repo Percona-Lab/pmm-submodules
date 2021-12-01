@@ -1,11 +1,1 @@
-deps:
-  - name: pmm-ui-tests
-    branch: PMM-8883-ia-always-on
-    path: sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
-    url: https://github.com/percona/pmm-ui-tests
-    component: qa
-  - name: pmm-managed
-    branch: PMM-9068-test-smtp-config
-    path: sources/pmm-managed/src/github.com/percona/pmm-managed
-    url: https://github.com/percona/pmm-managed
-    component: server
+
