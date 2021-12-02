@@ -1,0 +1,33 @@
+deps:
+# COMMON
+- name: pmm
+  branch: PMM-8770_enable_safe_metrics_collection
+  path: sources/pmm/src/github.com/percona/pmm
+  url: https://github.com/percona/pmm
+  component: common
+
+- name: mongodb_exporter
+  branch: PMM-8770_enable_safe_metrics_collection
+  path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
+  url: https://github.com/percona/mongodb_exporter.git
+  component: client
+
+- name: pmm-admin
+  branch: PMM-8770_enable_safe_metrics_collection
+  path: sources/pmm-admin/src/github.com/percona/pmm-admin
+  url: https://github.com/percona/pmm-admin.git
+  component: client
+
+# SERVER
+- name: pmm-managed
+  branch: PMM-8770_enable_safe_metrics_collection
+  path: sources/pmm-managed/src/github.com/percona/pmm-managed
+  url: https://github.com/percona/pmm-managed
+  component: server
+
+- name: grafana
+  branch: PMM-9193-add-collectios-metrics-fields-to-mongo
+  path: sources/grafana/src/github.com/grafana/grafana
+  url: https://github.com/percona-platform/grafana
+  component: server
+
