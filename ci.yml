@@ -1,0 +1,11 @@
+deps:
+- name: grafana
+  branch: PMM-9101-connect-portal
+- name: pmm-ui-tests
+  branch: PMM-9101-connect-portal
+- name: pmm-server
+  branch: PMM-9060-connect-to-portal
+- name: pmm-managed
+  branch: PMM-9050-Connect-To-Platform-QA
+- name: pmm
+  branch: PMM-9060-connect-to-portal
