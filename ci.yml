@@ -7,7 +7,7 @@ deps:
   component: common
 
 - name: mongodb_exporter
-  branch: PMM-8770_enable_safe_metrics_collection
+  branch: release-0.30.0
   path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
   url: https://github.com/percona/mongodb_exporter.git
   component: client
