@@ -196,7 +196,7 @@ class Builder():
 
         if outdated_branches:
             for branch_url in outdated_branches:
-                outdated_branches_message = f'{outdated_branches_message}\n {branch_url}'
+                outdated_branches_message += f'\n {branch_url}'
                 
             r = github_api.get_repo(submodules_url)
             pull = r.get_pull(int(pull_number))
