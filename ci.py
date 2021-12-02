@@ -22,6 +22,7 @@ YAML_CONFIG_OVERRIDE = 'ci.yml'
 SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
 GITHUB_TOKEN = os.environ.get('GITHUB_API_TOKEN', '')
+# example CHANGE_URL : https://github.com/Percona-Lab/pmm-submodules/pull/2167
 PR_URL = os.environ.get('CHANGE_URL', '')
 
 
@@ -184,13 +185,13 @@ class Builder():
             target_url = dep['url']
             repo_path = '/'.join(target_url.split('/')[-2:])
             target_branch = dep['branch']
-            r = github_api.get_repo(repo_path)
-            head = f'{r.organization.name}:{target_branch}'
-            pulls_list = r.get_pulls('open', 'updated', 'asc', 'main', head)
+            repo = github_api.get_repo(repo_path)
+            head = f'{repo.organization.name}:{target_branch}'
+            pulls_list = repo.get_pulls('open', 'updated', 'asc', 'main', head)
             if not pulls_list.totalCount:
                 continue
 
-            pull = r.get_pull(pulls_list[0].number)
+            pull = repo.get_pull(pulls_list[0].number)
             if pull.mergeable_state in ['behind', 'dirty']:
                 outdated_branches.append(pull.html_url)
 
@@ -198,8 +199,8 @@ class Builder():
             for branch_url in outdated_branches:
                 outdated_branches_message += f'\n {branch_url}'
                 
-            r = github_api.get_repo(submodules_url)
-            pull = r.get_pull(int(pull_number))
+            repo = github_api.get_repo(submodules_url)
+            pull = repo.get_pull(int(pull_number))
             pull.create_issue_comment(outdated_branches_message)
             sys.exit(1)
     
