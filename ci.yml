@@ -1,0 +1,5 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-9050-fix-singout-url
+  - name: grafana
+    branch: PMM-9050-fix-singout-url
