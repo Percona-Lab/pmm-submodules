@@ -21,7 +21,9 @@ YAML_CONFIG = 'ci-default.yml'
 YAML_CONFIG_OVERRIDE = 'ci.yml'
 SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
-GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
+GITHUB_TOKEN = os.environ.get('GITHUB_API_TOKEN', '')
+# example CHANGE_URL : https://github.com/Percona-Lab/pmm-submodules/pull/2167
+PR_URL = os.environ.get('CHANGE_URL', '')
 
 
 class Builder():
@@ -167,6 +169,41 @@ class Builder():
                 f.write(f'export {dep_name_underscore}_commit={commit_id}')
                 f.write(f'export {dep_name_underscore}_branch={dep["branch"]}\n')
 
+    def check_deps(self):
+        outdated_branches_message = 'Looks like there are outdated source branches.\n Please update them and restart ' \
+                                    'the job'
+        outdated_branches = []
+        submodules_url = '/'.join(PR_URL.split('/')[3:-2])
+        pull_number = PR_URL.split('/')[-1:][0]
+        
+        if GITHUB_TOKEN == '':
+            logging.warning('there is no GITHUB_TOKEN')
+
+        github_api = Github(GITHUB_TOKEN)
+
+        for dep in self.config_override['deps']:
+            target_url = dep['url']
+            repo_path = '/'.join(target_url.split('/')[-2:])
+            target_branch = dep['branch']
+            repo = github_api.get_repo(repo_path)
+            head = f'{repo.organization.name}:{target_branch}'
+            pulls_list = repo.get_pulls('open', 'updated', 'asc', 'main', head)
+            if not pulls_list.totalCount:
+                continue
+
+            pull = repo.get_pull(pulls_list[0].number)
+            if pull.mergeable_state in ['behind', 'dirty']:
+                outdated_branches.append(pull.html_url)
+
+        if outdated_branches:
+            for branch_url in outdated_branches:
+                outdated_branches_message += f'\n {branch_url}'
+                
+            repo = github_api.get_repo(submodules_url)
+            pull = repo.get_pull(int(pull_number))
+            pull.create_issue_comment(outdated_branches_message)
+            sys.exit(1)
+    
     def create_release(self):
         pass
 
@@ -254,6 +291,7 @@ def main():
         builder.create_fb_branch(args.prepare, args.global_repo)
         sys.exit(0)
 
+    builder.check_deps()
     builder.get_deps()
 
 
