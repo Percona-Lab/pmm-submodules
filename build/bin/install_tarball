@@ -59,4 +59,17 @@ for FILE in example.prom queries-mysqld.yml example-queries-postgres.yml; do
     done
 done
 
-${INSTALL_COMMAND} -m 0660 /dev/null ${PMM_DIR}/config/pmm-agent.yaml
+while getopts :u flag
+
+do
+    case "${flag}" in
+        u) update=1;;
+        *) echo "Invalid option: -$flag" ;;
+    esac
+done
+
+   if [ "${update}" = "1" ]; then
+       echo "Config file was not removed!"
+   else
+       ${INSTALL_COMMAND} -m 0660 /dev/null ${PMM_DIR}/config/pmm-agent.yaml
+fi
