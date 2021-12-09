@@ -1,0 +1,6 @@
+deps:
+- name: postgres_exporter
+  branch: PMM-9015_timeout_v2
+  path: sources/postgres_exporter/src/github.com/percona/postgres_exporter
+  url: https://github.com/percona/postgres_exporter
+  component: client
