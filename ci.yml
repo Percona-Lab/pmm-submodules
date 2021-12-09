@@ -1,0 +1,7 @@
+deps:
+  - name: grafana
+    branch: PMM-9200-test-smtp
+  - name: pmm
+    branch: PMM-9068-test-smtp-config
+  - name: pmm-managed
+    branch: PMM-9068-test-smtp-config
