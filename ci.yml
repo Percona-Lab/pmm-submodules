@@ -1,0 +1,5 @@
+deps:
+- name: pmm-update
+  branch: PMM-9298-fix-ami-ova-issue
+- name: pmm-server
+  branch: PMM-9298-fix-ami-ova-issue
