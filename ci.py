@@ -181,7 +181,7 @@ class Builder():
 
         github_api = Github(GITHUB_TOKEN)
 
-        # it's no a good idea use config_override here. Maybe we can add 'custom' key?
+        # it's not a good idea to use config_override here. Maybe we can add 'custom' key?
         for dep in self.config_override['deps']:
             if 'url' in dep:
                 target_url = dep['url']
