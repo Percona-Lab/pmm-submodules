@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-9144-MySQL-inventory-page-for-AWS-RDS-or-Aurora
