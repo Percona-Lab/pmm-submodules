@@ -128,7 +128,7 @@ class Builder():
                     # TODO we need to have link to PR here
                     body = body + dep['name'] + '\n'
                 pr = repo.create_pull(
-                    title=f'Feature Build: {branch_name}',
+                    title=f'{branch_name} (FB)',
                     body=body,
                     head=branch_name,
                     base='PMM-2.0',
@@ -175,14 +175,18 @@ class Builder():
         outdated_branches = []
         submodules_url = '/'.join(PR_URL.split('/')[3:-2])
         pull_number = PR_URL.split('/')[-1:][0]
-        
+
         if GITHUB_TOKEN == '':
             logging.warning('there is no GITHUB_TOKEN')
 
         github_api = Github(GITHUB_TOKEN)
 
+        # it's not a good idea to use config_override here. Maybe we can add 'custom' key?
         for dep in self.config_override['deps']:
-            target_url = dep['url']
+            if 'url' in dep:
+                target_url = dep['url']
+            else:
+                target_url = next(item for item in self.config['deps'] if item["name"] == dep['name'])['url']
             repo_path = '/'.join(target_url.split('/')[-2:])
             target_branch = dep['branch']
             repo = github_api.get_repo(repo_path)
@@ -198,12 +202,12 @@ class Builder():
         if outdated_branches:
             for branch_url in outdated_branches:
                 outdated_branches_message += f'\n {branch_url}'
-                
+
             repo = github_api.get_repo(submodules_url)
             pull = repo.get_pull(int(pull_number))
             pull.create_issue_comment(outdated_branches_message)
             sys.exit(1)
-    
+
     def create_release(self):
         pass
 
