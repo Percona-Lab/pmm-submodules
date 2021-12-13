@@ -1,4 +1,3 @@
 deps:
   - name: dbaas-controller
     branch: PMM-8094-fix-paused-state
-
