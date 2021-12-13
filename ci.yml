@@ -1,0 +1,6 @@
+deps:
+- name: pmm-managed
+  branch: fix-checks-tests
+  path: sources/pmm-managed/src/github.com/percona/pmm-managed
+  url: https://github.com/percona/pmm-managed
+  component: server
