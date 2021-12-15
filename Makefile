@@ -24,7 +24,7 @@ deps:						## Get deps from repos
 	python3 ci.py
 trigger:
 	git commit -m 'Trigger FB' --allow-empty
-        git push
+    git push
 
 prepare:					## Create new FB (new style)
 	python3 ci.py -g --prepare $(RUN_ARGS)
