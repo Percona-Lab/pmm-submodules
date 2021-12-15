@@ -1,0 +1,3 @@
+deps:
+- name: pmm-server
+  branch: PMM-9306-update-victoria-metrics-to-1.70.0
