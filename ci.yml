@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-9181-change-alert-toggle-text
