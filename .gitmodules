@@ -57,7 +57,7 @@
 [submodule "pmm-managed"]
 	path = sources/pmm-managed/src/github.com/percona/pmm-managed
 	url = https://github.com/percona/pmm-managed
-	branch = main
+	branch = PMM-4466-migrate-database-to-postgres
 [submodule "dbaas-controller"]
 	path = sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
 	url = https://github.com/percona-platform/dbaas-controller
@@ -69,11 +69,11 @@
 [submodule "pmm-update"]
 	path = sources/pmm-update/src/github.com/percona/pmm-update
 	url = https://github.com/percona/pmm-update
-	branch = main
+	branch = PMM-4466-migrate-database-to-postgres
 [submodule "pmm-server"]
 	path = sources/pmm-server
 	url = https://github.com/percona/pmm-server
-	branch = main
+	branch = PMM-8962-migrate-database-to-postgres
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
@@ -87,7 +87,7 @@
 [submodule "pmm-qa"]
 	path = sources/pmm-qa/src/github.com/percona/pmm-qa
 	url = https://github.com/percona/pmm-qa
-	branch = main
+	branch = PMM-5197-change-postgres-encoding
 [submodule "pmm-ui-tests"]
 	path = sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
 	url = https://github.com/percona/pmm-ui-tests
