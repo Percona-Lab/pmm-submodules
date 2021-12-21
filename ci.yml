@@ -1,0 +1,6 @@
+deps:
+- name: mysqld_exporter
+  branch: main
+  path: sources/mysqld_exporter/src/github.com/percona/mysqld_exporter
+  url: https://github.com/ritbl/mysqld_exporter.git
+  component: client
