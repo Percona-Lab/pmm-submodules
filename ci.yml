@@ -1,0 +1,6 @@
+deps:
+  - name: grafana
+    branch: PMM-9180-remove-rule-expression
+  - name: pmm-ui-tests
+    branch: PMM-9180-remove-rule-expression
+
