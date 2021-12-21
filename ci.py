@@ -168,6 +168,7 @@ class Builder():
                 dep_name_underscore = dep['name'].replace('-', '_')
                 f.write(f'export {dep_name_underscore}_commit={commit_id}')
                 f.write(f'export {dep_name_underscore}_branch={dep["branch"]}\n')
+                f.write(f'export {dep_name_underscore}_url={dep["url"]}\n')
 
     def check_deps(self):
         outdated_branches_message = 'Looks like there are outdated source branches.\n Please update them and restart ' \
@@ -190,7 +191,8 @@ class Builder():
             repo_path = '/'.join(target_url.split('/')[-2:])
             target_branch = dep['branch']
             repo = github_api.get_repo(repo_path)
-            head = f'{repo.organization.name}:{target_branch}'
+            org = repo.organization.name if repo.organization else repo.owner.login
+            head = f'{org}:{target_branch}'
             pulls_list = repo.get_pulls('open', 'updated', 'asc', 'main', head)
             if not pulls_list.totalCount:
                 continue
