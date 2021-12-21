@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-8535-stop-resources-request
