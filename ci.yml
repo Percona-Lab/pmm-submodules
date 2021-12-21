@@ -1,0 +1,3 @@
+deps:
+  - name: percona-toolkit
+    branch: 3.x
