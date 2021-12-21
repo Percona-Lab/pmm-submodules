@@ -22,8 +22,8 @@ RUN yum -y remove nodesource-release-el7-1.noarch
 RUN yum clean all && rm -rf /var/cache/yum
 
 # keep that format for easier search
-ENV GO_VERSION go1.16.4
-ENV GO_CHECKSUM 7154e88f5a8047aad4b80ebace58a059e36e7e2e4eb3b383127a28c711b4ff59
+ENV GO_VERSION go1.17.5
+ENV GO_CHECKSUM bd78114b0d441b029c8fe0341f4910370925a4d270a6a590668840675b0c653e
 ENV GO_RELEASER_CHECKSUM db351ae63bdb9f3834a9a76caa5845b4de4c403855a6524afb1d2a97f82e627f
 
 RUN wget --progress=dot:giga https://dl.google.com/go/${GO_VERSION}.linux-amd64.tar.gz -O /tmp/golang.tar.gz
