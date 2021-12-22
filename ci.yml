@@ -3,3 +3,5 @@ deps:
   branch: PMM-9353-use-external-clickhouse
 - name: pmm-update
   branch: PMM-9353-use-external-clickhouse
+- name: pmm-managed
+  branch: PMM-9353-use-external-clickhouse
