@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-9228-disconnect-from-portal
+- name: pmm-managed
+  branch: PMM-9228-disconnect-from-portal
+- name: grafana
+  branch: PMM-9059-disconnect-portal
