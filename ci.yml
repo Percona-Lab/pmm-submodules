@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-ui-tests
+    branch: codecept-3.2.2
