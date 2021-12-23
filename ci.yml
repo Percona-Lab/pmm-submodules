@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-admin
+    branch: PMM-4879
