@@ -1,0 +1,5 @@
+deps:
+- name: pmm-update
+  branch: PMM-9374-external-victoria-metrics
+- name: pmm-server
+  branch: PMM-9374-external-victoria-metrics
