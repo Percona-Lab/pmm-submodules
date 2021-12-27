@@ -13,6 +13,12 @@ deps:
   url: https://github.com/percona/pmm-admin
   component: client
 
+- name: mongodb_exporter
+  branch: PMM-9312_default_collectors
+  path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
+  url: https://github.com/percona/mongodb_exporter
+  component: client
+
 # SERVER
 - name: pmm-managed
   branch: PMM-9312_default_collectors
