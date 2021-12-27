@@ -1,0 +1,3 @@
+deps:
+- name: pmm-update
+  branch: PMM-7-ha-prototype-1
