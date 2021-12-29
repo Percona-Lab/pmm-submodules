@@ -1,4 +1,5 @@
 # SERVER
+deps:
 - name: pmm-managed
   branch: PMM-8997-api-tests-stability-fix
   path: sources/pmm-managed/src/github.com/percona/pmm-managed
