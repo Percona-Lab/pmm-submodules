@@ -6,4 +6,4 @@ deps:
 - name: pmm-update
   branch: PMM-7-ha-prototype-1
 - name: pmm-server
-  branch: PMM-7-ha-prototype-1
+  branch: PMM-7-ha-prototype
