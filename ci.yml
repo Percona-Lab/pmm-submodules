@@ -1,0 +1,3 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-9383-change-nullpointmode-connected-to-null
