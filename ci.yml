@@ -1,0 +1,3 @@
+deps:
+- name: pmm-managed
+  branch: PMM-8133-tune-vmagent-resources
