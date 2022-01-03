@@ -1,10 +1,11 @@
 deps:
-# CLIENT
-- name: pmm-admin
+
+# SERVER
+- name: pmm-managed
   branch: PMM-9400_Fix_9312_filters
-  path: sources/pmm-admin/src/github.com/percona/pmm-admin
-  url: https://github.com/percona/pmm-admin
-  component: client
+  path: sources/pmm-managed/src/github.com/percona/pmm-managed
+  url: https://github.com/percona/pmm-managed
+  component: server
 
 - name: mongodb_exporter
   branch: PMM-9400_Fix_9312_filters
