@@ -3,4 +3,6 @@ deps:
     branch: PMM-9332-dbaas-pass-secrets-for-aws
   - name: pmm-managed
     branch: PMM-8800-transform-eksctl-kubeconfig
+  - name: grafana
+    branch: PMM-9336-aws-access
  
