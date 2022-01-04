@@ -2,12 +2,9 @@ deps:
 # COMMON
 - name: pmm
   branch: PMM-9245-copy-rule
-  path: sources/pmm/src/github.com/percona/pmm
-  url: https://github.com/percona/pmm
-  component: common
 
 - name: pmm-managed
   branch: PMM-9245-copy-rule
-  path: sources/pmm-managed/src/github.com/percona/pmm-managed
-  url: https://github.com/percona/pmm-managed
-  component: server
+
+- name: grafana
+  branch: PMM-9244-new-rule-copy
