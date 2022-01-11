@@ -1,0 +1,5 @@
+deps:
+- name: pmm-update
+  branch: PMM-9416-fix-pmm-update-bug
+- name: pmm-server
+  branch: PMM-9416-fix-pmm-update-bug
