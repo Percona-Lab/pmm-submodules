@@ -1,0 +1,7 @@
+deps:
+# COMMON
+- name: pmm
+  branch: PMM-9370-silence-all
+
+- name: pmm-managed
+  branch: PMM-9370-silence-all
