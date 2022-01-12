@@ -1,0 +1,14 @@
+deps:
+- name: mongodb_exporter
+  branch: enable-basic-auth
+  path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
+  url: https://github.com/percona/mongodb_exporter
+  component: client
+
+# SERVER
+- name: pmm-managed
+  branch: mongo_exporter_community
+  path: sources/pmm-managed/src/github.com/percona/pmm-managed
+  url: https://github.com/percona/pmm-managed
+  component: server
+
