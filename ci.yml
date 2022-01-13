@@ -5,3 +5,6 @@ deps:
 
 - name: pmm-managed
   branch: PMM-9370-silence-all
+
+- name: grafana
+  branch: PMM-9369-silence-all-alerts
