@@ -1,0 +1,6 @@
+deps:
+- name: pmm-managed
+  branch: PMM-8986-fix-checks-timeouts
+
+- name: pmm-ui-tests
+  branch: PMM-9325-unskip-stt-tests
