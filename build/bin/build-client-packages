@@ -66,19 +66,11 @@ parse_arguments() {
 get_branches() {
     COMPONENT=$1
     if [ ! -e ${WORKDIR}/pmm-submodules ]; then
-        git clone https://github.com/Percona-Lab/pmm-submodules.git ${WORKDIR}/pmm-submodules 1>&2
+        git clone -b $SUBMODULE_BRANCH https://github.com/Percona-Lab/pmm-submodules.git ${WORKDIR}/pmm-submodules 1>&2
     fi
     cd ${WORKDIR}/pmm-submodules
-      echo git reset
       git reset --hard > /dev/null 2>&1
-      echo git clean
-
       git clean -xdf > /dev/null 2>&1
-      echo git checkout
-
-      git checkout $SUBMODULE_BRANCH 
-      echo submodule
-      git submodule status
       git submodule status | grep $COMPONENT | awk '{print $1}'
     cd - >/dev/null
 }
