@@ -14,15 +14,14 @@ main() {
         set -o errexit
         set -o xtrace
 
-        export sudo_path=\$(ls /usr/bin/sudo)
-        [[ ${IMAGE} = ${rpmbuild_docker_image} ]] || \$sudo_path yum -y install git rpm-build
+        [[ ${IMAGE} = ${rpmbuild_docker_image} ]] || yum -y install git rpm-build
         mkdir -p /tmp/pmm
         pushd /home/builder/results
             /home/builder/bin/build-client-packages \
                 --builddir=/tmp/pmm \
                 --build_src_rpm=1
         popd
-        \$sudo_path chown -R $(id -u):$(id -g) /home/builder/results/srpm
+        chown -R $(id -u):$(id -g) /home/builder/results/srpm
     "
 }
 

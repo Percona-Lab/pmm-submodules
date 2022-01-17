@@ -15,7 +15,6 @@ main() {
         set -o xtrace
 
 	export pmm_version=$pmm_version
-        export sudo_path=\$(ls /usr/bin/sudo)
         mkdir -p /tmp/pmm
         pushd /home/builder/results
             /home/builder/bin/build-client-packages \
@@ -25,7 +24,7 @@ main() {
                 --builddir=/tmp/pmm \
                 --build_rpm=1
         popd
-        \$sudo_path chown -R $(id -u):$(id -g) /home/builder/results/rpm
+        chown -R $(id -u):$(id -g) /home/builder/results/rpm
     "
 }
 
