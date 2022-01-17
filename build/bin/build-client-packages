@@ -72,7 +72,7 @@ get_branches() {
       git reset --hard > /dev/null 2>&1
       git clean -xdf > /dev/null 2>&1
       git checkout $SUBMODULE_BRANCH > /dev/null 2>&1
-      git submodule status | grep $COMPONENT | awk '{print $1}' | awk -F'-' '{print $2}'
+      git submodule status | grep $COMPONENT | awk '{print $1}'
     cd - >/dev/null
 }
 
