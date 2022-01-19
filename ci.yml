@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-agent
+    branch: PMM-8141-vmconfig-regenerate
