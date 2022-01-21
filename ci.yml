@@ -4,3 +4,7 @@ deps:
 
 - name: pmm-ui-tests
   branch: PMM-9325-unskip-stt-tests
+  
+- name: grafana
+  branch: PMM-9485-change-run-db-checks-popup
+  
