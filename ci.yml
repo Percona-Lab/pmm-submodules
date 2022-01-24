@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-agent
+    branch: PMM-5279-limit-caches-in-size
