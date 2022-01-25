@@ -1,0 +1,12 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-8308-track_paths_to_exporters_when_troubleshoot_PMM
+    component: common
+
+  # CLIENT
+  - name: pmm-agent
+    branch: PMM-8308-track_paths_to_exporters_when_troubleshoot_PMM
+    path: sources/pmm-admin/src/github.com/percona/pmm-admin
+    url: https://github.com/qwest812/pmm/
+    component: client
