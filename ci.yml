@@ -1,0 +1,5 @@
+deps:
+  - name: mongodb_exporter
+    branch: PMM-9471-context-deadline
+  - name: pmm-managed
+    branch: PMM-9471-two-resolutions-for-mongo-db
