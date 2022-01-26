@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-server
+    branch: PMM-9502-fix-installation-wizard-cve
