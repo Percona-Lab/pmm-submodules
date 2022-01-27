@@ -1,19 +1,19 @@
 deps:
   # COMMON
   - name: pmm
-    branch: https://github.com/percona/pmm/tree/PMM-8308-process-exec-path
+    branch: PMM-8308-process-exec-path
     component: common
 
   # CLIENT
   - name: pmm-admin
-    branch: https://github.com/percona/pmm-admin/tree/PMM-8308-process-exec-path
+    branch: PMM-8308-process-exec-path
     component: client
 
   - name: pmm-agent
-    branch: https://github.com/percona/pmm-agent/tree/PMM-8308-process-exec-path
+    branch: PMM-8308-process-exec-path
     component: client
 
   # SERVER
   - name: pmm-managed
-    branch: https://github.com/percona/pmm-managed/tree/PMM-8308-process-exec-path
+    branch: PMM-8308-process-exec-path
     component: server
