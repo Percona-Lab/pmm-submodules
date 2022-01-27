@@ -1,19 +1,12 @@
 deps:
-  # COMMON
   - name: pmm
     branch: PMM-8308-process-exec-path
-    component: common
 
-  # CLIENT
   - name: pmm-admin
     branch: PMM-8308-process-exec-path
-    component: client
 
   - name: pmm-agent
     branch: PMM-8308-process-exec-path
-    component: client
 
-  # SERVER
   - name: pmm-managed
     branch: PMM-8308-process-exec-path
-    component: server
