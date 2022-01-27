@@ -71,6 +71,7 @@ get_branches() {
     cd ${WORKDIR}/pmm-submodules
       git reset --hard > /dev/null 2>&1
       git clean -xdf > /dev/null 2>&1
+      git submodule update --init
       git submodule status | grep $COMPONENT | awk '{print $1}'
     cd - >/dev/null
 }
