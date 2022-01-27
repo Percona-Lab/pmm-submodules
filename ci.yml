@@ -1,0 +1,3 @@
+deps:
+  - name: grafana-dashboard
+    branch: PMM-9234-QAN-fix-isHistogramAvailable
