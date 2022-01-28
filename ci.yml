@@ -1,0 +1,7 @@
+deps:
+# QA
+- name: pmm-ui-tests
+  branch: PMM-9445-Fix-MongoDB-Exporter-test-issue
+  path: sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
+  url: https://github.com/percona/pmm-ui-tests
+  component: qa
