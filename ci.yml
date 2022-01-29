@@ -1,12 +1,3 @@
 deps:
-#  - name: pmm
-#    branch: PMM-8308-process-exec-path
-
   - name: pmm-admin
-    branch: PMM-8308-process-exec-path
-
-  - name: pmm-agent
-    branch: PMM-8308-process-exec-path
-
-  - name: pmm-managed
     branch: PMM-8308-process-exec-path
