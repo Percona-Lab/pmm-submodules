@@ -9,4 +9,4 @@ deps:
     branch: PMM-8308-process-exec-path
 
   - name: pmm-managed
-    branch: PMM-8308-process-exec-path
+    branch: PMM-8308-process-exec-path-test
