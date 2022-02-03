@@ -1,3 +1,5 @@
 deps:
 - name: grafana-dashboards
   branch: PMM-9399-change-service-name-variable
+- name: dbaas-controller
+  branch: PMM-9496-short-service-name
