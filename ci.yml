@@ -1,0 +1,5 @@
+deps:
+- name: pmm-server
+  branch: PMM-9306-update-victoria-metrics-to-1.72.0
+- name: pmm-managed
+  branch: vm-experiment-downsampling
