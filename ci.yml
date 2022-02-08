@@ -1,0 +1,5 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-7143-Proper-Node-Metrics-expose
+- name: dbaas-controller
+  branch: PMM-9496-short-service-name
