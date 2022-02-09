@@ -1,0 +1,8 @@
+
+deps:
+- name: grafana-dashboards
+  branch: PMM-7143-Proper-Node-Metrics-expose
+- name: dbaas-controller
+  branch: PMM-9496-short-service-name
+- name: pmm-server
+  branch: PMM-9306-update-victoria-metrics-to-1.72.0  
