@@ -109,7 +109,14 @@ class Builder():
         repo.git.add(['ci.yml', ])
         repo.index.commit(f'Create feature build: {branch_name}')
         origin = repo.remote(name='origin')
-        origin.push()
+        try:
+            origin.push()
+        except git.exc.GitCommandError:  # Could be due to no upstream branch.
+            logging.warning('Failed to push %s. This could be due to no matching upstream branch.', branch_name)
+            logging.info('Reattempting to push %s using a lower-level command which also sets upstream branch.', branch_name)
+            push_output = repo.git.push('--set-upstream', 'origin', branch_name)
+            logging.info('Push output was: %s', push_output)
+
         logging.info('Last ci.yml was pushed')
 
         if GITHUB_TOKEN:
