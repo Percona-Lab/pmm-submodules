@@ -1,3 +1,9 @@
 deps:
   - name: grafana
     branch: allow-logging-all-domains
+  - name: pmm-update
+    branch: PMM-8412-v8.3.3
+  - name: grafana-dashboards
+    branch: PMM-8412-v8.3.3
+  - name: pmm-ui-tests
+    branch: PMM-9514-grafana-8-test-tweaks
