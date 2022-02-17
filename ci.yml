@@ -1,0 +1,9 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-9473-extend-mongodb-checks
+
+  - name: pmm-agent
+    branch: PMM-9473-extend-mongodb-checks
+
+  - name: pmm
+    branch: PMM-9473-extend-mongodb-checks
