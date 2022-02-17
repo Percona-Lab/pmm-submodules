@@ -2,7 +2,3 @@ deps:
 - name: node_exporter
   branch: master
   url: https://github.com/pmm-experiments/node_exporter
-
-# SERVER
-- name: pmm-managed
-  branch: PMM-9439-Node-exporter-reforking-PoC
