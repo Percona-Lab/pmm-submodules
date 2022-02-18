@@ -1,0 +1,5 @@
+deps:
+  - name: grafana
+    branch: PMM-9562-PMM-server-IP-warning
+  - name: pmm-ui-tests
+    branch: PMM-9562-PMM-server-IP-warning
