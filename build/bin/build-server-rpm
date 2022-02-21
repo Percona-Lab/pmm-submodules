@@ -27,7 +27,7 @@ is_build_needed() {
     aws s3 sync \
         --region us-east-2 \
         --no-sign-request \
-        s3://pmm-build-cache/${spec_name}-${rpm_version} \
+        s3://pmm-build-cache-backup/${spec_name}-${rpm_version} \
         ${rpms_dir}/${spec_name}-${rpm_version}
 
     local packages=$(find ${rpms_dir}/${spec_name}-${rpm_version} -name "*.rpm" | wc -l)
@@ -100,7 +100,7 @@ build() {
         aws s3 sync \
             --region us-east-2 \
             ${rpms_dir}/${spec_name}-${rpm_version} \
-            s3://pmm-build-cache/${spec_name}-${rpm_version} \
+            s3://pmm-build-cache-backup/${spec_name}-${rpm_version} \
             || :
     fi
 }
