@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-7971-features-toggle-state
