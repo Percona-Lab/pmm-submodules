@@ -1,0 +1,7 @@
+deps:
+ - name: grafana
+   branch: PMM-9573-node-16
+ - name: grafana-dashboards
+   branch: PMM-9573-node-16
+ - name: pmm-ui-tests
+   branch: PMM-9573-node-16
