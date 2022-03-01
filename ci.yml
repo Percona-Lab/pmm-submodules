@@ -1,6 +1,4 @@
 deps:
-  - name: pmm-agent
-    branch: PMM-9377-update-grpc-gateway
   - name: pmm
     branch: PMM-9377-update-grpc-gateway
   - name: pmm-managed
