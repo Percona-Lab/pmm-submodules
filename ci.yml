@@ -1,9 +1,7 @@
 deps:
   - name: grafana
-    branch: PMM-9562-PMM-server-IP-warning
+    branch: PMM-9562-PMM-server-IP-warning-grafana8
   - name: pmm-update
     branch: PMM-8412-v8.3.3
   - name: grafana-dashboards
     branch: PMM-8412-v8.3.3
-  - name: pmm-ui-tests
-    branch: PMM-9562-PMM-server-IP-warning-grafana-8
