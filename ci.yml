@@ -1,4 +1,3 @@
 deps:
-  # SERVER
   - name: pmm-managed
     branch: PMM-9391-out-of-the-box-mysql-replication-alerts
