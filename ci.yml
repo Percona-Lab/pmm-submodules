@@ -1,0 +1,5 @@
+deps:
+  - name: postgres_exporter
+    branch: quick-fix-to-show-pg-up
+  - name: pmm-managed
+    branch: PMM-9477-three-resolutions
