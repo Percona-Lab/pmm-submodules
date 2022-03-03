@@ -1,0 +1,7 @@
+deps:
+# COMMON
+- name: pmm-agent
+  branch: PMM-8203_MariaDB_QUERY_SAMPLE_TEXT
+  path: sources/pmm-agent/src/github.com/percona/pmm-agent
+  url: https://github.com/percona/pmm-agent
+  component: client
