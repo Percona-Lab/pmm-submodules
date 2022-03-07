@@ -1,0 +1,4 @@
+deps:
+  - name: pmm-agent
+    branch: update-prometheus-client
+
