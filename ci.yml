@@ -1,3 +1,4 @@
+deps:
 # SERVER
 - name: pmm-managed
   branch: PMM-9614-add-database-migration
