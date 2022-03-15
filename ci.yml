@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-9636-refine-failed-checks
+  - name: pmm-managed
+    branch: PMM-9636-refine-failed-checks
+  - name: grafana
+    branch: PMM-9637-new-failed-checks
