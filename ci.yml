@@ -1,0 +1,8 @@
+deps:
+  - name: pmm-admin
+    branch: PMM-7326-logging-level
+    url: https://github.com/YaroslavPodorvanov/pmm-admin
+
+  - name: pmm-agent
+    branch: PMM-7326-logging-level
+    url: https://github.com/YaroslavPodorvanov/pmm-agent
