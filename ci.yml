@@ -1,0 +1,8 @@
+deps:
+# COMMON
+- name: pmm
+  branch: fixing-proto
+
+# SERVER
+- name: pmm-managed
+  branch: fixing-proto
