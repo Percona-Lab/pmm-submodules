@@ -1,0 +1,3 @@
+deps:
+- name: pmm-update
+  branch: PMM-9660-fix-dashboard-load-issue
