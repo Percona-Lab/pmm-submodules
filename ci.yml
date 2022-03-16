@@ -7,3 +7,5 @@ deps:
     branch: PMM-9637-new-failed-checks
   - name: pmm-ui-tests
     branch: PMM-9637-new-failed-checks
+  - name: grafana-dashboards
+    branch: PMM-9637-new-failed-checks
