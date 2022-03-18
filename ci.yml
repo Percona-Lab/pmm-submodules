@@ -1,0 +1,3 @@
+deps:
+- name: pmm-managed
+  branch: advisors-v2
