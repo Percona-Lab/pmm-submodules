@@ -115,7 +115,7 @@ class Builder():
             logging.warning(f'Failed to push {branch_name}. This could be due to no matching upstream branch.')
             logging.info(f'Reattempting to push {branch_name} using a lower-level command which also sets upstream branch.')
             push_output = repo.git.push('--set-upstream', 'origin', branch_name)
-            logging.info('Push output was: %s', push_output)
+            logging.info(f'Push output was: {push_output}')
 
         logging.info('Last ci.yml was pushed')
 
