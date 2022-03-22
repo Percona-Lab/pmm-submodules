@@ -1,0 +1,6 @@
+deps:
+- name: dbaas-controller
+  branch: PMM-9426_Update_vm_crd
+  path: sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
+  url: https://github.com/percona-platform/dbaas-controller
+  component: server
