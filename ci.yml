@@ -1,0 +1,3 @@
+deps:
+- name: dbaas-controller
+  branch: PMM-9745-create-password-for-replication
