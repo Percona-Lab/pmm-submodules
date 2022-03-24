@@ -1,3 +1,5 @@
 deps:
   - name: grafana
     branch: PMM-9672-new-routing
+  - name: pmm-ui-tests
+    branch: PMM-9672-new-routing
