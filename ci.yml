@@ -1,0 +1,11 @@
+deps:
+# CLIENT
+- name: pmm-admin
+  branch: PMM-5668-cli-logging-level
+
+- name: pmm-agent
+  branch: PMM-5668-cli-logging-level
+
+# SERVER
+- name: pmm-managed
+  branch: PMM-5668-cli-logging-level
