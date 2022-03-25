@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-agent
+    branch: PMM-9415-fix-first-restore-attempt-never-works
