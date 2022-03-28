@@ -1,0 +1,5 @@
+deps:
+  - name: grafana
+    branch: PMM-7853-rename-stt
+  - name: grafana-dashboards
+    branch: PMM-7853-rename-stt
