@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-agent
+    branch: PMM-9749-data-type-change
