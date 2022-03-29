@@ -21,12 +21,14 @@ ${bin_dir}/build-server-rpm pmm-server
 ${bin_dir}/build-server-rpm pmm-update
 ${bin_dir}/build-server-rpm dbaas-controller
 ${bin_dir}/build-server-rpm dbaas-tools
+${bin_dir}/build-server-rpm pmm-dump
 
 # 3rd-party
 ${bin_dir}/build-server-rpm victoriametrics
 ${bin_dir}/build-server-rpm alertmanager
 ${bin_dir}/build-server-rpm grafana
 
+# build pmm-server
 ${bin_dir}/build-server-docker
 
 # vim: expandtab shiftwidth=4 tabstop=4
