@@ -82,6 +82,10 @@
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
 	branch = main
+[submodule "pmm-dump"]
+	path = sources/pmm-dump
+	url = https://github.com/percona/pmm-dump
+	branch = main
 
 ## PMM Tests
 [submodule "pmm-qa"]
