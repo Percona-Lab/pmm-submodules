@@ -1,5 +1,0 @@
-deps:
-  - name: pmm-server
-    branch: PMM-9752-integrate-pmm-dump
-  - name: pmm-update
-    branch: PMM-9752-integrate-pmm-dump
