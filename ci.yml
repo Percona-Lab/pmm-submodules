@@ -1,0 +1,6 @@
+deps:
+  - name: pmm-server
+    branch: PMM-8082-srv-init
+  - name: pmm-update
+    branch: PMM-8082-srv-init
+    
