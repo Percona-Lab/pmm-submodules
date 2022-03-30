@@ -3,9 +3,5 @@ deps:
     branch: PMM-7853-rename-stt
   - name: grafana-dashboards
     branch: PMM-7853-rename-stt
-  - name: pmm
-    branch: PMM-9636-refine-failed-checks
-  - name: pmm-managed
-    branch: PMM-9636-refine-failed-checks
   - name: pmm-ui-tests
     branch: PMM-7853-rename-stt
