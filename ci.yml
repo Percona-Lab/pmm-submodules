@@ -2,6 +2,6 @@ deps:
   - name: grafana
     branch: PMM-9493-entitlements
   - name: pmm
-    branch: PMM-9712
+    branch: PMM-9712-UserStatus
   - name: pmm-managed
     branch: PMM-9712
