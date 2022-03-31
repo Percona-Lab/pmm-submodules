@@ -2,6 +2,6 @@ deps:
   - name: grafana
     branch: PMM-9309-support-tickets
   - name: pmm
-    branch: PMM-9712
+    branch: PMM-9712-UserStatus
   - name: pmm-managed
     branch: PMM-9712
