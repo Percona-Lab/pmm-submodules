@@ -32,7 +32,7 @@ deps:
   component: client
 
 - name: mongodb_exporter
-  branch: pmm-2.27.0
+  branch: release-0.31.0
   path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
   url: https://github.com/percona/mongodb_exporter
   component: client
