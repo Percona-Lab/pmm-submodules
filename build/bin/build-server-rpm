@@ -24,7 +24,7 @@ is_build_needed() {
     local spec_name=$1
     local rpm_version=$2
 
-    if [ "$cache" != "false" ]; then
+    if [ "$cache" == "auto" ] && [ type -P aws ]; then
         if [ -n "$RPM_EPOCH" ]; then
             aws s3 sync \
                 --region us-east-2 \
@@ -130,7 +130,7 @@ build() {
         "
 
 
-        if [ "$cache" != "false" ]; then
+        if [ "$cache" == "auto" ] && [ type -P aws ]; then
             if [ -n "$RPM_EPOCH" ]; then
                 aws s3 sync \
                     --region us-east-2 \

@@ -3,7 +3,9 @@ root_dir=$(cd $(dirname $0)/../..; pwd -P)
 tmp_dir=${root_dir}/tmp
 
 # Use s3 cache for PMM server build (build-server-rpm)
-cache=${CACHE:-false}
+# Defaults to autodetect for awscli, using it to download cache if found
+# Change to "false" to disable cache
+cache=${CACHE:-auto}
 
 # In VERSION file we can have numeric value like '2.0.0' as well as
 # alphanumeric value like '2.0.0-alpha3' which we can not be used entirely
