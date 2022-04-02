@@ -1,0 +1,10 @@
+deps:
+  - name: pmm
+    branch: PMM-5680-store-agents-logs
+
+  - name: pmm-admin
+    branch: PMM-5680-store-logs
+
+  - name: pmm-agent
+    branch: PMM-5680-store-logs
+
