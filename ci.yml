@@ -1,0 +1,10 @@
+deps:
+  # CLIENT
+  - name: mongodb_exporter
+    branch: enable-basic-auth
+    component: client
+
+  # SERVER
+  - name: pmm-managed
+    branch: mongo_exporter_community
+    component: server
