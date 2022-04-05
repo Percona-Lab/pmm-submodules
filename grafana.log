@@ -1,0 +1,236 @@
+t=2022-04-05T07:04:43+0000 lvl=info msg="The state of unified alerting is still not defined. The decision will be made during as we run the database migrations" logger=settings
+t=2022-04-05T07:04:43+0000 lvl=warn msg="falling back to legacy setting of 'min_interval_seconds'; please use the configuration option in the `unified_alerting` section if Grafana 8 alerts are enabled." logger=settings
+t=2022-04-05T07:04:43+0000 lvl=info msg="Config loaded from" logger=settings file=/usr/share/grafana/conf/defaults.ini
+t=2022-04-05T07:04:43+0000 lvl=info msg="Config loaded from" logger=settings file=/etc/grafana/grafana.ini
+t=2022-04-05T07:04:43+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.data=/srv/grafana"
+t=2022-04-05T07:04:43+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.logs=/srv/logs"
+t=2022-04-05T07:04:43+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.plugins=/srv/grafana/plugins"
+t=2022-04-05T07:04:43+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.server.root_url=https://%(domain)s/graph"
+t=2022-04-05T07:04:43+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.log.mode=console"
+t=2022-04-05T07:04:43+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.log.console.format=console"
+t=2022-04-05T07:04:43+0000 lvl=info msg="Path Home" logger=settings path=/usr/share/grafana
+t=2022-04-05T07:04:43+0000 lvl=info msg="Path Data" logger=settings path=/srv/grafana
+t=2022-04-05T07:04:43+0000 lvl=info msg="Path Logs" logger=settings path=/srv/logs
+t=2022-04-05T07:04:43+0000 lvl=info msg="Path Plugins" logger=settings path=/srv/grafana/plugins
+t=2022-04-05T07:04:43+0000 lvl=info msg="Path Provisioning" logger=settings path=/usr/share/grafana/conf/provisioning
+t=2022-04-05T07:04:43+0000 lvl=info msg="App mode production" logger=settings
+t=2022-04-05T07:04:43+0000 lvl=info msg="Connecting to DB" logger=sqlstore dbtype=postgres
+t=2022-04-05T07:04:43+0000 lvl=eror msg="failed to determine the status of alerting engine. Enable either legacy or unified alerting explicitly and try again" logger=migrator err="failed to verify if the 'alert' table exists: pq: the database system is starting up"
+t=2022-04-05T07:04:44+0000 lvl=info msg="The state of unified alerting is still not defined. The decision will be made during as we run the database migrations" logger=settings
+t=2022-04-05T07:04:44+0000 lvl=warn msg="falling back to legacy setting of 'min_interval_seconds'; please use the configuration option in the `unified_alerting` section if Grafana 8 alerts are enabled." logger=settings
+t=2022-04-05T07:04:44+0000 lvl=info msg="Config loaded from" logger=settings file=/usr/share/grafana/conf/defaults.ini
+t=2022-04-05T07:04:44+0000 lvl=info msg="Config loaded from" logger=settings file=/etc/grafana/grafana.ini
+t=2022-04-05T07:04:44+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.data=/srv/grafana"
+t=2022-04-05T07:04:44+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.logs=/srv/logs"
+t=2022-04-05T07:04:44+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.plugins=/srv/grafana/plugins"
+t=2022-04-05T07:04:44+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.server.root_url=https://%(domain)s/graph"
+t=2022-04-05T07:04:44+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.log.mode=console"
+t=2022-04-05T07:04:44+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.log.console.format=console"
+t=2022-04-05T07:04:44+0000 lvl=info msg="Path Home" logger=settings path=/usr/share/grafana
+t=2022-04-05T07:04:44+0000 lvl=info msg="Path Data" logger=settings path=/srv/grafana
+t=2022-04-05T07:04:44+0000 lvl=info msg="Path Logs" logger=settings path=/srv/logs
+t=2022-04-05T07:04:44+0000 lvl=info msg="Path Plugins" logger=settings path=/srv/grafana/plugins
+t=2022-04-05T07:04:44+0000 lvl=info msg="Path Provisioning" logger=settings path=/usr/share/grafana/conf/provisioning
+t=2022-04-05T07:04:44+0000 lvl=info msg="App mode production" logger=settings
+t=2022-04-05T07:04:44+0000 lvl=info msg="Connecting to DB" logger=sqlstore dbtype=postgres
+t=2022-04-05T07:04:44+0000 lvl=info msg="Starting DB migrations" logger=migrator
+t=2022-04-05T07:04:44+0000 lvl=info msg="migrations completed" logger=migrator performed=0 skipped=377 duration=13.753901ms
+t=2022-04-05T07:04:44+0000 lvl=info msg="Initialising plugins" logger=plugin.manager
+t=2022-04-05T07:04:44+0000 lvl=warn msg="Skipping finding plugins as directory does not exist" logger=plugin.finder dir=/usr/share/grafana/plugins-bundled
+t=2022-04-05T07:04:44+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-check-panel-home pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-check-home
+t=2022-04-05T07:04:44+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-qan-app-panel pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-qan
+t=2022-04-05T07:04:44+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-pt-summary-panel pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-pt-summary/panel
+t=2022-04-05T07:04:44+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-update pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-update
+t=2022-04-05T07:04:44+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-pt-summary-datasource pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-pt-summary/datasource
+t=2022-04-05T07:04:44+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=vertamedia-clickhouse-datasource pluginDir=/srv/grafana/plugins/vertamedia-clickhouse-datasource
+t=2022-04-05T07:04:44+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-app pluginDir=/srv/grafana/plugins/pmm-app/dist
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=grafana-polystat-panel
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=yesoreyeram-boomtable-panel
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-check-panel-home
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-qan-app-panel
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=grafana-worldmap-panel
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-pt-summary-panel
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-update
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=grafana-piechart-panel
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-pt-summary-datasource
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=digiapulssi-breadcrumb-panel
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=natel-discrete-panel
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=jdbranham-diagram-panel
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=petrslavotinek-carpetplot-panel
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=camptocamp-prometheus-alertmanager-datasource
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=vertamedia-clickhouse-datasource
+t=2022-04-05T07:04:44+0000 lvl=info msg="Starting ClickHouse datasource backend..." logger=plugin.initializer pluginID=vertamedia-clickhouse-datasource
+t=2022-04-05T07:04:44+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-app
+t=2022-04-05T07:04:44+0000 lvl=info msg="Live Push Gateway initialization" logger=live.push_http
+t=2022-04-05T07:04:45+0000 lvl=info msg="Updating app from configuration " logger=provisioning.plugins type=pmm-app enabled=true
+t=2022-04-05T07:04:45+0000 lvl=info msg="HTTP Server Listen" logger=http.server address=[::]:3000 protocol=http subUrl=/graph socket=
+t=2022-04-05T07:04:45+0000 lvl=info msg="warming cache for startup" logger=ngalert
+t=2022-04-05T07:04:45+0000 lvl=info msg="starting MultiOrg Alertmanager" logger=ngalert.multiorg.alertmanager
+t=2022-04-05T07:14:19+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=127.0.0.1 time_ms=1 size=59 referer=
+t=2022-04-05T07:14:22+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=0 size=56 referer=
+t=2022-04-05T07:14:22+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:14:22+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:14:22+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=0 size=56 referer=
+t=2022-04-05T07:14:22+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:14:22+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:14:27+0000 lvl=info msg="Successful Login" logger=http.server User=admin@localhost
+t=2022-04-05T07:14:33+0000 lvl=eror msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=GET path=/percona-api/user/oauth-token status=500 remote_addr=127.0.0.1 time_ms=9 size=57 referer=
+t=2022-04-05T07:14:34+0000 lvl=info msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=GET path=/api/live/ws status=0 remote_addr=127.0.0.1 time_ms=3 size=0 referer=
+t=2022-04-05T07:14:35+0000 lvl=info msg="Initialized channel handler" logger=live channel=grafana/dashboard/uid/pmm-home address=grafana/dashboard/uid/pmm-home
+t=2022-04-05T07:14:46+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=127.0.0.1 time_ms=1 size=59 referer=http://example.com
+t=2022-04-05T07:16:28+0000 lvl=info msg="Shutdown started" logger=server reason="System signal: terminated"
+t=2022-04-05T07:16:28+0000 lvl=info msg="The state of unified alerting is still not defined. The decision will be made during as we run the database migrations" logger=settings
+t=2022-04-05T07:16:28+0000 lvl=warn msg="falling back to legacy setting of 'min_interval_seconds'; please use the configuration option in the `unified_alerting` section if Grafana 8 alerts are enabled." logger=settings
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config loaded from" logger=settings file=/usr/share/grafana/conf/defaults.ini
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config loaded from" logger=settings file=/etc/grafana/grafana.ini
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.data=/srv/grafana"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.logs=/srv/logs"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.plugins=/srv/grafana/plugins"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.server.domain=3.12.103.34"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.server.root_url=https://%(domain)s/graph"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.name=Percona Account"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.enabled=true"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.client_id=0oa3ebsh7zRBnDQxa1d7"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.scopes=openid profile email offline_access percona"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.role_attribute_path=contains(portal_admin_orgs[*], '5deed84c-26b3-4100-8925-d066bc956495') && 'Admin' || 'Viewer'"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.auth_url=https://id-dev.percona.com/oauth2/aus15pi5rjdtfrcH51d7/v1/authorize"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.token_url=https://id-dev.percona.com/oauth2/aus15pi5rjdtfrcH51d7/v1/token"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.api_url=https://id-dev.percona.com/oauth2/aus15pi5rjdtfrcH51d7/v1/userinfo"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.use_pkce=true"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.log.mode=console"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.log.console.format=console"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Config overridden from Environment variable" logger=settings var="GF_AUTH_SIGNOUT_REDIRECT_URL=https://id-dev.percona.com/login/signout?fromURI=https://3.12.103.34/graph/login"
+t=2022-04-05T07:16:28+0000 lvl=info msg="Path Home" logger=settings path=/usr/share/grafana
+t=2022-04-05T07:16:28+0000 lvl=info msg="Path Data" logger=settings path=/srv/grafana
+t=2022-04-05T07:16:28+0000 lvl=info msg="Path Logs" logger=settings path=/srv/logs
+t=2022-04-05T07:16:28+0000 lvl=info msg="Path Plugins" logger=settings path=/srv/grafana/plugins
+t=2022-04-05T07:16:28+0000 lvl=info msg="Path Provisioning" logger=settings path=/usr/share/grafana/conf/provisioning
+t=2022-04-05T07:16:28+0000 lvl=info msg="App mode production" logger=settings
+t=2022-04-05T07:16:28+0000 lvl=info msg="Connecting to DB" logger=sqlstore dbtype=postgres
+t=2022-04-05T07:16:28+0000 lvl=info msg="Starting DB migrations" logger=migrator
+t=2022-04-05T07:16:28+0000 lvl=info msg="migrations completed" logger=migrator performed=0 skipped=377 duration=1.052923ms
+t=2022-04-05T07:16:28+0000 lvl=info msg="Initialising plugins" logger=plugin.manager
+t=2022-04-05T07:16:28+0000 lvl=warn msg="Skipping finding plugins as directory does not exist" logger=plugin.finder dir=/usr/share/grafana/plugins-bundled
+t=2022-04-05T07:16:29+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-update pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-update
+t=2022-04-05T07:16:29+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-qan-app-panel pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-qan
+t=2022-04-05T07:16:29+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-pt-summary-panel pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-pt-summary/panel
+t=2022-04-05T07:16:29+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-pt-summary-datasource pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-pt-summary/datasource
+t=2022-04-05T07:16:29+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-app pluginDir=/srv/grafana/plugins/pmm-app/dist
+t=2022-04-05T07:16:29+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=vertamedia-clickhouse-datasource pluginDir=/srv/grafana/plugins/vertamedia-clickhouse-datasource
+t=2022-04-05T07:16:29+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-check-panel-home pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-check-home
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=grafana-piechart-panel
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=jdbranham-diagram-panel
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-update
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=digiapulssi-breadcrumb-panel
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=petrslavotinek-carpetplot-panel
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-qan-app-panel
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-pt-summary-panel
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=grafana-worldmap-panel
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-pt-summary-datasource
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=yesoreyeram-boomtable-panel
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=camptocamp-prometheus-alertmanager-datasource
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-app
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=natel-discrete-panel
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=grafana-polystat-panel
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=vertamedia-clickhouse-datasource
+t=2022-04-05T07:16:29+0000 lvl=info msg="Starting ClickHouse datasource backend..." logger=plugin.initializer pluginID=vertamedia-clickhouse-datasource
+t=2022-04-05T07:16:29+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-check-panel-home
+t=2022-04-05T07:16:29+0000 lvl=info msg="Live Push Gateway initialization" logger=live.push_http
+t=2022-04-05T07:16:29+0000 lvl=info msg="Updating app from configuration " logger=provisioning.plugins type=pmm-app enabled=true
+t=2022-04-05T07:16:29+0000 lvl=info msg="warming cache for startup" logger=ngalert
+t=2022-04-05T07:16:29+0000 lvl=info msg="starting MultiOrg Alertmanager" logger=ngalert.multiorg.alertmanager
+t=2022-04-05T07:16:29+0000 lvl=info msg="HTTP Server Listen" logger=http.server address=[::]:3000 protocol=http subUrl=/graph socket=
+t=2022-04-05T07:16:30+0000 lvl=info msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=GET path=/api/live/ws status=0 remote_addr=127.0.0.1 time_ms=5 size=0 referer=
+t=2022-04-05T07:16:30+0000 lvl=info msg="Initialized channel handler" logger=live channel=grafana/dashboard/uid/pmm-home address=grafana/dashboard/uid/pmm-home
+t=2022-04-05T07:16:40+0000 lvl=eror msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=GET path=/percona-api/user/oauth-token status=500 remote_addr=127.0.0.1 time_ms=3 size=57 referer=
+t=2022-04-05T07:16:40+0000 lvl=info msg="Shutdown started" logger=server reason="System signal: terminated"
+t=2022-04-05T07:16:41+0000 lvl=info msg="The state of unified alerting is still not defined. The decision will be made during as we run the database migrations" logger=settings
+t=2022-04-05T07:16:41+0000 lvl=warn msg="falling back to legacy setting of 'min_interval_seconds'; please use the configuration option in the `unified_alerting` section if Grafana 8 alerts are enabled." logger=settings
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config loaded from" logger=settings file=/usr/share/grafana/conf/defaults.ini
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config loaded from" logger=settings file=/etc/grafana/grafana.ini
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.data=/srv/grafana"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.logs=/srv/logs"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.plugins=/srv/grafana/plugins"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.server.domain=3.12.103.34"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.server.root_url=https://%(domain)s/graph"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.name=Percona Account"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.enabled=true"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.client_id=0oa3ebsh7zRBnDQxa1d7"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.scopes=openid profile email offline_access percona"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.role_attribute_path=contains(portal_admin_orgs[*], '') && 'Admin' || 'Viewer'"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.auth_url=https://id-dev.percona.com/oauth2/aus15pi5rjdtfrcH51d7/v1/authorize"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.token_url=https://id-dev.percona.com/oauth2/aus15pi5rjdtfrcH51d7/v1/token"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.api_url=https://id-dev.percona.com/oauth2/aus15pi5rjdtfrcH51d7/v1/userinfo"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.auth.generic_oauth.use_pkce=true"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.log.mode=console"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.log.console.format=console"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Config overridden from Environment variable" logger=settings var="GF_AUTH_SIGNOUT_REDIRECT_URL=https://id-dev.percona.com/login/signout?fromURI=https://3.12.103.34/graph/login"
+t=2022-04-05T07:16:41+0000 lvl=info msg="Path Home" logger=settings path=/usr/share/grafana
+t=2022-04-05T07:16:41+0000 lvl=info msg="Path Data" logger=settings path=/srv/grafana
+t=2022-04-05T07:16:41+0000 lvl=info msg="Path Logs" logger=settings path=/srv/logs
+t=2022-04-05T07:16:41+0000 lvl=info msg="Path Plugins" logger=settings path=/srv/grafana/plugins
+t=2022-04-05T07:16:41+0000 lvl=info msg="Path Provisioning" logger=settings path=/usr/share/grafana/conf/provisioning
+t=2022-04-05T07:16:41+0000 lvl=info msg="App mode production" logger=settings
+t=2022-04-05T07:16:41+0000 lvl=info msg="Connecting to DB" logger=sqlstore dbtype=postgres
+t=2022-04-05T07:16:41+0000 lvl=info msg="Starting DB migrations" logger=migrator
+t=2022-04-05T07:16:41+0000 lvl=info msg="migrations completed" logger=migrator performed=0 skipped=377 duration=728.236µs
+t=2022-04-05T07:16:41+0000 lvl=info msg="Initialising plugins" logger=plugin.manager
+t=2022-04-05T07:16:41+0000 lvl=warn msg="Skipping finding plugins as directory does not exist" logger=plugin.finder dir=/usr/share/grafana/plugins-bundled
+t=2022-04-05T07:16:41+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-pt-summary-panel pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-pt-summary/panel
+t=2022-04-05T07:16:41+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-app pluginDir=/srv/grafana/plugins/pmm-app/dist
+t=2022-04-05T07:16:41+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-update pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-update
+t=2022-04-05T07:16:41+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-qan-app-panel pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-qan
+t=2022-04-05T07:16:41+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-pt-summary-datasource pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-pt-summary/datasource
+t=2022-04-05T07:16:41+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=pmm-check-panel-home pluginDir=/srv/grafana/plugins/pmm-app/dist/pmm-check-home
+t=2022-04-05T07:16:41+0000 lvl=warn msg="Permitting unsigned plugin. This is not recommended" logger=plugin.signature.validator pluginID=vertamedia-clickhouse-datasource pluginDir=/srv/grafana/plugins/vertamedia-clickhouse-datasource
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=jdbranham-diagram-panel
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=natel-discrete-panel
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-pt-summary-panel
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-app
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-update
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=petrslavotinek-carpetplot-panel
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-qan-app-panel
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=grafana-polystat-panel
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=grafana-piechart-panel
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-pt-summary-datasource
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=camptocamp-prometheus-alertmanager-datasource
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=pmm-check-panel-home
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=yesoreyeram-boomtable-panel
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=grafana-worldmap-panel
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=vertamedia-clickhouse-datasource
+t=2022-04-05T07:16:41+0000 lvl=info msg="Starting ClickHouse datasource backend..." logger=plugin.initializer pluginID=vertamedia-clickhouse-datasource
+t=2022-04-05T07:16:41+0000 lvl=info msg="Plugin registered" logger=plugin.manager pluginId=digiapulssi-breadcrumb-panel
+t=2022-04-05T07:16:41+0000 lvl=info msg="Live Push Gateway initialization" logger=live.push_http
+t=2022-04-05T07:16:41+0000 lvl=info msg="Updating app from configuration " logger=provisioning.plugins type=pmm-app enabled=true
+t=2022-04-05T07:16:41+0000 lvl=info msg="HTTP Server Listen" logger=http.server address=[::]:3000 protocol=http subUrl=/graph socket=
+t=2022-04-05T07:16:41+0000 lvl=info msg="warming cache for startup" logger=ngalert
+t=2022-04-05T07:16:41+0000 lvl=info msg="starting MultiOrg Alertmanager" logger=ngalert.multiorg.alertmanager
+t=2022-04-05T07:16:43+0000 lvl=info msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=GET path=/api/live/ws status=0 remote_addr=127.0.0.1 time_ms=3 size=0 referer=
+t=2022-04-05T07:16:43+0000 lvl=info msg="Initialized channel handler" logger=live channel=grafana/dashboard/uid/pmm-home address=grafana/dashboard/uid/pmm-home
+t=2022-04-05T07:16:44+0000 lvl=info msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=GET path=/logout status=302 remote_addr=127.0.0.1 time_ms=8 size=117 referer=https://3.12.103.34/graph/settings/percona-platform
+t=2022-04-05T07:16:51+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:16:51+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:16:51+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:16:51+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:16:51+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:16:51+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=0 size=56 referer=
+t=2022-04-05T07:16:53+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=302 remote_addr=127.0.0.1 time_ms=0 size=357 referer=https://3.12.103.34/graph/login
+t=2022-04-05T07:17:10+0000 lvl=info msg="state check" logger=oauth queryState=7b5714f2704d72e60628f5820748b9d9440238dda10693aaeed70d982a301ec6 cookieState=7b5714f2704d72e60628f5820748b9d9440238dda10693aaeed70d982a301ec6
+t=2022-04-05T07:17:11+0000 lvl=warn msg="Failed to extract role" logger=oauth.generic_oauth error="failed to search user info JSON response with provided path: \"contains(portal_admin_orgs[*], '') && 'Admin' || 'Viewer'\": Invalid type for: <nil>, expected: []jmespath.jpType{\"array\", \"string\"}"
+t=2022-04-05T07:17:11+0000 lvl=info msg="Successful Login" logger=http.server User=zoriana.stefanyshyn@percona.com
+t=2022-04-05T07:17:11+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/login/generic_oauth status=302 remote_addr=127.0.0.1 time_ms=544 size=54 referer=
+t=2022-04-05T07:17:18+0000 lvl=info msg="Request Completed" logger=context userId=2 orgId=1 uname=zoriana.stefanyshyn@percona.com method=GET path=/api/live/ws status=0 remote_addr=127.0.0.1 time_ms=3 size=0 referer=
+t=2022-04-05T07:17:43+0000 lvl=info msg="Request Completed" logger=context userId=2 orgId=1 uname=zoriana.stefanyshyn@percona.com method=GET path=/api/live/ws status=0 remote_addr=127.0.0.1 time_ms=2 size=0 referer=
+t=2022-04-05T07:24:53+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/ status=302 remote_addr=127.0.0.1 time_ms=1 size=59 referer=
+t=2022-04-05T07:25:02+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:25:02+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:25:02+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:25:02+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=1 size=56 referer=
+t=2022-04-05T07:25:02+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=2 size=56 referer=
+t=2022-04-05T07:25:02+0000 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/api/user status=401 remote_addr=127.0.0.1 time_ms=3 size=56 referer=
+t=2022-04-05T07:25:06+0000 lvl=info msg="Successful Login" logger=http.server User=admin@localhost
+t=2022-04-05T07:25:28+0000 lvl=eror msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=GET path=/percona-api/user/oauth-token status=500 remote_addr=127.0.0.1 time_ms=7 size=57 referer=
+t=2022-04-05T07:25:29+0000 lvl=info msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=GET path=/api/live/ws status=0 remote_addr=127.0.0.1 time_ms=3 size=0 referer=
+t=2022-04-05T07:26:13+0000 lvl=info msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=GET path=/logs status=404 remote_addr=127.0.0.1 time_ms=18 size=11833 referer=
+t=2022-04-05T07:26:22+0000 lvl=eror msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=GET path=/percona-api/user/oauth-token status=500 remote_addr=127.0.0.1 time_ms=6 size=57 referer=
+t=2022-04-05T07:26:23+0000 lvl=info msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=GET path=/api/live/ws status=0 remote_addr=127.0.0.1 time_ms=10 size=0 referer=
