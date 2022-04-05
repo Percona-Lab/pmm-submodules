@@ -1,0 +1,3 @@
+deps:
+- name: pmm-update
+  branch: PMM-9793-fix-upgrade
