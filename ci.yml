@@ -1,0 +1,13 @@
+deps:
+  # COMMON
+  - name: proxysql_exporter
+    branch: main
+    path: PMM-9350_Upgrade_go-jwt
+    url: https://github.com/percona/proxysql_exporter
+    component: client
+
+  - name: pmm-agent
+    branch: main
+    path: PMM-9350_Upgrade_go-jwt
+    url: https://github.com/percona/pmm-agent
+    component: client
