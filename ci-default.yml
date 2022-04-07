@@ -37,6 +37,7 @@ deps:
     url: https://github.com/percona/mongodb_exporter
     component: client
 
+
   - name: postgres_exporter
     branch: main
     path: sources/postgres_exporter/src/github.com/percona/postgres_exporter
