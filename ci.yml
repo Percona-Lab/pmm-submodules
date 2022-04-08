@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-server
+    branch: pmm-2.27.0
