@@ -1,3 +1,3 @@
 deps:
-  - name: pmm-server
+  - name: pmm-managed
     branch: pmm-2.27.0
