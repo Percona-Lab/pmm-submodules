@@ -1,0 +1,3 @@
+deps:
+- name: pmm-update
+  branch: PMM-9727-remove-all-percona-dashboard-during-upgrade
