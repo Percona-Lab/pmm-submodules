@@ -1,0 +1,5 @@
+deps:
+  - name: grafana
+    branch: PMM-9526-migrate-enzyme-to-RTL
+  - name: pmm-ui-tests
+    branch: PMM-9526-migrate-enzyme-to-RTL
