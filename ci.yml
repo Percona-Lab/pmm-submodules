@@ -1,0 +1,6 @@
+deps:
+  - name: mysqld_exporter
+    branch: PMM-9840-standard-log-level
+
+  - name: proxysql_exporter
+    branch: PMM-9840-log-level-like-another-exporters
