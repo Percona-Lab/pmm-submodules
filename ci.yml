@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-managed
+    branch: 2.26.0-with-no-tls-verification
