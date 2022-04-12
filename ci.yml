@@ -4,3 +4,6 @@ deps:
 
   - name: proxysql_exporter
     branch: PMM-9840-log-level-like-another-exporters
+
+  - name: azure_metrics_exporter
+    branch: PMM-9840-replace-standard-log-to-can-use-log-level-flag
