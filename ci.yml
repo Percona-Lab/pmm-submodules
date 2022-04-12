@@ -1,0 +1,5 @@
+deps:
+- name: pmm-update
+  branch: PMM-7-revert-postgres-migration
+- name: pmm-server
+  branch: PMM-7-revert-postgres-migration
