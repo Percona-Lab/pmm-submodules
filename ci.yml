@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-9842-remove-technical-preview-state
