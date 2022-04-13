@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: fix-host-cancelled-request
