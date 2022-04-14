@@ -1,0 +1,4 @@
+
+deps:
+- name: pmm-server
+  branch: PMM-9780-victoriametrics-upgrade-to-1.76.0
