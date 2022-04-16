@@ -1,0 +1,15 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-8566-node-exporter-password
+
+  # CLIENT
+  - name: pmm-admin
+    branch: PMM-8566-node-exporter-password
+
+  - name: pmm-agent
+    branch: PMM-8566-node-exporter-password
+
+  # SERVER
+  - name: pmm-managed
+    branch: PMM-8566-node-exporter-password
