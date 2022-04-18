@@ -1,0 +1,3 @@
+deps:
+- name: pmm-managed
+  branch: PMM-9854-refresh-checks-cache
