@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-9848-fix-check-hover-style
