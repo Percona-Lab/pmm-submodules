@@ -1,0 +1,5 @@
+deps:
+- name: pmm
+  branch: PMM-9764-checks-category
+- name: pmm-managed
+  branch: PMM-9764-checks-category
