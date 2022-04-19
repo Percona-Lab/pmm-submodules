@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-8326-edit-check-interval-logo
