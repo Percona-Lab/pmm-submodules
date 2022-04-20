@@ -1,0 +1,8 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: update-mongo-driver
+
+  # SERVER
+  - name: pmm-managed
+    branch: update-mongo-driver
