@@ -1,0 +1,19 @@
+deps:
+  # COMMON
+  - name: pmm
+    url: https://github.com/pkadej/pmm
+    branch: PMM-4879-mysql-add-defaults-file
+
+  # CLIENT
+  - name: pmm-admin
+    url: https://github.com/pkadej/pmm-admin
+    branch: PMM-4879-defaults-file
+
+  - name: pmm-agent
+    url: https://github.com/pkadej/pmm-agent
+    branch: PMM-4879-defaults-file
+
+  # SERVER
+  - name: pmm-managed
+    url: https://github.com/pkadej/pmm-managed
+    branch: PMM-4879-defaults-file
