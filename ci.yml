@@ -1,0 +1,13 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-9890-more-server-info
+    path: sources/pmm/src/github.com/percona/pmm
+    url: https://github.com/percona/pmm
+    component: common
+   
+  - name: pmm-managed
+    branch: PMM-9890-more-server-info
+    path: sources/pmm-managed/src/github.com/percona/pmm-managed
+    url: https://github.com/percona/pmm-managed
+    component: server
