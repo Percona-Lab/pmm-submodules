@@ -3,3 +3,5 @@ deps:
     branch: PMM-9863-remove-yum-cron
   - name: pmm-update
     branch: PMM-9863-remove-yum-cron
+  - name: pmm-managed
+    branch: PMM-9863-remove-yum-cron
