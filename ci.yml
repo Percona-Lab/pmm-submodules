@@ -7,4 +7,4 @@ deps:
     branch: PMM-7326-log-level-for-FB-build-special
 
   - name: pmm-managed
-    branch: PMM-7326-log-level
+    branch: PMM-7326-log-level-for-FB-build-special
