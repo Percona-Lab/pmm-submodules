@@ -184,13 +184,6 @@ get_system(){
     return
 }
 
-install_golang() {
-    wget --progress=dot:giga ${GO_TARBALL} -O /tmp/golang.tar.gz
-    tar -zxf /tmp/golang.tar.gz
-    rm -rf /usr/local/go*
-    mv go /usr/local/
-}
-
 install_deps() {
     if [ $INSTALL = 0 ]
     then
