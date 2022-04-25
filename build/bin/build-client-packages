@@ -102,58 +102,6 @@ check_workdir(){
     return
 }
 
-add_percona_yum_repo(){
-    if [ ! -f /etc/yum.repos.d/percona-dev.repo ]
-    then
-        if [ "x$RHEL" = "x8" ]; then
-            cat >/etc/yum.repos.d/percona-dev.repo <<EOL
-[percona-rhel8-AppStream]
-name=Percona internal YUM repository for RHEL8 AppStream
-baseurl=http://jenkins.percona.com/yum-repo/rhel8/AppStream
-gpgkey=https://jenkins.percona.com/yum-repo/rhel8/AppStream/RPM-GPG-KEY-redhat-beta
-gpgcheck=0
-enabled=1
-
-[percona-rhel8-BaseOS]
-name=Percona internal YUM repository for RHEL8 BaseOS
-baseurl=https://jenkins.percona.com/yum-repo/rhel8/BaseOS/
-gpgkey=https://jenkins.percona.com/yum-repo/rhel8/BaseOS/RPM-GPG-KEY-redhat-beta
-gpgcheck=0
-enabled=1
-EOL
-        else
-            cat >/etc/yum.repos.d/percona-dev.repo <<EOL
-[percona-dev-$basearch]
-name=Percona internal YUM repository for build slaves \$releasever - \$basearch
-baseurl=http://jenkins.percona.com/yum-repo/\$releasever/RPMS/\$basearch
-gpgkey=http://jenkins.percona.com/yum-repo/PERCONA-PACKAGING-KEY
-gpgcheck=0
-enabled=1
-
-[percona-dev-noarch]
-name=Percona internal YUM repository for build slaves \$releasever - noarch
-baseurl=http://jenkins.percona.com/yum-repo/\$releasever/RPMS/noarch
-gpgkey=http://jenkins.percona.com/yum-repo/PERCONA-PACKAGING-KEY
-gpgcheck=0
-enabled=1
-EOL
-        fi
-    fi
-    return
-}
-
-add_percona_apt_repo(){
-    if [ ! -f /etc/apt/sources.list.d/percona-dev.list ]
-    then
-        cat >/etc/apt/sources.list.d/percona-dev.list <<EOL
-deb http://jenkins.percona.com/apt-repo/ @@DIST@@ main
-deb-src http://jenkins.percona.com/apt-repo/ @@DIST@@ main
-EOL
-    sed -i "s:@@DIST@@:$OS_NAME:g" /etc/apt/sources.list.d/percona-dev.list
-    fi
-    return
-}
-
 get_sources(){
     cd $WORKDIR
     if [ $SOURCE = 0 ]
@@ -256,7 +204,6 @@ install_deps() {
     fi
     if [ "x$OS" = "xrpm" ]
     then
-        add_percona_yum_repo
         yum -y install git wget rpmdevtools bison yum-utils rpm-build
         install_golang
     else
@@ -539,7 +486,7 @@ if [ -n "$pmm_release" ]; then
 fi
 
 REVISION=0
-GO_TARBALL="https://dl.google.com/go/go1.17.5.linux-amd64.tar.gz"
+GO_TARBALL="https://dl.google.com/go/go1.18.1.linux-amd64.tar.gz"
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
 get_system
 install_deps
