@@ -1,10 +1,14 @@
-FROM registry.access.redhat.com/ubi7/ubi
+FROM registry.access.redhat.com/ubi7/ubi-minimal
 
 COPY pmm2-client.tar.gz /tmp/pmm2-client.tar.gz
 
+RUN microdnf update \
+    && microdnf install shadow-utils python tar gzip \
+    && microdnf clean all
+
 # need to use IDs for openshift
-RUN groupadd -g 1002 pmm-agent
-RUN useradd -u 1002 -r -g pmm-agent -s /sbin/nologin \
+RUN groupadd -g 1002 pmm-agent && \
+    useradd -u 1002 -r -g pmm-agent -s /sbin/nologin \
             -d /usr/local/percona/pmm2 \
             -c "PMM 2.X Client User" pmm-agent
 
