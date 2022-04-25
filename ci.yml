@@ -2,4 +2,4 @@ deps:
   - name: pmm-admin
     branch: PMM-7186-include-targets-from-vmagent
     component: client
-    
+  
