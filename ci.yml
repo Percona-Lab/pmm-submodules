@@ -1,4 +1,4 @@
 deps:
-  # COMMON
-  - name: pmm
+  # CLIENT
+  - name: pmm-admin
     branch: PMM-7-latest-pmm-fix
