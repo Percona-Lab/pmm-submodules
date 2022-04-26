@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-9849-run-individual-checks
