@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-9885-advanced-settings-read-more-links-fix
