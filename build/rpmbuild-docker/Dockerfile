@@ -27,13 +27,6 @@ ENV GO_VERSION 1.18.1
 ENV GO_CHECKSUM b3b815f47ababac13810fc6021eb73d65478e0b2db4b09d348eefad9581a2334
 ENV GO_CHECKSUM_ARM 56a91851c97fb4697077abbca38860f735c32b38993ff79b088dac46e4735633
 
-
-RUN if [ `uname -i` == "x86_64" ] ; then \
-    echo Argument not provided; \
-  else \
-    echo Argument is $arg; \
-  fi
-
 RUN if [ `uname -i` == "x86_64" ]; then CHECKSUM=$GO_CHECKSUM; ARCH=amd64; else CHECKSUM=$GO_CHECKSUM_ARM; ARCH=arm64; fi && \
     wget --progress=dot:giga https://dl.google.com/go/go${GO_VERSION}.linux-${ARCH}.tar.gz -O /tmp/golang.tar.gz && \
     echo "${CHECKSUM} /tmp/golang.tar.gz" | sha256sum -c - && \
@@ -52,6 +45,7 @@ RUN useradd builder -u 1000 -m -G users,wheel && \
     mkdir /home/builder/rpm && \
     chmod 755 /home/builder && \
     chown -R builder:builder /home/builder
+
 USER builder
 
 ENV FLAVOR=rpmbuild OS=centos DIST=el7
