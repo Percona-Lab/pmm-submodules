@@ -1,0 +1,3 @@
+deps:
+- name: pmm-managed
+  branch: PMM-9841-advisors-enabled-default
