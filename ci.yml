@@ -5,4 +5,7 @@ deps:
     branch: PMM-9764-checks-category
   - name: pmm-managed
     branch: PMM-9764-checks-category
+  - name: pmm-ui-tests
+    branch: PMM-9836-advisors-filter
+
 
