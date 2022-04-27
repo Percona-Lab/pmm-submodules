@@ -1,4 +1,8 @@
 deps:
   - name: grafana
     branch: PMM-9836-advisors-filter
+  - name: pmm
+    branch: PMM-9764-checks-category
+  - name: pmm-managed
+    branch: PMM-9764-checks-category
 
