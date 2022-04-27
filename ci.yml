@@ -1,4 +1,4 @@
 deps:
-  - name: pmm-admin
-    url: https://github.com/cezmunsta/pmm-admin
-    branch: PMM-9590-credentials-source
+- name: pmm-admin
+  url: https://github.com/cezmunsta/pmm-admin
+  branch: PMM-9590-credentials-source
