@@ -1,3 +1,6 @@
 deps:
   - name: grafana
     branch: PMM-9885-advanced-settings-read-more-links-fix
+  - name: pmm-ui-tests
+    branch: PMM-9885-advanced-settings-read-more-links-fix
+
