@@ -7,7 +7,7 @@ Homepage: https://percona.com
 Build-Depends: debhelper
 
 Package: pmm2-client
-Architecture: amd64
+Architecture: any
 Breaks: pmm-client
 Description: Percona Monitoring and Management Client
  Percona Monitoring and Management (PMM) is an open-source platform for managing and monitoring MySQL and MongoDB
