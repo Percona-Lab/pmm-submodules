@@ -1,4 +1,6 @@
 deps:
   - name: grafana
     branch: PMM-9363-automatic-disconnect
+  - name: pmm-ui-tests
+    branch: PMM-9363-automatic-disconnect
 
