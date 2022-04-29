@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-9320-mongodb-password-escape-special-characters
