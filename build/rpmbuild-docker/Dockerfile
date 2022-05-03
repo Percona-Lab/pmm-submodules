@@ -24,14 +24,20 @@ RUN yum update -y && \
 
 # keep that format for easier search
 ENV GO_VERSION 1.18.1
+ENV GO_RELEASER_VERSION 1.8.3
 ENV GO_CHECKSUM b3b815f47ababac13810fc6021eb73d65478e0b2db4b09d348eefad9581a2334
 ENV GO_CHECKSUM_ARM 56a91851c97fb4697077abbca38860f735c32b38993ff79b088dac46e4735633
+ENV GO_RELEASER_CHECKSUM db351ae63bdb9f3834a9a76caa5845b4de4c403855a6524afb1d2a97f82e627f
 
 RUN if [ `uname -i` == "x86_64" ]; then CHECKSUM=$GO_CHECKSUM; ARCH=amd64; else CHECKSUM=$GO_CHECKSUM_ARM; ARCH=arm64; fi && \
     wget --progress=dot:giga https://dl.google.com/go/go${GO_VERSION}.linux-${ARCH}.tar.gz -O /tmp/golang.tar.gz && \
+    wget --progress=dot:giga https://github.com/goreleaser/goreleaser/releases/download/v${GO_RELEASER_VERSION}/goreleaser-${GO_RELEASER_VERSION}.`uname -i`.rpm -O /tmp/goreleaser.rpm && \
     echo "${CHECKSUM} /tmp/golang.tar.gz" | sha256sum -c - && \
     tar -C /usr/local -xzf /tmp/golang.tar.gz && \
-    rm /tmp/golang.tar.gz
+    yum install -y /tmp/goreleaser.rpm && \
+    rm /tmp/golang.tar.gz /tmp/goreleaser.rpm
+
+RUN wget --progress=dot:giga https://github.com/goreleaser/goreleaser/releases/download/v0.142.0/goreleaser_amd64.rpm -O /tmp/goreleaser.rpm
 
 RUN update-alternatives --install "/usr/bin/go" "go" "/usr/local/go/bin/go" 0
 RUN update-alternatives --set go /usr/local/go/bin/go
