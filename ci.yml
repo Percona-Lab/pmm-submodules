@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-9964-infinite-cluster-loading
