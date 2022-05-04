@@ -31,7 +31,7 @@ ENV GO_RELEASER_CHECKSUM db351ae63bdb9f3834a9a76caa5845b4de4c403855a6524afb1d2a9
 
 RUN if [ `uname -i` == "x86_64" ]; then CHECKSUM=$GO_CHECKSUM; ARCH=amd64; else CHECKSUM=$GO_CHECKSUM_ARM; ARCH=arm64; fi && \
     wget --progress=dot:giga https://dl.google.com/go/go${GO_VERSION}.linux-${ARCH}.tar.gz -O /tmp/golang.tar.gz && \
-    wget --progress=dot:giga https://github.com/goreleaser/goreleaser/releases/download/v${GO_RELEASER_VERSION}/goreleaser-${GO_RELEASER_VERSION}.`uname -i`.rpm -O /tmp/goreleaser.rpm && \
+    wget --progress=dot:giga https://github.com/goreleaser/goreleaser/releases/download/v${GO_RELEASER_VERSION}/goreleaser_amd64.rpm -O /tmp/goreleaser.rpm && \
     echo "${CHECKSUM} /tmp/golang.tar.gz" | sha256sum -c - && \
     tar -C /usr/local -xzf /tmp/golang.tar.gz && \
     yum install -y /tmp/goreleaser.rpm && \
