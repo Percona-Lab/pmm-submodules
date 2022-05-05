@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-admin
+    branch: PMM-5692-add-ports-output
