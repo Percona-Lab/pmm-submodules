@@ -1,10 +1,10 @@
 deps:
   # COMMON
   - name: pmm
-    branch: PMM-7326-log-level
+    branch: PMM-9968-pmm-admin-inventory-with-log-level
 
   - name: pmm-admin
-    branch: PMM-7326-log-level
+    branch: PMM-9968-pmm-admin-inventory-with-log-level
 
   - name: pmm-managed
-    branch: PMM-7326-log-level
+    branch: PMM-9968-pmm-admin-inventory-with-log-level
