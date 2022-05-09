@@ -8,8 +8,8 @@
 
 [submodule "pmm-admin"]
 	path = sources/pmm-admin/src/github.com/percona/pmm-admin
-	url = https://github.com/percona/pmm-admin.git
-	branch = main
+	url = https://github.com/cezmunsta/pmm-admin.git
+	branch = PMM-9590-credentials-source
 [submodule "pmm-agent"]
 	path = sources/pmm-agent/src/github.com/percona/pmm-agent
 	url = https://github.com/percona/pmm-agent.git
