@@ -1,0 +1,4 @@
+deps:
+- name: pmm-managed
+  branch: bupycHuk-patch-1
+  url: github.com/bupychuk/pmm-managed
