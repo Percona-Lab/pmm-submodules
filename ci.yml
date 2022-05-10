@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-9782-render-dynamic-contacts
