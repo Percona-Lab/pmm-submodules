@@ -1,4 +1,6 @@
 deps:
   - name: pmm-server
     branch: PMM-7-update-dbaas-tools
-
+deps:
+  - name: dbaas-controller
+    branch: PMM-7-update-dbaas-tools
