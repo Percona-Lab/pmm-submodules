@@ -1,4 +1,4 @@
 deps:
 - name: pmm-managed
   branch: bupycHuk-patch-1
-  url: https://api.github.com/repos/BupycHuk/pmm-managed
+  url: https://github.com/BupycHuk/pmm-managed
