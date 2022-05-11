@@ -1,3 +1,4 @@
-# CLIENT
-- name: mysqld_exporter
-  branch: PMM-2038-upstream-update-refork
+deps:
+  # CLIENT
+  - name: mysqld_exporter
+    branch: PMM-2038-upstream-update-refork
