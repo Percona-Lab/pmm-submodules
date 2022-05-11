@@ -43,19 +43,26 @@ git push
 
 ## Using a Personal Access Token (PAT)
 
-Given that github is limiting the number of API requests for unauthenticated users, it'd be a good idea to use your personal access token. You can create a personal token in [Github settings](https://github.com/settings/tokens). Generate New Token -> Click on a repo -> Create an environment variable called GITHUB_TOKEN and provide your token as the value.
+Given that github is limiting the number of API requests for unauthenticated users, it'd be a good idea to use your personal access token. You can create a personal token in [Github settings](https://github.com/settings/tokens). Generate New Token -> Click on a repo -> Create an environment variable called `GITHUB_API_TOKEN` and provide your token as the value.
+
+The token requires the following permissions:
+* `repo:status`
+* `public_repo`
+* `read:user`
+
+It is recommended to set an expiration date for your token.
 
 if you use zsh:
 
 ```console
-echo 'export GITHUB_TOKEN=********' >> ~/.zshrc
+echo 'export GITHUB_API_TOKEN=********' >> ~/.zshrc
 source ~/.zshrc
 ```
 
 if you use bash:
 
 ```console
-echo 'export GITHUB_TOKEN=********' >> ~/.bash_profile
+echo 'export GITHUB_API_TOKEN=********' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
@@ -71,6 +78,12 @@ If you use the same branch name in all repos then you can run:
 make prepare <you branch name>
 ```
 Branches with "you branch name" will be used for all repos or default branch if the branch with this name isn't found in repo.
+
+If you want to create FB from fork you can pass environment variable "FORK_OWNER" which should be equal to your username in github and run:
+
+```console
+FORK_OWNER=<your username> make prepare <you branch name>
+```
 
 ### I got error "...branch has no upstream branch"
 
