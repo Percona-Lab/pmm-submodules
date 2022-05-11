@@ -1,3 +1,7 @@
 deps:
   - name: grafana
     branch: PMM-9782-render-dynamic-contacts
+  - name: pmm
+    branch: PMM-9662-Platform-Contact-Information
+  - name: pmm-managed
+    branch: PMM-9662-Platform-Contact-Information
