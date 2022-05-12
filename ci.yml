@@ -1,0 +1,3 @@
+deps:
+- name: dbaas-controller
+  branch: PMM-7143-Proper-Node-Metrics-expose
