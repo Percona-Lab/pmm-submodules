@@ -20,6 +20,8 @@ WORKDIR /opt
 
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && yum -y install ansible
 
+RUN groupdel ssh_keys
+
 COPY RPMS /tmp/RPMS
 COPY gitCommit /tmp/gitCommit
 
