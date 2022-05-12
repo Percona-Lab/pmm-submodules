@@ -1,0 +1,9 @@
+deps:
+  - name: pmm
+    branch: alerting-poc
+
+  - name: pmm-managed
+    branch: alerting-poc
+
+  - name: grafana
+    branch: antalya-poc
