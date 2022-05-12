@@ -18,7 +18,7 @@ EXPOSE 80 443
 
 WORKDIR /opt
 
-RUN yum -y install epel-release && yum -y install ansible
+RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && yum -y install ansible
 
 COPY RPMS /tmp/RPMS
 COPY gitCommit /tmp/gitCommit
