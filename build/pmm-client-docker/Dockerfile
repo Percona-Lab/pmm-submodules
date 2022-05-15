@@ -16,9 +16,8 @@ RUN tar -zxpf /tmp/pmm2-client.tar.gz -C /tmp \
     && cd /tmp \
     && rm -rf /tmp/pmm2-client*
 
-COPY entrypoint.py /entrypoint.py
 
 USER pmm-agent
 WORKDIR /usr/local/percona/pmm2/
 ENV PATH /usr/local/percona/pmm2/bin/:$PATH
-ENTRYPOINT ["/entrypoint.py"]
+ENTRYPOINT ["/usr/local/percona/pmm2/bin/pmm-agent-entrypoint"]

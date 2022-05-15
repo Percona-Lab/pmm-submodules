@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-agent
+    branch: PMM-9921-rewrite-pmm-client-image-entrypoint
