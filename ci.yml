@@ -1,1 +1,4 @@
-# TEST
+deps:
+  - name: pmm-dump
+    branch: main
+
