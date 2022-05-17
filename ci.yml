@@ -1,0 +1,4 @@
+deps:
+- name: pmm-server
+  branch: PMM-10027-remove-useless-packages
+  url: https://github.com/percona/pmm-server
