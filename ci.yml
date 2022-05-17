@@ -1,0 +1,7 @@
+deps:
+  # COMMON
+  - name: pmm-agent
+    branch: PMM-9998_detect_mariadb_in_debian
+    path: sources/pmm-agent/src/github.com/percona/pmm-agent
+    url: https://github.com/percona/pmm-agent
+    component: client
