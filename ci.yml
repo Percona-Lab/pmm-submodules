@@ -1,0 +1,4 @@
+deps:
+- name: pmm-server
+  branch: CUSTOM-107-upgrade-python
+  url: https://github.com/percona/pmm-server
