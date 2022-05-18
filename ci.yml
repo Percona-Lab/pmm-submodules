@@ -1,0 +1,4 @@
+deps:
+- name: dbaas-controller
+  branch: PMM-10039-upgrade-VM-operator-0.16-to-0.24
+  url: https://github.com/percona-platform/dbaas-controller
