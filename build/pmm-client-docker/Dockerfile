@@ -21,8 +21,6 @@ RUN cd /tmp/pmm2-client-* \
     && cd /tmp \
     && rm -rf /tmp/pmm2-client*
 
-COPY entrypoint.py /entrypoint.py
-
 USER pmm-agent
 WORKDIR /usr/local/percona/pmm2/
 ENV PATH /usr/local/percona/pmm2/bin/:$PATH
