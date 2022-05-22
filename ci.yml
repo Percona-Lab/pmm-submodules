@@ -1,0 +1,4 @@
+deps:
+- name: dbaas-controller
+  branch: PMM-10040-relabel-metrics
+  url: https://github.com/percona-platform/dbaas-controller
