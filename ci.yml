@@ -5,3 +5,6 @@ deps:
 - name: pmm-server
   branch: PMM-5885-upgrade-postgres-to-14
   url: https://github.com/percona/pmm-server
+- name: pmm-managed
+  branch: PMM-5885-upgrade-postgres-to-14
+  url: https://github.com/percona/pmm-managed
