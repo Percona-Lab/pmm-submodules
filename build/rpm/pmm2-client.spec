@@ -70,6 +70,7 @@ install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-quer
 
 install -m 0755 bin/pmm-admin $RPM_BUILD_ROOT/usr/local/percona/pmm2/bin
 install -m 0755 bin/pmm-agent $RPM_BUILD_ROOT/usr/local/percona/pmm2/bin
+install -m 0755 bin/pmm-agent-entrypoint $RPM_BUILD_ROOT/usr/local/percona/pmm2/bin
 install -m 0755 bin/node_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
 install -m 0755 bin/mysqld_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
 install -m 0755 bin/postgres_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters
@@ -219,7 +220,7 @@ fi
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/pmm2
 
 %changelog
-* Tue Aug 24 2021 Vadim Yalovets <vadim.yalovets@percona.com> 
+* Tue Aug 24 2021 Vadim Yalovets <vadim.yalovets@percona.com>
 - PMM-8618 ship default PG queries in PMM.
 
 * Tue Oct 13 2020 Nikolay Khramchikhin <nik@victoriametrics.com>
