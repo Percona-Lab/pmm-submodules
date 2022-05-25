@@ -25,4 +25,4 @@ USER pmm-agent
 WORKDIR /usr/local/percona/pmm2/
 ENV PATH /usr/local/percona/pmm2/bin/:$PATH
 
-ENTRYPOINT [" /usr/local/percona/pmm2/pmm-agent-entrypoint"]
+ENTRYPOINT ["/usr/local/percona/pmm2/bin/pmm-agent-entrypoint"]
