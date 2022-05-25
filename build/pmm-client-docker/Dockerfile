@@ -24,4 +24,5 @@ RUN cd /tmp/pmm2-client-* \
 USER pmm-agent
 WORKDIR /usr/local/percona/pmm2/
 ENV PATH /usr/local/percona/pmm2/bin/:$PATH
-ENTRYPOINT ["/entrypoint.py"]
+
+ENTRYPOINT [" /usr/local/percona/pmm2/pmm-agent-entrypoint"]
