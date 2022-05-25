@@ -1,0 +1,7 @@
+deps:
+- name: pmm-update
+  branch: PMM-8082-srv-init-test
+  url: https://github.com/percona/pmm-update
+- name: pmm-server
+  branch: PMM-8082-srv-init-test
+  url: https://github.com/percona/pmm-server
