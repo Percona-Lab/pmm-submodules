@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi-minimal as users
+FROM redhat/ubi9-minimal as users
 
 RUN microdnf install shadow-utils
 
@@ -7,7 +7,7 @@ RUN groupadd -g 1002 pmm-agent && \
             -d /usr/local/percona/pmm2 \
             -c "PMM 2.X Client User" pmm-agent
 
-FROM registry.access.redhat.com/ubi8/ubi-micro
+FROM redhat/ubi9-micro
 
 COPY --from=users --chown=0:0 /etc/passwd /etc/passwd
 COPY --from=users --chown=0:0 /etc/group /etc/group
