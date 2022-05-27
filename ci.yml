@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-managed
+    branch: PMM-10087-fix-ia-error-on-custom-alert-rule
