@@ -4,4 +4,4 @@ deps:
   url: https://github.com/percona-platform/dbaas-controller
 - name: grafana-dashboards
   branch: PMM-7143-Proper-Node-Metrics-expose
-  url: https://github.com/percona-platform/grafana-dashboards
+  url: https://github.com/percona/grafana-dashboards
