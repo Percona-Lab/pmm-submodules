@@ -10,7 +10,7 @@ import sys
 
 from subprocess import check_output, check_call, call, CalledProcessError
 from pathlib import Path
-from github import Github
+from github import Github, UnknownObjectException
 
 import yaml
 import git
@@ -21,6 +21,7 @@ YAML_CONFIG = 'ci-default.yml'
 YAML_CONFIG_OVERRIDE = 'ci.yml'
 SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
+FORK_OWNER = os.environ.get('FORK_OWNER', '')
 GITHUB_TOKEN = os.environ.get('GITHUB_API_TOKEN', '')
 # example CHANGE_URL : https://github.com/Percona-Lab/pmm-submodules/pull/2167
 PR_URL = os.environ.get('CHANGE_URL', '')
@@ -65,17 +66,26 @@ class Builder():
                     sys.exit(1)
 
     def get_global_branches(self, target_branch_name):
-        found_branches = []
+        found_branches = {}
+        github_api = Github(GITHUB_TOKEN)
         for dep in self.config['deps']:
-            repo_path = '/'.join(dep['url'].split('/')[-2:]).replace('.git', '')
+            url_parts = dep['url'].split('/')[-2:]
+            owners = [url_parts[0]]
+            if FORK_OWNER != '':
+                owners.append(FORK_OWNER)
 
-            github_api = Github(GITHUB_TOKEN)
-            repo = github_api.get_repo(repo_path)
+            for owner in owners:
+                url_parts[0] = owner
+                repo_path = '/'.join(url_parts).replace('.git', '')
+                try:
+                    repo = github_api.get_repo(repo_path)
+                except UnknownObjectException:
+                    continue
 
-            for branch in repo.get_branches():
-                if target_branch_name == branch.name:
-                    logging.info(f'Found branch {target_branch_name} for {dep["name"]}')
-                    found_branches.append(dep['name'])
+                for branch in repo.get_branches():
+                    if target_branch_name == branch.name:
+                        logging.info(f'Found branch {target_branch_name} for {dep["name"]}')
+                        found_branches[dep['name']] = repo.html_url
 
         return found_branches
 
@@ -90,6 +100,7 @@ class Builder():
         else:
             git_cmd.checkout('HEAD', b=branch_name)
 
+        found_branches = {}
         if global_repo:
             found_branches = self.get_global_branches(branch_name)
 
@@ -100,10 +111,11 @@ class Builder():
         for dep in self.config_override['deps']:
             if dep['name'] in found_branches:
                 dep['branch'] = branch_name
-                found_branches.remove(dep['name'])
+                dep['url'] = found_branches[dep['name']]
+                found_branches.pop(dep['name'])
 
-        for dep_name in found_branches:
-            self.config_override['deps'].append({'name': dep_name, 'branch': branch_name})
+        for dep_name, url in found_branches.items():
+            self.config_override['deps'].append({'name': dep_name, 'branch': branch_name, 'url': url})
 
         self.write_custom_config(self.config_override)
         repo.git.add(['ci.yml', ])
@@ -113,7 +125,8 @@ class Builder():
             origin.push()
         except git.exc.GitCommandError:  # Could be due to no upstream branch.
             logging.warning(f'Failed to push {branch_name}. This could be due to no matching upstream branch.')
-            logging.info(f'Reattempting to push {branch_name} using a lower-level command which also sets upstream branch.')
+            logging.info(
+                f'Reattempting to push {branch_name} using a lower-level command which also sets upstream branch.')
             push_output = repo.git.push('--set-upstream', 'origin', branch_name)
             logging.info(f'Push output was: {push_output}')
 
@@ -124,7 +137,7 @@ class Builder():
             repo = github_api.get_repo('Percona-Lab/pmm-submodules')
             pr = repo.get_pulls(base='PMM-2.0', head=f'Percona-Lab:{branch_name}')
             # TODO we can use totalCount here: https://github.com/PyGithub/PyGithub/blob/babcbcd04fd5605634855f621b8558afc5cbc515/github/PaginatedList.py#L102
-            # but it works pretty strange. It reterned count ALL PR from repo without filters
+            # but it works pretty strange. It returned count ALL PR from repo without filters
             hasPR = False
             for i in pr:
                 hasPR = True
@@ -286,7 +299,7 @@ def switch_branch(path, branch):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--prepare', help='prepare feature build')
-    parser.add_argument('--global', '-g', dest='global_repo', help='find and use all bracnhes with this name',
+    parser.add_argument('--global', '-g', dest='global_repo', help='find and use all branches with this name',
                         action='store_true')
     parser.add_argument('--convert', help='convert .gitmodules to .git-deps.yml', action='store_true')
     parser.add_argument('--release', help='create release candidate')
