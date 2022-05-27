@@ -1,3 +1,9 @@
 deps:
+  - name: pmm
+    branch: PMM-6592-show-ports
+
   - name: pmm-admin
+    branch: PMM-6592-add-ports-output
+
+  - name: pmm-managed
     branch: PMM-6592-add-ports-output
