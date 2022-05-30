@@ -79,6 +79,12 @@ make prepare <you branch name>
 ```
 Branches with "you branch name" will be used for all repos or default branch if the branch with this name isn't found in repo.
 
+If you want to create FB from fork you can pass environment variable "FORK_OWNER" which should be equal to your username in github and run:
+
+```console
+FORK_OWNER=<your username> make prepare <you branch name>
+```
+
 ### I got error "...branch has no upstream branch"
 
 This happens because of your newly created branch. Your Git is not configured to create that same branch on remote. You can run:
