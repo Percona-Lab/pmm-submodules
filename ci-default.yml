@@ -7,18 +7,6 @@ deps:
     component: common
 
   # CLIENT
-  - name: pmm-admin
-    branch: main
-    path: sources/pmm-admin/src/github.com/percona/pmm-admin
-    url: https://github.com/percona/pmm-admin
-    component: client
-
-  - name: pmm-agent
-    branch: main
-    path: sources/pmm-agent/src/github.com/percona/pmm-agent
-    url: https://github.com/percona/pmm-agent
-    component: client
-
   - name: node_exporter
     branch: main
     path: sources/node_exporter/src/github.com/prometheus/node_exporter

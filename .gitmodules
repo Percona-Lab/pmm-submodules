@@ -1,19 +1,11 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = main
+	branch = PMM-10008-merge-agnet-and-admin
 
 
 # PMM Client
 
-[submodule "pmm-admin"]
-	path = sources/pmm-admin/src/github.com/percona/pmm-admin
-	url = https://github.com/percona/pmm-admin.git
-	branch = main
-[submodule "pmm-agent"]
-	path = sources/pmm-agent/src/github.com/percona/pmm-agent
-	url = https://github.com/percona/pmm-agent.git
-	branch = main
 [submodule "node_exporter"]
 	path = sources/node_exporter/src/github.com/prometheus/node_exporter
 	url = https://github.com/percona/node_exporter.git

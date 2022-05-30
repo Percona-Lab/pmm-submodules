@@ -102,8 +102,8 @@ main() {
     gobuild_component "azure_metrics_exporter"
     gobuild_component "clickhouse_exporter"     "github.com/Percona-Lab/clickhouse_exporter"
 
-    gobuild_component "pmm-admin" "" "" "github.com/percona/pmm-agent/bin/pmm-admin"
-    gobuild_component "pmm-agent" "" "" "github.com/percona/pmm-agent/bin/pmm-agent"
+    gobuild_component "pmm-admin" "github.com/percona/pmm/admin" "" "github.com/percona/pmm/bin/pmm-admin"
+    gobuild_component "pmm-agent" "github.com/percona/pmm/agent" "" "github.com/percona/pmm/bin/pmm-agent"
 
     echo ${version} > ${binary_dir}/VERSION
 
