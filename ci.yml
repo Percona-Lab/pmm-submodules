@@ -1,5 +1,4 @@
 deps:
-  # COMMON
   - name: pmm
     branch: PMM-9968-pmm-admin-inventory-with-log-level
 
