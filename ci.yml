@@ -1,0 +1,4 @@
+deps:
+- name: dbaas-controller
+  branch: PMM-10040-Relabel-metrics-from-cadvisor
+  url: https://github.com/percona-platform/dbaas-controller
