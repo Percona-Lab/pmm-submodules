@@ -15,7 +15,7 @@ extract_source_tarball() {
 gobuild_component() {
     local component=$1
     local parent_component=${2:-$component}
-    local extract_path=${3:-"github.com/percona/$component"}
+    local extract_path=${3:-"github.com/percona/$parent_component"}
     local component_path=$4
     local result_file=${5:-bin/$(basename ${component_path:-$extract_path})}
 
@@ -64,7 +64,8 @@ gobuild_component() {
         mkdir -p \$binary_dir/bin
 
         mkdir -p /tmp/go/src/${extract_path}
-        tar -C /tmp/go/src/${extract_path} --strip-components=1 -zxpf \${source_dir}/${component}-*.tar.gz
+        archive=$(ls ${source_dir} | grep -e "pmm-\w*\.tar\.gz")
+        tar -C /tmp/go/src/${extract_path} --strip-components=1 -zxpf \${source_dir}/\$archive
         pushd /tmp/go
             export GOPATH=\$(pwd -P)
             ${build_command}
@@ -103,8 +104,8 @@ main() {
     gobuild_component "azure_metrics_exporter"
     gobuild_component "clickhouse_exporter" "" "github.com/Percona-Lab/clickhouse_exporter"
 
-    gobuild_component "pmm-admin" "pmm" "github.com/percona/pmm/admin" "" "github.com/percona/pmm/bin/pmm-admin"
-    gobuild_component "pmm-agent" "pmm" "github.com/percona/pmm/agent" "" "github.com/percona/pmm/bin/pmm-agent"
+    gobuild_component "pmm-admin" "pmm" "" "" "github.com/percona/pmm/bin/pmm-admin"
+    gobuild_component "pmm-agent" "pmm" "" "" "github.com/percona/pmm/bin/pmm-agent"
 
     echo ${version} > ${binary_dir}/VERSION
 
