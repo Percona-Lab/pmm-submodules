@@ -1,3 +1,5 @@
 deps:
 - name: grafana
   branch: PMM-7491-alert-rules-filters
+- name: pmm-ui-tests
+  branch: PMM-7491-alert-rules-filters
