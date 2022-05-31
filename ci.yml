@@ -1,0 +1,3 @@
+deps:
+- name: grafana
+  branch: PMM-7491-alert-rules-filters
