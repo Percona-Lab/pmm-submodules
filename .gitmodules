@@ -6,6 +6,10 @@
 
 # PMM Client
 
+[submodule "vmagent"]
+	path = sources/vmagent/src/github.com/VictoriaMetrics/VictoriaMetrics
+	url = https://github.com/VictoriaMetrics/VictoriaMetrics.git
+	branch = main
 [submodule "pmm-admin"]
 	path = sources/pmm-admin/src/github.com/percona/pmm-admin
 	url = https://github.com/percona/pmm-admin.git
