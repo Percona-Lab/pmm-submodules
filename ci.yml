@@ -2,8 +2,5 @@ deps:
   - name: pmm
     branch: PMM-9968-pmm-admin-inventory-with-log-level
 
-  - name: pmm-admin
-    branch: PMM-9968-pmm-admin-inventory-with-log-level
-
   - name: pmm-managed
     branch: PMM-9968-pmm-admin-inventory-with-log-level
