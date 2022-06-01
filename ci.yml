@@ -1,0 +1,3 @@
+deps:
+- name: pmm-managed
+  branch: PMM-10110-dont-ignore-status-field
