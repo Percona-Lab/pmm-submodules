@@ -5,3 +5,6 @@ deps:
 - name: grafana-dashboards
   branch: PMM-7143-Proper-Node-Metrics-expose
   url: https://github.com/percona/grafana-dashboards
+- name: pmm-managed
+  branch: PMM-9510-remove-time-from-label-job
+  url: https://github.com/percona/pmm-managed
