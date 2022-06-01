@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-10008-merge-agnet-and-admin
+	branch = main
 
 
 # PMM Client
