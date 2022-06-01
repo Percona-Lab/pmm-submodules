@@ -6,8 +6,6 @@ import os, subprocess, time
 REPOS = [
     "sources/grafana/src/github.com/grafana/grafana",
     "sources/grafana-dashboards",
-    "sources/pmm-admin/src/github.com/percona/pmm-admin",
-    "sources/pmm-agent/src/github.com/percona/pmm-agent",
     "sources/pmm-managed/src/github.com/percona/pmm-managed",
     "sources/pmm-server",
     "sources/pmm-update/src/github.com/percona/pmm-update",
