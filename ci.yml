@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10127-alerts-pagination-fix
