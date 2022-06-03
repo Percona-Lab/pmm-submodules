@@ -1,3 +1,4 @@
 deps:
 - name: pmm-managed
   branch: PMM-9510-remove-time-from-label-job
+  url: https://github.com/percona/pmm-managed
