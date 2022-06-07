@@ -1,0 +1,4 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-7110-pprof-server-component
