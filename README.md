@@ -13,7 +13,7 @@ pip install -r requirements.txt
 
 ## How to create a feature build
 
-To create a feature build (FB) you have to edit `ci.yml` and specify the branches that you want the system to pull when building a feature. For example:
+To create a feature build (B) you have to edit `ci.yml` and specify the branches that you want the system to pull when building a feature. For example:
 
 ```yaml
 deps:
