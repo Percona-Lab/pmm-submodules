@@ -5,4 +5,5 @@ tmp/
 results/
 .DS_Store
 .git-sources
-.vscode
+.vscode/
+.idea/
