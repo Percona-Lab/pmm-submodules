@@ -1,0 +1,4 @@
+deps:
+  # COMMON
+  - name: pmm-qa
+    branch: PMM-10083
