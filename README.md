@@ -23,7 +23,7 @@ deps:
     branch: PMM-0000-fix-everything-and-even-more
 ```
 
-To build from a fork, you need to specify `url` for the dependency, for example:
+To build from a fork, you need to specify `url` fr the dependency, for example:
 
 ```yaml
 deps:
