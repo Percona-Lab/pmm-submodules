@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-9909-Redirection-from-Home-Dashboard-Stats-Panel
+  url: https://github.com/percona/grafana-dashboards
