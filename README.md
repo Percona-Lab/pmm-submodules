@@ -1,7 +1,7 @@
 # PMM Submodules
 
 This repository serves the purpose of creating and/or updating the feature builds for PMM Server and PMM Client. It is auxiliary
-to our build system managed by Jenkins as it helps pull the right branches from different repositories that PMM [consists of](https://github.com/percona/pmm).
+to our build system managed by Jenkns as it helps pull the right branches from different repositories that PMM [consists of](https://github.com/percona/pmm).
 
 # Installation dependencies
 
