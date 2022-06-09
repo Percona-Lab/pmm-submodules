@@ -1,0 +1,4 @@
+deps:
+- name: pmm-managed
+  branch: vmagent-remove-stailness
+  url: https://github.com/percona/pmm-managed
