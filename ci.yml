@@ -1,0 +1,3 @@
+deps:
+  - name: pmm-server
+    branch: PMM-7-upgrade-go-version
