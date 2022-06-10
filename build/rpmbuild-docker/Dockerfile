@@ -24,10 +24,9 @@ RUN yum update -y && \
 
 # keep that format for easier search
 ENV GO_VERSION 1.18.3
-ENV GO_RELEASER_VERSION 1.8.3
+ENV GO_RELEASER_VERSION 1.9.2
 ENV GO_CHECKSUM 956f8507b302ab0bb747613695cdae10af99bbd39a90cae522b7c0302cc27245
 ENV GO_CHECKSUM_ARM beacbe1441bee4d7978b900136d1d6a71d150f0a9bb77e9d50c822065623a35a
-ENV GO_RELEASER_CHECKSUM db351ae63bdb9f3834a9a76caa5845b4de4c403855a6524afb1d2a97f82e627f
 
 RUN if [ `uname -i` == "x86_64" ]; then CHECKSUM=$GO_CHECKSUM; ARCH=amd64; else CHECKSUM=$GO_CHECKSUM_ARM; ARCH=arm64; fi && \
     wget --progress=dot:giga https://dl.google.com/go/go${GO_VERSION}.linux-${ARCH}.tar.gz -O /tmp/golang.tar.gz && \
