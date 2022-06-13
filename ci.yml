@@ -1,0 +1,6 @@
+deps:
+  - name: dbaas-controller
+    branch: PMM-10012_psmdb_1_11_plus_b
+    path: sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
+    url: https://github.com/percona-platform/dbaas-controller
+    component: server
