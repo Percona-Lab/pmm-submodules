@@ -1,0 +1,7 @@
+deps:
+  # SERVER
+  - name: pmm-managed
+    branch: PMM-9029-PoC-API-tests-DB-connectivity
+    path: sources/pmm-managed/src/github.com/percona/pmm-managed
+    url: https://github.com/percona/pmm-managed
+    component: server
