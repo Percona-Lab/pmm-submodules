@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: fix-setup-command
+  url: https://github.com/dliakhov/pmm
