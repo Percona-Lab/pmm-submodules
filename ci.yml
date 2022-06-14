@@ -1,3 +1,5 @@
 deps:
   - name: grafana
     branch: PMM-tour
+  - name: pmm-ui-tests
+    branch: PMM-tour
