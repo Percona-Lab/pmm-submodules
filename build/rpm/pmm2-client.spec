@@ -220,7 +220,7 @@ fi
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/pmm2
 
 %changelog
-* Web Jun 15 2022 Nikita Beletskii <nikita.beletskii@percona.com>
+* Wed Jun 15 2022 Nikita Beletskii <nikita.beletskii@percona.com>
 - PMM-10103 add RHEL 9 package
 
 * Tue Aug 24 2021 Vadim Yalovets <vadim.yalovets@percona.com>
