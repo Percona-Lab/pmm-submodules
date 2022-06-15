@@ -3,6 +3,7 @@
 %{!?with_systemd:%global systemd 0}
 %{?el7:          %global systemd 1}
 %{?el8:          %global systemd 1}
+%{?el9:          %global systemd 1}
 
 Name:           pmm2-client
 Summary:        Percona Monitoring and Management Client
@@ -219,7 +220,10 @@ fi
 %attr(-,pmm-agent,pmm-agent) /usr/local/percona/pmm2
 
 %changelog
-* Tue Aug 24 2021 Vadim Yalovets <vadim.yalovets@percona.com> 
+* Web Jun 15 2022 Nikita Beletskii <nikita.beletskii@percona.com>
+- PMM-10103 add RHEL 9 package
+
+* Tue Aug 24 2021 Vadim Yalovets <vadim.yalovets@percona.com>
 - PMM-8618 ship default PG queries in PMM.
 
 * Tue Oct 13 2020 Nikolay Khramchikhin <nik@victoriametrics.com>
