@@ -1,0 +1,8 @@
+deps:
+  # API
+  - name: pmm
+    branch: PMM-5492-pprof-support
+
+  # SERVER
+  - name: pmm-managed
+    branch: PMM-5492-pprof-support
