@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: monorepo
+  - name: pmm-server
+    branch: PMM-10206-merge-managed-to-pmm
