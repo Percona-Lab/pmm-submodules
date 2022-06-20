@@ -1,5 +1,5 @@
 deps:
-  - name: pmm-agent
+  - name: pmm
     branch: PMM-9320-fix-mongo-creds-escape
   - name: mongodb_exporter
     branch: PMM-9320-fix-mongo-creds-escape
