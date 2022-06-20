@@ -1,4 +1,3 @@
 deps:
-  # COMMON
   - name: pmm
     branch: PMM-10122-match-exporters-log-level
