@@ -1,5 +1,5 @@
 deps:
   - name: postgres_exporter
     branch: PMM-7806-upgrade-pg-exporter
-  - name: pmm-managed
-    branch: PMM-7806-upgrade-pg-exporter
+  - name: pmm
+    branch: PMM-10180-disable-http-compression
