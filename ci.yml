@@ -1,7 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-10078-dev-env-variables
-  - name: grafana
-    branch: PMM-10131-new-saas-var
   - name: pmm-ui-tests
     branch: PMM-10078-new-env-vars
