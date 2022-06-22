@@ -1,4 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-10170-unlock-all-severities
-
+  - name: grafana
+    branch: PMM-10171-all-severities
