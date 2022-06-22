@@ -1,3 +1,4 @@
-- name: grafana-dashboards
-  branch: PMM-7143-Proper-Node-Metrics-expose
-  url: https://github.com/percona/grafana-dashboards
+deps:
+  - name: grafana-dashboards
+    branch: PMM-7143-Proper-Node-Metrics-expose
+    url: https://github.com/percona/grafana-dashboards
