@@ -22,4 +22,5 @@ queries-mysqld-group-replication.yml /usr/local/percona/pmm2/collectors/custom-q
 example-queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution/
 example-queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
 example-queries-postgres.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
-queries-postgres-uptime.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/high-resolution/
+queries-postgres-uptime.yml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/medium-resolution/
+queries.yaml /usr/local/percona/pmm2/collectors/custom-queries/postgresql/low-resolution/
