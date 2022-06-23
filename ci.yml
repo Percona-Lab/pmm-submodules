@@ -1,0 +1,4 @@
+deps:
+  - name: qan-api2
+    branch: PMM-10204-grpc-gateway-v2
+
