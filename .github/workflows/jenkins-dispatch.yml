@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          ./pmm-qa/pmm-tests/install_k8s_tools.sh --minikube
+          ./sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests/install_k8s_tools.sh --minikube
           minikube start
 
   helm_tests:
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          cd pmm-qa/pmm-tests
+          cd ./sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests/
           
           ./install_k8s_tools.sh --helm --kubectl
           
