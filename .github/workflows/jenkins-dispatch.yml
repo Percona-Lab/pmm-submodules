@@ -28,6 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
+          ls -la
+          ls -la ./sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests/
           ./sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests/install_k8s_tools.sh --minikube
           minikube start
 
