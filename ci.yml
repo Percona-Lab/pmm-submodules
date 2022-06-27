@@ -5,3 +5,5 @@ deps:
     branch: PMM-10171-all-severities
   - name: pmm-ui-tests
     branch: PMM-10171-all-severities
+  - name: grafana-dashboards
+    branch: PMM-10171-all-severities
