@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-9510-remove-duplicate-values
+  url: https://github.com/percona/pmm
