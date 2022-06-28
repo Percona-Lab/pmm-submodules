@@ -9,11 +9,18 @@ on:
         description: 'client image: repo/name:tag'
         required: true 
         type: string
+      sha:
+        description: 'commit sha to report status'
+        required: false
+        type: string
 
 jobs:
 
   helm-tests:
     runs-on: ubuntu-latest
+    env:
+      WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests
+
     steps:
 
       - name: checkout code
@@ -29,7 +36,7 @@ jobs:
       - name: install tools
         run: |
           npm install -g bats
-          ./sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests/install_k8s_tools.sh --minikube --helm --kubectl --user
+          $WORK_DIR/install_k8s_tools.sh --minikube --helm --kubectl --user
 
       - name: minikube_start
         run: |
@@ -40,10 +47,33 @@ jobs:
         run: |
           echo $(git submodule status)
 
-          cd /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests/
+          cd $WORK_DIR
           
           export IMAGE_REPO=$(echo $SERVER_IMAGE | cut -d ':' -f 1)
           export IMAGE_TAG=$(echo $SERVER_IMAGE | cut -d ':' -f 2)
           bats --tap pmm-2-0-bats-tests/helm-test.bats
         env:
           SERVER_IMAGE: ${{ inputs.server_image }}
+
+      - name: Create status check
+        if: ${{ always() }}
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          SHA: ${{ inputs.sha }}
+          STATUS: ${{ job.status }}
+        run: |
+          if [ "${STATUS}" = "cancelled" ]; then
+            STATUS="error"
+          fi
+
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            /repos/$REPO/statuses/$SHA \
+            -f state="$STATUS" \
+            -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID" \
+            -f description="Helm Tests status: $STATUS" \
+            -f context='actions/workflows/helm-tests'
