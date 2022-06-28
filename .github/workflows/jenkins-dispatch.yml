@@ -18,6 +18,9 @@ jobs:
 
   helm-tests:
     runs-on: ubuntu-latest
+    env:
+      WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests
+
     steps:
 
       - name: checkout code
@@ -33,7 +36,7 @@ jobs:
       - name: install tools
         run: |
           npm install -g bats
-          ./sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests/install_k8s_tools.sh --minikube --helm --kubectl --user
+          $WORK_DIR/install_k8s_tools.sh --minikube --helm --kubectl --user
 
       - name: minikube_start
         run: |
@@ -44,7 +47,7 @@ jobs:
         run: |
           echo $(git submodule status)
 
-          cd /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests/
+          cd $WORK_DIR
           
           export IMAGE_REPO=$(echo $SERVER_IMAGE | cut -d ':' -f 1)
           export IMAGE_TAG=$(echo $SERVER_IMAGE | cut -d ':' -f 2)
