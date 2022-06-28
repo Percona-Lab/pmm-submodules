@@ -70,7 +70,7 @@ jobs:
             --method POST \
             -H "Accept: application/vnd.github.v3+json" \
             /repos/$REPO/statuses/$SHA \
-            -f state='$STATUS' \
-            -f target_url='https://github.com/$REPO/actions/runs/$RUN_ID' \
-            -f description='Helm Tests status: $STATUS' \
+            -f state="$STATUS" \
+            -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID" \
+            -f description="Helm Tests status: $STATUS" \
             -f context='actions/workflows/helm-tests'
