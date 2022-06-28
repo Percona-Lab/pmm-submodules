@@ -68,8 +68,7 @@ main() {
 
     prepare_vmagent_tarball
     prepare_tarball pmm-submodules
-    prepare_tarball pmm-admin
-    prepare_tarball pmm-agent
+    prepare_tarball pmm
     prepare_tarball mongodb_exporter
     prepare_tarball mysqld_exporter
     prepare_tarball postgres_exporter
