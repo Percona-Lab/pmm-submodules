@@ -9,6 +9,10 @@ on:
         description: 'client image: repo/name:tag'
         required: true 
         type: string
+      sha:
+        description: 'commit sha to report status'
+        required: false
+        type: string
 
 jobs:
 
@@ -47,3 +51,26 @@ jobs:
           bats --tap pmm-2-0-bats-tests/helm-test.bats
         env:
           SERVER_IMAGE: ${{ inputs.server_image }}
+
+      - name: Create status check
+        if: ${{ always() }}
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          SHA: ${{ inputs.sha }}
+          STATUS: ${{ job.status }}
+        run: |
+          if [ "${STATUS}" = "cancelled" ]; then
+            STATUS="error"
+          fi
+
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            /repos/$REPO/statuses/$SHA \
+            -f state='$STATUS' \
+            -f target_url='https://github.com/$REPO/actions/runs/$RUN_ID' \
+            -f description='Helm Tests status: $STATUS' \
+            -f context='actions/workflows/helm-tests'
