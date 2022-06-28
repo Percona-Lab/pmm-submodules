@@ -1,0 +1,49 @@
+on: 
+  workflow_dispatch:
+    inputs:
+      server_image:
+        description: 'server image: repo/name:tag'     
+        required: true
+        type: string 
+      client_image:
+        description: 'client image: repo/name:tag'
+        required: true 
+        type: string
+
+jobs:
+
+  helm-tests:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout code
+        uses: percona-platform/checkout@v3
+        with:
+          submodules: 'recursive'
+
+      - name: install npm
+        uses: percona-platform/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: install tools
+        run: |
+          npm install -g bats
+          ./sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests/install_k8s_tools.sh --minikube --helm --kubectl --user
+
+      - name: minikube_start
+        run: |
+          minikube start
+          kubectl wait --for=condition=Ready node --timeout=90s minikube
+
+      - name: helm_tests
+        run: |
+          echo $(git submodule status)
+
+          cd /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests/
+          
+          export IMAGE_REPO=$(echo $SERVER_IMAGE | cut -d ':' -f 1)
+          export IMAGE_TAG=$(echo $SERVER_IMAGE | cut -d ':' -f 2)
+          bats --tap pmm-2-0-bats-tests/helm-test.bats
+        env:
+          SERVER_IMAGE: ${{ inputs.server_image }}
