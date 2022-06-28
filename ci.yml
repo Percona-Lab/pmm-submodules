@@ -1,0 +1,7 @@
+deps:
+- name: mysqld_exporter
+  branch: PMM-9981-remove-high-cardinality-values
+  url: https://github.com/percona/mysqld_exporter
+- name: grafana-dashboards
+  branch: PMM-9981-remove-high-cardinality-values
+  url: https://github.com/percona/grafana-dashboards
