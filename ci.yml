@@ -1,0 +1,4 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-10231-cred-src-bugfix
