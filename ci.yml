@@ -1,4 +1,4 @@
 deps:
   # COMMON
   - name: pmm
-    branch: PMM-10231-cred-src-bugfix
+    branch: PMM-10231_defaults_file_revert
