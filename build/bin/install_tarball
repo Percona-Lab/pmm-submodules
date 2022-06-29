@@ -2,6 +2,9 @@
 
 set -eu
 
+WORKING_DIR="$(dirname "${0}")"
+cd "${WORKING_DIR}" || exit 2
+
 PMM_DIR=${PMM_DIR:-/usr/local/percona/pmm2}
 
 PMM_USER=${PMM_USER:-}
@@ -73,3 +76,5 @@ if [ "${update}" = "1" ]; then
 else
   ${INSTALL_COMMAND} -m 0660 /dev/null ${PMM_DIR}/config/pmm-agent.yaml
 fi
+
+cd - || true
