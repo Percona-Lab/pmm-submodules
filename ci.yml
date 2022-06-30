@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10155-Move-QAN-to-main-menu-from-submenu
