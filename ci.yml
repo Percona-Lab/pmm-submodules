@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-9650-experimental-pxc-summary-dashboard
+  url: https://github.com/percona/grafana-dashboards
