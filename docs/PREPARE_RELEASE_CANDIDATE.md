@@ -1,8 +1,10 @@
 # Prepare release candidate (RC)
 
 If you want to create a new RC then you need to follow [Create RC](#create-rc) section.
+
 If you have new commits in release branches and want to rebuild them then you need [Rebuild RC](#rebuild-rc).
-If you want **remove** current release branches and recreate them from PMM-2.0 then your choice is [Recreate RC][#recreate-rc] section
+
+If you want **remove** current release branches and recreate them from PMM-2.0 then your choice is [Recreate RC](#recreate-rc) section
 
 ## Create RC
 
