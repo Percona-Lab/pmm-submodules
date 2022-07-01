@@ -23,4 +23,4 @@ field. Usually it should be something like: `pmm-2.20.0` for 2.20.0 release.
 ## Recreate RC
 ![Release candidate recreate process](img/rc-recreate.png)
 
-If you want recreate RC and RC branches you can use option: REMOVE_RELEASE_BRANCH in [release candidate job](https://pmm.cd.percona.com/blue/organizations/jenkins/pmm2-prepare-release-candidate). Be careful, bracnhes will be recreated from PMM-2.0 branch.
+If you want recreate RC and RC branches you can use option: REMOVE_RELEASE_BRANCH in [release candidate job](https://pmm.cd.percona.com/blue/organizations/jenkins/pmm2-prepare-release-candidate). Be careful, branches will be recreated from PMM-2.0 branch.
