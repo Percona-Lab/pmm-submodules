@@ -184,13 +184,6 @@ get_system(){
     return
 }
 
-install_golang() {
-    wget --progress=dot:giga ${GO_TARBALL} -O /tmp/golang.tar.gz
-    tar -zxf /tmp/golang.tar.gz
-    rm -rf /usr/local/go*
-    mv go /usr/local/
-}
-
 install_deps() {
     if [ $INSTALL = 0 ]
     then
@@ -205,11 +198,9 @@ install_deps() {
     if [ "x$OS" = "xrpm" ]
     then
         yum -y install git wget rpmdevtools bison yum-utils rpm-build
-        install_golang
     else
         apt-get update
         apt-get -y install devscripts equivs
-        install_golang
         sed -i 's:apt-get :apt-get -y --force-yes :g' /usr/bin/mk-build-deps
         link="https://raw.githubusercontent.com/Percona-Lab/pmm-submodules/${BRANCH}/build/debian/control"
         wget -O $WORKDIR/control $link
@@ -486,7 +477,7 @@ if [ -n "$pmm_release" ]; then
 fi
 
 REVISION=0
-GO_TARBALL="https://dl.google.com/go/go1.17.5.linux-amd64.tar.gz"
+GO_TARBALL="https://dl.google.com/go/go1.18.1.linux-amd64.tar.gz"
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
 get_system
 install_deps
