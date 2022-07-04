@@ -2,6 +2,7 @@
 
 set -eu
 
+CURRENT_DIR="$(pwd)"
 WORKING_DIR="$(dirname "${0}")"
 cd "${WORKING_DIR}" || exit 2
 
@@ -77,4 +78,4 @@ else
   ${INSTALL_COMMAND} -m 0660 /dev/null ${PMM_DIR}/config/pmm-agent.yaml
 fi
 
-cd - || true
+cd "${CURRENT_DIR}" || true
