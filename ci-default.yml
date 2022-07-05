@@ -20,7 +20,7 @@ deps:
     component: client
 
   - name: mongodb_exporter
-    branch: release-0.32.0
+    branch: release-0.32.1
     path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
     url: https://github.com/percona/mongodb_exporter
     component: client
@@ -62,11 +62,6 @@ deps:
     component: client
 
   # SERVER
-  - name: pmm-managed
-    branch: main
-    path: sources/pmm-managed/src/github.com/percona/pmm-managed
-    url: https://github.com/percona/pmm-managed
-    component: server
 
   - name: dbaas-controller
     branch: main
