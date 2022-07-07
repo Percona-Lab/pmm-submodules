@@ -1,0 +1,7 @@
+deps:
+  # COMMON
+  - name: mongodb_exporter
+    branch: PMM-10271-fix-meta-metric-label-dbstats
+    path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
+    url: https://github.com/percona/mongodb_exporter
+    component: client
