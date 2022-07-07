@@ -1,0 +1,7 @@
+deps:
+  - name: grafana
+    branch: PMM-10091-g9-unified-alerting
+  - name: pmm
+    branch: alerting-poc
+  - name: pmm-managed
+    branch: alerting-poc
