@@ -1,0 +1,6 @@
+deps:
+  - name: pmm
+    branch: PMM-10265-fix-non-uri-dsn-for-mongo
+
+  - name: mongodb_exporter
+    branch: PMM-10265-fix-non-uri-dsn-for-mongo
