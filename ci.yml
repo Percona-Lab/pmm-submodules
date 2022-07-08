@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-10285-fix-swagger-cve
+  url: https://github.com/percona/pmm
+- name: pmm-update
+  branch: PMM-10285-fix-swagger-cve
+  url: https://github.com/percona/pmm-update
