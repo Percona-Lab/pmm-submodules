@@ -1,3 +1,5 @@
 deps:
   - name: postgres_exporter
     branch: PMM-10244-vacuum-monitoring
+  - name: grafana-dashboards
+    branch: PMM-10244-vacuum-monitoring
