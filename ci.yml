@@ -1,4 +1,0 @@
-deps:
-  - name: pmm-agent
-    branch: PMM-9921-rewrite-pmm-client-image-entrypoint
-    url: https://github.com/percona/pmm-agent
