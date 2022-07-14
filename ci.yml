@@ -2,6 +2,3 @@ deps:
 - name: pmm-server
   branch: CUSTOM-107-upgrade-python
   url: https://github.com/percona/pmm-server
-- name: grafana-dashboards
-  branch: CUSTOM-107-upgrade-clickhouse-plugin
-  url: https://github.com/percona/grafana-dashboards
