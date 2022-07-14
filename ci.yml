@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-10312-fix-clickhouse-datasource
+  url: https://github.com/percona/pmm
+- name: pmm-update
+  branch: PMM-10312-fix-clickhouse-datasource
+  url: https://github.com/percona/pmm-update
