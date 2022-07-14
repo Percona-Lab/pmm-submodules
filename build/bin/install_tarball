@@ -39,7 +39,7 @@ ${INSTALL_COMMAND} -m 0755 queries.yaml ${PMM_DIR}/collectors/custom-queries/pos
 ${INSTALL_COMMAND} -m 0755 queries-mysqld-group-replication.yml ${PMM_DIR}/collectors/custom-queries/mysql/high-resolution
 
 for FILE in $( ls ${PWD}/bin ); do
-    if [ "x${FILE}" = "xpmm-admin" -o "x${FILE}" = "xpmm-agent" ]; then
+    if [ "x${FILE}" = "xpmm-admin" -o "x${FILE}" = "xpmm-agent" -o "x${FILE}" = "xpmm-agent-entrypoint" ]; then
         ${INSTALL_COMMAND} -m 0755 ${PWD}/bin/${FILE} ${PMM_DIR}/bin
     elif [ "x${FILE}" = "xpt-summary" -o "x${FILE}" = "xpt-mysql-summary" -o "x${FILE}" = "xpt-pg-summary" -o "x${FILE}" = "xpt-mongodb-summary" ]; then
         ${INSTALL_COMMAND} -m 0755 ${PWD}/bin/${FILE} ${PMM_DIR}/tools
