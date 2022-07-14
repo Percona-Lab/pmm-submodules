@@ -3,8 +3,9 @@ FROM centos:7
 # enable nodesource repo for nodejs
 RUN curl -sL https://rpm.nodesource.com/setup_16.x | bash -
 RUN curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
-RUN yum update -y
-RUN yum install -y --setopt=skip_missing_names_on_install=False \
+
+RUN yum update -y && \
+    yum install -y --setopt=skip_missing_names_on_install=False \
     gcc gcc-c++ \
     nodejs \
     libtool libtool-ltdl \
@@ -17,30 +18,28 @@ RUN yum install -y --setopt=skip_missing_names_on_install=False \
     yum-utils rpm-build \
     wget \
     glibc-static \
-    yarn
-RUN yum -y remove nodesource-release-el7-1.noarch
-RUN yum clean all && rm -rf /var/cache/yum
+    yarn && \
+    yum -y remove nodesource-release-el7-1.noarch && \
+    yum clean all && rm -rf /var/cache/yum
 
 # keep that format for easier search
-ENV GO_VERSION go1.18.1
-ENV GO_CHECKSUM b3b815f47ababac13810fc6021eb73d65478e0b2db4b09d348eefad9581a2334
-ENV GO_RELEASER_CHECKSUM db351ae63bdb9f3834a9a76caa5845b4de4c403855a6524afb1d2a97f82e627f
+ENV GO_VERSION 1.18.3
+ENV GO_RELEASER_VERSION 1.9.2
+ENV GO_CHECKSUM 956f8507b302ab0bb747613695cdae10af99bbd39a90cae522b7c0302cc27245
+ENV GO_CHECKSUM_ARM beacbe1441bee4d7978b900136d1d6a71d150f0a9bb77e9d50c822065623a35a
 
-RUN wget --progress=dot:giga https://dl.google.com/go/${GO_VERSION}.linux-amd64.tar.gz -O /tmp/golang.tar.gz
-RUN wget --progress=dot:giga https://github.com/goreleaser/goreleaser/releases/download/v0.142.0/goreleaser_amd64.rpm -O /tmp/goreleaser.rpm
-RUN sha256sum /tmp/golang.tar.gz
-RUN echo "${GO_CHECKSUM} /tmp/golang.tar.gz" | sha256sum -c -
-RUN sha256sum /tmp/goreleaser.rpm
-RUN echo "${GO_RELEASER_CHECKSUM} /tmp/goreleaser.rpm" | sha256sum -c -
-RUN tar -C /usr/local -xzf /tmp/golang.tar.gz
-RUN yum install -y /tmp/goreleaser.rpm
+RUN if [ `uname -i` == "x86_64" ]; then CHECKSUM=$GO_CHECKSUM; ARCH=amd64; else CHECKSUM=$GO_CHECKSUM_ARM; ARCH=arm64; fi && \
+    wget --progress=dot:giga https://dl.google.com/go/go${GO_VERSION}.linux-${ARCH}.tar.gz -O /tmp/golang.tar.gz && \
+    wget --progress=dot:giga https://github.com/goreleaser/goreleaser/releases/download/v${GO_RELEASER_VERSION}/goreleaser-${GO_RELEASER_VERSION}.`uname -i`.rpm -O /tmp/goreleaser.rpm && \
+    echo "${CHECKSUM} /tmp/golang.tar.gz" | sha256sum -c - && \
+    tar -C /usr/local -xzf /tmp/golang.tar.gz && \
+    yum install -y /tmp/goreleaser.rpm && \
+    rm /tmp/golang.tar.gz /tmp/goreleaser.rpm
+
 RUN update-alternatives --install "/usr/bin/go" "go" "/usr/local/go/bin/go" 0
 RUN update-alternatives --set go /usr/local/go/bin/go
 RUN update-alternatives --install "/usr/bin/gofmt" "gofmt" "/usr/local/go/bin/gofmt" 0
 RUN update-alternatives --set gofmt /usr/local/go/bin/gofmt
-RUN update-alternatives --install "/usr/bin/goreleaser" "goreleaser" "/usr/local/goreleaser" 0
-RUN update-alternatives --set goreleaser /usr/local/goreleaser
-RUN rm /tmp/golang.tar.gz /tmp/goreleaser.rpm
 
 RUN useradd builder -u 1000 -m -G users,wheel && \
     echo "builder ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers && \
@@ -49,6 +48,7 @@ RUN useradd builder -u 1000 -m -G users,wheel && \
     mkdir /home/builder/rpm && \
     chmod 755 /home/builder && \
     chown -R builder:builder /home/builder
+
 USER builder
 
 ENV FLAVOR=rpmbuild OS=centos DIST=el7

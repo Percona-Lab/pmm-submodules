@@ -7,18 +7,6 @@ deps:
     component: common
 
   # CLIENT
-  - name: pmm-admin
-    branch: main
-    path: sources/pmm-admin/src/github.com/percona/pmm-admin
-    url: https://github.com/percona/pmm-admin
-    component: client
-
-  - name: pmm-agent
-    branch: main
-    path: sources/pmm-agent/src/github.com/percona/pmm-agent
-    url: https://github.com/percona/pmm-agent
-    component: client
-
   - name: node_exporter
     branch: main
     path: sources/node_exporter/src/github.com/prometheus/node_exporter
@@ -32,7 +20,7 @@ deps:
     component: client
 
   - name: mongodb_exporter
-    branch: release-0.31.0
+    branch: release-0.33.0
     path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
     url: https://github.com/percona/mongodb_exporter
     component: client
@@ -68,17 +56,12 @@ deps:
     component: client
 
   - name: percona-toolkit
-    branch: release-3.3.2
+    branch: release-3.4.0
     path: sources/percona-toolkit/src/github.com/percona/percona-toolkit
     url: https://github.com/percona/percona-toolkit
     component: client
 
   # SERVER
-  - name: pmm-managed
-    branch: main
-    path: sources/pmm-managed/src/github.com/percona/pmm-managed
-    url: https://github.com/percona/pmm-managed
-    component: server
 
   - name: dbaas-controller
     branch: main

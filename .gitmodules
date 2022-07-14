@@ -6,14 +6,6 @@
 
 # PMM Client
 
-[submodule "pmm-admin"]
-	path = sources/pmm-admin/src/github.com/percona/pmm-admin
-	url = https://github.com/percona/pmm-admin.git
-	branch = main
-[submodule "pmm-agent"]
-	path = sources/pmm-agent/src/github.com/percona/pmm-agent
-	url = https://github.com/percona/pmm-agent.git
-	branch = main
 [submodule "node_exporter"]
 	path = sources/node_exporter/src/github.com/prometheus/node_exporter
 	url = https://github.com/percona/node_exporter.git
@@ -25,7 +17,7 @@
 [submodule "mongodb_exporter"]
 	path = sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
 	url = https://github.com/percona/mongodb_exporter.git
-	branch = release-0.31.0
+	branch = release-0.33.0
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
@@ -49,15 +41,11 @@
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
-	branch = release-3.3.2
+	branch = release-3.4.0
 
 
 # PMM Server
 
-[submodule "pmm-managed"]
-	path = sources/pmm-managed/src/github.com/percona/pmm-managed
-	url = https://github.com/percona/pmm-managed
-	branch = main
 [submodule "dbaas-controller"]
 	path = sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
 	url = https://github.com/percona-platform/dbaas-controller
