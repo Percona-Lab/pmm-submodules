@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: version-drift-warning
+
