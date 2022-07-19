@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10338-g8.3.10
