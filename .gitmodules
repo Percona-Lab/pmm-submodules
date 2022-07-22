@@ -69,7 +69,7 @@
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
-	branch = pmm-2.29.1
+	branch = main
 [submodule "pmm-dump"]
 	path = sources/pmm-dump
 	url = https://github.com/percona/pmm-dump
