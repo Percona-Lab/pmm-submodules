@@ -10,6 +10,7 @@ if [ -f "${docker_client_tarball}" ]; then
     exit 0
 fi
 
+find ${root_dir}
 cp ${root_dir}/results/tarball/pmm2-client-*.tar.gz ${root_dir}/sources/pmm/build/docker/client/pmm2-client.tar.gz
 
 if [ -z "${DOCKER_CLIENT_TAG}" ]; then
