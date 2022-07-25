@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    url: https://github.com/arriven/pmm
+    branch: PMM-9118-x509-error-message
