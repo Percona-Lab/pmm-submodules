@@ -79,13 +79,14 @@ copy_component() {
     local component_path=$2
     local component_dest=${3:-$component_path}
     local component_dir=${tmp_dir}/source/${component}
+    local archives=$(ls ${source_dir}/${component}-*.tar.gz | head -n1) # temporary hack for pmm repo
 
     if [ ! -d "${component_dir}" ]; then
         mkdir -p ${component_dir}
         tar \
             -C ${component_dir} \
             --strip-components=1 \
-            -zxpf "${source_dir}/${component}"-??????.tar.gz # commit id
+            -zxpf "$archives"
     fi
 
     cp -r ${component_dir}/${component_path} ${binary_dir}/${component_dest}
