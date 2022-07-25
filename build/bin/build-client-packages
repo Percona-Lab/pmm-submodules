@@ -282,6 +282,7 @@ build_srpm(){
     cp ${WORKDIR}/${NAME}-${VERSION}/rpm/*.spec .
     cp ${WORKDIR}/${TARFILE} ../SOURCES/
     cd ${WORKDIR}
+    find ${WORKDIR}/rpmbuild
     rpmbuild -bs --define "_topdir ${WORKDIR}/rpmbuild" --define "version $VERSION" --define "release $RPM_RELEASE" --define "dist %{nil}" rpmbuild/SOURCES/pmm/build/pmm2-client.spec
     mkdir -p ${WORKDIR}/srpm
     mkdir -p ${CURDIR}/srpm
