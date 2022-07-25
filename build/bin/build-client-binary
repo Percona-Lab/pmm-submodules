@@ -85,7 +85,7 @@ copy_component() {
         tar \
             -C ${component_dir} \
             --strip-components=1 \
-            -zxpf "${source_dir}/${component}-??????.tar.gz"
+            -zxpf "${source_dir}/${component}"-??????.tar.gz # commit id
     fi
 
     cp -r ${component_dir}/${component_path} ${binary_dir}/${component_dest}
