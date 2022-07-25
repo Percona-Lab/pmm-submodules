@@ -79,7 +79,7 @@ copy_component() {
     local component_path=$2
     local component_dest=${3:-$component_path}
     local component_dir=${tmp_dir}/source/${component}
-    local archive=$(ls ${source_dir}/${component}-??????.tar.gz)
+    local archive=$(ls ${source_dir}/${component}-*.tar.gz | head -n1) # temporary hack for pmm repo
 
     if [ ! -d "${component_dir}" ]; then
         mkdir -p ${component_dir}
