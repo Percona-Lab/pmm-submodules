@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-7-rebuild-agent
+	branch = PMM-9875-errors-view-usage
 
 
 # PMM Client
@@ -84,4 +84,3 @@
 	path = sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
 	url = https://github.com/percona/pmm-ui-tests
 	branch = main
-
