@@ -110,7 +110,7 @@ main() {
 
     echo ${version} > ${binary_dir}/VERSION
 
-    copy_component "pmm" "build/packages/rpm/client/pmm2-client.spec"
+    copy_component "pmm" "build/packages/rpm/client" "rpm"
     copy_component "pmm-submodules" "config"
     copy_component "pmm-submodules" "debian"
     copy_component "pmm-submodules" "install_tarball"
