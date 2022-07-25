@@ -1,0 +1,4 @@
+deps:
+- name: qan-api2
+  branch: PMM-9987-fix-qps-sum-values
+  url: https://github.com/percona/qan-api2
