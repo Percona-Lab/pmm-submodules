@@ -26,6 +26,7 @@ install -m 0755 -d $RPM_BUILD_ROOT/usr/local/percona/pmm2/collectors/custom-quer
 
 install -m 0755 bin/pmm-agent $RPM_BUILD_ROOT/usr/local/percona/pmm2/bin/
 install -m 0755 bin/pmm-admin $RPM_BUILD_ROOT/usr/local/percona/pmm2/bin/
+install -m 0755 bin/pmm-admin-entrypoint $RPM_BUILD_ROOT/usr/local/percona/pmm2/bin/
 install -m 0755 bin/node_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters/
 install -m 0755 bin/mysqld_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters/
 install -m 0755 bin/postgres_exporter $RPM_BUILD_ROOT/usr/local/percona/pmm2/exporters/
