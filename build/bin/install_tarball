@@ -42,7 +42,7 @@ ${INSTALL_COMMAND} -m 0755 queries-postgres-uptime.yml "${PMM_DIR}"/collectors/c
 ${INSTALL_COMMAND} -m 0755 queries.yaml "${PMM_DIR}"/collectors/custom-queries/postgresql/medium-resolution
 ${INSTALL_COMMAND} -m 0755 queries-mysqld-group-replication.yml "${PMM_DIR}"/collectors/custom-queries/mysql/high-resolution
 
-find ./bin -maxdepth 1 -type f | while read -r FILE; do
+for FILE in $( ls ${PWD}/bin ); do
     if [ "x${FILE}" = "xpmm-admin" ] || [ "x${FILE}" = "xpmm-agent" ] || [ "x${FILE}" = "xpmm-agent-entrypoint" ]; then
         ${INSTALL_COMMAND} -m 0755 "${FILE}" "${PMM_DIR}"/bin
     elif [ "x${FILE}" = "xpt-summary" ] || [ "x${FILE}" = "xpt-mysql-summary" ] || [ "x${FILE}" = "xpt-pg-summary" ] || [ "x${FILE}" = "xpt-mongodb-summary" ]; then
