@@ -1,4 +1,1 @@
-deps:
-- name: pmm
-  branch: PMM-10036-migrate-to-monorepo
-  url: https://github.com/percona/pmm
+
