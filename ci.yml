@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10351-DBaaS-naming-update
