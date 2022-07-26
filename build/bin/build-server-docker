@@ -10,7 +10,7 @@ if [ -f "${docker_tarball}" ]; then
     exit 0
 fi
 
-cp -r ${root_dir}/sources/pmm/build/ansible ${rpms_dir}/../ansible
+cp -r ${root_dir}/tmp/source/pmm/build/ansible ${rpms_dir}/../ansible
 
 # enable 'local' repo in ansible playbooks
 sed -i -e "s/enablerepo: \"pmm2-server\"/enablerepo: local/" ${rpms_dir}/../ansible/roles/pmm2-images/tasks/main.yml
