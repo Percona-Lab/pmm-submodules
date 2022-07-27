@@ -111,7 +111,7 @@ main() {
     echo ${version} > ${binary_dir}/VERSION
 
     copy_component "pmm" "build/packages/rpm/client" "rpm"
-    copy_component "pmm-submodules" "config"
+    copy_component "pmm" "build/packages/config" "config"
     copy_component "pmm" "build/packages/deb" "debian"
     copy_component "pmm-submodules" "install_tarball"
     copy_component "node_exporter" "example.prom"
