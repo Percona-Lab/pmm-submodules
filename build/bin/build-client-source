@@ -26,6 +26,7 @@ prepare_tarball() {
         echo ${tarball} already exists, skipping build
     else
         if [ ${repo_name} = 'pmm-submodules' ]; then
+            cp sources/pmm/src/github.com/percona/pmm/build/packages/deb ${git_dir}/debian
             cp -r build/config ${git_dir}/
             cp -f build/bin/install_tarball ${git_dir}/
             tar -C sources -zcf ${repo_name}-${commit}.tar.gz  ${repo_name}
