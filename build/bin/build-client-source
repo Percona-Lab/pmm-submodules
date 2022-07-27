@@ -26,7 +26,6 @@ prepare_tarball() {
         echo ${tarball} already exists, skipping build
     else
         if [ ${repo_name} = 'pmm-submodules' ]; then
-            cp -r build/debian ${git_dir}/
             cp -r build/config ${git_dir}/
             cp -f build/bin/install_tarball ${git_dir}/
             tar -C sources -zcf ${repo_name}-${commit}.tar.gz  ${repo_name}
@@ -64,7 +63,7 @@ main() {
     rm -rf ${source_tarball}
     mkdir -p ${source_dir}/ $(dirname ${source_tarball}) || :
     echo "PMM_SUBMODULES_COMMIT=$(git rev-parse --short HEAD)" > ${client_properties}
-
+    find . 
     prepare_vmagent_tarball
     prepare_tarball pmm-submodules
     prepare_tarball pmm
