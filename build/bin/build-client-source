@@ -27,7 +27,6 @@ prepare_tarball() {
     else
         if [ ${repo_name} = 'pmm-submodules' ]; then
             cp -r build/debian ${git_dir}/
-            cp -r build/rpm ${git_dir}/
             cp -r build/config ${git_dir}/
             cp -f build/bin/install_tarball ${git_dir}/
             tar -C sources -zcf ${repo_name}-${commit}.tar.gz  ${repo_name}
