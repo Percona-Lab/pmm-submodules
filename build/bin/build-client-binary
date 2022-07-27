@@ -79,13 +79,14 @@ copy_component() {
     local component_path=$2
     local component_dest=${3:-$component_path}
     local component_dir=${tmp_dir}/source/${component}
+    local archive=$(ls ${source_dir}/${component}-*.tar.gz | head -n1) # temporary hack for pmm repo
 
     if [ ! -d "${component_dir}" ]; then
         mkdir -p ${component_dir}
         tar \
             -C ${component_dir} \
             --strip-components=1 \
-            -zxpf ${source_dir}/${component}-*.tar.gz
+            -zxpf "$archive"
     fi
 
     cp -r ${component_dir}/${component_path} ${binary_dir}/${component_dest}
@@ -109,9 +110,9 @@ main() {
 
     echo ${version} > ${binary_dir}/VERSION
 
+    copy_component "pmm" "build/packages/rpm/client" "rpm"
     copy_component "pmm-submodules" "config"
     copy_component "pmm-submodules" "debian"
-    copy_component "pmm-submodules" "rpm"
     copy_component "pmm-submodules" "install_tarball"
     copy_component "node_exporter" "example.prom"
     copy_component "mysqld_exporter" "queries-mysqld.yml"
