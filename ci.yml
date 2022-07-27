@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-10257-fix-time-interval
+  url: https://github.com/percona/grafana-dashboards
