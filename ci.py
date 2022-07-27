@@ -317,7 +317,7 @@ def main():
         builder.create_fb_branch(args.prepare, args.global_repo)
         sys.exit(0)
 
-    # builder.check_deps()
+    builder.check_deps()
     builder.get_deps()
 
 
