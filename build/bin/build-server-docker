@@ -10,13 +10,13 @@ if [ -f "${docker_tarball}" ]; then
     exit 0
 fi
 
-cp -r ${root_dir}/sources/pmm-server/ansible ${rpms_dir}/../ansible
+cp -r ${root_dir}/tmp/source/pmm/build/ansible ${rpms_dir}/../ansible
 
 # enable 'local' repo in ansible playbooks
 sed -i -e "s/enablerepo: \"pmm2-server\"/enablerepo: local/" ${rpms_dir}/../ansible/roles/pmm2-images/tasks/main.yml
 sed -i -e "s/pmm_client_repo_name: \".*\"/pmm_client_repo_name: local/" ${rpms_dir}/../ansible/roles/pmm2-images/vars/main.yml
 
-cp ${root_dir}/build/pmm-server-docker/* ${rpms_dir}/../
+cp ${root_dir}/tmp/source/pmm/build/docker/server/* ${rpms_dir}/../
 git -C ${root_dir} rev-parse HEAD > ${rpms_dir}/../gitCommit
 docker run --rm -v ${rpms_dir}:/home/builder/rpm/RPMS ${rpmbuild_docker_image} sh -c "
     sudo chown -R builder /home/builder/rpm/RPMS
@@ -28,6 +28,7 @@ if [ -z "${DOCKER_TAG}" ]; then
 fi
 
 IMAGE_VERSION=`echo $DOCKER_TAG | cut -d ':' -f2`
+
 
 docker build --build-arg BUILD_DATE="`date --rfc-3339=seconds`" \
              --build-arg VERSION="$IMAGE_VERSION" \

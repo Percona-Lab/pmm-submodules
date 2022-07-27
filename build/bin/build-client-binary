@@ -14,9 +14,10 @@ extract_source_tarball() {
 
 gobuild_component() {
     local component=$1
-    local extract_path=${2:-"github.com/percona/$component"}
-    local component_path=$3
-    local result_file=${4:-bin/$(basename ${component_path:-$extract_path})}
+    local parent_component=${2:-$component}
+    local extract_path=${3:-"github.com/percona/$parent_component"}
+    local component_path=$4
+    local result_file=${5:-bin/$(basename ${component_path:-$extract_path})}
 
     if [ ${component} = 'azure_metrics_exporter' ]; then
         result_file=${result_file/_metrics/}
@@ -50,9 +51,9 @@ gobuild_component() {
         # for 'make release'
         export PMM_RELEASE_VERSION=${full_pmm_version}
         export PMM_RELEASE_TIMESTAMP=$(date '+%s')
-        export PMM_RELEASE_FULLCOMMIT=$(cd sources/${component}/src/${extract_path} && git rev-parse HEAD)
-        export COMPONENT_VERSION=$(cd sources/${component}/src/${extract_path} && git describe --abbrev=0 --always)
-        export COMPONENT_BRANCH=$(cd sources/${component}/src/${extract_path} && git describe --always --contains --all)
+        export PMM_RELEASE_FULLCOMMIT=$(cd sources/${parent_component}/src/${extract_path} && git rev-parse HEAD)
+        export COMPONENT_VERSION=$(cd sources/${parent_component}/src/${extract_path} && git describe --abbrev=0 --always)
+        export COMPONENT_BRANCH=$(cd sources/${parent_component}/src/${extract_path} && git describe --always --contains --all)
         export PMM_RELEASE_BRANCH=""
         sudo chown -R builder:builder /home/builder/tmp
 
@@ -63,7 +64,8 @@ gobuild_component() {
         mkdir -p \$binary_dir/bin
 
         mkdir -p /tmp/go/src/${extract_path}
-        tar -C /tmp/go/src/${extract_path} --strip-components=1 -zxpf \${source_dir}/${component}-*.tar.gz
+        archive=$(ls ${source_dir} | grep -e "${parent_component}-\w*\.tar\.gz")
+        tar -C /tmp/go/src/${extract_path} --strip-components=1 -zxpf \${source_dir}/\$archive
         pushd /tmp/go
             export GOPATH=\$(pwd -P)
             ${build_command}
@@ -77,13 +79,14 @@ copy_component() {
     local component_path=$2
     local component_dest=${3:-$component_path}
     local component_dir=${tmp_dir}/source/${component}
+    local archive=$(ls ${source_dir}/${component}-*.tar.gz | head -n1) # temporary hack for pmm repo
 
     if [ ! -d "${component_dir}" ]; then
         mkdir -p ${component_dir}
         tar \
             -C ${component_dir} \
             --strip-components=1 \
-            -zxpf ${source_dir}/${component}-*.tar.gz
+            -zxpf "$archive"
     fi
 
     cp -r ${component_dir}/${component_path} ${binary_dir}/${component_dest}
@@ -92,24 +95,24 @@ copy_component() {
 main() {
     extract_source_tarball
 
-    gobuild_component "vmagent" "github.com/VictoriaMetrics/VictoriaMetrics" "app/vmagent"
-    gobuild_component "node_exporter"     "github.com/prometheus/node_exporter"
+    gobuild_component "vmagent" "" "github.com/VictoriaMetrics/VictoriaMetrics" "app/vmagent"
+    gobuild_component "node_exporter" "" "github.com/prometheus/node_exporter"
     gobuild_component "mysqld_exporter"
-    gobuild_component "postgres_exporter" "" "cmd/postgres_exporter"
+    gobuild_component "postgres_exporter" "" "" "cmd/postgres_exporter"
     gobuild_component "mongodb_exporter"
     gobuild_component "proxysql_exporter"
     gobuild_component "rds_exporter"
     gobuild_component "azure_metrics_exporter"
-    gobuild_component "clickhouse_exporter"     "github.com/Percona-Lab/clickhouse_exporter"
+    gobuild_component "clickhouse_exporter" "" "github.com/Percona-Lab/clickhouse_exporter"
 
-    gobuild_component "pmm-admin" "" "" "github.com/percona/pmm-agent/bin/pmm-admin"
-    gobuild_component "pmm-agent" "" "" "github.com/percona/pmm-agent/bin/pmm-agent"
+    gobuild_component "pmm-admin" "pmm" "" "" "github.com/percona/pmm/bin/pmm-admin"
+    gobuild_component "pmm-agent" "pmm" "" "" "github.com/percona/pmm/bin/pmm-agent"
 
     echo ${version} > ${binary_dir}/VERSION
 
+    copy_component "pmm" "build/packages/rpm/client" "rpm"
     copy_component "pmm-submodules" "config"
     copy_component "pmm-submodules" "debian"
-    copy_component "pmm-submodules" "rpm"
     copy_component "pmm-submodules" "install_tarball"
     copy_component "node_exporter" "example.prom"
     copy_component "mysqld_exporter" "queries-mysqld.yml"
@@ -120,8 +123,8 @@ main() {
 
     copy_component "percona-toolkit" "bin/pt-summary"
     copy_component "percona-toolkit" "bin/pt-mysql-summary"
-    gobuild_component "percona-toolkit" "github.com/percona/percona-toolkit" "src/go/pt-mongodb-summary"
-    gobuild_component "percona-toolkit" "github.com/percona/percona-toolkit" "src/go/pt-pg-summary"
+    gobuild_component "percona-toolkit" "" "github.com/percona/percona-toolkit" "src/go/pt-mongodb-summary"
+    gobuild_component "percona-toolkit" "" "github.com/percona/percona-toolkit" "src/go/pt-pg-summary"
 
     rm -rf ${binary_tarball}
     mkdir -p $(dirname ${binary_tarball}) || :
