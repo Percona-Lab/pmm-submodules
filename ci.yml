@@ -1,3 +1,6 @@
 deps:
   - name: postgres_exporter
     branch: PMM-7806-upgrade-pg-exporter
+  - name: pmm
+    branch: PMM-10289-add-licence-to-client-image
+    url: https://github.com/percona/pmm
