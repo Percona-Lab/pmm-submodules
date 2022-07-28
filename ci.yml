@@ -1,7 +1,4 @@
 deps:
-  - name: pmm
-    branch: PMM-10289-add-licence-to-client-image
-    url: https://github.com/percona/pmm
   - name: pmm-dump
     branch: main
 
