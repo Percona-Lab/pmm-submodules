@@ -15,7 +15,13 @@ cp ${root_dir}/results/tarball/pmm2-client-*.tar.gz ${root_dir}/tmp/source/pmm/b
 if [ -z "${DOCKER_CLIENT_TAG}" ]; then
     DOCKER_CLIENT_TAG=perconalab/pmm-client-fb:${full_pmm_version}
 fi
-docker build --squash --no-cache -t ${DOCKER_CLIENT_TAG} tmp/source/pmm/build/docker/client
+
+
+CLIENT_IMAGE_VERSION=`echo $DOCKER_CLIENT_TAG | cut -d ':' -f2`
+
+docker build --build-arg BUILD_DATE="`date --rfc-3339=seconds`" \
+             --build-arg VERSION="$CLIENT_IMAGE_VERSION" \
+             --squash --no-cache -t ${DOCKER_CLIENT_TAG} tmp/source/pmm/build/docker/client
 
 if [ -n "${PUSH_DOCKER}" ]; then
     mkdir -p $(dirname ${docker_client_tag_file})
