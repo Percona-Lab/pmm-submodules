@@ -200,13 +200,7 @@ install_deps() {
         yum -y install git wget rpmdevtools bison yum-utils rpm-build
     else
         apt-get update
-        apt-get -y install devscripts equivs
-        sed -i 's:apt-get :apt-get -y --force-yes :g' /usr/bin/mk-build-deps
-        link="https://raw.githubusercontent.com/Percona-Lab/pmm-submodules/${BRANCH}/build/debian/control"
-        wget -O $WORKDIR/control $link
-        cd $WORKDIR
-            mk-build-deps --install $WORKDIR/control
-        cd - >/dev/null
+        apt-get -y install devscripts equivs debhelper
     fi
     return;
 }
@@ -477,7 +471,6 @@ if [ -n "$pmm_release" ]; then
 fi
 
 REVISION=0
-GO_TARBALL="https://dl.google.com/go/go1.18.1.linux-amd64.tar.gz"
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
 get_system
 install_deps
