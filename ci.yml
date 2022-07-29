@@ -1,0 +1,9 @@
+deps:
+  - name: pmm-update
+    branch: PMM-10036-migrate-to-monorepo2
+  - name: pmm-server
+    branch: PMM-10036-migrate-to-monorepo2
+  - name: grafana-dashboards
+    branch: PMM-10036-migrate-to-monorepo2
+  - name: pmm
+    branch: PMM-10036-migrate-to-monorepo2
