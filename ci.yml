@@ -1,0 +1,5 @@
+deps:
+  - name: grafana
+    branch: PMM-10018-default-haproxy-resources
+  - name: pmm
+    branch: PMM-10018-default-haproxy-resources
