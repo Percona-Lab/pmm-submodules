@@ -2,6 +2,6 @@ deps:
 - name: pmm
   branch: PMM-10036-migrating-to-monorepo-final
   url: https://github.com/percona/pmm
-- name: pmm-server
+- name: pmm-update
   branch: PMM-10036-migrating-to-monorepo-final
-  url: https://github.com/percona/pmm-server
+  url: https://github.com/percona/pmm-update
