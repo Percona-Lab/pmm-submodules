@@ -3,7 +3,6 @@
 	url = https://github.com/percona/pmm
 	branch = main
 
-
 # PMM Client
 
 [submodule "node_exporter"]
@@ -42,7 +41,6 @@
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
 	branch = release-3.4.0
-
 
 # PMM Server
 
