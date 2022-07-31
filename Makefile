@@ -1,4 +1,4 @@
-.PHONY: all submodules deps prepare server client build clean purge fb help default
+.PHONY: submodules deps prepare build clean purge fb help default
 
 ifeq (prepare,$(firstword $(MAKECMDGOALS)))
   # use the rest as arguments for "create"
@@ -13,8 +13,6 @@ help:                       ## Display this help message.
 	@echo "Please use \`make <target>\` where <target> is one of:"
 	@grep '^[a-zA-Z]' $(MAKEFILE_LIST) | \
 	awk -F ':.*?## ' 'NF==2 {printf "  %-26s%s\n", $$1, $$2}'
-
-all: client server          ## Build client and server.
 
 submodules:                 ## Update all sumodules .
 	git submodule update --init --remote --jobs 10
