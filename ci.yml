@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-10435-add-cluster-to-datasize-dashboard
+  url: https://github.com/percona/grafana-dashboards
