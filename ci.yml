@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-10272-mongo-physical-backups
+
