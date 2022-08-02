@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-10314-add-perl-to-deps
+  url: https://github.com/percona/pmm
