@@ -81,12 +81,6 @@ deps:
     url: https://github.com/percona/pmm-update
     component: server
 
-  - name: pmm-server
-    branch: main
-    path: sources/pmm-server
-    url: https://github.com/percona/pmm-server
-    component: server
-
   - name: grafana-dashboards
     branch: main
     path: sources/grafana-dashboards
