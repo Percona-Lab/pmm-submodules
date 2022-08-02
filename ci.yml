@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10340-Simpler-K8s-registration
