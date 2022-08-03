@@ -1,0 +1,5 @@
+deps:
+
+  - name: pmm
+    branch: PMM-5680-fix-api-tests-TestDownloadLogs
+
