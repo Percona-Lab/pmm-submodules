@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10327-promote-portal-k8s-cluster-creation
