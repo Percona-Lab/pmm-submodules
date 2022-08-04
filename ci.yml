@@ -1,0 +1,6 @@
+deps:
+  - name: pmm
+    branch: PMM-10119-automated-telemetry-list
+  - name: grafana
+    branch: PMM-10119-display-datapoint-summaries-in-tooltip
+
