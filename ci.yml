@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10182-One-Button-Database-Deployment
