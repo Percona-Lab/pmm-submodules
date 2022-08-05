@@ -3,7 +3,7 @@ deps:
   branch: PMM-9682-large-scale-support
   url: https://github.com/percona/pmm
 - name: dbaas-controller
-  branch: PMM-9682-large-scale-support
+  branch: PMM-9862-large-scale-support
   url: https://github.com/percona-platform/dbaas-controller
 - name: grafana
   branch: PMM-9682-large-scale-support
