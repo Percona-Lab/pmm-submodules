@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-9503-remove-prometheus
+  - name: pmm-update
+    branch: PMM-9503-remove-prometheus
