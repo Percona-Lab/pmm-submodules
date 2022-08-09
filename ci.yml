@@ -1,0 +1,7 @@
+deps:
+  - name: grafana
+    branch: PMM-10369-implement-websockets-for-checks
+  - name: pmm
+    branch: PMM-10305-checks-websockets-poc
+  - name: pmm-update
+    branch: PMM-10305-checks-websockets-poc
