@@ -1,4 +1,4 @@
 deps:
 
-  - name: PMM-6289-api-inventory-logs
-    branch: main
+  - name: pmm
+    branch: PMM-6289-api-inventory-logs
