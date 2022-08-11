@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10496-fix-Promote-Portal-k8s-cluster-message-on-refresh
