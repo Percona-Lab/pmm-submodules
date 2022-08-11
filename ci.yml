@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10347-K8s-and-DB-Cluster-tabs-order
