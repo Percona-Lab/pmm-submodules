@@ -1,3 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-10139-migration-to-kong
+- name: pmm-qa
+    branch: PMM-10287
