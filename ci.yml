@@ -1,0 +1,4 @@
+deps:
+  - name: grafana-dashboards
+    branch: PMM-10483-fix-QAN-not-reloading
+    url: https://github.com/percona/grafana-dashboards
