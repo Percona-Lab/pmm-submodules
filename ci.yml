@@ -1,0 +1,16 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-10012_psmdb_1_11_plus_b
+    path: sources/pmm/src/github.com/percona/pmm
+    url: https://github.com/percona/pmm
+    component: common
+
+  # SERVER
+
+  - name: dbaas-controller
+    branch: PMM-10361_client_4_unreleased_version
+    path: sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
+    url: https://github.com/percona-platform/dbaas-controller
+    component: server
+
