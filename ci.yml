@@ -6,4 +6,4 @@ deps:
     branch: alerting-poc
 
   - name: grafana
-    branch: antalya-poc
+    branch: PMM-10344-g9-unified-alerting
