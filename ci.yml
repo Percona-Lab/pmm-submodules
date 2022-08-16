@@ -1,3 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-10272-mongo-physical-backups
+  - name: pmm-ui-tests
+    branch: PMM-10272-fix-backup-model
