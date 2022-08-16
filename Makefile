@@ -30,12 +30,6 @@ trigger:
 prepare:					## Create new FB (new style)
 	python3 ci.py -g --prepare $(RUN_ARGS)
 
-server:                     ## Build the server.
-	./build/bin/build-server
-
-client:                     ## Build the client.
-	./build/bin/build-client
-
 clean:                      ## Clean build results.
 	rm -rf tmp results sources/pmm-submodules
 
