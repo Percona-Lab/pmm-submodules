@@ -1,4 +1,4 @@
 deps:
-- name: grafana
-  branch: PMM-10064-inventory-pagination
-  url: https://github.com/percona-platform/grafana
+  - name: grafana
+    branch: PMM-10064-inventory-pagination
+    url: https://github.com/percona-platform/grafana
