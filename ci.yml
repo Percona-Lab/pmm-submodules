@@ -3,3 +3,5 @@ deps:
     branch: PMM-10344-g9-unified-alerting
   - name: pmm
     branch: alerting-poc
+  - name: pmm-update
+    branch: grafana-9
