@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10349-DBaaS-easy-access-to-Deploy-button
