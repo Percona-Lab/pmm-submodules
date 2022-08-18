@@ -1,0 +1,4 @@
+deps:
+
+  - name: pmm
+    branch: PMM-10520-remove-enum-fatal-from-log-level-in-mysql
