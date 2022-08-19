@@ -1,0 +1,4 @@
+deps:
+  - name: mongodb_exporter
+    branch: fix_uri_parsing
+    url: https://github.com/a-gavin/mongodb_exporter
