@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-10513-mask-pwd-in-server-url
