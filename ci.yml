@@ -1,0 +1,3 @@
+deps:
+  - name: dbaas-controller
+    branch: PMM-8432-client-go-client
