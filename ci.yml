@@ -1,3 +1,5 @@
 deps:
   - name: grafana
     branch: PMM-10587-fix-displaying-telemetry-datapoints
+  - name: pmm
+    branch: pmm-2.30.0
