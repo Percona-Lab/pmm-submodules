@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10577-Typo-in-PMM-Public-Address-warning
