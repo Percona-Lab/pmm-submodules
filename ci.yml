@@ -5,3 +5,5 @@ deps:
     branch: alerting-poc
   - name: pmm-update
     branch: grafana-9
+  - name: grafana-dashboards
+    branch: grafana-9
