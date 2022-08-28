@@ -2,7 +2,7 @@ deps:
   - name: grafana
     branch: PMM-10344-g9-unified-alerting
   - name: pmm
-    branch: no-grafana-dashboards
+    branch: alerting-poc
   - name: pmm-update
     branch: grafana-9
   - name: grafana-dashboards
