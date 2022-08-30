@@ -7,3 +7,5 @@ deps:
     branch: grafana-9
   - name: grafana-dashboards
     branch: grafana-9
+  - name: pmm-ui-tests
+    branch: PMM-10622-grafana-9
