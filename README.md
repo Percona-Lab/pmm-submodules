@@ -17,9 +17,9 @@ To create a feature build (FB) you have to edit `ci.yml` and specify the branche
 
 ```yaml
 deps:
-  - name: pmm-server
+  - name: pmm
     branch: PMM-0000-fix-everything
-  - name: pmm-agent
+  - name: pmm-qa
     branch: PMM-0000-fix-everything-and-even-more
 ```
 
