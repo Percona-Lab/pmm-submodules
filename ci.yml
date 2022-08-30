@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-10092-grafana-9-main-menu
+  url: https://github.com/percona-platform/grafana
