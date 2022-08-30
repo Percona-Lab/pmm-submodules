@@ -1,0 +1,6 @@
+deps:
+  - name: pmm
+    branch: PMM-9368-backup-management-local-storage-support
+
+  - name: grafana
+    branch: PMM-10549-local-backup
