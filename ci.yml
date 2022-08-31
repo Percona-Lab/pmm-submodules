@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-10624-remove-empty-datname-postgres
+  url: https://github.com/percona/grafana-dashboards
