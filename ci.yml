@@ -4,4 +4,4 @@ deps:
   - name: pmm-ui-tests
     branch: PMM-10272-fix-backup-model
   - name: grafana
-    branch: PMM-10517-physical-backups
+    branch: PMM-10503-backup-modal
