@@ -2,4 +2,4 @@ deps:
   - name: pmm
     branch: PMM-9599-config-custom-labels
   - name: pmm-qa
-    branch: PMM-10287
+    branch: PMM-7-haproxy-custom-label-fix
