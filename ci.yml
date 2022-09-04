@@ -4,6 +4,6 @@ deps:
   - name: pmm-update
     branch: grafana-9
   - name: grafana-dashboards
-    branch: grafana-9
+    branch: fix-tooltip
   - name: pmm-ui-tests
     branch: PMM-10622-grafana-9
