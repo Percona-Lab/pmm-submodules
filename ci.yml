@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-10642-split-pmm-command
