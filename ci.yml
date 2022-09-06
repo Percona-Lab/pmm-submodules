@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-10044-fix-enormous-numbers-for-qan
+  url: https://github.com/percona/pmm
