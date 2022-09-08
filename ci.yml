@@ -3,5 +3,3 @@ deps:
     branch: PMM-9946-automatically-add-k8s-cluster
   - name: dbaas-controller
     branch: PMM-9946-getkubeconfig
-  - name: dbaas-api
-    branch: PMM-9946-get-kubeconfig-api
