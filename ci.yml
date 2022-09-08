@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-10668-onboarding-guide-update
+  url: https://github.com/percona-platform/grafana
