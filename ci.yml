@@ -1,4 +1,10 @@
 deps:
-- name: grafana
-  branch: PMM-10668-onboarding-guide-update
-  url: https://github.com/percona-platform/grafana
+  - name: grafana
+    branch: PMM-10668-onboarding-guide-update
+    url: https://github.com/percona-platform/grafana
+  - name: pmm-update
+    branch: grafana-9
+  - name: grafana-dashboards
+    branch: fix-tooltip
+  - name: pmm-ui-tests
+    branch: PMM-10622-grafana-9
