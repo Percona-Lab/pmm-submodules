@@ -1,0 +1,4 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-10563-log-level-downgrade-from-fatal-to-error
