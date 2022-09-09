@@ -2,3 +2,6 @@ deps:
 - name: pmm
   branch: PMM-10643-revert-PMM-9503
   url: https://github.com/percona/pmm
+- name: pmm-update
+  branch: PMM-10643-revert-PMM-9503
+  url: https://github.com/percona/pmm-update
