@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10627-ability-to-create-single-node-cluster
