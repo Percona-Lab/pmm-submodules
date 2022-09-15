@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-10727-add-package-manager
+  url: https://github.com/percona/pmm
