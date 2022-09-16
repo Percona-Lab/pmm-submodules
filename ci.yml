@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-10600-add-mongodb-edition-datapoint
+  - name: mongodb_exporter
+    branch: main
