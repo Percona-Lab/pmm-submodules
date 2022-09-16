@@ -1,4 +1,4 @@
-.PHONY: all submodules deps prepare server client build clean purge fb help default
+.PHONY: help all submodules deps trigger prepare clean purge fb default
 
 ifeq (prepare,$(firstword $(MAKECMDGOALS)))
   # use the rest as arguments for "create"
@@ -16,24 +16,24 @@ help:                       ## Display this help message.
 
 all: client server          ## Build client and server.
 
-submodules:                 ## Update all sumodules .
+submodules:                 ## Update all sumodules.
 	git submodule update --init --remote --jobs 10
 	git submodule status
 
-deps:						## Get deps from repos
+deps:												## Get deps from repos
 	python3 ci.py
 
-trigger:
+trigger:										## Trigger another build (empty commit).
 	git commit -m 'Trigger FB' --allow-empty
 	git push
 
-prepare:					## Create new FB (new style)
+prepare:										## Create new FB (new style).
 	python3 ci.py -g --prepare $(RUN_ARGS)
 
 clean:                      ## Clean build results.
 	rm -rf tmp results sources/pmm-submodules
 
-purge:                      ## Clean cache and leftovers. Please run this when starting a new feature build.
+purge:                      ## Clean cache and leftovers. Run this when starting a new feature build.
 	git reset --hard && git clean -xdff
 	git submodule update
 	git submodule foreach 'git reset --hard && git clean -xdff'
