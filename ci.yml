@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-10692-links-high-cpu-panel
+  url: https://github.com/percona/grafana-dashboards
