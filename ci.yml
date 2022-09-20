@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-10667-product-tour-flag
+  url: https://github.com/percona-platform/grafana
