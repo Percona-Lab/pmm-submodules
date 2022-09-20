@@ -1,0 +1,3 @@
+deps:
+  - name: mongodb_exporter
+    branch: PMM-10600-add-mongo-vendor-info
