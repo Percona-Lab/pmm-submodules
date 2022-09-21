@@ -3,7 +3,6 @@
 	url = https://github.com/percona/pmm
 	branch = main
 
-
 # PMM Client
 
 [submodule "node_exporter"]
@@ -17,7 +16,7 @@
 [submodule "mongodb_exporter"]
 	path = sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
 	url = https://github.com/percona/mongodb_exporter.git
-	branch = release-0.33.0
+	branch = release-0.34.0
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
@@ -43,7 +42,6 @@
 	url = https://github.com/percona/percona-toolkit.git
 	branch = release-3.4.0
 
-
 # PMM Server
 
 [submodule "dbaas-controller"]
@@ -57,10 +55,6 @@
 [submodule "pmm-update"]
 	path = sources/pmm-update/src/github.com/percona/pmm-update
 	url = https://github.com/percona/pmm-update
-	branch = main
-[submodule "pmm-server"]
-	path = sources/pmm-server
-	url = https://github.com/percona/pmm-server
 	branch = main
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
