@@ -1,0 +1,12 @@
+deps:
+  - name: dbaas-controller
+    branch: PMM-10704_Single_PSMDB_instance
+    path: sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
+    url: https://github.com/percona-platform/dbaas-controller
+    component: server
+
+  - name: grafana
+    branch: PMM-10627-ability-to-create-single-node-cluster
+    path: sources/grafana/src/github.com/grafana/grafana
+    url: https://github.com/percona-platform/grafana
+    component: server
