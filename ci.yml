@@ -1,0 +1,3 @@
+deps:
+  - name: dbaas-controller
+    branch: PMM-10552-pxc-psmdb-client-go
