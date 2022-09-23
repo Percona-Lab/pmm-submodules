@@ -1,3 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-10735-fix-sudden-service-stoppage
+  - name: pmm-update
+    branch: PMM-10735-fix-sudden-service-stoppage
