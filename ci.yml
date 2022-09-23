@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10723-Available-new-version-of-operator-badge-color
