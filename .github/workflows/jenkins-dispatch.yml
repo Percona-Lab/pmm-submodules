@@ -1,13 +1,13 @@
-on: 
+on:
   workflow_dispatch:
     inputs:
       server_image:
-        description: 'server image: repo/name:tag'     
+        description: 'server image: repo/name:tag'
         required: true
-        type: string 
+        type: string
       client_image:
         description: 'client image: repo/name:tag'
-        required: true 
+        required: true
         type: string
       sha:
         description: 'commit sha to report status'
@@ -77,3 +77,52 @@ jobs:
             -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID" \
             -f description="Helm Tests status: $STATUS" \
             -f context='actions/workflows/helm-tests'
+  ui-tests:
+      runs-on: ubuntu-latest
+      timeout-minutes: 50
+      env:
+        WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-qa/src/github.com/percona/pmm-ui-tests
+
+      steps:
+        - name: Checkout code
+          uses: percona-platform/checkout@v3
+          with:
+            submodules: 'recursive'
+
+        - name: Install Node 14
+          uses: percona-platform/setup-node@v3
+          with:
+            node-version: '14'
+
+        - name: Install dependencies
+          run: |
+            npm ci
+
+        - name: Run UI tests
+          env:
+            PMM_SERVER_IMAGE: ${{ inputs.server_image }}
+
+          run: npm run e2e:ia
+
+        - name: Create status check
+          if: ${{ always() }}
+          continue-on-error: true
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            REPO: ${{ github.repository }}
+            RUN_ID: ${{ github.run_id }}
+            SHA: ${{ inputs.sha }}
+            STATUS: ${{ job.status }}
+          run: |
+            if [ "${STATUS}" = "cancelled" ]; then
+              STATUS="error"
+            fi
+  
+            gh api \
+              --method POST \
+              -H "Accept: application/vnd.github.v3+json" \
+              /repos/$REPO/statuses/$SHA \
+              -f state="$STATUS" \
+              -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID" \
+              -f description="UI Tests status: $STATUS" \
+              -f context='actions/workflows/ui-tests'
