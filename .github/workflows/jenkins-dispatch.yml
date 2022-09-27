@@ -84,7 +84,7 @@ jobs:
         WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-qa/src/github.com/percona/pmm-ui-tests
 
       steps:
-        - name: Checkout code
+        - name: Checkout Code
           uses: percona-platform/checkout@v3
           with:
             submodules: 'recursive'
@@ -93,15 +93,17 @@ jobs:
           uses: percona-platform/setup-node@v3
           with:
             node-version: '14'
+            working-directory: ${{ env.WORK_DIR }}
 
         - name: Install dependencies
+          working-directory: ${{ env.WORK_DIR }}
           run: |
             npm ci
 
         - name: Run UI tests
+          working-directory: ${{ env.WORK_DIR }}
           env:
             PMM_SERVER_IMAGE: ${{ inputs.server_image }}
-
           run: npm run e2e:ia
 
         - name: Create status check
