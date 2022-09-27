@@ -1,7 +1,3 @@
 deps:
-  - name: pmm
-    branch: PMM-10272-mongo-physical-backups
-  - name: pmm-ui-tests
-    branch: PMM-10272-fix-backup-model
   - name: grafana
     branch: PMM-10502-improve-columns-for-backup
