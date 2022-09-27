@@ -95,7 +95,7 @@ jobs:
             node-version: '14'
             working-directory: ${{ env.WORK_DIR }}
 
-        - name: Install dependencies
+        - name: Install dependencies 
           working-directory: ${{ env.WORK_DIR }}
           run: |
             npm ci
