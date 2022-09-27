@@ -1,0 +1,7 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-10555-add-mongodb-exporter-meta-metrics-in-telemetry
+    path: sources/pmm/src/github.com/percona/pmm
+    url: https://github.com/percona/pmm
+    component: common
