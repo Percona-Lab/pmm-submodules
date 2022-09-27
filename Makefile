@@ -18,20 +18,20 @@ submodules:                 ## Update all sumodules .
 	git submodule update --init --remote --jobs 10
 	git submodule status
 
-deps:												## Get deps from repos
+deps:						## Get deps from repos
 	python3 ci.py
 
-trigger:										## Trigger another build (empty commit).
+trigger:
 	git commit -m 'Trigger FB' --allow-empty
 	git push
 
-prepare:										## Create new FB (new style).
+prepare:					## Create new FB (new style)
 	python3 ci.py -g --prepare $(RUN_ARGS)
 
 clean:                      ## Clean build results.
 	rm -rf tmp results sources/pmm-submodules
 
-purge:                      ## Clean cache and leftovers. Run this when starting a new feature build.
+purge:                      ## Clean cache and leftovers. Please run this when starting a new feature build.
 	git reset --hard && git clean -xdff
 	git submodule update
 	git submodule foreach 'git reset --hard && git clean -xdff'
