@@ -93,7 +93,6 @@ jobs:
           uses: percona-platform/setup-node@v3
           with:
             node-version: '14'
-            working-directory: ${{ env.WORK_DIR }}
             
         - name: Start environment 
           working-directory: ${{ env.WORK_DIR }}
