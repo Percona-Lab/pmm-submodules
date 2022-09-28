@@ -81,10 +81,10 @@ jobs:
       runs-on: ubuntu-latest
       timeout-minutes: 50
       env:
-        WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-qa/src/github.com/percona/pmm-ui-tests
+        WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
 
       steps:
-        - name: Checkout Code
+        - name: Checkout сode
           uses: percona-platform/checkout@v3
           with:
             submodules: 'recursive'
