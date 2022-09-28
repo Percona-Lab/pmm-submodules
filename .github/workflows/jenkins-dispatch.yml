@@ -81,6 +81,8 @@ jobs:
       runs-on: ubuntu-latest
       timeout-minutes: 50
       env:
+        PMM_IP: 127.0.0.1
+        PMM_URL: http://admin:admin@${{ env.PMM_IP }}
         WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
 
       steps:
@@ -112,8 +114,32 @@ jobs:
           env:
             PMM_SERVER_IMAGE: ${{ inputs.server_image }}
           run: |
-            wait-on --timeout=60000 http-get://admin:admin@127.0.0.1/ping && npm run e2e:ia
+            wait-on --timeout=60000 http://admin:admin@${{ env.PMM_IP }}/ping && npm run e2e:ia
+            
+        - name: Record logs
+          working-directory: ${{ env.WORK_DIR }}
+          continue-on-error: true
+          env:
+            PMM_SERVER_IMAGE: ${{ inputs.server_image }}
+          run: |
+            mkdir debugdata
+            curl --insecure ${{ env.PMM_URL }}/logs.zip --output ./debugdata/logs.zip || true
+            echo --- Jobs from pmm-server --- >> ./debugdata/job_logs.txt
+            docker exec pmm-server psql -Upmm-managed -c 'select id,error,data,created_at,updated_at from jobs ORDER BY updated_at DESC LIMIT 1000;' >> ./debugdata/job_logs.txt || true
+            echo --- Job logs from pmm-server --- >> ./debugdata/job_logs.txt
+            docker exec pmm-server psql -Upmm-managed -c 'select * from job_logs ORDER BY job_id LIMIT 1000;' >> ./debugdata/job_logs.txt || true
+            echo --- pmm-managed logs from pmm-server --- >> ./debugdata/pmm-managed-full.log
+            docker exec pmm-server cat /srv/logs/pmm-managed.log > ./debugdata/pmm-managed-full.log || true
+            echo --- pmm-agent logs from pmm-server --- >> ./debugdata/pmm-agent-full.log
+            docker exec pmm-server cat /srv/logs/pmm-agent.log > ./debugdata/pmm-agent-full.log || true  
 
+        - name: Attaching artifacts
+          if: ${{ always() }}
+          uses: percona-platform/upload-artifact@v2
+          with:
+            name: debugdata
+            path: ${{ env.WORK_DIR }}/debugdata
+        
         - name: Create status check
           if: ${{ always() }}
           continue-on-error: true
