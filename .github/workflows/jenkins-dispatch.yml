@@ -84,7 +84,7 @@ jobs:
         WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
 
       steps:
-        - name: Checkout сode
+        - name: Checkout Code
           uses: percona-platform/checkout@v3
           with:
             submodules: 'recursive'
