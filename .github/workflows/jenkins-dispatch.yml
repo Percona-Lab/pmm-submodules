@@ -94,17 +94,26 @@ jobs:
           with:
             node-version: '14'
             working-directory: ${{ env.WORK_DIR }}
+            
+        - name: Start environment 
+          working-directory: ${{ env.WORK_DIR }}
+          env:
+            PMM_SERVER_IMAGE: ${{ inputs.server_image }}
+          run: |
+            PWD=$(pwd) docker-compose up -d
 
         - name: Install dependencies 
           working-directory: ${{ env.WORK_DIR }}
           run: |
             npm ci
-
+            npm install -g wait-on
+            
         - name: Run UI tests
           working-directory: ${{ env.WORK_DIR }}
           env:
             PMM_SERVER_IMAGE: ${{ inputs.server_image }}
-          run: npm run e2e:ia
+          run: |
+            wait-on --timeout=60000 http-get://admin:admin@127.0.0.1/ping && npm run e2e:ia
 
         - name: Create status check
           if: ${{ always() }}
