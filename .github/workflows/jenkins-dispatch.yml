@@ -82,7 +82,7 @@ jobs:
       timeout-minutes: 50
       env:
         PMM_IP: 127.0.0.1
-        PMM_URL: http://admin:admin@$127.0.0.1
+        PMM_URL: http://admin:admin@127.0.0.1
         WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
 
       steps:
