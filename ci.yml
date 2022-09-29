@@ -1,0 +1,4 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-10802-fix-checks-v2-validation
