@@ -1,3 +1,5 @@
 deps:
   - name: mongodb_exporter
-    branch: PMM-10600-add-mongo-vendor-info
+    branch: main
+  - name: pmm
+    branch: PMM-10600-add-mongodb-edition-datapoint
