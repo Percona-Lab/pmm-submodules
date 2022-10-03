@@ -1,0 +1,3 @@
+deps:
+  - name: postgres_exporter
+    branch: PMM-10820-pg-exporter-update
