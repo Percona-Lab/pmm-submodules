@@ -1,0 +1,3 @@
+deps:
+  - name: node_exporter
+    branch: PMM-10818-exporter-update
