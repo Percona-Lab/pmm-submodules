@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-10801-fix-navigation-folders-fetch
+  url: https://github.com/percona-platform/grafana
