@@ -1,0 +1,7 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: azure-sdk-lib-update
+    path: sources/pmm/src/github.com/percona/pmm
+    url: https://github.com/Azanul/pmm
+    component: common
