@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10733-DB-version-selection-simplification
