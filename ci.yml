@@ -2,3 +2,6 @@ deps:
 - name: pmm
   branch: PMM-9874-remove-staleness-metrics
   url: https://github.com/percona/pmm
+- name: dbaas-controller
+  branch: PMM-9874-remove-staleness-markers
+  url: https://github.com/percona-platform/dbaas-controller
