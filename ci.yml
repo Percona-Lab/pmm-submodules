@@ -1,0 +1,3 @@
+deps:
+  - name: mysqld_exporter
+    branch: PMM-10819-exporter-update
