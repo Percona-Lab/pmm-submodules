@@ -1,3 +1,6 @@
 deps:
     - name: pmm
       branch: PMM-8792-query-length
+    - name: grafana
+      branch: PMM-9094-mysql-query-length
+      url: https://github.com/percona-platform/grafana
