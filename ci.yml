@@ -1,0 +1,6 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-10840-fix-embedded-alert-templates
+
+
