@@ -1,0 +1,4 @@
+deps:
+  - name: mongodb_exporter
+    branch: balancer-enabled-fix
+    url: https://github.com/omnisend/mongodb_exporter
