@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: pmm-10599-change-backup-modals-to-separate-pages
