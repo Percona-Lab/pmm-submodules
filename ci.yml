@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-7000-collect-offline-metrics
+  url: https://github.com/percona/pmm
