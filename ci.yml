@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-9874-removing-duplicate-data
+  url: https://github.com/percona/grafana-dashboards
