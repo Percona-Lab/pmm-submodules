@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10831-change-backups-titles
