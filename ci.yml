@@ -1,0 +1,3 @@
+deps:
+  - name: dbaas-controller
+    branch: PMM-10724-server-side
