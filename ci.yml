@@ -1,0 +1,5 @@
+deps:
+  - name: grafana
+    branch: backup-ga
+  - name: pmm
+    branch: backups
