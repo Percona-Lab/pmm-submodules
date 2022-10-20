@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-10629-victoria-metrics-1.82.1
