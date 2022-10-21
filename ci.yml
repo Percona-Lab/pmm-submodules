@@ -1,9 +1,4 @@
 deps:
-- name: pmm
-  branch: PMM-9055-postgres-query-length
-- name: grafana
-  branch: PMM-9055-postgres-query-length
-  url: https://github.com/percona-platform/grafana
 - name: grafana-dashboards
   branch: PMM-10847-qan-incomplete-example-query
   url: https://github.com/percona/grafana-dashboards
