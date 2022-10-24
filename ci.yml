@@ -3,3 +3,5 @@ deps:
     branch: backup-ga
   - name: pmm
     branch: backups
+  - name: pmm-ui-tests
+    branch: PMM-10599-fix-bm-tests
