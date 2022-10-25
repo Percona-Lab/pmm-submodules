@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-10939-add-all-option-cluster
+  url: https://github.com/percona/grafana-dashboards
