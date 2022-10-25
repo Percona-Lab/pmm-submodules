@@ -1,0 +1,8 @@
+deps:
+  - name: pmm
+    branch: PMM-10466-ui-events
+    url: https://github.com/percona/pmm
+
+  - name: grafana
+    branch: PMM-10466-ui-events
+    url: https://github.com/percona-platform/grafana
