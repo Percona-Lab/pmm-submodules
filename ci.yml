@@ -1,0 +1,5 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: restart-exporters-after-restore
+
