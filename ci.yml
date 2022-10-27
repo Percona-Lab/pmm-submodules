@@ -2,6 +2,6 @@ deps:
   - name: grafana
     branch: backup-ga
   - name: pmm
-    branch: backups
+    branch: backups-mega-logging
   - name: pmm-ui-tests
     branch: backup-ga
