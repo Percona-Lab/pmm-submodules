@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-7-pbm-status-for-timeranges
+  - name: grafana
+    branch: backups
+  - name: pmm-ui-tests
+    branch: backup-ga
