@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-10964-roles-api
+  - name: pmm-update
+    branch: PMM-10966-vmgateway-config
