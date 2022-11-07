@@ -1,0 +1,7 @@
+deps:
+- name: grafana
+  branch: PMM-10919-alerting-tour
+  url: https://github.com/percona-platform/grafana
+- name: pmm-ui-tests
+  branch: PMM-10919-alerting-tour
+  url: https://github.com/percona/pmm-ui-tests
