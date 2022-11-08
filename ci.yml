@@ -1,0 +1,5 @@
+deps:
+  - name: grafana
+    branch: PMM-11035-restore-additional-fields
+  - name: pmm
+    branch: PMM-10955-PITRTimestamp-in-ListRestoreHistory-response
