@@ -69,12 +69,6 @@ deps:
     url: https://github.com/percona-platform/dbaas-controller
     component: server
 
-  - name: qan-api2
-    branch: main
-    path: sources/qan-api2/src/github.com/percona/qan-api2
-    url: https://github.com/percona/qan-api2
-    component: server
-
   - name: pmm-update
     branch: main
     path: sources/pmm-update/src/github.com/percona/pmm-update
