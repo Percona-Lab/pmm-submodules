@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-10732-page-only-selection
+  url: https://github.com/percona-platform/grafana
