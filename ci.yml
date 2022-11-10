@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-10493-portal-force-disconnect
+  url: https://github.com/percona-platform/grafana
