@@ -5,3 +5,6 @@ deps:
 - name: pmm-ui-tests
   branch: PMM-10919-alerting-tour
   url: https://github.com/percona/pmm-ui-tests
+- name: pmm
+  branch: PMM-10875-add-alerting-tour-flag
+  url: https://github.com/percona/pmm
