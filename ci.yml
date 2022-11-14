@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-10029-grpc-message-size-error
+  url: https://github.com/percona/pmm
