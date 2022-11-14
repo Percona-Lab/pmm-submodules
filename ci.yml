@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-10868-initiate-client-upgrade
