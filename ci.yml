@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10874-Register-k8s-Cluster-Move-to-the-separate-page
