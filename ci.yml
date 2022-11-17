@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-11041-fix-typo-home
+  url: https://github.com/percona/grafana-dashboards
