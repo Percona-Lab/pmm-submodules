@@ -63,7 +63,7 @@ jobs:
           npm run test:pmm-cli
 
       - name: Create status check
-        if: ${{ ${{ github.event.inputs.sha }} && always() }}
+        if: ${{ github.event.inputs.sha && always() }}
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
