@@ -24,6 +24,10 @@ jobs:
         with:
           submodules: 'recursive'
 
+      - name: Run ci.py
+        run: |
+          python3 ci.py
+
       - name: Use Node.js 16.x
         uses: percona-platform/setup-node@v2
         with:
