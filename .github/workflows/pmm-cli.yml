@@ -26,6 +26,7 @@ jobs:
 
       - name: Run ci.py
         run: |
+          pip install pygithub
           python3 ci.py
 
       - name: Use Node.js 16.x
