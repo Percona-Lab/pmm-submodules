@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-11060-fix-titles
+  url: https://github.com/percona/grafana-dashboards
