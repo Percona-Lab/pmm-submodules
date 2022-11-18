@@ -26,7 +26,8 @@ jobs:
 
       - name: Run ci.py
         run: |
-          pip3 install setuptools PyGithub
+          sudo apt-get install python3-setuptools
+          pip3 install PyGithub
           python3 ci.py
 
       - name: Use Node.js 16.x
