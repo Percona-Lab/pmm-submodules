@@ -1,0 +1,6 @@
+deps:
+  - name: pmm-ui-tests
+    branch: PMM-11080-pmm-cli-init-tests
+    path: sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
+    url: https://github.com/percona/pmm-ui-tests
+    component: qa

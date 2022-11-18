@@ -1,0 +1,90 @@
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      client_tar_url:
+        description: 'client tar url'
+        required: false
+        type: string
+        default: 'https://s3.us-east-2.amazonaws.com/pmm-build-cache/PR-BUILDS/pmm2-client/pmm2-client-PR-2881-ce126b6.tar.gz'
+      sha:
+        description: 'commit sha to report status'
+        required: false
+        type: string
+
+jobs:
+  pmm-cli:
+    runs-on: ubuntu-18.04
+    env:
+      CLIENT_TAR_URL: ${{ github.event.inputs.client_tar_url }}
+      WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-qa/src/github.com/percona/pmm-ui-tests/cli
+
+    steps:
+      - name: checkout code
+        uses: percona-platform/checkout@v3
+        with:
+          submodules: 'recursive'
+
+      - name: Use Node.js 16.x
+        uses: percona-platform/setup-node@v2
+        with:
+          node-version: 16.x
+
+      - name: Set Client tar name env variable
+        run: echo "PMM_CLIENT_TAR=$(echo ${{ env.CLIENT_TAR_URL }} | grep -o '[^/]*$')" >> $GITHUB_ENV
+
+      - name: Download client
+        run: |
+          sudo wget ${{ env.CLIENT_TAR_URL }}
+
+      - name: Unzip client
+        run: |
+          tar -xzf ${{ env.PMM_CLIENT_TAR }}
+          echo "PMM_CLIENT_BASEDIR=$(ls -1td pmm2-client-* 2>/dev/null | grep -v ".tar" | head -n1)" >> $GITHUB_ENV
+
+      - name: Rename client folder
+        run: mv ${{ env.PMM_CLIENT_BASEDIR }} pmm2-client
+
+      - name: Check pmm version output
+        working-directory: pmm2-client
+        run: |
+          echo "export PATH=$PATH:$PWD/bin" >> ~/.bash_profile
+          source ~/.bash_profile
+          pmm --version
+
+      - name: Install Dependencies
+        working-directory: ${{ env.WORK_DIR }}
+        run: npm ci
+
+      - name: Run tests
+        working-directory: ${{ env.WORK_DIR }}
+        run: |
+          source ~/.bash_profile
+          npm run test:pmm-cli
+
+      - name: Create status check
+        if: ${{ ${{ github.event.inputs.sha }} && always() }}
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          SHA: ${{ inputs.sha }}
+          STATUS: ${{ job.status }}
+        run: |
+          if [ "${STATUS}" = "cancelled" ]; then
+            STATUS="error"
+          fi
+
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            /repos/$REPO/statuses/$SHA \
+            -f state="$STATUS" \
+            -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID" \
+            -f description="PMM binary CLI Tests $STATUS" \
+            -f context='actions/workflows/pmm-cli'
+
+  #      - name: Setup tmate session on failure
+  #        if: ${{ failure() }}
+  #        uses: percona-platform/action-tmate@v2
