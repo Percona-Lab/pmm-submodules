@@ -23,7 +23,6 @@ SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
 FORK_OWNER = os.environ.get('FORK_OWNER', '')
 GITHUB_TOKEN = os.environ.get('GITHUB_API_TOKEN', '')
-GH_ACTIONS_TOKEN = os.environ.get('GH_API_TOKEN', '')
 # example CHANGE_URL : https://github.com/Percona-Lab/pmm-submodules/pull/2167
 PR_URL = os.environ.get('CHANGE_URL', '')
 
@@ -197,12 +196,13 @@ class Builder():
         outdated_branches = []
         submodules_url = '/'.join(PR_URL.split('/')[3:-2])
         pull_number = PR_URL.split('/')[-1:][0]
+        GH_ACTIONS_TOKEN = GITHUB_TOKEN
 
-        if GITHUB_TOKEN == '':
+        if GH_ACTIONS_TOKEN == '':
             logging.warning('there is no GITHUB_TOKEN')
-            GITHUB_TOKEN = GH_ACTIONS_TOKEN
+            GH_ACTIONS_TOKEN = os.environ.get('GH_API_TOKEN', '')
 
-        github_api = Github(GITHUB_TOKEN)
+        github_api = Github(GH_ACTIONS_TOKEN)
 
         # it's not a good idea to use config_override here. Maybe we can add 'custom' key?
         for dep in self.config_override['deps']:
