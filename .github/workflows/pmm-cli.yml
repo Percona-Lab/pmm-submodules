@@ -17,7 +17,7 @@ jobs:
     env:
       CLIENT_TAR_URL: ${{ github.event.inputs.client_tar_url || 'https://s3.us-east-2.amazonaws.com/pmm-build-cache/PR-BUILDS/pmm2-client/pmm2-client-PR-2881-ce126b6.tar.gz' }}
       WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests/cli
-      GITHUB_API_TOKEN: ${{ secrets.ROBOT_TOKEN }}
+      GITHUB_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
     steps:
       - name: checkout code
