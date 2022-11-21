@@ -28,6 +28,8 @@ jobs:
 
       - name: Run ci.py
         run: |
+          pip3 install PyGithub
+          pip3 install GitPython
           python3 ci.py
 
 #      - name: Run ci.py
