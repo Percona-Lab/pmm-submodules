@@ -23,6 +23,7 @@ SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
 FORK_OWNER = os.environ.get('FORK_OWNER', '')
 GITHUB_TOKEN = os.environ.get('GITHUB_API_TOKEN', '')
+GH_ACTIONS_TOKEN = os.environ.get('GH_API_TOKEN', '')
 # example CHANGE_URL : https://github.com/Percona-Lab/pmm-submodules/pull/2167
 PR_URL = os.environ.get('CHANGE_URL', '')
 
@@ -199,7 +200,7 @@ class Builder():
 
         if GITHUB_TOKEN == '':
             logging.warning('there is no GITHUB_TOKEN')
-            GITHUB_TOKEN = os.environ.get('GH_API_TOKEN', '')
+            GITHUB_TOKEN = GH_ACTIONS_TOKEN
 
         github_api = Github(GITHUB_TOKEN)
 
