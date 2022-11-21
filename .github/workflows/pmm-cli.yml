@@ -13,10 +13,11 @@ on:
 
 jobs:
   pmm-cli:
+    name: 'PMM binary CLI tests'
     runs-on: ubuntu-20.04
     env:
       CLIENT_TAR_URL: ${{ github.event.inputs.client_tar_url || 'https://s3.us-east-2.amazonaws.com/pmm-build-cache/PR-BUILDS/pmm2-client/pmm2-client-PR-2881-ce126b6.tar.gz' }}
-      WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests/cli
+      WORK_DIR: ./pmm-submodules/pmm-submodules/sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests/cli
       GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
     steps:
@@ -27,10 +28,14 @@ jobs:
 
       - name: Run ci.py
         run: |
-          sudo apt-get install python3-setuptools
-          pip3 install PyGithub
-          pip3 install GitPython
           python3 ci.py
+
+#      - name: Run ci.py
+#        run: |
+#          sudo apt-get install python3-setuptools
+#          pip3 install PyGithub
+#          pip3 install GitPython
+#          python3 ci.py
 
       - name: Use Node.js 16.x
         uses: percona-platform/setup-node@v2
