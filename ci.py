@@ -198,10 +198,8 @@ class Builder():
         pull_number = PR_URL.split('/')[-1:][0]
 
         if GITHUB_TOKEN == '':
-            GITHUB_TOKEN = os.environ.get('GH_API_TOKEN', '')
-
-        if GITHUB_TOKEN == '':
             logging.warning('there is no GITHUB_TOKEN')
+            GITHUB_TOKEN = os.environ.get('GH_API_TOKEN', '')
 
         github_api = Github(GITHUB_TOKEN)
 
