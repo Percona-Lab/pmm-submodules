@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-10938-restart-after-physical-restore
+
