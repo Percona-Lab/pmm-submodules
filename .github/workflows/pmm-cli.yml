@@ -16,7 +16,7 @@ jobs:
     name: 'PMM binary CLI tests'
     runs-on: ubuntu-20.04
     env:
-      CLIENT_TAR_URL: ${{ github.event.inputs.client_tar_url || 'https://s3.us-east-2.amazonaws.com/pmm-build-cache/PR-BUILDS/pmm2-client/pmm2-client-PR-2881-ce126b6.tar.gz' }}
+      CLIENT_TAR_URL: ${{ github.event.inputs.client_tar_url }}
       WORK_DIR: sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests/cli
       GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
@@ -31,11 +31,6 @@ jobs:
           pip3 install PyGithub
           pip3 install GitPython
           python3 ci.py
-#
-#      - name: Use Node.js 16.x
-#        uses: percona-platform/setup-node@v2
-#        with:
-#          node-version: 16.x
 
       - name: Set Client tar name env variable
         run: echo "PMM_CLIENT_TAR=$(echo ${{ env.CLIENT_TAR_URL }} | grep -o '[^/]*$')" >> $GITHUB_ENV
