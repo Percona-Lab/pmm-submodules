@@ -1,13 +1,13 @@
-on: 
+on:
   workflow_dispatch:
     inputs:
       server_image:
-        description: 'server image: repo/name:tag'     
+        description: 'server image: repo/name:tag'
         required: true
-        type: string 
+        type: string
       client_image:
         description: 'client image: repo/name:tag'
-        required: true 
+        required: true
         type: string
       sha:
         description: 'commit sha to report status'
@@ -19,19 +19,19 @@ jobs:
   helm-tests:
     runs-on: ubuntu-latest
     env:
-      WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests
+      WORK_DIR: sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests
 
     steps:
-
       - name: checkout code
         uses: percona-platform/checkout@v3
         with:
           submodules: 'recursive'
 
-      - name: install npm
-        uses: percona-platform/setup-node@v3
-        with:
-          node-version: '14'
+      - name: run ci.py
+        run: |
+          pip3 install PyGithub
+          pip3 install GitPython
+          python3 ci.py
 
       - name: install tools
         run: |
