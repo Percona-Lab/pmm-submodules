@@ -98,4 +98,4 @@ It's a branch name that this script will try to find in a repo instead of the de
 
 ### Can I build my FB as before using .gitmodules?
 
-Certainly. If `ci.yml` is left empty, the system will pick the branches from `.gitmodules` as before. The mix of both however is not supported.
+Certainly. If `ci.yml` is left empty,  the system will pick the branches from `.gitmodules` as before. The mix of both however is not supported.
