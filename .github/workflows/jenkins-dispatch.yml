@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       WORK_DIR: sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests
+      GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
     steps:
       - name: checkout code
