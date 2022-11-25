@@ -2,3 +2,6 @@ deps:
 - name: grafana
   branch: PMM-10881-grafana-9.2.5
   url: https://github.com/percona-platform/grafana
+- name: pmm-ui-tests
+  branch: PMM-10881-grafana-9.2.5
+  url: https://github.com/percona/pmm-ui-tests
