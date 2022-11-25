@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10873-replace-create-db-cluster-modal-with-the-page
