@@ -1,0 +1,5 @@
+deps:
+    - name: pmm
+      branch: PMM-10385-disable-examples
+    - name: grafana-dashboards
+      branch: PMM-10384-mysql-explain-pii
