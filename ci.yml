@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-10908-invalid-token-message-update
+  url: https://github.com/percona-platform/grafana
