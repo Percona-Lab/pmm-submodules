@@ -1,0 +1,4 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-11090-move-k8s-logs-to-PMM
