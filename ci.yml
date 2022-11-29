@@ -1,0 +1,4 @@
+deps:
+- name: mysqld_exporter
+  branch: PMM-11082
+  url: https://github.com/percona/mysqld_exporter
