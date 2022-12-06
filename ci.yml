@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-9079-target-restore-service
