@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-9505-Disable-actions-on-paused-dbclusters
