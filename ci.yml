@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-11134-mode-edit-db-cluster-form-to-page
