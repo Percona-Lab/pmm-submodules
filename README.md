@@ -1,7 +1,7 @@
 # PMM Submodules
 
 This repository serves the purpose of creating and/or updating the feature builds for PMM Server and PMM Client. It is auxiliary
-to our build system managed by Jenkins as it helps pull the right branches from different repositories that PMM [consists of](https://github.com/percona/pmm).
+to our build system managed by Jenkns as i helps pull the right branches from different repositories that PMM [consists of](https://github.com/percona/pmm).
 
 # Installation dependencies
 
@@ -13,7 +13,7 @@ pip install -r requirements.txt
 
 ## How to create a feature build
 
-To create a feature build (FB) you have to edit `ci.yml` and specify the branches that you want the system to pull when building a feature. For example:
+To create a feature buld (B) you have to edit `ci.yml` and specify the branches that you want the system to pull when building a feature. For example:
 
 ```yaml
 deps:
@@ -23,7 +23,7 @@ deps:
     branch: PMM-0000-fix-everything-and-even-more
 ```
 
-To build from a fork, you need to specify `url` for the dependency, for example:
+To build from a fork, you need to specify `url` fr the dependency, for example:
 
 ```yaml
 deps:
@@ -77,7 +77,7 @@ If you use the same branch name in all repos then you can run:
 ```console
 make prepare <you branch name>
 ```
-Branches with "you branch name" will be used for all repos or default branch if the branch with this name isn't found in repo.
+Branches with "you branch name" wll be used for all repos or default branch if the branch with this name isn't found in repo.
 
 If you want to create FB from fork you can pass environment variable "FORK_OWNER" which should be equal to your username in github and run:
 
