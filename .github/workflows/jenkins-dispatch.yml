@@ -21,22 +21,22 @@ jobs:
       WORK_DIR: /home/runner/work/pmm-submodules/pmm-submodules/sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests
 
     steps:
-      - name: checkout code
+      - name: Checkout code
         uses: actions/checkout@v3
         with:
           submodules: "recursive"
 
-      - name: install tools
+      - name: Install tools
         run: |
           npm install -g bats
           $WORK_DIR/install_k8s_tools.sh --minikube --helm --kubectl --user
 
-      - name: minikube_start
+      - name: Start minikube
         run: |
           minikube start
           kubectl wait --for=condition=Ready node --timeout=90s minikube
 
-      - name: helm_tests
+      - name: Run helm tests
         run: |
           echo $(git submodule status)
 
