@@ -1,0 +1,3 @@
+deps:
+  - name: mongodb_exporter
+    branch: PMM-11040-add-security-metrics
