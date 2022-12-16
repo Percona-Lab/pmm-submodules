@@ -181,7 +181,7 @@ class Builder():
                     check_call(
                         f'git clone --depth 1 --single-branch --branch {target_branch} {target_url} {path}'.split())
                 else:
-                    logging.info(f'Files in the path for {dep["name"]} is already exist')
+                    logging.info(f'Files for {dep["name"]} already exist')
                 call(['git', 'pull', '--ff-only'], cwd=path)
                 commit_id = switch_branch(path, dep['branch'])
 
@@ -275,17 +275,16 @@ class Converter:
 
 
 def switch_branch(path, branch):
-    # symbolic-ref works only if we on branch. If we use commit we use rev-parse instead
-    try:
-        cur_branch = check_output('git symbolic-ref --short HEAD'.split(), cwd=path).decode().strip()
-    except CalledProcessError:
-        cur_branch = check_output('git rev-parse HEAD'.split(), cwd=path).decode().strip()
+    # `symbolic-ref` works only if we are on the branch. If we want to use the commit, we must use `rev-parse` instead
+    git_command = 'git symbolic-ref --short HEAD 2>/dev/null || git rev-parse HEAD'
+    cur_branch = check_output(['bash', '-c', git_command], cwd=path).decode().strip()
+    
     if cur_branch != branch:
         branches = check_output('git ls-remote --heads origin'.split(), cwd=path)
         branches = [line.split("/")[-1]
                     for line in branches.decode().strip().split("\n")]
         if branch in branches:
-            print(f'Switch to branch: {branch} (from {cur_branch})')
+            print(f'Switch to branch: {branch} from {cur_branch}')
             check_call(f'git remote set-branches origin {branch}'.split(), cwd=path)
             check_call(f'git fetch --depth 1 origin {branch}'.split(), cwd=path)
             check_call(f'git checkout {branch}'.split(), cwd=path)
