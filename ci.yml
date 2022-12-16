@@ -1,3 +1,7 @@
 deps:
   - name: pmm
     branch: PMM-11038-dbaas-operator
+  - name: dbaas-controller
+    branch: PMM-11024-percona-catalog
+  - name: grafana
+    branch: PMM-11031-advanced-settings-ui-dbaas
