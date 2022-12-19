@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-11221-fix-dbaas-is-disabled-message
