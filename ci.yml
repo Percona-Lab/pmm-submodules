@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-9446-change-panels-view
+  url: https://github.com/percona/grafana-dashboards
