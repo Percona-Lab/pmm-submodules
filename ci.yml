@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-11040-add-datapoints-for-mongodb-encryption
+  - name: mongodb_exporter
+    branch: main
