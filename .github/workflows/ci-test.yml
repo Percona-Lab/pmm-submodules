@@ -1,0 +1,25 @@
+# This workflow will do a clean install of node dependencies and run lint tests
+
+name: Temp test
+
+on:
+  pull_request:
+
+jobs:
+  lint:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Trigger dispatch
+        uses: percona-platform/workflow-dispatch@v1
+        with:
+          workflow: E2E
+          token: ${{ secrets.GH_API_TOKEN }}
+          repo: percona/pmm-qa
+          ref: PMM-7_Migrate_Testsuite
+          inputs: |
+            {
+                "pmm_qa_branch": "PMM-7_Migrate_Testsuite",
+                "sha": "${{ github.event.pull_request.head.sha }}",
+            }
