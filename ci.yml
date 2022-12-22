@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-10924-all-backups-pages-should-display-storage-type
