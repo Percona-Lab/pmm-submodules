@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Trigger dispatch
-        uses: percona-platform/workflow-dispatch@v1
+        uses: actions/workflow-dispatch@v1
         with:
           workflow: E2E
           token: ${{ secrets.GH_API_TOKEN }}
