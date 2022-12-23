@@ -16,7 +16,7 @@ on:
 
 jobs:
   pmm2-testsuite-workflow:
-    uses: percona/pmm-qa/.github/workflows/testsuite.yml@PMM-7_Migrate_Testsuite
+    uses: Percona-Lab/pmm-submodules/.github/workflows/pmm2-testsuite.yml@PMM-7-testsuite-action
     with:
       server_image: ${{ github.event.inputs.server_image }}
       client_image: ${{ github.event.inputs.client_image }}
