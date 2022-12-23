@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  lint:
+  trigger:
 
     runs-on: ubuntu-18.04
 
@@ -14,7 +14,7 @@ jobs:
       - name: Trigger dispatch
         uses: actions/workflow-dispatch@v1
         with:
-          workflow: E2E
+          workflow: pmm2-testsuite pipeline
           token: ${{ secrets.GH_API_TOKEN }}
           repo: percona/pmm-qa
           ref: PMM-7_Migrate_Testsuite
