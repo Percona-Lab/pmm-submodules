@@ -12,14 +12,10 @@ jobs:
 
     steps:
       - name: Trigger dispatch
-        uses: percona-platform/workflow-dispatch@v1
-        with:
-          workflow: pmm2-testsuite pipeline
-          token: ${{ secrets.GH_API_TOKEN }}
-          repo: percona/pmm-qa
-          ref: PMM-7_Migrate_Testsuite
-          inputs: |
-            {
-                "pmm_qa_branch": "PMM-7_Migrate_Testsuite",
-                "sha": "${{ github.event.pull_request.head.sha }}",
-            }
+        if: ${{ always() }}
+        run: |
+          curl -v -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.GH_API_TOKEN }}" \
+          "https://api.github.com/repos/percona/pmm-qa/actions/workflows/testsuite.yml/dispatches" \
+          -d '{"ref":"PMM-7_Migrate_Testsuite","inputs":{"pmm_qa_branch":"PMM-7_Migrate_Testsuite","sha":"${{ github.event.pull_request.head.sha }}}'
