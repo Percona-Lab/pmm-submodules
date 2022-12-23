@@ -1,7 +1,7 @@
 name: pmm2-testsuite pipeline
 on:
   # run with default inputs
-  pull_request:
+  workflow_dispatch:
   workflow_call:
     inputs:
       server_image:
@@ -45,7 +45,7 @@ jobs:
 
     steps:
       - name: Checkout PMM-QA tests when Workflow_dispatch
-        if: ${{ github.event_name == 'workflow_call' || github.event_name == 'push' }}
+        if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }}
         uses: actions/checkout@v3
         with:
           ref: ${{ env.PMM_QA_BRANCH }}
