@@ -188,3 +188,25 @@ jobs:
         if: ${{ matrix.db-type == 'ms8.0' }}
         run: |
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
+      
+      - name: Create status check
+        if: ${{ always() }}
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          SHA: ${{ inputs.sha }}
+          STATUS: ${{ job.status }}
+        run: |
+          if [ "${STATUS}" = "cancelled" ]; then
+            STATUS="error"
+          fi
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            /repos/$REPO/statuses/$SHA \
+            -f state="$STATUS" \
+            -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID" \
+            -f description="pmm2-testsuite bats cli tests $STATUS" \
+            -f context='actions/workflows/bats-testsuite'
