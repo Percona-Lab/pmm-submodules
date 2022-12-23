@@ -188,7 +188,13 @@ jobs:
         if: ${{ matrix.db-type == 'ms8.0' }}
         run: |
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
-      
+  
+  publish-results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    if: ${{ always() }}
+    needs: [bats-testsuite]
+    steps:
       - name: Create status check
         if: ${{ always() }}
         continue-on-error: true
