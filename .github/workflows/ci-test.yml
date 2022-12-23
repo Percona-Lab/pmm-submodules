@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Trigger dispatch
-        uses: actions/workflow-dispatch@v1
+        uses: percona-platform/workflow-dispatch@v1
         with:
           workflow: pmm2-testsuite pipeline
           token: ${{ secrets.GH_API_TOKEN }}
