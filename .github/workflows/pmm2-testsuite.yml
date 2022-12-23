@@ -12,7 +12,7 @@ on:
         required: false
         type: string
       client_image:
-        description: "pmm2-client docker image, defalt perconalab/pmm-client:dev-latest"
+        description: "pmm2-client docker image, default perconalab/pmm-client:dev-latest"
         required: false
         type: string
       pmm_qa_branch:
