@@ -107,7 +107,7 @@ jobs:
 
       - name: Setup PMM2-Server
         run: |
-          PWD=\$(pwd) PMM_SERVER_IMAGE=${{ env.DOCKER_VERSION }} docker-compose up -d
+          PWD=$(pwd) PMM_SERVER_IMAGE=${{ env.DOCKER_VERSION }} docker-compose up -d
           sleep 60
           docker exec pmm-server change-admin-password ${{ env.ADMIN_PASSWORD }}
           bash -x testdata/db_setup.sh
