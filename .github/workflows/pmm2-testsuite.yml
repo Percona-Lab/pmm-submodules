@@ -149,33 +149,33 @@ jobs:
       - name: Run Setup Generic Tests, Including Client Container Setup
         if: ${{ matrix.db-type == 'clientContainer' }}
         run: |
-          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm2
+          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm2
 
       - name: Run bats tests for generic Scenarios
         if: ${{ matrix.db-type == 'generic' }}
         run: |
-          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/generic-tests.bats
-          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/docker-env-variable-tests.bats
+          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/generic-tests.bats
+          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/docker-env-variable-tests.bats
 
       - name: Run bats tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'clientContainer' }}
         run: |
-          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-client-docker-tests.bats
-          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-admin-unregister-tests.bats
+          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-client-docker-tests.bats
+          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-admin-unregister-tests.bats
 
       - name: Run Setup for HAPROXY
         if: ${{ matrix.db-type == 'haproxy' }}
         run: |
-          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=haproxy,1 --pmm2
+          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=haproxy,1 --pmm2
 
       - name: Run bats tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'haproxy' }}
         run: |
-          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/haproxy-tests.bats
+          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/haproxy-tests.bats
 
       - name: Run Setup for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
-        run: CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=pxc,1 --pmm2 --pxc-version=5.7
+        run: CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=pxc,1 --pmm2 --pxc-version=5.7
 
       - name: Run bats tests for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
@@ -184,7 +184,7 @@ jobs:
 
       - name: Run Setup for MySQL
         if: ${{ matrix.db-type == 'ms8.0' }}
-        run: CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=ms,1 --pmm2 --ms-version=8.0
+        run: CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=ms,1 --pmm2 --ms-version=8.0
 
       - name: Run bats tests for MySQL Tests
         if: ${{ matrix.db-type == 'ms8.0' }}

@@ -104,9 +104,9 @@ jobs:
 
       - name: Setup PMM2-Server
         run: |
-          PWD=\$(pwd) PMM_SERVER_IMAGE=${{ DOCKER_VERSION }} docker-compose up -d
+          PWD=\$(pwd) PMM_SERVER_IMAGE=${{ env.DOCKER_VERSION }} docker-compose up -d
           sleep 60
-          docker exec pmm-server change-admin-password ${{ ADMIN_PASSWORD }}
+          docker exec pmm-server change-admin-password ${{ env.ADMIN_PASSWORD }}
           bash -x testdata/db_setup.sh
 
       - name: Setup PMM2-Client
@@ -126,7 +126,7 @@ jobs:
           PMM_UI_URL : "http://${{ env.SERVER_IP }}/"
           PMM_URL : "http://admin:${{ env.ADMIN_PASSWORD }}@${{ env.SERVER_IP }}"
         run: |
-          sed -i 's+http://localhost/+${PMM_UI_URL}/+g' pr.codecept.js
+          sed -i 's+http://localhost/+${{ envPMM_UI_URL }}/+g' pr.codecept.js
           ./node_modules/.bin/codeceptjs run-multiple parallel --steps --reporter mocha-multi -c pr.codecept.js --grep "@fb"
 
       - name: Create status check
