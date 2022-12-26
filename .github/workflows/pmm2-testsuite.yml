@@ -238,6 +238,6 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             /repos/$REPO/statuses/$SHA \
             -f state="$STATUS" \
-            -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID/jobs" \
+            -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID" \
             -f description="pmm2-testsuite bats cli tests ${{ matrix.db-type }} $STATUS" \
             -f context='actions/workflows/bats-testsuite/${{ matrix.db-type }}'
