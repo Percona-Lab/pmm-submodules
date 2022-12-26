@@ -56,7 +56,6 @@ on:
         type: string
 
 jobs:
-  timeout-minutes: 40
   env:
     SERVER_IMAGE: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
     CLIENT_IMAGE: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
