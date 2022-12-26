@@ -148,71 +148,43 @@ jobs:
 
       - name: Run Setup Generic Tests, Including Client Container Setup
         if: ${{ matrix.db-type == 'clientContainer' }}
-        env:
-          SERVER_IMAGE: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-          CLIENT_IMAGE: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-          CLIENT_VERSION: ${{ github.event.inputs.client_version || 'dev-latest' }}
-          DOCKER_VERSION: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-          CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-        run: sudo bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm2
+        run: |
+          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm2
 
       - name: Run bats tests for generic Scenarios
         if: ${{ matrix.db-type == 'generic' }}
         run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/generic-tests.bats
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/docker-env-variable-tests.bats
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-admin-unregister-tests.bats
+          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/generic-tests.bats
+          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/docker-env-variable-tests.bats
 
       - name: Run bats tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'clientContainer' }}
-        env:
-          SERVER_IMAGE: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-          CLIENT_IMAGE: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-          CLIENT_VERSION: ${{ github.event.inputs.client_version || 'dev-latest' }}
-          DOCKER_VERSION: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-          CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
         run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-client-docker-tests.bats
+          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-client-docker-tests.bats
+          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-admin-unregister-tests.bats
 
       - name: Run Setup for HAPROXY
         if: ${{ matrix.db-type == 'haproxy' }}
-        run: sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=haproxy,1 --pmm2
+        run: |
+          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=haproxy,1 --pmm2
 
       - name: Run bats tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'haproxy' }}
-        env:
-          SERVER_IMAGE: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-          CLIENT_IMAGE: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-          CLIENT_VERSION: ${{ github.event.inputs.client_version || 'dev-latest' }}
-          DOCKER_VERSION: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-          CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
         run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/haproxy-tests.bats
+          CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/haproxy-tests.bats
 
       - name: Run Setup for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
-        env:
-          SERVER_IMAGE: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-          CLIENT_IMAGE: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-          CLIENT_VERSION: ${{ github.event.inputs.client_version || 'dev-latest' }}
-          DOCKER_VERSION: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-          CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-        run: sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=pxc,1 --pmm2 --pxc-version=5.7
+        run: CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=pxc,1 --pmm2 --pxc-version=5.7
 
       - name: Run bats tests for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
-        env:
-          SERVER_IMAGE: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-          CLIENT_IMAGE: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-          CLIENT_VERSION: ${{ github.event.inputs.client_version || 'dev-latest' }}
-          DOCKER_VERSION: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-          CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
         run: |
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/proxysql-specific-tests.bats
 
       - name: Run Setup for MySQL
         if: ${{ matrix.db-type == 'ms8.0' }}
-        run: sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=ms,1 --pmm2 --ms-version=8.0
+        run: CLIENT_VERSION=${{ CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=ms,1 --pmm2 --ms-version=8.0
 
       - name: Run bats tests for MySQL Tests
         if: ${{ matrix.db-type == 'ms8.0' }}
