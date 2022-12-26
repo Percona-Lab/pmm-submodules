@@ -168,7 +168,7 @@ jobs:
         run: |
           export CLIENT_VERSION=${{ env.CLIENT_VERSION }}
           export CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }}
-          sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=haproxy,1 --pmm2
+          sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=haproxy,1 --pmm2
 
       - name: Run bats tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'haproxy' }}

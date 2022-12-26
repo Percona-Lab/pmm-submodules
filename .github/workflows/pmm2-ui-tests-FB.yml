@@ -113,10 +113,10 @@ jobs:
           bash -x testdata/db_setup.sh
 
       - name: Setup PMM2-Client
-        run: sudo bash -x ./pmm-qa/pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
+        run: sudo bash -x ./pmm-qa/pmm-tests/pmm2-client-setup.sh --pmm_server_ip 192.168.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
 
       - name: Run Setup for FB E2E Tests
-        run: sudo bash -x ./pmm-qa/pmm-tests/pmm-framework.sh --addclient=haproxy,1 --addclient=ps,1 --setup-external-service --mongo-replica-for-backup --pmm2
+        run: sudo -E bash -x ./pmm-qa/pmm-tests/pmm-framework.sh --addclient=haproxy,1 --addclient=ps,1 --setup-external-service --mongo-replica-for-backup --pmm2
 
       - name: Setup npm modules for e2e tests
         run: |
@@ -125,7 +125,7 @@ jobs:
           envsubst < env.list > env.generated.list
       - name: Execute e2e tests for FB with tags @fb
         env:
-          SERVER_IP : "127.0.0.1"
+          SERVER_IP : "192.168.0.1"
           PMM_UI_URL : "http://${{ env.SERVER_IP }}/"
           PMM_URL : "http://admin:${{ env.ADMIN_PASSWORD }}@${{ env.SERVER_IP }}"
         run: |
