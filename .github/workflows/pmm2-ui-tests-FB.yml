@@ -74,7 +74,6 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout PMM-QA tests when Workflow_dispatch
-        if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }}
         uses: actions/checkout@v3
         with:
           ref: ${{ env.PMM_QA_BRANCH }}
@@ -82,6 +81,13 @@ jobs:
           path: ./pmm-qa
       - name: Checkout PMM-UI tests when Workflow_dispatch
         if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }}
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.PMM_UI_BRANCH }}
+          repository: percona/pmm-ui-tests
+          path: ./
+      - name: Checkout PMM-UI tests when pull_request
+        if: ${{ github.event_name == 'pull_request' }}
         uses: actions/checkout@v3
         with:
           ref: ${{ env.PMM_UI_BRANCH }}
@@ -101,6 +107,7 @@ jobs:
           wget https://raw.githubusercontent.com/Percona-QA/percona-qa/master/get_download_link.sh
           chmod +x get_download_link.sh
           popd pmm-qa
+          ls -la
 
       - name: Setup PMM2-Server
         run: |
