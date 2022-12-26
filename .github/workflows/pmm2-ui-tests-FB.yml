@@ -103,7 +103,7 @@ jobs:
           pushd pmm-qa
           wget https://raw.githubusercontent.com/Percona-QA/percona-qa/master/get_download_link.sh
           chmod +x get_download_link.sh
-          popd pmm-qa
+          popd
 
       - name: Setup PMM2-Server
         run: |
