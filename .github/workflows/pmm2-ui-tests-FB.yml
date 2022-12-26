@@ -73,12 +73,6 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-      - name: Checkout PMM-QA tests when Workflow_dispatch
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ env.PMM_QA_BRANCH }}
-          repository: percona/pmm-qa
-          path: ./pmm-qa
       - name: Checkout PMM-UI tests when Workflow_dispatch
         if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }}
         uses: actions/checkout@v3
@@ -103,11 +97,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y clickhouse-client
           sudo curl -s https://raw.githubusercontent.com/datacharmer/dbdeployer/master/scripts/dbdeployer-install.sh | bash
+          ls -la
+          git clone -b ${{ env.PMM_QA_BRANCH }} https://github.com/percona/pmm-qa
+          ls -la
           pushd pmm-qa
           wget https://raw.githubusercontent.com/Percona-QA/percona-qa/master/get_download_link.sh
           chmod +x get_download_link.sh
           popd pmm-qa
-          ls -la
 
       - name: Setup PMM2-Server
         run: |
