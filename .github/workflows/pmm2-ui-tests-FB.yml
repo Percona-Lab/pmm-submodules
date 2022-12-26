@@ -66,6 +66,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ADMIN_PASSWORD: ${{ github.event.inputs.admin_password || 'admin-password' }}
       PMM_QA_BRANCH: ${{ github.event.inputs.pmm_qa_branch || 'main' }}
+      PMM_QA_GIT_BRANCH: ${{ github.event.inputs.pmm_qa_branch || 'main' }}
       PMM_UI_BRANCH: ${{ github.event.inputs.pmm_ui_branch || 'main' }}
       DOCKER_VERSION: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
       CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
@@ -126,10 +127,10 @@ jobs:
       - name: Execute e2e tests for FB with tags @fb
         env:
           SERVER_IP : "192.168.0.1"
-          PMM_UI_URL : "http://${{ env.SERVER_IP }}/"
+          PMM_UI_URL : "http://192.168.0.1/"
           PMM_URL : "http://admin:${{ env.ADMIN_PASSWORD }}@${{ env.SERVER_IP }}"
         run: |
-          sed -i 's+http://localhost/+${{ env.PMM_UI_URL }}/+g' pr.codecept.js
+          sed -i 's+http://localhost/+${PMM_UI_URL}/+g' pr.codecept.js
           ./node_modules/.bin/codeceptjs run-multiple parallel --steps --reporter mocha-multi -c pr.codecept.js --grep "@fb"
 
       - name: Create status check
