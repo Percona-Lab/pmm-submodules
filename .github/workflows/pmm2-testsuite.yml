@@ -98,15 +98,15 @@ jobs:
           sleep 30
 
       - name: Setup PMM2-Client
-        run: sudo bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
+        run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
 
       - name: Run Setup for ps5.7
         if: ${{ matrix.db-type == 'ps5.7' }}
-        run: sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=ps,1 --ps-version=5.7 --pmm2
+        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=ps,1 --ps-version=5.7 --pmm2
 
       - name: Run Setup for ps8.0
         if: ${{ matrix.db-type == 'ps8' }}
-        run: sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=ps,1 --ps-version=8 --pmm2
+        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=ps,1 --ps-version=8 --pmm2
 
       - name: Run bats tests for PS
         if: ${{ matrix.db-type == 'ps5.7' || matrix.db-type == 'ps8' }}
@@ -114,15 +114,15 @@ jobs:
 
       - name: Run Setup for pdpgsql 13
         if: ${{ matrix.db-type == 'pdpgsql13' }}
-        run: sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=13 --pmm2
+        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=13 --pmm2
 
       - name: Run Setup for pdpgsql 14
         if: ${{ matrix.db-type == 'pdpgsql14' }}
-        run: sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=14 --pmm2
+        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=14 --pmm2
 
       - name: Run Setup for pdpgsql 15.0
         if: ${{ matrix.db-type == 'pdpgsql15' }}
-        run: sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=15.0 --pmm2
+        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=15.0 --pmm2
 
       - name: Run bats tests for PDPGSQL
         if: ${{ matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
@@ -132,15 +132,15 @@ jobs:
 
       - name: Run Setup for PSMDB 4.4
         if: ${{ matrix.db-type == 'modb4.4' }}
-        run: sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=4.4 --pmm2
+        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=4.4 --pmm2
 
       - name: Run Setup for PSMDB 5
         if: ${{ matrix.db-type == 'modb5' }}
-        run: sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=5 --pmm2
+        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=5 --pmm2
 
       - name: Run Setup for PSMDB 6
         if: ${{ matrix.db-type == 'modb6' }}
-        run: sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=6 --pmm2
+        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=6 --pmm2
 
       - name: Run bats tests for PSMDB
         if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' }}
@@ -149,19 +149,19 @@ jobs:
       - name: Run Setup Generic Tests, Including Client Container Setup
         if: ${{ matrix.db-type == 'clientContainer' }}
         run: |
-          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm2
+          sudo -E bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm2
 
       - name: Run bats tests for generic Scenarios
         if: ${{ matrix.db-type == 'generic' }}
         run: |
-          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/generic-tests.bats
-          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/docker-env-variable-tests.bats
+          sudo bats ./pmm-tests/pmm-2-0-bats-tests/generic-tests.bats
+          sudo bats ./pmm-tests/pmm-2-0-bats-tests/docker-env-variable-tests.bats
 
       - name: Run bats tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'clientContainer' }}
         run: |
-          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-client-docker-tests.bats
-          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-admin-unregister-tests.bats
+          sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-client-docker-tests.bats
+          sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-admin-unregister-tests.bats
 
       - name: Run Setup for HAPROXY
         if: ${{ matrix.db-type == 'haproxy' }}
@@ -173,11 +173,11 @@ jobs:
       - name: Run bats tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'haproxy' }}
         run: |
-          CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bats ./pmm-tests/pmm-2-0-bats-tests/haproxy-tests.bats
+          sudo bats ./pmm-tests/pmm-2-0-bats-tests/haproxy-tests.bats
 
       - name: Run Setup for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
-        run: CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=pxc,1 --pmm2 --pxc-version=5.7
+        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pxc,1 --pmm2 --pxc-version=5.7
 
       - name: Run bats tests for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
@@ -186,7 +186,7 @@ jobs:
 
       - name: Run Setup for MySQL
         if: ${{ matrix.db-type == 'ms8.0' }}
-        run: CLIENT_VERSION=${{ env.CLIENT_VERSION }} CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }} sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=ms,1 --pmm2 --ms-version=8.0
+        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=ms,1 --pmm2 --ms-version=8.0
 
       - name: Run bats tests for MySQL Tests
         if: ${{ matrix.db-type == 'ms8.0' }}
