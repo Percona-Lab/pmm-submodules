@@ -74,84 +74,15 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-      - name: Checkout PMM-UI tests when Workflow_dispatch
-        if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }}
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ env.PMM_UI_BRANCH }}
-          repository: percona/pmm-ui-tests
-          path: ./
-      - name: Checkout PMM-UI tests when pull_request
+      - name: Run STT tests
         if: ${{ github.event_name == 'pull_request' }}
-        uses: actions/checkout@v3
+        uses: ./.github/workflows/ui-tests.yml
         with:
-          ref: ${{ env.PMM_UI_BRANCH }}
-          repository: percona/pmm-ui-tests
-          path: ./
-      - name: Setup tools
-        run: |
-          npm install -g bats
-          sudo apt-get install -y apt-transport-https ca-certificates dirmngr ansible libaio1 libaio-dev libnuma-dev libncurses5 socat sysbench
-          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 8919F6BD2B48D754
-          echo "deb https://packages.clickhouse.com/deb stable main" | sudo tee \
-              /etc/apt/sources.list.d/clickhouse.list
-          sudo apt-get update
-          sudo apt-get install -y clickhouse-client
-          sudo curl -s https://raw.githubusercontent.com/datacharmer/dbdeployer/master/scripts/dbdeployer-install.sh | bash
-          ls -la
-          git clone -b ${{ env.PMM_QA_BRANCH }} https://github.com/percona/pmm-qa
-          ls -la
-          pushd pmm-qa
-          wget https://raw.githubusercontent.com/Percona-QA/percona-qa/master/get_download_link.sh
-          chmod +x get_download_link.sh
-          popd
-
-      - name: Setup PMM2-Server
-        run: |
-          PWD=$(pwd) PMM_SERVER_IMAGE=${{ env.DOCKER_VERSION }} docker-compose up -d
-          sleep 60
-          docker exec pmm-server change-admin-password ${{ env.ADMIN_PASSWORD }}
-          bash -x testdata/db_setup.sh
-
-      - name: Setup PMM2-Client
-        run: sudo bash -x ./pmm-qa/pmm-tests/pmm2-client-setup.sh --pmm_server_ip 192.168.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password ${{ env.ADMIN_PASSWORD }} --use_metrics_mode no
-
-      - name: Run Setup for FB E2E Tests
-        run: sudo -E bash -x ./pmm-qa/pmm-tests/pmm-framework.sh --addclient=haproxy,1 --addclient=ps,1 --setup-external-service --mongo-replica-for-backup --pmm2
-
-      - name: Setup npm modules for e2e tests
-        run: |
-          npm install
-          npm ci
-          envsubst < env.list > env.generated.list
-      - name: Execute e2e tests for FB with tags @fb
-        env:
-          SERVER_IP : "192.168.0.1"
-          PMM_UI_URL : "http://192.168.0.1/"
-          PMM_URL : "http://admin:${{ env.ADMIN_PASSWORD }}@${{ env.SERVER_IP }}"
-        run: |
-          sed -i 's+http://localhost/+${PMM_UI_URL}/+g' pr.codecept.js
-          ./node_modules/.bin/codeceptjs run-multiple parallel --steps --reporter mocha-multi -c pr.codecept.js --grep "@fb"
-
-      - name: Create status check
-        if: ${{ always() }}
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-          RUN_ID: ${{ github.run_id }}
-          SHA: ${{ inputs.sha }}
-          STATUS: ${{ needs.build.result }}
-        run: |
-          result="${{ needs.build.result }}"
-          if [ "${STATUS}" = "cancelled" ]; then
-            STATUS="error"
-          fi
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            /repos/$REPO/statuses/$SHA \
-            -f state="$STATUS" \
-            -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID" \
-            -f description="pmm2-ui-tests e2e tests $STATUS" \
-            -f context='actions/workflows/ui-tests-e2e'
+          server_image: ${{ env.SERVER_IMAGE }}
+          client_version: ${{ env.CLIENT_VERSION }}
+          client_image: ${{ env.CLIENT_IMAGE }}
+          pmm_qa_branch: ${{ env.PMM_QA_BRANCH }}
+          pmm_ui_branch: ${{ env.PMM_UI_BRANCH }}
+          sha: ${{ env.SHA }}
+          client_flags: '--addclient=ps,1 --ps-version=5.7.30'
+          tags_for_tests: '@stt'
