@@ -74,6 +74,7 @@ jobs:
     strategy:
       fail-fast: false
     steps:
+      - uses: actions/checkout@v3
       - name: Run STT tests
         if: ${{ github.event_name == 'pull_request' }}
         uses: ./.github/workflows/ui-tests.yml
