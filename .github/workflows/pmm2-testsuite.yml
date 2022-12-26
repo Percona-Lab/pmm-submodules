@@ -188,7 +188,7 @@ jobs:
         if: ${{ matrix.db-type == 'ms8.0' }}
         run: |
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
-  
+
   publish-results:
     runs-on: ubuntu-latest
     timeout-minutes: 40
@@ -203,8 +203,9 @@ jobs:
           REPO: ${{ github.repository }}
           RUN_ID: ${{ github.run_id }}
           SHA: ${{ inputs.sha }}
-          STATUS: ${{ job.status }}
+          STATUS: ${{ needs.build.result }}
         run: |
+          result="${{ needs.build.result }}"
           if [ "${STATUS}" = "cancelled" ]; then
             STATUS="error"
           fi
