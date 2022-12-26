@@ -126,7 +126,7 @@ jobs:
           PMM_UI_URL : "http://${{ env.SERVER_IP }}/"
           PMM_URL : "http://admin:${{ env.ADMIN_PASSWORD }}@${{ env.SERVER_IP }}"
         run: |
-          sed -i 's+http://localhost/+${{ envPMM_UI_URL }}/+g' pr.codecept.js
+          sed -i 's+http://localhost/+${{ env.PMM_UI_URL }}/+g' pr.codecept.js
           ./node_modules/.bin/codeceptjs run-multiple parallel --steps --reporter mocha-multi -c pr.codecept.js --grep "@fb"
 
       - name: Create status check
