@@ -148,6 +148,12 @@ jobs:
 
       - name: Run Setup Generic Tests, Including Client Container Setup
         if: ${{ matrix.db-type == 'clientContainer' }}
+        env:
+          SERVER_IMAGE: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+          CLIENT_IMAGE: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+          CLIENT_VERSION: ${{ github.event.inputs.client_version || 'dev-latest' }}
+          DOCKER_VERSION: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+          CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
         run: sudo bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm2
 
       - name: Run bats tests for generic Scenarios
@@ -159,6 +165,12 @@ jobs:
 
       - name: Run bats tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'clientContainer' }}
+        env:
+          SERVER_IMAGE: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+          CLIENT_IMAGE: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+          CLIENT_VERSION: ${{ github.event.inputs.client_version || 'dev-latest' }}
+          DOCKER_VERSION: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+          CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
         run: |
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-client-docker-tests.bats
 
@@ -168,15 +180,33 @@ jobs:
 
       - name: Run bats tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'haproxy' }}
+        env:
+          SERVER_IMAGE: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+          CLIENT_IMAGE: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+          CLIENT_VERSION: ${{ github.event.inputs.client_version || 'dev-latest' }}
+          DOCKER_VERSION: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+          CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
         run: |
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/haproxy-tests.bats
 
       - name: Run Setup for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
+        env:
+          SERVER_IMAGE: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+          CLIENT_IMAGE: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+          CLIENT_VERSION: ${{ github.event.inputs.client_version || 'dev-latest' }}
+          DOCKER_VERSION: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+          CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
         run: sudo bash -x ./pmm-tests/pmm-framework.sh --addclient=pxc,1 --pmm2 --pxc-version=5.7
 
       - name: Run bats tests for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
+        env:
+          SERVER_IMAGE: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+          CLIENT_IMAGE: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+          CLIENT_VERSION: ${{ github.event.inputs.client_version || 'dev-latest' }}
+          DOCKER_VERSION: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+          CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
         run: |
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/proxysql-specific-tests.bats
 
@@ -208,6 +238,6 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             /repos/$REPO/statuses/$SHA \
             -f state="$STATUS" \
-            -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID/jobs/$JOB_ID" \
+            -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID/jobs" \
             -f description="pmm2-testsuite bats cli tests ${{ matrix.db-type }} $STATUS" \
             -f context='actions/workflows/bats-testsuite/${{ matrix.db-type }}'
