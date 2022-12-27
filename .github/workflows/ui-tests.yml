@@ -56,7 +56,7 @@ jobs:
 
     steps:
       - name: Checkout PMM-UI tests when Workflow_dispatch
-        uses: percona-platform/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup tools
         run: |
