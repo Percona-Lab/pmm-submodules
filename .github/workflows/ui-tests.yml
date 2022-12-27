@@ -57,6 +57,10 @@ jobs:
     steps:
       - name: Checkout PMM-UI tests when Workflow_dispatch
         uses: actions/checkout@v3
+        with:
+          ref: ${{ env.PMM_UI_BRANCH }}
+          repository: percona/pmm-ui-tests
+          path: ./
 
       - name: Setup tools
         run: |
