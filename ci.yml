@@ -1,0 +1,8 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-11116-agent-push-status-on-reconnection
+    path: sources/pmm/src/github.com/percona/pmm
+    url: https://github.com/percona/pmm
+    component: common
+
