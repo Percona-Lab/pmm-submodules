@@ -1,4 +1,0 @@
-deps:
-- name: pmm-qa
-  branch: PMM-7_Migrate_Testsuite
-  url: https://github.com/percona/pmm-qa
