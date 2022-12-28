@@ -61,6 +61,7 @@ jobs:
   advisors:
       name: Advisors UI tests
       uses: ./.github/workflows/ui-tests.yml
+      secrets: inherit
       with:
         server_image: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
         client_version: ${{ github.event.inputs.client_version || 'dev-latest' }}
@@ -74,6 +75,7 @@ jobs:
   backup_management:
     name: Backup Management UI tests
     uses: ./.github/workflows/ui-tests.yml
+    secrets: inherit
     with:
       server_image: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
       client_version: ${{ github.event.inputs.client_version || 'dev-latest' }}
@@ -87,6 +89,7 @@ jobs:
   instances:
     name: Instances UI tests
     uses: ./.github/workflows/ui-tests.yml
+    secrets: inherit
     with:
       server_image: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
       client_version: ${{ github.event.inputs.client_version || 'dev-latest' }}
@@ -100,6 +103,7 @@ jobs:
   alerting_and_settings:
     name: Alerting and Settings UI tests
     uses: ./.github/workflows/ui-tests.yml
+    secrets: inherit
     with:
       server_image: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
       client_version: ${{ github.event.inputs.client_version || 'dev-latest' }}
