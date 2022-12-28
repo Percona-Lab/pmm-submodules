@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-11298-change-query-cpu-busy
+  url: https://github.com/percona/grafana-dashboards
