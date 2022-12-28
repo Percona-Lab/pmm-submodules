@@ -54,6 +54,11 @@ jobs:
       CLIENT_FLAGS: ${{ inputs.client_flags || '' }}
       TAGS_FOR_TESTS: ${{ inputs.tags_for_tests || '@settings-fb' }}
 
+#      Environment variables for tests
+      BACKUP_LOCATION_ACCESS_KEY: ${{ secrets.BACKUP_LOCATION_ACCESS_KEY }}
+      BACKUP_LOCATION_SECRET_KEY: ${{ secrets.BACKUP_LOCATION_SECRET_KEY }}
+
+
     steps:
       - name: Checkout PMM-UI tests
         uses: actions/checkout@v3
