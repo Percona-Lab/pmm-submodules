@@ -51,15 +51,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
-      SERVER_IMAGE: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-      CLIENT_IMAGE: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-      CLIENT_VERSION: ${{ github.event.inputs.client_version || 'dev-latest' }}
+      SERVER_IMAGE: ${{ github.event.inputs.server_image || inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+      CLIENT_IMAGE: ${{ github.event.inputs.client_image || inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+      CLIENT_VERSION: ${{ github.event.inputs.client_version || inputs.client_version || 'dev-latest' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      PMM_QA_BRANCH: ${{ github.event.inputs.pmm_qa_branch || 'main' }}
-      DOCKER_VERSION: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-      CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-      PMM_QA_GIT_BRANCH: ${{ github.event.inputs.pmm_qa_branch || 'main' }}
-      SHA: ${{ github.event.inputs.sha || 'null' }}
+      PMM_QA_BRANCH: ${{ github.event.inputs.pmm_qa_branch || inputs.pmm_qa_branch || 'main' }}
+      DOCKER_VERSION: ${{ github.event.inputs.server_image || inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+      CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+      PMM_QA_GIT_BRANCH: ${{ github.event.inputs.pmm_qa_branch || inputs.pmm_qa_branch || 'main' }}
+      SHA: ${{ github.event.inputs.sha || inputs.sha || 'null' }}
     strategy:
       fail-fast: false
       matrix:
@@ -67,16 +67,10 @@ jobs:
 
     steps:
       - name: Checkout PMM-QA tests when Workflow_dispatch
-        if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }}
         uses: actions/checkout@v3
         with:
           ref: ${{ env.PMM_QA_BRANCH }}
           repository: percona/pmm-qa
-          path: ./
-      - name: Checkout PMM-QA tests when pull_request
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: actions/checkout@v3
-        with:
           path: ./
 
       - name: Setup tools

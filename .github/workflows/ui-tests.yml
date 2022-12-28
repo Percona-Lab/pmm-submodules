@@ -55,7 +55,7 @@ jobs:
       TAGS_FOR_TESTS: ${{ inputs.tags_for_tests || '@settings-fb' }}
 
     steps:
-      - name: Checkout PMM-UI tests when Workflow_dispatch
+      - name: Checkout PMM-UI tests
         uses: actions/checkout@v3
         with:
           ref: ${{ env.PMM_UI_BRANCH }}
@@ -90,7 +90,7 @@ jobs:
       - name: Setup PMM2-Client
         run: sudo bash -x ./pmm-qa/pmm-tests/pmm2-client-setup.sh --pmm_server_ip 192.168.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password ${{ env.ADMIN_PASSWORD }} --use_metrics_mode no
 
-      - name: Run Setup for FB E2E Tests
+      - name: Run Setup for E2E Tests
         run: sudo -E bash -x ./pmm-qa/pmm-tests/pmm-framework.sh ${{ env.CLIENT_FLAGS }} --pmm2
 
       - name: Setup npm modules for e2e tests
@@ -98,7 +98,7 @@ jobs:
           npm ci
           envsubst < env.list > env.generated.list
 
-      - name: Execute e2e tests for FB with tags ${{ env.TAGS_FOR_TESTS }}
+      - name: Execute e2e tests with tags ${{ env.TAGS_FOR_TESTS }}
         env:
           SERVER_IP : "192.168.0.1"
           PMM_UI_URL : "http://192.168.0.1/"
