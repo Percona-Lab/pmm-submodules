@@ -37,7 +37,7 @@ on:
         required: false
         type: string
       client_version:
-        description: "pmm2-client version Tarball or Dev-latest, default is dev-latest"
+        description: "pmm2-client version Tarball URL or Dev-latest, default is dev-latest"
         required: false
         type: string
       client_image:
