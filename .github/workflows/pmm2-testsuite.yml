@@ -66,7 +66,7 @@ jobs:
         db-type: [ps5.7, ps8, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, generic, clientContainer, haproxy, proxysql, ms8.0]
 
     steps:
-      - name: Checkout PMM-QA tests when Workflow_dispatch
+      - name: Checkout PMM-QA tests ${{ env.PMM_QA_BRANCH }} branch
         uses: actions/checkout@v3
         with:
           ref: ${{ env.PMM_QA_BRANCH }}
