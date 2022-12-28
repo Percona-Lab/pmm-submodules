@@ -112,6 +112,13 @@ jobs:
           sed -i 's+http://localhost/+${PMM_UI_URL}/+g' pr.codecept.js
           ./node_modules/.bin/codeceptjs run-multiple parallel --steps --reporter mocha-multi -c pr.codecept.js --grep "${{ env.TAGS_FOR_TESTS }}"
 
+      - name: Attach artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifacts_for_{{ env.TAGS_FOR_TESTS }}
+          path: tests/output
+
       - name: Create status check
         if: ${{ always() }}
         continue-on-error: true
