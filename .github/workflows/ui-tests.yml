@@ -142,6 +142,6 @@ jobs:
             -f description="pmm2-ui-tests e2e ${{ env.TAGS_FOR_TESTS }} tests $STATUS" \
             -f context='actions/workflows/ui-tests-e2e'
 
-      - name: Setup tmate session on failure
+      - name: Setup tmate session  on failure
         if: ${{ failure() }}
         uses: percona-platform/action-tmate@v2
