@@ -60,7 +60,7 @@ jobs:
 
 
     steps:
-      - name: Checkout PMM-UI tests
+      - name: Checkout PMM UI tests
         uses: actions/checkout@v3
         with:
           ref: ${{ env.PMM_UI_BRANCH }}
