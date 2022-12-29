@@ -1,8 +1,6 @@
 name: pmm2-ui-tests-fb pipeline
 on:
 
-  pull_request:
-
   workflow_dispatch:
     inputs:
       server_image:

@@ -187,26 +187,16 @@ jobs:
         if: ${{ matrix.db-type == 'ms8.0' }}
         run: |
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
+
       - name: Create status check
         if: ${{ always() }}
+        uses: percona-platform/github-status-action@v1
         continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-          RUN_ID: ${{ github.run_id }}
-          SHA: ${{ inputs.sha }}
-          STATUS: ${{ job.status }}
-          JOB_ID: ${{ job.id }}
-        run: |
-          result="${{ needs.build.result }}"
-          if [ "${STATUS}" = "cancelled" ]; then
-            STATUS="error"
-          fi
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            /repos/$REPO/statuses/$SHA \
-            -f state="$STATUS" \
-            -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID" \
-            -f description="pmm2-testsuite bats cli tests ${{ matrix.db-type }} $STATUS" \
-            -f context='actions/workflows/bats-testsuite/${{ matrix.db-type }}'
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: "${{ env.TAGS_FOR_TESTS }} UI tests"
+          description: "Test execution ${{ job.status }}"
+          state: ${{ job.status }}
+          repository: ${{ github.repository }}
+          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          sha: ${{ env.SHA }}
