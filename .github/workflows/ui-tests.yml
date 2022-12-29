@@ -110,7 +110,7 @@ jobs:
           PMM_URL : "http://admin:${{ env.ADMIN_PASSWORD }}@${{ env.SERVER_IP }}"
         run: |
           sed -i 's+http://localhost/+${PMM_UI_URL}/+g' pr.codecept.js
-          ./node_modules/.bin/codeceptjs run-multiple parallel --steps --reporter mocha-multi -c pr.codecept.js --grep "${{ env.TAGS_FOR_TESTS }}"
+          ./node_modules/.bin/codeceptjs run --steps --reporter mocha-multi -c pr.codecept.js --grep "${{ env.TAGS_FOR_TESTS }}"
 
       - uses: actions/github-script@v6
         id: artifact_name
@@ -129,26 +129,35 @@ jobs:
 
       - name: Create status check
         if: ${{ always() }}
+        uses: percona-platform/github-status-action@v1
         continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-          RUN_ID: ${{ github.run_id }}
-          SHA: ${{ inputs.sha }}
-          STATUS: ${{ job.status }}
-        run: |
-          result="${{ job.status }}"
-          if [ "${STATUS}" = "cancelled" ]; then
-            STATUS="error"
-          fi
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            /repos/$REPO/statuses/$SHA \
-            -f state="$STATUS" \
-            -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID" \
-            -f description="pmm2-ui-tests e2e ${{ env.TAGS_FOR_TESTS }} tests $STATUS" \
-            -f context='actions/workflows/ui-tests-e2e'
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: "${{ env.TAGS_FOR_TESTS }} UI tests"
+          description: "Test execution ${{ job.status }}"
+          state: ${{ job.status }}
+          repository: ${{ github.repository }}
+          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          sha: ${{ env.SHA }}
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          REPO: ${{ github.repository }}
+#          RUN_ID: ${{ github.run_id }}
+#          SHA: ${{ inputs.sha }}
+#          STATUS: ${{ job.status }}
+#        run: |
+#          result="${{ job.status }}"
+#          if [ "${STATUS}" = "cancelled" ]; then
+#            STATUS="error"
+#          fi
+#          gh api \
+#            --method POST \
+#            -H "Accept: application/vnd.github.v3+json" \
+#            /repos/$REPO/statuses/$SHA \
+#            -f state="$STATUS" \
+#            -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID" \
+#            -f description="pmm2-ui-tests e2e ${{ env.TAGS_FOR_TESTS }} tests $STATUS" \
+#            -f context='actions/workflows/ui-tests-e2e'
 
 #      - name: Setup tmate session  on failure
 #        if: ${{ failure() }}

@@ -68,7 +68,7 @@ jobs:
         client_image: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
         pmm_qa_branch: ${{ github.event.inputs.pmm_qa_branch || 'PMM-10789-respect-ubuntu' }}
         pmm_ui_branch: ${{ github.event.inputs.pmm_ui_branch || 'PMM-10789-run-fb-tests' }}
-        sha: ${{ github.event.inputs.sha || 'null' }}
+        sha: ${{ github.event.inputs.sha || github.event.pull_request.head.sha ||  'null' }}
         client_flags: '--addclient=ps,1 --ps-version=5.7.30'
         tags_for_tests: '@advisors-fb'
 
@@ -82,7 +82,7 @@ jobs:
       client_image: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
       pmm_qa_branch: ${{ github.event.inputs.pmm_qa_branch || 'PMM-10789-respect-ubuntu' }}
       pmm_ui_branch: ${{ github.event.inputs.pmm_ui_branch || 'PMM-10789-run-fb-tests' }}
-      sha: ${{ github.event.inputs.sha || 'null' }}
+      sha: ${{ github.event.inputs.sha || github.event.pull_request.head.sha ||  'null' }}
       client_flags: '--mongo-replica-for-backup'
       tags_for_tests: '@bm-fb'
 
@@ -96,7 +96,7 @@ jobs:
       client_image: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
       pmm_qa_branch: ${{ github.event.inputs.pmm_qa_branch || 'main' }}
       pmm_ui_branch: ${{ github.event.inputs.pmm_ui_branch || 'PMM-10789-run-fb-tests' }}
-      sha: ${{ github.event.inputs.sha || 'null' }}
+      sha: ${{ github.event.inputs.sha || github.event.pull_request.head.sha ||  'null' }}
       client_flags: '--addclient=haproxy,1 --addclient=ps,1 --setup-external-service'
       tags_for_tests: '@instances-fb'
 
@@ -110,5 +110,5 @@ jobs:
       client_image: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
       pmm_qa_branch: ${{ github.event.inputs.pmm_qa_branch || 'main' }}
       pmm_ui_branch: ${{ github.event.inputs.pmm_ui_branch || 'PMM-10789-run-fb-tests' }}
-      sha: ${{ github.event.inputs.sha || 'null' }}
+      sha: ${{ github.event.inputs.sha || github.event.pull_request.head.sha ||  'null' }}
       tags_for_tests: '@alerting-fb|@settings-fb'
