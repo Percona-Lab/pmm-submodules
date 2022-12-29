@@ -66,6 +66,19 @@ jobs:
         db-type: [ps5.7, ps8, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, generic, clientContainer, haproxy, proxysql, ms8.0]
 
     steps:
+      - name: Create status check
+        if: ${{ env.SHA != 'null' }}
+        uses: percona-platform/github-status-action@v1
+        continue-on-error: true
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: "${{ matrix.db-type }} CLI tests"
+          description: "Test execution ${{ job.status }}"
+          state: "pending"
+          repository: ${{ github.repository }}
+          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          sha: ${{ env.SHA }}
+
       - name: Checkout PMM-QA tests ${{ env.PMM_QA_BRANCH }} branch
         uses: actions/checkout@v3
         with:

@@ -60,6 +60,19 @@ jobs:
 
 
     steps:
+      - name: Create status check
+        if: ${{ env.SHA != 'null' }}
+        uses: percona-platform/github-status-action@v1
+        continue-on-error: true
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: "${{ env.TAGS_FOR_TESTS }} UI tests"
+          description: "Test execution ${{ job.status }}"
+          state: "pending"
+          repository: ${{ github.repository }}
+          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          sha: ${{ env.SHA }}
+
       - name: Checkout PMM UI tests
         uses: actions/checkout@v3
         with:
