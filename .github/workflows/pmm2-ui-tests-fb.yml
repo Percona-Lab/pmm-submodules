@@ -66,7 +66,7 @@ jobs:
         server_image: ${{ github.event.inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
         client_version: ${{ github.event.inputs.client_version || 'dev-latest' }}
         client_image: ${{ github.event.inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-        pmm_qa_branch: ${{ github.event.inputs.pmm_qa_branch || 'main' }}
+        pmm_qa_branch: ${{ github.event.inputs.pmm_qa_branch || 'PMM-10789-respect-ubuntu' }}
         pmm_ui_branch: ${{ github.event.inputs.pmm_ui_branch || 'PMM-10789-run-fb-tests' }}
         sha: ${{ github.event.inputs.sha || 'null' }}
         client_flags: '--addclient=ps,1 --ps-version=5.7.30'
