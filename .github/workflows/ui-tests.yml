@@ -119,6 +119,10 @@ jobs:
           name: artifacts_for_${{ env.TAGS_FOR_TESTS }}
           path: tests/output
 
+      - name: Setup tmate session on failure
+        if: ${{ failure() }}
+        uses: percona-platform/action-tmate@v2
+
       - name: Create status check
         if: ${{ always() }}
         continue-on-error: true
