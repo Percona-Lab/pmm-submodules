@@ -196,11 +196,13 @@ class Builder():
         outdated_branches = []
         submodules_url = '/'.join(PR_URL.split('/')[3:-2])
         pull_number = PR_URL.split('/')[-1:][0]
+        GH_ACTIONS_TOKEN = GITHUB_TOKEN
 
-        if GITHUB_TOKEN == '':
+        if GH_ACTIONS_TOKEN == '':
             logging.warning('there is no GITHUB_TOKEN')
+            GH_ACTIONS_TOKEN = os.environ.get('GH_API_TOKEN', '')
 
-        github_api = Github(GITHUB_TOKEN)
+        github_api = Github(GH_ACTIONS_TOKEN)
 
         # it's not a good idea to use config_override here. Maybe we can add 'custom' key?
         for dep in self.config_override['deps']:
