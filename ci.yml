@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-11189-vmproxy-integration
+  - name: grafana
+    branch: bypass-http-header-strip
