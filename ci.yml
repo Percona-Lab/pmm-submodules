@@ -1,0 +1,3 @@
+deps:
+  - name: mongodb_exporter
+    branch: PMM-11247-not-create-storage-engine-metric-if-it-not-available
