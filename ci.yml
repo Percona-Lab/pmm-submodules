@@ -1,0 +1,4 @@
+deps:
+- name: dbaas-controller
+  branch: PMM-10254-add-metrics-from-kube-state
+  url: https://github.com/percona-platform/dbaas-controller
