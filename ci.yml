@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-11370-vm-agent
+  - name: dbaas-controller
+    branch: PMM-11370-vm-agent
