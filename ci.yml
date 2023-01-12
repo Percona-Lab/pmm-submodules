@@ -1,0 +1,4 @@
+deps:
+- name: dbaas-controller
+  branch: PMM-11381-add-kubelet-metrics
+  url: https://github.com/percona-platform/dbaas-controller
