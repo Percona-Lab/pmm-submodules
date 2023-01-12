@@ -1,0 +1,22 @@
+deps:
+  - name: pmm
+    branch: PMM-11312-build-exporters-version
+
+  - name: node_exporter
+    branch: PMM-11312-build-exporters-version
+
+  - name: mysqld_exporter
+    branch: PMM-11312-build-exporters-version
+
+  - name: postgres_exporter
+    branch: PMM-11312-build-exporters-version
+
+  - name: proxysql_exporter
+    branch: PMM-11312-build-exporters-version
+
+  - name: rds_exporter
+    branch: PMM-11312-build-exporters-version
+
+  - name: azure_metrics_exporter
+    branch: PMM-11312-build-exporters-version
+
