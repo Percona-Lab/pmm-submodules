@@ -1,0 +1,4 @@
+deps:
+- name: dbaas-controller
+  branch: PMM-10254-change-scrape-timeout
+  url: https://github.com/percona-platform/dbaas-controller
