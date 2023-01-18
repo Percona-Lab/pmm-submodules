@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-11267-enable-plugins-collector-for-mysqld_exporter-and-send-mysql-plugins-to-telemetry
+  - name: mysqld_exporter
+    branch: PMM-11267-add-collector-to-get-plugins-on-mysql
