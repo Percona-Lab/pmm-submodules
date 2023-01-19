@@ -1,1 +1,4 @@
-deps: []
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-11274-rdsadmin-db-ignore
