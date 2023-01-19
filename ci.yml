@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-11291-DB-Cluster-Status-change-on-budget
