@@ -1,0 +1,5 @@
+deps:
+  - name: grafana
+    branch: PMM-11182-hide-disconnect-button
+  - name: pmm
+    branch: PMM-10807-Improve-disconnectPMM-flow
