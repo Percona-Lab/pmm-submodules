@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
-	url = https://github.com/percona/pmm
-	branch = main
+	url = https://github.com/nikita-b/pmm
+	branch = migrate_to_postgres
 
 # PMM Client
 
