@@ -63,6 +63,10 @@ on:
 
 
 jobs:
+  context:
+    name: Context
+    run: echo "$GITHUB_CONTEXT"
+
   advisors:
       name: Advisors UI tests
       uses: ./.github/workflows/ui-tests.yml
