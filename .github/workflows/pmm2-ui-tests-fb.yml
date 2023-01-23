@@ -64,9 +64,11 @@ on:
 
 jobs:
   context:
+    runs-on: ubuntu-18.04
     steps:
-      name: Context
-      run: echo "$GITHUB_CONTEXT"
+      - uses: percona-platform/checkout@v2
+      - name: Context
+        run: echo "$GITHUB_CONTEXT"
 
   advisors:
       name: Advisors UI tests
