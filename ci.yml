@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-11357-verify-that-name-of-the-rule-is-properly-inherited-from-the-termplate
