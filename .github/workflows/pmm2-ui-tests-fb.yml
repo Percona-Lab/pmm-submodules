@@ -68,7 +68,7 @@ jobs:
     steps:
       - uses: percona-platform/checkout@v2
       - name: Context
-        run: echo "$GITHUB_CONTEXT"
+        run: echo '${{ toJSON(github) }}'
 
   advisors:
       name: Advisors UI tests
