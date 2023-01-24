@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-11399-empty-rule-name-in-pop-up-messages
