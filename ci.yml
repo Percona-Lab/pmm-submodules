@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-11148-inventory-manage-labels
+  url: https://github.com/percona-platform/grafana
