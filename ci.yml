@@ -3,3 +3,5 @@ deps:
   - name: pmm
     branch: PMM-11186-cluster-validation
 
+  - name: pmm-ui-tests
+    branch: PMM-11186-fb-fix
