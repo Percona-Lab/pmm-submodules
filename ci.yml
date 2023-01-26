@@ -1,0 +1,3 @@
+deps:
+- name: pmm-ui-tests
+  branch: PMM-7-debug-trigger-actions
