@@ -55,6 +55,13 @@ on:
         required: false
         type: string
 
+    secrets:
+      BACKUP_LOCATION_ACCESS_KEY:
+        required: false
+      BACKUP_LOCATION_SECRET_KEY:
+        required: false
+
+
 jobs:
   advisors:
       name: Advisors UI tests
