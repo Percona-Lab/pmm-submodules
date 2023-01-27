@@ -128,15 +128,21 @@ jobs:
 
       - name: Run Setup for pdpgsql 13
         if: ${{ matrix.db-type == 'pdpgsql13' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=13 --pmm2
+        run: |
+          sudo npm install
+          sudo npx ts-node ./integration-setup.ts --ci --addclient=pdpgsql,1 --pdpgsql-version=13
 
       - name: Run Setup for pdpgsql 14
         if: ${{ matrix.db-type == 'pdpgsql14' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=14 --pmm2
+        run: |
+          sudo npm install
+          sudo npx ts-node ./integration-setup.ts --ci --addclient=pdpgsql,1 --pdpgsql-version=14
 
       - name: Run Setup for pdpgsql 15.0
         if: ${{ matrix.db-type == 'pdpgsql15' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=15.0 --pmm2
+        run: |
+          sudo npm install
+          sudo npx ts-node ./integration-setup.ts --ci --addclient=pdpgsql,1 --pdpgsql-version=15.0
 
       - name: Run bats tests for PDPGSQL
         if: ${{ matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
