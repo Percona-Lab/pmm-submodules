@@ -127,18 +127,21 @@ jobs:
         run: sudo bats ./pmm-tests/pmm-2-0-bats-tests/ps-specific-tests.bats
 
       - name: Run Setup for pdpgsql 13
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'pdpgsql13' }}
         run: |
           sudo npm install
           sudo npx ts-node ./integration-setup.ts --ci --addclient=pdpgsql,1 --pdpgsql-version=13
 
       - name: Run Setup for pdpgsql 14
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'pdpgsql14' }}
         run: |
           sudo npm install
           sudo npx ts-node ./integration-setup.ts --ci --addclient=pdpgsql,1 --pdpgsql-version=14
 
       - name: Run Setup for pdpgsql 15.0
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'pdpgsql15' }}
         run: |
           sudo npm install
