@@ -1,4 +1,6 @@
 deps:
   - name: pmm
     branch: PMM-11175-mongo-restore-logs
+  - name: grafana
+    branch: PMM-11174-mongo-restore-logs
 
