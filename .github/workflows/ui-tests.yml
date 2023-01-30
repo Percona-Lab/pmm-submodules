@@ -61,7 +61,7 @@ jobs:
 
     steps:
       - name: Create status check
-        if: ${{ env.SHA != 'null' }}
+        if: ${{ github.event_name != 'pull_request' }}
         uses: percona-platform/github-status-action@v1
         continue-on-error: true
         with:
@@ -141,7 +141,7 @@ jobs:
           path: tests/output
 
       - name: Create status check
-        if: ${{ always() }}
+        if: ${{ github.event_name != 'pull_request' && always() }}
         uses: percona-platform/github-status-action@v1
         continue-on-error: true
         with:
