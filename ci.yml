@@ -1,3 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-10918-backup
+  - name: grafana
+    branch: PMM-11301-Backups-and-Restores
