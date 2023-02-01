@@ -1,0 +1,4 @@
+deps:
+  # COMMON
+  - name: pmm-qa
+    branch: PMM-11500-reuse-setup
