@@ -1,4 +1,7 @@
 deps:
-- name: grafana
-  branch: PMM-11510-role-settings-toggle
-  url: https://github.com/percona-platform/grafana
+  - name: pmm
+    branch: PMM-11499-access-control-in-settings
+    url: https://github.com/percona/pmm
+  - name: grafana
+    branch: PMM-11510-role-settings-toggle
+    url: https://github.com/percona-platform/grafana
