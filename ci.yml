@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-11525-postgres-file-store-and-endpoints
