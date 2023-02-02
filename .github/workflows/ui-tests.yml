@@ -141,10 +141,9 @@ jobs:
       - name: Attach artifacts
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
-        working-directory: ./pmm-ui-tests
         with:
           name: ${{ steps.artifact_name.outputs.result }}
-          path: tests/output
+          path: pmm-ui-tests/tests/output
 
       - name: Create status check
         if: ${{ github.event_name != 'pull_request' && always() }}
