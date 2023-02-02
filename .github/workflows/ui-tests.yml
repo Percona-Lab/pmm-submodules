@@ -37,7 +37,8 @@ on:
 
 jobs:
   ui-tests-e2e:
-    runs-on: ubuntu-latest
+#    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     timeout-minutes: 40
     env:
       SERVER_IMAGE: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
