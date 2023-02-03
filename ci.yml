@@ -2,3 +2,6 @@ deps:
 - name: grafana-dashboards
   branch: PMM-10893-postgres-explain
   url: https://github.com/percona/grafana-dashboards
+- name: pmm
+  branch: PMM-10891-pg-disable-examples
+  url: https://github.com/percona/pmm
