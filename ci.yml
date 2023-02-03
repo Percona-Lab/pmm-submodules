@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-10893-postgres-explain
+  url: https://github.com/percona/grafana-dashboards
