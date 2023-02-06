@@ -1,0 +1,22 @@
+deps:
+- name: node_exporter
+  branch: PMM-11497-update-dependencies
+  url: https://github.com/percona/node_exporter
+- name: mysqld_exporter
+  branch: PMM-11497-update-dependencies
+  url: https://github.com/percona/mysqld_exporter
+- name: mongodb_exporter
+  branch: PMM-11497-update-dependencies
+  url: https://github.com/percona/mongodb_exporter
+- name: postgres_exporter
+  branch: PMM-11497-update-dependencies
+  url: https://github.com/percona/postgres_exporter
+- name: proxysql_exporter
+  branch: PMM-11497-update-dependencies
+  url: https://github.com/percona/proxysql_exporter
+- name: rds_exporter
+  branch: PMM-11497-update-dependencies
+  url: https://github.com/percona/rds_exporter
+- name: azure_metrics_exporter
+  branch: PMM-11497-update-dependencies
+  url: https://github.com/percona/azure_metrics_exporter
