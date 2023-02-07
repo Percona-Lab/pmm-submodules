@@ -20,3 +20,6 @@ deps:
 - name: azure_metrics_exporter
   branch: PMM-11497-update-dependencies
   url: https://github.com/percona/azure_metrics_exporter
+- name: pmm-qa
+  branch: pmm-2.32.0
+  url: https://github.com/percona/pmm-qa
