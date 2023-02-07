@@ -19,6 +19,10 @@ on:
         description: "Branch for PMM-QA to checkout"
         required: false
         type: string
+      pmm_ui_branch:
+        description: "Branch for PMM-UI(CLI) tests to checkout"
+        required: false
+        type: string
       sha:
         description: "SHA (leave empty if running manually, default - 'null')"
         required: false
@@ -39,6 +43,10 @@ on:
         type: string
       pmm_qa_branch:
         description: "Branch for PMM-QA to checkout"
+        required: false
+        type: string
+      pmm_ui_branch:
+        description: "Branch for PMM-UI(CLI) tests to checkout"
         required: false
         type: string
       sha:
@@ -86,6 +94,19 @@ jobs:
           repository: percona/pmm-qa
           path: ./
 
+      - name: Checkout PMM UI tests
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.PMM_UI_BRANCH }}
+          repository: percona/pmm-ui-tests
+          path: ./
+
+      - name: Install  playwright
+        working-directory: ./pmm-ui-tests/cli
+        run: |
+          npm install
+          npx playwright install
+
       - name: Setup tools
         run: |
           npm install -g bats
@@ -107,6 +128,10 @@ jobs:
 
       - name: Setup PMM2-Client
         run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
+
+      - name: Run CLI tests for PMM2-Client --help
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test tests/help.spec.ts
 
       - name: Run Setup for ps5.7
         working-directory: pmm-integration
@@ -156,9 +181,10 @@ jobs:
         if: ${{ matrix.db-type == 'modb6' }}
         run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=6 --pmm2
 
-      - name: Run bats tests for PSMDB
+      - name: Run CLI tests for PSMDB
         if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' }}
-        run: sudo bats ./pmm-tests/pmm-2-0-bats-tests/modb-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test tests/modb.spec.ts
 
       - name: Run Setup Generic Tests, Including Client Container Setup
         if: ${{ matrix.db-type == 'clientContainer' }}
