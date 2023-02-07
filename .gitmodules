@@ -8,19 +8,19 @@
 [submodule "node_exporter"]
 	path = sources/node_exporter/src/github.com/prometheus/node_exporter
 	url = https://github.com/percona/node_exporter.git
-	branch = main
+	branch = PMM-11497-update-dependencies
 [submodule "mysqld_exporter"]
 	path = sources/mysqld_exporter/src/github.com/percona/mysqld_exporter
 	url = https://github.com/percona/mysqld_exporter.git
-	branch = main
+	branch = PMM-11497-update-dependencies
 [submodule "mongodb_exporter"]
 	path = sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
 	url = https://github.com/percona/mongodb_exporter.git
-	branch = release-0.36.0
+	branch = PMM-11497-update-dependencies
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
-	branch = main
+	branch = PMM-11497-update-dependencies
 [submodule "clickhouse_exporter"]
 	path = sources/clickhouse_exporter/src/github.com/Percona-Lab/clickhouse_exporter
 	url = https://github.com/Percona-Lab/clickhouse_exporter
@@ -28,26 +28,26 @@
 [submodule "proxysql_exporter"]
 	path = sources/proxysql_exporter/src/github.com/percona/proxysql_exporter
 	url = https://github.com/percona/proxysql_exporter.git
-	branch = main
+	branch = PMM-11497-update-dependencies
 [submodule "rds_exporter"]
 	path = sources/rds_exporter/src/github.com/percona/rds_exporter
 	url = https://github.com/percona/rds_exporter
-	branch = main
+	branch = PMM-11497-update-dependencies
 [submodule "azure_metrics_exporter"]
 	path = sources/azure_metrics_exporter/src/github.com/percona/azure_metrics_exporter
 	url = https://github.com/percona/azure_metrics_exporter
-	branch = main
+	branch = PMM-11497-update-dependencies
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
-	branch = release-3.5.0
+	branch = release-3.5.1
 
 # PMM Server
 
 [submodule "dbaas-controller"]
 	path = sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
 	url = https://github.com/percona-platform/dbaas-controller
-	branch = main
+	branch = PMM-11497-update-dependencies
 [submodule "grafana-dashboards"]
 	path = sources/grafana-dashboards
 	url = https://github.com/percona/grafana-dashboards
@@ -55,11 +55,11 @@
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
-	branch = main
+	branch = PMM-11497-update-dependencies
 [submodule "pmm-dump"]
 	path = sources/pmm-dump
 	url = https://github.com/percona/pmm-dump
-	branch = main
+	branch = PMM-11497-update-dependencies
 
 ## PMM Tests
 [submodule "pmm-qa"]
