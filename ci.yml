@@ -1,4 +1,7 @@
 deps:
+- name: pmm
+  branch: PMM-11497-update-dependencies
+  url: https://github.com/percona/pmm
 - name: node_exporter
   branch: PMM-11497-update-dependencies
   url: https://github.com/percona/node_exporter
@@ -20,6 +23,9 @@ deps:
 - name: azure_metrics_exporter
   branch: PMM-11497-update-dependencies
   url: https://github.com/percona/azure_metrics_exporter
+- name: grafana-dashboards
+  branch: PMM-11497-update-dependencies
+  url: https://github.com/percona/grafana-dashboards
 - name: dbaas-controller
   branch: PMM-11497-update-dependencies
   url: https://github.com/percona-platform/dbaas-controller
