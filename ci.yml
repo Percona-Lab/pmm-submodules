@@ -26,6 +26,3 @@ deps:
 - name: pmm-dump
   branch: PMM-11497-update-dependencies
   url: https://github.com/percona/pmm-dump
-- name: pmm-qa
-  branch: pmm-2.32.0
-  url: https://github.com/percona/pmm-qa
