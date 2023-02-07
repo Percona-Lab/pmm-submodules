@@ -23,9 +23,6 @@ deps:
 - name: dbaas-controller
   branch: PMM-11497-update-dependencies
   url: https://github.com/percona-platform/dbaas-controller
-- name: grafana
-  branch: PMM-11497-update-dependencies
-  url: https://github.com/percona-platform/grafana
 - name: pmm-dump
   branch: PMM-11497-update-dependencies
   url: https://github.com/percona/pmm-dump
