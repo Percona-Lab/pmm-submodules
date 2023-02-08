@@ -102,6 +102,12 @@ jobs:
           repository: percona/pmm-ui-tests
           path: ./pmm-ui-tests
 
+      - name: Install NodeJS v16
+        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
+        uses: percona-platform/setup-node@v2
+        with:
+          node-version: 16.14.1
+
       - name: Install  playwright
         if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
         working-directory: ./pmm-ui-tests/cli
