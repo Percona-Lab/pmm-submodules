@@ -37,7 +37,7 @@ on:
 
 jobs:
   ui-tests-e2e:
-#    runs-on: ubuntu-latest
+#    runs-on: ubuntu-latest Mongo Replica setup fails in ubuntu-latest for some reason. Additional investigation needed
     runs-on: ubuntu-20.04
     timeout-minutes: 40
     env:
@@ -141,7 +141,7 @@ jobs:
 
       - name: Attach artifacts
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.artifact_name.outputs.result }}
           path: pmm-ui-tests/tests/output
