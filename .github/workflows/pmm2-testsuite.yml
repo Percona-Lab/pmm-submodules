@@ -71,7 +71,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        db-type: [ps5.7, ps8, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, generic, clientContainer, haproxy, proxysql, ms8.0]
+        db-type: [ps5.7, ps8, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, help, generic, clientContainer, haproxy, proxysql, ms8.0]
 
     steps:
       - name: Create status check
@@ -95,6 +95,7 @@ jobs:
           path: ./
 
       - name: Checkout PMM UI tests
+        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
         uses: actions/checkout@v3
         with:
           ref: ${{ env.PMM_UI_BRANCH }}
@@ -102,6 +103,7 @@ jobs:
           path: ./pmm-ui-tests
 
       - name: Install  playwright
+        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
         working-directory: ./pmm-ui-tests/cli
         run: |
           npm install
@@ -130,8 +132,9 @@ jobs:
         run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
 
       - name: Run CLI tests for PMM2-Client --help
+        if: ${{ matrix.db-type == 'help' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test tests/help.spec.ts
+        run: npx playwright test help
 
       - name: Run Setup for ps5.7
         working-directory: pmm-integration
