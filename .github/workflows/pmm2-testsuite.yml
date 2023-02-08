@@ -187,7 +187,7 @@ jobs:
       - name: Run CLI tests for PSMDB
         if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test tests/modb.spec.ts
+        run: npx playwright test pmm-ui-tests/cli/tests/modb.spec.ts
 
       - name: Run Setup Generic Tests, Including Client Container Setup
         if: ${{ matrix.db-type == 'clientContainer' }}
