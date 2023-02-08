@@ -244,7 +244,7 @@ jobs:
 
       - name: Generate and Attach the report
         if: ${{ always() && steps.ui-tests.outcome != 'skipped' }}
-        uses: percona-platform/upload-artifact@v3
+        uses: actions/checkout@v3
         with:
           name: cli-tests-report
           path: pmm-ui-tests/playwright-report
