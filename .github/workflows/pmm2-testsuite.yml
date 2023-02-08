@@ -131,7 +131,7 @@ jobs:
       - name: Setup PMM2-Client
         run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
 
-      - name: Run CLI tests for PMM2-Client --help
+      - name: Run CLI '--help' tests
         if: ${{ matrix.db-type == 'help' }}
         working-directory: ./pmm-ui-tests/cli
         run: npx playwright test pmm-ui-tests/cli/tests/help.spec.ts
