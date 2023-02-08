@@ -104,7 +104,7 @@ jobs:
 
       - name: Install NodeJS v16
         if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
-        uses: percona-platform/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16.14.1
 
@@ -241,6 +241,13 @@ jobs:
         if: ${{ matrix.db-type == 'ms8.0' }}
         run: |
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
+
+      - name: Generate and Attach the report
+        if: ${{ always() && steps.ui-tests.outcome != 'skipped' }}
+        uses: percona-platform/upload-artifact@v3
+        with:
+          name: cli-tests-report
+          path: pmm-ui-tests/playwright-report
 
       - name: Create status check
         if: ${{ always() }}
