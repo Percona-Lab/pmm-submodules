@@ -135,7 +135,7 @@ jobs:
       - name: Run CLI tests for PMM2-Client --help
         if: ${{ matrix.db-type == 'help' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test tests/help.spec.ts
+        run: npx playwright test pmm-ui-tests/cli/tests/help.spec.ts
 
       - name: Run Setup for ps5.7
         working-directory: pmm-integration
