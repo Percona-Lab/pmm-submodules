@@ -1,6 +1,3 @@
 deps:
   - name: grafana
     branch: PMM-10963-rbac-ui-roles
-  - name: pmm
-    branch: PMM-11499-access-control-in-settings
-    url: https://github.com/percona/pmm
