@@ -99,7 +99,7 @@ jobs:
         with:
           ref: ${{ env.PMM_UI_BRANCH }}
           repository: percona/pmm-ui-tests
-          path: ./
+          path: ./pmm-ui-tests
 
       - name: Install  playwright
         working-directory: ./pmm-ui-tests/cli
