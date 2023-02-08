@@ -67,6 +67,7 @@ jobs:
       DOCKER_VERSION: ${{ github.event.inputs.server_image || inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
       CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
       PMM_QA_GIT_BRANCH: ${{ github.event.inputs.pmm_qa_branch || inputs.pmm_qa_branch || 'main' }}
+      PMM_UI_BRANCH: ${{ github.event.inputs.pmm_ui_branch || inputs.pmm_ui_branch || 'main' }}
       SHA: ${{ github.event.inputs.sha || inputs.sha || 'null' }}
     strategy:
       fail-fast: false
@@ -134,7 +135,7 @@ jobs:
       - name: Run CLI tests for PMM2-Client --help
         if: ${{ matrix.db-type == 'help' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test help
+        run: npx playwright test
 
       - name: Run Setup for ps5.7
         working-directory: pmm-integration
