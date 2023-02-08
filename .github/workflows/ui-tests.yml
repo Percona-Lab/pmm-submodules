@@ -141,7 +141,7 @@ jobs:
 
       - name: Attach artifacts
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.artifact_name.outputs.result }}
           path: pmm-ui-tests/tests/output
