@@ -102,12 +102,6 @@ jobs:
           repository: percona/pmm-ui-tests
           path: ./pmm-ui-tests
 
-#      - name: Install NodeJS v16
-#        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: 16.14.1
-
       - name: Install  playwright
         if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
         working-directory: ./pmm-ui-tests/cli
@@ -244,10 +238,10 @@ jobs:
 
       - name: Generate and Attach the report
         if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
-        uses: actions/checkout@v3
+        uses: actions/upload-artifact@v3
         with:
-          name: report-${{ matrix.db-type }}
-          path: pmm-ui-tests/cli/test-report
+          name: "report-${{ matrix.db-type }}"
+          path: ./pmm-ui-tests/cli/test-report
 
       - name: Create status check
         if: ${{ always() }}
