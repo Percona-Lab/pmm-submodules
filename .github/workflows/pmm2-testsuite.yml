@@ -245,7 +245,7 @@ jobs:
 
       - name: Create status check
         if: ${{ always() }}
-        uses: percona-platform/github-status-action@v1
+        uses: percona-platform/github-status-action@udpate-node
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
