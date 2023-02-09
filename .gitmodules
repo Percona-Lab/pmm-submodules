@@ -40,7 +40,7 @@
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
-	branch = release-3.4.0
+	branch = release-3.5.1
 
 # PMM Server
 
