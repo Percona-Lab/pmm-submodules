@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-11428-edit-clusters
+  - name: grafana
+    branch: PMM-11428-DBaaS-edit-db-cluster-broken
