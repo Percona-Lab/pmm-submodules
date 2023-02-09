@@ -246,8 +246,8 @@ jobs:
         if: ${{ always() }}
         uses: actions/checkout@v3
         with:
-          name: cli-tests-report
-          path: pmm-ui-tests/playwright-report
+          name: report-${{ matrix.db-type }}
+          path: pmm-ui-tests/cli/test-report
 
       - name: Create status check
         if: ${{ always() }}
