@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = main
+	branch = 2.36-el9
 
 # PMM Client
 
@@ -16,7 +16,7 @@
 [submodule "mongodb_exporter"]
 	path = sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
 	url = https://github.com/percona/mongodb_exporter.git
-	branch = release-0.37.0
+	branch = main
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
