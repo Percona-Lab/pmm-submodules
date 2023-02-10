@@ -76,7 +76,7 @@ jobs:
     steps:
       - name: Create status check
         if: ${{ env.SHA != 'null' }}
-        uses: percona-platform/github-status-action@v1
+        uses: percona-platform/github-status-action@update-node
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
@@ -255,6 +255,6 @@ jobs:
           repository: ${{ github.repository }}
           target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 #          sha: ${{ env.SHA }}
-          sha: ${{ github.event.pull_request.head.sha }}
+          sha: ${{ github.sha }}
 #          SHA of commit to update status on, defaults to context github.sha
 #          If using on: pull_request use github.event.pull_request.head.sha
