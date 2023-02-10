@@ -255,6 +255,6 @@ jobs:
           repository: ${{ github.repository }}
           target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 #          sha: ${{ env.SHA }}
-
+          sha: ${{ github.event.pull_request.head.sha }}
 #          SHA of commit to update status on, defaults to context github.sha
 #          If using on: pull_request use github.event.pull_request.head.sha
