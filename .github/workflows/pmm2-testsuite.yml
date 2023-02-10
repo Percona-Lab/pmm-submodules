@@ -109,12 +109,18 @@ jobs:
         run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
 
       - name: Run Setup for ps5.7
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'ps5.7' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=ps,1 --ps-version=5.7 --pmm2
+        run: |
+          sudo npm install
+          sudo npx ts-node ./integration-setup.ts --ps-version=5.7 --ci --addclient=ps,1
 
       - name: Run Setup for ps8.0
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'ps8' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=ps,1 --ps-version=8 --pmm2
+        run: |
+          sudo npm install
+          sudo npx ts-node ./integration-setup.ts --ps-version=8 --ci --addclient=ps,1
 
       - name: Run bats tests for PS
         if: ${{ matrix.db-type == 'ps5.7' || matrix.db-type == 'ps8' }}
