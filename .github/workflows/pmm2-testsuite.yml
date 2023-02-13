@@ -67,7 +67,7 @@ jobs:
       PMM_UI_BRANCH: ${{ github.event.inputs.pmm_ui_branch || inputs.pmm_ui_branch || 'main' }}
       DOCKER_VERSION: ${{ github.event.inputs.server_image || inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
       CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-      SHA: ${{ github.event.inputs.sha || inputs.sha || github.event.pull_request.head.sha || 'null' }}
+      SHA: ${{ github.event.inputs.sha || inputs.sha || github.event.pull_request.head.sha || github.event.pull_request.head.sha || github.sha || 'null' }}
     strategy:
       fail-fast: false
       matrix:
@@ -244,7 +244,7 @@ jobs:
           path: ./pmm-ui-tests/cli/test-report
 
       - name: Create status check
-        if: ${{ env.SHA != 'null' }}
+        if: ${{ always() }}
         uses: percona-platform/github-status-action@update-node
         continue-on-error: true
         with:
@@ -256,15 +256,15 @@ jobs:
           target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           sha: ${{ env.SHA }}
 
-      - name: Create status check
-        if: ${{ env.SHA == 'null' }}
-        uses: percona-platform/github-status-action@update-node
-        continue-on-error: true
-        with:
-          authToken: ${{ secrets.GITHUB_TOKEN }}
-          context: "${{ matrix.db-type }} CLI tests"
-          description: "Test execution ${{ job.status }}"
-          state: ${{ job.status }}
-          repository: ${{ github.repository }}
-          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          sha: ${{ github.event.pull_request.head.sha || github.sha }}
+#      - name: Create status check
+#        if: ${{ env.SHA == 'null' }}
+#        uses: percona-platform/github-status-action@update-node
+#        continue-on-error: true
+#        with:
+#          authToken: ${{ secrets.GITHUB_TOKEN }}
+#          context: "${{ matrix.db-type }} CLI tests"
+#          description: "Test execution ${{ job.status }}"
+#          state: ${{ job.status }}
+#          repository: ${{ github.repository }}
+#          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+#          sha: ${{ github.event.pull_request.head.sha || github.sha }}
