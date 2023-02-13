@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-11358-revolving-bar-when-DB-cluster-is-suspended
