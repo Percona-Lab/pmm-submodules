@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-11439-internal-pmm-agent-collects-from-external-db
