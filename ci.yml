@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-11296-db-creation-page-loading
