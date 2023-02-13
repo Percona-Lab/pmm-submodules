@@ -255,16 +255,3 @@ jobs:
           repository: ${{ github.repository }}
           target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           sha: ${{ env.SHA }}
-
-#      - name: Create status check
-#        if: ${{ env.SHA == 'null' }}
-#        uses: percona-platform/github-status-action@update-node
-#        continue-on-error: true
-#        with:
-#          authToken: ${{ secrets.GITHUB_TOKEN }}
-#          context: "${{ matrix.db-type }} CLI tests"
-#          description: "Test execution ${{ job.status }}"
-#          state: ${{ job.status }}
-#          repository: ${{ github.repository }}
-#          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-#          sha: ${{ github.event.pull_request.head.sha || github.sha }}
