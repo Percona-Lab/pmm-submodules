@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-11637-adjust-branding
+  url: https://github.com/percona-platform/grafana
