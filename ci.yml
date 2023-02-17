@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-11588-fix-db-counts
+  url: https://github.com/percona/grafana-dashboards
