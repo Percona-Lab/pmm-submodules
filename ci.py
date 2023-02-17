@@ -181,7 +181,7 @@ class Builder():
                     check_call(
                         f'git clone --depth 1 --single-branch --branch {target_branch} {target_url} {path}'.split())
                 else:
-                    logging.info(f'Files for {dep["name"]} already exist')
+                    logging.info(f'Files in the path for {dep["name"]} is already exist')
                 call(['git', 'pull', '--ff-only'], cwd=path)
                 commit_id = switch_branch(path, dep['branch'])
 
@@ -196,11 +196,13 @@ class Builder():
         outdated_branches = []
         submodules_url = '/'.join(PR_URL.split('/')[3:-2])
         pull_number = PR_URL.split('/')[-1:][0]
+        GH_ACTIONS_TOKEN = GITHUB_TOKEN
 
-        if GITHUB_TOKEN == '':
+        if GH_ACTIONS_TOKEN == '':
             logging.warning('there is no GITHUB_TOKEN')
+            GH_ACTIONS_TOKEN = os.environ.get('GH_API_TOKEN', '')
 
-        github_api = Github(GITHUB_TOKEN)
+        github_api = Github(GH_ACTIONS_TOKEN)
 
         # it's not a good idea to use config_override here. Maybe we can add 'custom' key?
         for dep in self.config_override['deps']:
@@ -275,16 +277,17 @@ class Converter:
 
 
 def switch_branch(path, branch):
-    # `symbolic-ref` works only if we are on the branch. If we want to use the commit, we must use `rev-parse` instead
-    git_command = 'git symbolic-ref --short HEAD 2>/dev/null || git rev-parse HEAD'
-    cur_branch = check_output(['bash', '-c', git_command], cwd=path).decode().strip()
-    
+    # symbolic-ref works only if we on branch. If we use commit we use rev-parse instead
+    try:
+        cur_branch = check_output('git symbolic-ref --short HEAD'.split(), cwd=path).decode().strip()
+    except CalledProcessError:
+        cur_branch = check_output('git rev-parse HEAD'.split(), cwd=path).decode().strip()
     if cur_branch != branch:
         branches = check_output('git ls-remote --heads origin'.split(), cwd=path)
         branches = [line.split("/")[-1]
                     for line in branches.decode().strip().split("\n")]
         if branch in branches:
-            print(f'Switch to branch: {branch} from {cur_branch}')
+            print(f'Switch to branch: {branch} (from {cur_branch})')
             check_call(f'git remote set-branches origin {branch}'.split(), cwd=path)
             check_call(f'git fetch --depth 1 origin {branch}'.split(), cwd=path)
             check_call(f'git checkout {branch}'.split(), cwd=path)
