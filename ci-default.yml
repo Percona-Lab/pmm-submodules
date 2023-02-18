@@ -20,7 +20,7 @@ deps:
     component: client
 
   - name: mongodb_exporter
-    branch: release-0.34.0
+    branch: release-0.37.0
     path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
     url: https://github.com/percona/mongodb_exporter
     component: client
@@ -56,7 +56,7 @@ deps:
     component: client
 
   - name: percona-toolkit
-    branch: release-3.4.0
+    branch: release-3.5.1
     path: sources/percona-toolkit/src/github.com/percona/percona-toolkit
     url: https://github.com/percona/percona-toolkit
     component: client
@@ -67,18 +67,6 @@ deps:
     branch: main
     path: sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
     url: https://github.com/percona-platform/dbaas-controller
-    component: server
-
-  - name: qan-api2
-    branch: main
-    path: sources/qan-api2/src/github.com/percona/qan-api2
-    url: https://github.com/percona/qan-api2
-    component: server
-
-  - name: pmm-update
-    branch: main
-    path: sources/pmm-update/src/github.com/percona/pmm-update
-    url: https://github.com/percona/pmm-update
     component: server
 
   - name: grafana-dashboards

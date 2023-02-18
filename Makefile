@@ -1,4 +1,4 @@
-.PHONY: submodules deps prepare clean purge fb help default
+.PHONY: submodules deps trigger prepare clean purge fb help default
 
 ifeq (prepare,$(firstword $(MAKECMDGOALS)))
   # use the rest as arguments for "create"
