@@ -1,0 +1,77 @@
+name: Scan pmm server and client docker images
+
+on:
+  workflow_dispatch:
+    inputs:
+      server_image:
+        description: "pmm-server docker image"
+        required: true
+        type: string
+      client_image:
+        description: "pmm-client docker image"
+        required: true
+        type: string
+      sha:
+        description: "SHA (leave empty if running manually, default - 'null')"
+        required: false
+        type: string
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: ${{ inputs.server_image }}
+          - image: ${{ inputs.client_image }}
+
+    steps:
+      - name: Create status check
+        if: ${{ env.SHA != 'null' }}
+        uses: percona-platform/github-status-action@update-node
+        continue-on-error: true
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: "${{ matrix.image }}"
+          description: "Trivy vulnerability scanning ${{ job.status }}"
+          state: "pending"
+          repository: ${{ github.repository }}
+          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          sha: ${{ env.SHA }}
+
+      - name: Set report filename
+        run: |
+          echo "REPORT=$(echo ${{ matrix.image }} | cut -d'/' -f2 | tr ':' '-')" >> $GITHUB_ENV
+
+      - name: Run trivy scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ matrix.image }}
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+          output: ${{ env.REPORT }}
+
+      - name: Archive trivy scan results
+        if: always()
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: ${{ env.REPORT }}
+          path: ${{ env.REPORT }}
+
+      - name: Create status check
+        if: always()
+        uses: percona-platform/github-status-action@update-node
+        continue-on-error: true
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: "${{ matrix.image }}"
+          description: "Trivy vulnerability scanning ${{ job.status }}"
+          state: ${{ job.status }}
+          repository: ${{ github.repository }}
+          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          sha: ${{ env.SHA }}
