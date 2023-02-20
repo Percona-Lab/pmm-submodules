@@ -1,0 +1,5 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-11678-serializable-tx-retry
+
