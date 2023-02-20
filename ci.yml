@@ -5,5 +5,10 @@ deps:
     path: sources/pmm/src/github.com/percona/pmm
     url: https://github.com/percona/pmm
     component: common
-
+  # SERVER
+  - name: dbaas-controller
+    branch: PMM-11023_Move_olm_to_pmm
+    path: sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
+    url: https://github.com/percona-platform/dbaas-controller
+    component: server
 
