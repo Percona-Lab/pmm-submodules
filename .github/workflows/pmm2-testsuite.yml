@@ -131,6 +131,10 @@ jobs:
       - name: Setup PMM2-Client
         run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
 
+      - name: Setup npm modules for the integration setup
+        working-directory: pmm-integration
+        run: npm ci
+
       - name: Run CLI '--help' tests
         if: ${{ matrix.db-type == 'help' }}
         working-directory: ./pmm-ui-tests/cli
@@ -140,14 +144,12 @@ jobs:
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'ps5.7' }}
         run: |
-          sudo npm install
           sudo npx ts-node ./integration-setup.ts --ps-version=5.7 --ci --addclient=ps,1
 
       - name: Run Setup for ps8.0
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'ps8' }}
         run: |
-          sudo npm install
           sudo npx ts-node ./integration-setup.ts --ps-version=8 --ci --addclient=ps,1
 
       - name: Run bats tests for PS
@@ -158,21 +160,18 @@ jobs:
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'pdpgsql13' }}
         run: |
-          sudo npm install
           sudo npx ts-node ./integration-setup.ts --ci --addclient=pdpgsql,1 --pdpgsql-version=13
 
       - name: Run Setup for pdpgsql 14
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'pdpgsql14' }}
         run: |
-          sudo npm install
           sudo npx ts-node ./integration-setup.ts --ci --addclient=pdpgsql,1 --pdpgsql-version=14
 
       - name: Run Setup for pdpgsql 15.0
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'pdpgsql15' }}
         run: |
-          sudo npm install
           sudo npx ts-node ./integration-setup.ts --ci --addclient=pdpgsql,1 --pdpgsql-version=15.0
 
       - name: Run bats tests for PDPGSQL
