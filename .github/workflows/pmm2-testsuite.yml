@@ -95,7 +95,7 @@ jobs:
           path: ./
 
       - name: Checkout PMM UI tests
-        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
+        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' ||  matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         uses: actions/checkout@v3
         with:
           ref: ${{ env.PMM_UI_BRANCH }}
@@ -103,7 +103,7 @@ jobs:
           path: ./pmm-ui-tests
 
       - name: Install  playwright
-        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
+        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' ||  matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         working-directory: ./pmm-ui-tests/cli
         run: |
           npm install
