@@ -1,0 +1,5 @@
+deps:
+  - name: grafana
+    branch: PMM-11345-security-advisors-section
+  - name: pmm
+    branch: PMM-11272-advisors
