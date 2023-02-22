@@ -63,6 +63,7 @@ jobs:
         with:
           name: ${{ env.REPORT }}
           path: ${{ env.REPORT }}
+          retention_days: 7
 
       - name: Create status check
         if: always()
