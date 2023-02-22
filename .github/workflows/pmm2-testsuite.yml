@@ -166,7 +166,7 @@ jobs:
         if: ${{ matrix.db-type == 'pdpgsql15' }}
         run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=15.0 --pmm2
 
-      - name: Run bats tests for PDPGSQL
+      - name: Run CLI tests for PDPGSQL
         if: ${{ matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         working-directory: ./pmm-ui-tests/cli
         run: npx playwright test pgsql
