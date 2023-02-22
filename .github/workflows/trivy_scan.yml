@@ -12,13 +12,15 @@ on:
         required: true
         type: string
       sha:
-        description: "SHA (leave empty if running manually, default - 'null')"
-        required: false
+        description: "SHA of commit to update status on"
+        required: true
         type: string
 
 jobs:
   scan:
     runs-on: ubuntu-latest
+    env:
+      SHA: ${{ github.event.inputs.sha || github.event.pull_request.head.sha || github.sha }}
     
     strategy:
       fail-fast: false
@@ -29,7 +31,6 @@ jobs:
 
     steps:
       - name: Create status check
-        if: ${{ env.SHA != 'null' }}
         uses: percona-platform/github-status-action@update-node
         continue-on-error: true
         with:
