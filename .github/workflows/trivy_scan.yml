@@ -65,7 +65,7 @@ jobs:
           path: ${{ env.REPORT }}
           retention_days: 7
 
-      - name: Create status check
+      - name: Communicate action status back to the PR
         if: always()
         uses: percona-platform/github-status-action@update-node
         continue-on-error: true
