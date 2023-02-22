@@ -169,9 +169,7 @@ jobs:
       - name: Run bats tests for PDPGSQL
         if: ${{ matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         working-directory: ./pmm-ui-tests/cli
-        run: |
-          npx playwright test pmm-ui-tests/cli/tests/pdpgsql.spec.ts
-          npx playwright test pmm-ui-tests/cli/tests/pgsql.spec.ts
+        run: npx playwright test pgsql
 
       - name: Run Setup for PSMDB 4.4
         if: ${{ matrix.db-type == 'modb4.4' }}
