@@ -59,7 +59,7 @@ jobs:
 
       - name: Archive trivy scan results
         if: always()
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@latest
         with:
           name: ${{ env.REPORT }}
           path: ${{ env.REPORT }}
