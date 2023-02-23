@@ -236,7 +236,7 @@ jobs:
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
 
       - name: Generate and Attach the report
-        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
+        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' ||  matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         uses: actions/upload-artifact@v3
         with:
           name: "report-${{ matrix.db-type }}"
