@@ -120,7 +120,7 @@ jobs:
 
   rbac:
     name: RBAC UI tests
-    uses: Percona/pmm-ui-tests/.github/workflows/pmm-ui-tests.yml@${{ inputs.pmm_ui_branch || 'main' }}
+    uses: Percona/pmm-ui-tests/.github/workflows/pmm-ui-tests.yml@PMM-11616-matrix-pipelines
     secrets: inherit
     with:
       pmm_ui_tests_branch: ${{ inputs.pmm_ui_branch || 'main '}}
