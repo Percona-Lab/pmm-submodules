@@ -95,7 +95,7 @@ jobs:
           path: ./
 
       - name: Checkout PMM UI tests
-        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
+        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' ||  matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         uses: actions/checkout@v3
         with:
           ref: ${{ env.PMM_UI_BRANCH }}
@@ -103,7 +103,7 @@ jobs:
           path: ./pmm-ui-tests
 
       - name: Install  playwright
-        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
+        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' ||  matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         working-directory: ./pmm-ui-tests/cli
         run: |
           npm install
@@ -166,11 +166,10 @@ jobs:
         if: ${{ matrix.db-type == 'pdpgsql15' }}
         run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=15.0 --pmm2
 
-      - name: Run bats tests for PDPGSQL
+      - name: Run CLI tests for PDPGSQL
         if: ${{ matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/pdpgsql-tests.bats
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/pgsql-specific-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pgsql
 
       - name: Run Setup for PSMDB 4.4
         if: ${{ matrix.db-type == 'modb4.4' }}
@@ -237,7 +236,7 @@ jobs:
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
 
       - name: Generate and Attach the report
-        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' }}
+        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' ||  matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         uses: actions/upload-artifact@v3
         with:
           name: "report-${{ matrix.db-type }}"
