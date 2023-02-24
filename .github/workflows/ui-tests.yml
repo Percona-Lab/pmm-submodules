@@ -135,8 +135,10 @@ jobs:
         id: artifact_name
         with:
           script: |
-            
-            return `artifacts_for_${process.env.TAGS_FOR_TESTS.replaceAll('|', '')}`
+            let tags = process.env.TAGS_FOR_TESTS
+            console.log(`before replace: ${process.env.TAGS_FOR_TESTS}`)
+            console.log(`after replace: ${(process.env.TAGS_FOR_TESTS).replaceAll('|', '')}`)
+            return `artifacts_for_${(process.env.TAGS_FOR_TESTS).replaceAll('|', '')}`
           result-encoding: string
 
       - name: Attach artifacts
