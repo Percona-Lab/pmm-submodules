@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    url: https://github.com/xgrommx/pmm
+    branch: PMM-4511-improve-slow-log-parse-header-performance
