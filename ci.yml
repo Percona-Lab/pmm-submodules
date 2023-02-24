@@ -1,0 +1,8 @@
+deps:
+  # SERVER
+
+  - name: dbaas-controller
+    branch: PMM-10687_unreleased_pmm_version
+    path: sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
+    url: https://github.com/percona-platform/dbaas-controller
+    component: server
