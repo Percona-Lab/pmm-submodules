@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-11664-add-environment-variable
+  url: https://github.com/percona/grafana-dashboards
