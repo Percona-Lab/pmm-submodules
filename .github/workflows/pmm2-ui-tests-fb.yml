@@ -129,5 +129,5 @@ jobs:
       pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
       pmm_ui_branch: ${{ inputs.pmm_ui_branch || 'main' }}
       sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
-      client_flags: '--addclient=ps,1 --addclient=mo,1 --addclient=pdpgsql,1'
+      client_flags: '--addclient=ps,1 --addclient=modb,1 --addclient=pdpgsql,1'
       tags_for_tests: '@user-password'
