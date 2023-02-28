@@ -63,7 +63,7 @@ jobs:
         with:
           name: ${{ env.REPORT }}
           path: ${{ env.REPORT }}
-          retention_days: 7
+          retention-days: 7
 
       - name: Communicate action status back to the PR
         if: always()
