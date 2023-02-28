@@ -37,11 +37,17 @@ jobs:
       - name: install tools
         run: |
           npm install -g bats
-          $WORK_DIR/install_k8s_tools.sh --minikube --helm --kubectl --user
 
       - name: Start minikube
         run: |
           minikube start
+          minikube addons disable storage-provisioner
+
+          ### Install CSI drivers for snapshots
+          kubectl delete storageclass standard
+          minikube addons enable csi-hostpath-driver
+          minikube addons enable volumesnapshots
+          kubectl patch storageclass csi-hostpath-sc -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
           kubectl wait --for=condition=Ready node --timeout=90s minikube
 
       - name: Run helm tests
