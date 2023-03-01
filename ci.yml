@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-9374-external-victoria-metrics
+  url: https://github.com/percona/pmm
