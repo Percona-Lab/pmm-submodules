@@ -1,0 +1,7 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-10687_unreleased_pmm_version
+    path: sources/pmm/src/github.com/percona/pmm
+    url: https://github.com/percona/pmm
+    component: common
