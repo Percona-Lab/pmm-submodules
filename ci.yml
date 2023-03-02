@@ -2,3 +2,5 @@ deps:
   # COMMON
   - name: pmm
     branch: PMM-11550-add-templates
+  - name: grafana
+    branch: PMM-11667-Adding-DBaaS-templates
