@@ -132,10 +132,10 @@ jobs:
           ./node_modules/.bin/codeceptjs run --steps --reporter mocha-multi -c pr.codecept.js --grep "${{ env.TAGS_FOR_TESTS }}"
 
       - uses: actions/github-script@v6
+        if: ${{ always() }}
         id: artifact_name
         with:
           script: |
-            
             return `artifacts_for_${process.env.TAGS_FOR_TESTS.replaceAll('|', '')}`
           result-encoding: string
 
