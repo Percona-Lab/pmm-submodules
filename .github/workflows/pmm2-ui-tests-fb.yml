@@ -63,6 +63,7 @@ on:
 
 
 jobs:
+
   advisors:
       name: Advisors UI tests
       uses: ./.github/workflows/ui-tests.yml
@@ -134,7 +135,7 @@ jobs:
 
   rbac:
     name: RBAC UI tests
-    uses: percona/pmm-ui-tests/.github/workflows/pmm-ui-tests.yml@${{inputs.pmm_ui_branch||'main'}}
+    uses: percona/pmm-ui-tests/.github/workflows/pmm-ui-tests.yml@${{ inputs.pmm_ui_branch }}
     secrets: inherit
     with:
       pmm_ui_tests_branch: ${{ inputs.pmm_ui_branch || 'main '}}
