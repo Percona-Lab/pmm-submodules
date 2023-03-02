@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-10391-clickhouse-ordinary-to-atomic
