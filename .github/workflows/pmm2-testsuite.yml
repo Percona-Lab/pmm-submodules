@@ -180,14 +180,17 @@ jobs:
         run: npx playwright test pgsql
 
       - name: Run Setup for PSMDB 4.4
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb4.4' }}
         run: sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=4.4
 
       - name: Run Setup for PSMDB 5
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb5' }}
         run: sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=5
 
       - name: Run Setup for PSMDB 6
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb6' }}
         run: sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=6
 
