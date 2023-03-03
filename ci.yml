@@ -1,0 +1,5 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-7-golang-1.20
+
