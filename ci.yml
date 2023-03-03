@@ -1,0 +1,5 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-9474-pg-advisors
+
