@@ -135,7 +135,7 @@ jobs:
 
   rbac:
     name: RBAC UI tests
-    uses: percona/pmm-ui-tests/.github/workflows/pmm-ui-tests.yml@PMM-fix-ui-tests-pipeline
+    uses: percona/pmm-ui-tests/.github/workflows/pmm-ui-tests.yml@main
     secrets: inherit
     with:
       pmm_ui_tests_branch: ${{ inputs.pmm_ui_branch || 'main '}}
