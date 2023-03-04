@@ -250,7 +250,6 @@ jobs:
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
 
       - name: Generate and Attach the report
-        if: ${{ matrix.db-type != 'ms8.0'  }}
         uses: actions/upload-artifact@v3
         with:
           name: "report-${{ matrix.db-type }}"
