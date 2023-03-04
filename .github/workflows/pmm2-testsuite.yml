@@ -1,4 +1,4 @@
-name: pmm2-testsuite pipeline
+name: pmm2 integration tests pipeline
 on:
   # run with default inputs
   workflow_dispatch:
@@ -55,7 +55,7 @@ on:
         type: string
 
 jobs:
-  bats-testsuite:
+  cli-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
