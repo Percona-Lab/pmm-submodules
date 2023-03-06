@@ -1,3 +1,5 @@
 deps:
   - name: grafana
     branch: PMM-11512-fix-proxy-error
+  - name: pmm
+    branch: PMM-11421-proxy-vars
