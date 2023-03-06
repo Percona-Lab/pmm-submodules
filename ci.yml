@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    url: https://github.com/xgrommx/pmm
+    branch: PMM-5081-Prometheus-metrics-for-Inventory-data
