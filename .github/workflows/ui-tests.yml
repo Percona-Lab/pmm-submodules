@@ -129,7 +129,7 @@ jobs:
           PMM_URL : "http://admin:${{ env.ADMIN_PASSWORD }}@${{ env.SERVER_IP }}"
         run: |
           sed -i 's+http://localhost/+${PMM_UI_URL}/+g' pr.codecept.js
-          ./node_modules/.bin/codeceptjs run --reporter mocha-multi -c pr.codecept.js --grep "${{ env.TAGS_FOR_TESTS }}"
+          ./node_modules/.bin/codeceptjs run -c pr.codecept.js --grep "${{ env.TAGS_FOR_TESTS }}"
 
       - uses: actions/github-script@v6
         if: ${{ always() }}
