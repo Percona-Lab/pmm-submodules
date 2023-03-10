@@ -249,6 +249,11 @@ jobs:
         run: |
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
 
+      - name: Run CLI tests for MySQL Tests
+        if: ${{ matrix.db-type == 'ms8.0' }}
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-ui-tests/cli/tests/mysql-conf-file.spec.ts
+
       - name: Generate and Attach the report
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
