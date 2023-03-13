@@ -1,0 +1,8 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-6279-show-query-metadata-in-the-details
+
+  # SERVER
+  - name: grafana-dashboards
+    branch: PMM-6279-show-query-metadata-in-the-details
