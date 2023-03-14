@@ -129,7 +129,7 @@ jobs:
           PMM_URL : "http://admin:${{ env.ADMIN_PASSWORD }}@${{ env.SERVER_IP }}"
         run: |
           sed -i 's+http://localhost/+${PMM_UI_URL}/+g' pr.codecept.js
-          ./node_modules/.bin/codeceptjs run --steps --reporter mocha-multi -c pr.codecept.js --grep "${{ env.TAGS_FOR_TESTS }}"
+          ./node_modules/.bin/codeceptjs run -c pr.codecept.js --grep "${{ env.TAGS_FOR_TESTS }}"
 
       - uses: actions/github-script@v6
         if: ${{ always() }}
@@ -138,13 +138,6 @@ jobs:
           script: |
             return `artifacts_for_${process.env.TAGS_FOR_TESTS.replaceAll('|', '')}`
           result-encoding: string
-
-      - name: Attach artifacts
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.artifact_name.outputs.result }}
-          path: pmm-ui-tests/tests/output
 
       - name: Create status check
         if: ${{ github.event_name != 'pull_request' && always() }}
