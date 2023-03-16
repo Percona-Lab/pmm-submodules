@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-10698-fix-cpu-and-other
+  url: https://github.com/percona/grafana-dashboards
