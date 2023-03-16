@@ -153,9 +153,9 @@ jobs:
             echo 'Setup local pmm-agent...'
             sudo pmm-agent setup --force --config-file=/usr/local/percona/pmm2/config/pmm-agent.yaml --server-address=127.0.0.1:443 --server-insecure-tls --server-username=admin --server-password=admin
             sudo pmm-agent --config-file=/usr/local/percona/pmm2/config/pmm-agent.yaml > pmm-agent.log 2>&1 &
-            else
+          else
             echo 'Setup installed PMM Client package...'
-            sudo pmm-agent config --force --server-insecure-tls --metrics-mode=auto --server-url=https://admin:admin@127.0.0.1:443
+            sudo pmm-admin config --force --server-insecure-tls --metrics-mode=auto --server-url=https://admin:admin@127.0.0.1:443
           fi
           echo "pmm-admin status"
           pmm-admin status
