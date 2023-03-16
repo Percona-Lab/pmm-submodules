@@ -156,6 +156,7 @@ jobs:
           else
             echo 'Setup installed PMM Client package...'
             sudo pmm-admin config --force --server-insecure-tls --metrics-mode=auto --server-url=https://admin:admin@127.0.0.1:443
+            sleep 10
           fi
           echo "pmm-admin status"
           pmm-admin status
