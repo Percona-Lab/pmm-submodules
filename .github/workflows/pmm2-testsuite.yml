@@ -212,12 +212,21 @@ jobs:
       - name: Run CLI tests for Generic Scenarios
         if: ${{ matrix.db-type == 'generic' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test generic unregister
+        run: npx playwright test generic
+
+      - name: Run CLI tests for Generic Scenarios
+        if: ${{ matrix.db-type == 'generic' }}
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test unregister
 
       - name: Run CLI tests for PMM Client Docker Container
         if: ${{ matrix.db-type == 'clientContainer' }}
         working-directory: ./pmm-ui-tests/cli
         run: npx playwright test pmm-client-docker
+
+      - name: Run bats tests for PMM Client Unregister
+        if: ${{ matrix.db-type == 'clientContainer' }}
+        run: sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-admin-unregister-tests.bats
 
       - name: Run Setup for HAPROXY
         if: ${{ matrix.db-type == 'haproxy' }}
