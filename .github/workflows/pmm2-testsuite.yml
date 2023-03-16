@@ -110,10 +110,14 @@ jobs:
       - name: Setup tools
         run: |
           npm install -g bats
+          sudo apt-get update
+          sudo apt-get install -y wget gnupg2 libtinfo-dev mysql-client postgresql-client
           sudo apt-get install -y apt-transport-https ca-certificates dirmngr ansible libaio1 libaio-dev libnuma-dev libncurses5 socat sysbench
           sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 8919F6BD2B48D754
           echo "deb https://packages.clickhouse.com/deb stable main" | sudo tee \
               /etc/apt/sources.list.d/clickhouse.list
+          sudo wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb
+          sudo dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb
           sudo apt-get update
           sudo apt-get install -y clickhouse-client
           sudo curl -s https://raw.githubusercontent.com/datacharmer/dbdeployer/master/scripts/dbdeployer-install.sh | bash
@@ -127,7 +131,42 @@ jobs:
           sleep 30
 
       - name: Setup PMM2-Client
-        run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
+        run: |
+#          sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
+          echo "install local PMM Client..."
+          if [[ -z "${{ env.CLIENT_VERSION }}" || "${{ env.CLIENT_VERSION }}" == "dev-latest" ]]; then
+            sudo percona-release enable-only original experimental
+            sudo apt-get update
+            sudo apt-get -y install pmm2-client
+          fi
+          if [[ "${{ env.CLIENT_VERSION }}" == "pmm2-rc" ]]; then
+            sudo percona-release enable-only original testing
+            sudo apt-get update
+            sudo apt-get -y install pmm2-client
+          fi
+          if [[ "${{ env.CLIENT_VERSION }}" == "pmm2-latest" ]]; then
+            sudo apt-get -y install pmm2-client
+            sudo apt-get -y update
+          fi
+               
+#         echo 'Setup local agent'
+#         sudo pmm-admin config --force --server-insecure-tls --metrics-mode=auto --agent-password=pmm-pass --server-url=https://admin:admin@127.0.0.1:443
+#         sudo pmm-agent setup --force --config-file=${path}/config/pmm-agent.yaml --server-address=127.0.0.1:443 --server-insecure-tls --server-username=admin --server-password=admin
+#         sudo pmm-agent --config-file=${path}/config/pmm-agent.yaml > pmm-agent.log 2>&1 &
+  
+          if [[ "${{ env.CLIENT_VERSION }}" == http* || "${{ env.CLIENT_VERSION }}" == 2* ]]; then
+#          curl -O https://raw.githubusercontent.com/Percona-QA/package-testing/master/scripts/pmm2_client_install_tarball.sh
+            curl -O https://raw.githubusercontent.com/Percona-QA/package-testing/PMM-7-tarball-improve/scripts/pmm2_client_install_tarball.sh
+            sudo bash -x pmm2_client_install_tarball.sh -v ${{ env.CLIENT_VERSION }}
+            echo 'Setup local pmm-agent...'
+            sudo pmm-agent setup --force --config-file=/usr/local/percona/pmm2/config/pmm-agent.yaml --server-address=127.0.0.1:443 --server-insecure-tls --server-username=admin --server-password=admin
+            sudo pmm-agent --config-file=/usr/local/percona/pmm2/config/pmm-agent.yaml > pmm-agent.log 2>&1 &
+          else
+            echo 'Setup installed PMM Client package...'
+            sudo pmm-agent config --force --server-insecure-tls --metrics-mode=auto --server-url=https://admin:admin@127.0.0.1:443
+          fi
+          echo "pmm-admin status"
+          pmm-admin status
 
       - name: Setup npm modules for the integration setup
         working-directory: pmm-integration
