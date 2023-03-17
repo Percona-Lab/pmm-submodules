@@ -149,7 +149,7 @@ jobs:
       - name: Setup PMM2-Client tarball
         if: startsWith(env.CLIENT_VERSION, 'http') || startsWith(env.CLIENT_VERSION, '2.')
         run: |
-          curl -O https://raw.githubusercontent.com/Percona-QA/package-testing/PMM-7-tarball-improve/scripts/pmm2_client_install_tarball.sh
+          curl -O https://raw.githubusercontent.com/Percona-QA/package-testing/master/scripts/pmm2_client_install_tarball.sh
           sudo bash -x pmm2_client_install_tarball.sh -v ${{ env.CLIENT_VERSION }}
           echo 'Setup local pmm-agent...'
           sudo pmm-agent setup --force --config-file=/usr/local/percona/pmm2/config/pmm-agent.yaml --server-address=127.0.0.1:443 --server-insecure-tls --server-username=admin --server-password=admin
