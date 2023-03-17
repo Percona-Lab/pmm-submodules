@@ -140,7 +140,6 @@ jobs:
           if [[ "${{ env.CLIENT_VERSION }}" == "pmm2-rc" ]]; then
             sudo percona-release enable-only original testing
           fi
-#          if [[ "${{ env.CLIENT_VERSION }}" == "pmm2-latest" ]]; then
           sudo apt-get update
           sudo apt-get install -y pmm2-client
           echo 'Setup PMM Client package...'
