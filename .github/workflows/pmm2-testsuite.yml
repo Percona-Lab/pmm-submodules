@@ -144,11 +144,6 @@ jobs:
           sudo apt-get install -y pmm2-client
           echo 'Setup PMM Client package...'
           sudo pmm-admin config --force --server-insecure-tls --metrics-mode=auto --server-url=https://admin:admin@127.0.0.1:443
-          sudo usermod -a -G pmm-agent $USER
-          sudo chown -R pmm-agent:pmm-agent /usr/bin/pmm-admin
-          sudo chown -R pmm-agent:pmm-agent /usr/bin/pmm-agent
-          sudo chown -R pmm-agent:pmm-agent /usr/sbin/pmm-agent
-          sudo chown -R pmm-agent:pmm-agent /usr/sbin/pmm-admin
           sudo pmm-admin status
 
       - name: Setup PMM2-Client tarball
