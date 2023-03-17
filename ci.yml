@@ -1,0 +1,8 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-10793-dont-rely-on-tar
+    path: sources/pmm/src/github.com/percona/pmm
+    url: https://github.com/percona/pmm
+    component: common
+    
