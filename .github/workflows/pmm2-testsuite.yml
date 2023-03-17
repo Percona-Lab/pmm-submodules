@@ -163,13 +163,7 @@ jobs:
             sudo chown -R pmm-agent:pmm-agent /usr/sbin/pmm-agent
             sudo chown -R pmm-agent:pmm-agent /usr/sbin/pmm-admin
             source ~/.bashrc
-            ls -la /usr/bin/pmm-admin
-            ls -la /usr/bin/pmm-agent
-            ls -la /usr/sbin/pmm-admin
-            ls -la /usr/sbin/pmm-agent
-            groups $USER
           fi
-          echo "pmm-admin status"
           pmm-admin status
 
       - name: Setup npm modules for the integration setup
@@ -242,7 +236,7 @@ jobs:
 
 # TODO: Add setup for the official MongoDB and run "npx playwright test pmm-ui-tests/cli/tests/mongoDb.spec.ts"
 
-      - name: Run Setup Generic Tests, Including Client Container Setup
+      - name: Run Client Container Setup
         if: ${{ matrix.db-type == 'clientContainer' }}
         run: |
           sudo -E bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm2
