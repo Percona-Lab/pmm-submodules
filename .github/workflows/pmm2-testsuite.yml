@@ -162,9 +162,8 @@ jobs:
             sudo chown -R pmm-agent:pmm-agent /usr/bin/pmm-agent
             sudo chown -R pmm-agent:pmm-agent /usr/sbin/pmm-agent
             sudo chown -R pmm-agent:pmm-agent /usr/sbin/pmm-admin
-            source ~/.bashrc
           fi
-          pmm-admin status
+          sudo pmm-admin status
 
       - name: Setup npm modules for the integration setup
         working-directory: pmm-integration
