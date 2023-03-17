@@ -157,6 +157,11 @@ jobs:
           else
             echo 'Setup installed PMM Client package...'
             sudo pmm-admin config --force --server-insecure-tls --metrics-mode=auto --server-url=https://admin:admin@127.0.0.1:443
+            sudo usermod -a -G pmm-agent $USER
+            sudo chown -R pmm-agent:pmm-agent /usr/bin/pmm-admin
+            sudo chown -R pmm-agent:pmm-agent /usr/bin/pmm-agent
+            sudo chown -R pmm-agent:pmm-agent /usr/sbin/pmm-agent
+            sudo chown -R pmm-agent:pmm-agent /usr/sbin/pmm-admin
             ls -la /usr/bin/pmm-admin
             ls -la /usr/bin/pmm-agent
             ls -la /usr/sbin/pmm-admin
@@ -164,7 +169,7 @@ jobs:
             groups $USER
           fi
           echo "pmm-admin status"
-          sudo pmm-admin status
+          pmm-admin status
 
       - name: Setup npm modules for the integration setup
         working-directory: pmm-integration
@@ -241,15 +246,15 @@ jobs:
         run: |
           sudo -E bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm2
 
-      - name: Run bats tests for generic Scenarios
-        if: ${{ matrix.db-type == 'generic' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/generic-tests.bats
-
       - name: Run CLI tests for Generic Scenarios
         if: ${{ matrix.db-type == 'generic' }}
         working-directory: ./pmm-ui-tests/cli
         run: npx playwright test generic unregister
+
+      - name: Run bats tests for generic Scenarios
+        if: ${{ matrix.db-type == 'generic' }}
+        run: |
+          sudo bats ./pmm-tests/pmm-2-0-bats-tests/generic-tests.bats
 
       - name: Run CLI tests for PMM Client Docker Container
         if: ${{ matrix.db-type == 'clientContainer' }}
