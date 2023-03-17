@@ -130,39 +130,37 @@ jobs:
           docker run -d -p 80:80 -p 443:443 -p 9000:9000 -e PERCONA_TEST_PLATFORM_ADDRESS=https://check-dev.percona.com:443 -e PERCONA_TEST_PLATFORM_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX --volumes-from pmm-server-data --name pmm-server --restart always ${{ env.SERVER_IMAGE }}
           sleep 30
 
-      - name: Setup PMM2-Client
+      - name: Setup PMM2-Client package
+        if: ${{ env.CLIENT_VERSION == 'dev-latest' || env.CLIENT_VERSION == 'pmm2-rc' || env.CLIENT_VERSION == 'pmm2-latest' }}
         run: |
           echo "install local PMM Client..."
-          if [[ -z "${{ env.CLIENT_VERSION }}" || "${{ env.CLIENT_VERSION }}" == "dev-latest" ]]; then
+          if [[ "${{ env.CLIENT_VERSION }}" == "dev-latest" ]]; then
             sudo percona-release enable-only original experimental
-            sudo apt-get update
-            sudo apt-get -y install pmm2-client
           fi
           if [[ "${{ env.CLIENT_VERSION }}" == "pmm2-rc" ]]; then
             sudo percona-release enable-only original testing
-            sudo apt-get update
-            sudo apt-get -y install pmm2-client
           fi
-          if [[ "${{ env.CLIENT_VERSION }}" == "pmm2-latest" ]]; then
-            sudo apt-get -y install pmm2-client
-            sudo apt-get -y update
-          fi
-          if [[ "${{ env.CLIENT_VERSION }}" == http* || "${{ env.CLIENT_VERSION }}" == 2* ]]; then
-            curl -O https://raw.githubusercontent.com/Percona-QA/package-testing/PMM-7-tarball-improve/scripts/pmm2_client_install_tarball.sh
-            sudo bash -x pmm2_client_install_tarball.sh -v ${{ env.CLIENT_VERSION }}
-            echo 'Setup local pmm-agent...'
-            sudo pmm-agent setup --force --config-file=/usr/local/percona/pmm2/config/pmm-agent.yaml --server-address=127.0.0.1:443 --server-insecure-tls --server-username=admin --server-password=admin
-            sudo pmm-agent --config-file=/usr/local/percona/pmm2/config/pmm-agent.yaml > pmm-agent.log 2>&1 &
-            sleep 2
-          else
-            echo 'Setup installed PMM Client package...'
-            sudo pmm-admin config --force --server-insecure-tls --metrics-mode=auto --server-url=https://admin:admin@127.0.0.1:443
-            sudo usermod -a -G pmm-agent $USER
-            sudo chown -R pmm-agent:pmm-agent /usr/bin/pmm-admin
-            sudo chown -R pmm-agent:pmm-agent /usr/bin/pmm-agent
-            sudo chown -R pmm-agent:pmm-agent /usr/sbin/pmm-agent
-            sudo chown -R pmm-agent:pmm-agent /usr/sbin/pmm-admin
-          fi
+#          if [[ "${{ env.CLIENT_VERSION }}" == "pmm2-latest" ]]; then
+          sudo apt-get update
+          sudo apt-get install -y pmm2-client
+          echo 'Setup PMM Client package...'
+          sudo pmm-admin config --force --server-insecure-tls --metrics-mode=auto --server-url=https://admin:admin@127.0.0.1:443
+          sudo usermod -a -G pmm-agent $USER
+          sudo chown -R pmm-agent:pmm-agent /usr/bin/pmm-admin
+          sudo chown -R pmm-agent:pmm-agent /usr/bin/pmm-agent
+          sudo chown -R pmm-agent:pmm-agent /usr/sbin/pmm-agent
+          sudo chown -R pmm-agent:pmm-agent /usr/sbin/pmm-admin
+          sudo pmm-admin status
+
+      - name: Setup PMM2-Client tarball
+        if: startsWith(env.CLIENT_VERSION, 'http') || startsWith(env.CLIENT_VERSION, '2.')
+        run: |
+          curl -O https://raw.githubusercontent.com/Percona-QA/package-testing/PMM-7-tarball-improve/scripts/pmm2_client_install_tarball.sh
+          sudo bash -x pmm2_client_install_tarball.sh -v ${{ env.CLIENT_VERSION }}
+          echo 'Setup local pmm-agent...'
+          sudo pmm-agent setup --force --config-file=/usr/local/percona/pmm2/config/pmm-agent.yaml --server-address=127.0.0.1:443 --server-insecure-tls --server-username=admin --server-password=admin
+          sudo pmm-agent --config-file=/usr/local/percona/pmm2/config/pmm-agent.yaml > pmm-agent.log 2>&1 &
+          sleep 2
           sudo pmm-admin status
 
       - name: Setup npm modules for the integration setup
