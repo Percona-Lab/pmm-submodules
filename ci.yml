@@ -1,3 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-11684-add-more-attributes-to-services-list
+  - name: grafana
+    branch: PMM-8234-new-services-list
