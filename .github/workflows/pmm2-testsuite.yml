@@ -1,4 +1,4 @@
-name: pmm2-testsuite pipeline
+name: pmm2 integration tests pipeline
 on:
   # run with default inputs
   workflow_dispatch:
@@ -55,7 +55,7 @@ on:
         type: string
 
 jobs:
-  bats-testsuite:
+  cli-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -95,7 +95,6 @@ jobs:
           path: ./
 
       - name: Checkout PMM UI tests
-        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' ||  matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         uses: actions/checkout@v3
         with:
           ref: ${{ env.PMM_UI_BRANCH }}
@@ -103,7 +102,6 @@ jobs:
           path: ./pmm-ui-tests
 
       - name: Install  playwright
-        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' ||  matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         working-directory: ./pmm-ui-tests/cli
         run: |
           npm install
@@ -177,41 +175,49 @@ jobs:
       - name: Run CLI tests for PDPGSQL
         if: ${{ matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test pgsql
+        run: npx playwright test postgreSql
 
       - name: Run Setup for PSMDB 4.4
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb4.4' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=4.4 --pmm2
+        run: sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=4.4
 
       - name: Run Setup for PSMDB 5
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb5' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=5 --pmm2
+        run: sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=5
 
       - name: Run Setup for PSMDB 6
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb6' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=6 --pmm2
+        run: sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=6
 
       - name: Run CLI tests for PSMDB
         if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test pmm-ui-tests/cli/tests/modb.spec.ts
+        run: npx playwright test pmm-ui-tests/cli/tests/mongoDb-psmdb.spec.ts
 
-      - name: Run Setup Generic Tests, Including Client Container Setup
+# TODO: Add setup for the official MongoDB and run "npx playwright test pmm-ui-tests/cli/tests/mongoDb.spec.ts"
+
+      - name: Run Client Container Setup
         if: ${{ matrix.db-type == 'clientContainer' }}
         run: |
           sudo -E bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm2
+
+      - name: Run CLI tests for Generic Scenarios
+        if: ${{ matrix.db-type == 'generic' }}
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test generic unregister
 
       - name: Run bats tests for generic Scenarios
         if: ${{ matrix.db-type == 'generic' }}
         run: |
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/generic-tests.bats
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/docker-env-variable-tests.bats
 
-      - name: Run bats tests for Client Container Scenarios
+      - name: Run CLI tests for PMM Client Docker Container
         if: ${{ matrix.db-type == 'clientContainer' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-client-docker-tests.bats
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-admin-unregister-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-client-docker
 
       - name: Run Setup for HAPROXY
         if: ${{ matrix.db-type == 'haproxy' }}
@@ -220,19 +226,19 @@ jobs:
           export CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }}
           sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=haproxy,1 --pmm2
 
-      - name: Run bats tests for Client Container Scenarios
+      - name: Run CLI tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'haproxy' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/haproxy-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test haproxy
 
       - name: Run Setup for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
         run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pxc,1 --pmm2 --pxc-version=5.7
 
-      - name: Run bats tests for ProxySQL
+      - name: Run CLI tests for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/proxysql-specific-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test proxySql
 
       - name: Run Setup for MySQL
         if: ${{ matrix.db-type == 'ms8.0' }}
@@ -244,7 +250,7 @@ jobs:
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
 
       - name: Generate and Attach the report
-        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' || matrix.db-type == 'help' ||  matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
+        if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: "report-${{ matrix.db-type }}"
