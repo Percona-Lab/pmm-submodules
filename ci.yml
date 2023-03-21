@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-11801-mongo-experimental-dashboard
+  url: https://github.com/percona/grafana-dashboards
