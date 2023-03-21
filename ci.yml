@@ -1,4 +1,3 @@
 deps:
-  # COMMON
   - name: grafana
     branch: PMM-11537-expose-toggle
