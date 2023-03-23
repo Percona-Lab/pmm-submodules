@@ -1,4 +1,4 @@
 deps:
   # COMMON
   - name: pmm
-    branch: PMM-11456-add-backend-for-tips
+    branch: main
