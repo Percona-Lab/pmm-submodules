@@ -1,5 +1,3 @@
 deps:
   - name: grafana
     branch: PMM-11401-onboarding
-  - name: pmm
-    branch: PMM-11456-add-backend-for-tips
