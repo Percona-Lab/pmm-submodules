@@ -16,7 +16,7 @@
 [submodule "mongodb_exporter"]
 	path = sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
 	url = https://github.com/percona/mongodb_exporter.git
-	branch = release-0.35.0
+	branch = release-0.37.0
 [submodule "postgres_exporter"]
 	path = sources/postgres_exporter/src/github.com/percona/postgres_exporter
 	url = https://github.com/percona/postgres_exporter
@@ -40,7 +40,7 @@
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
-	branch = release-3.4.0
+	branch = release-3.5.1
 
 # PMM Server
 

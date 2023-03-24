@@ -9,6 +9,10 @@ on:
         description: "client image: repo/name:tag"
         required: true
         type: string
+      pmm_qa_branch:
+        description: "Branch for PMM-QA to checkout"
+        required: false
+        type: string
       sha:
         description: "commit sha to report status"
         required: false
@@ -18,29 +22,32 @@ jobs:
   helm-tests:
     runs-on: ubuntu-latest
     env:
-      WORK_DIR: sources/pmm-qa/src/github.com/percona/pmm-qa/pmm-tests
+      WORK_DIR: ./pmm-qa/pmm-tests
       GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
+      PMM_QA_BRANCH: ${{ inputs.pmm_qa_branch || 'main' }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          submodules: "recursive"
-
-      - name: run ci.py
-        run: |
-          pip3 install PyGithub
-          pip3 install GitPython
-          python3 ci.py
+          ref: ${{ env.PMM_QA_BRANCH }}
+          repository: percona/pmm-qa
+          path: ./pmm-qa
 
       - name: install tools
         run: |
           npm install -g bats
-          $WORK_DIR/install_k8s_tools.sh --minikube --helm --kubectl --user
 
       - name: Start minikube
         run: |
           minikube start
+          minikube addons disable storage-provisioner
+
+          ### Install CSI drivers for snapshots
+          kubectl delete storageclass standard
+          minikube addons enable csi-hostpath-driver
+          minikube addons enable volumesnapshots
+          kubectl patch storageclass csi-hostpath-sc -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
           kubectl wait --for=condition=Ready node --timeout=90s minikube
 
       - name: Run helm tests
