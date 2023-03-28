@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-11875-added-multivalue-to-node
+  url: https://github.com/percona/grafana-dashboards
