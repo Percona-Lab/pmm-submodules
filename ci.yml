@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-11244-server-update-ui-changes
+  url: https://github.com/percona-platform/grafana
