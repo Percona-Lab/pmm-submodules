@@ -2,3 +2,6 @@ deps:
 - name: grafana
   branch: PMM-11244-server-update-ui-changes
   url: https://github.com/percona-platform/grafana
+- name: pmm
+  url: https://github.com/percona/pmm
+  branch: PMM-11216-server-upgrade-side-container
