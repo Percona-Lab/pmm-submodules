@@ -1,3 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-11830-add-health-status-to-services
+  - name: grafana
+    branch: PMM-8640-new-service-status
