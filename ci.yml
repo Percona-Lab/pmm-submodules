@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-11879-assign-role-api-update
+  url: https://github.com/percona-platform/grafana
