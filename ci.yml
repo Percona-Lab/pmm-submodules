@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-11313-added-mariadb-stats
+  url: https://github.com/percona/grafana-dashboards
