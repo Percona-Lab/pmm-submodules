@@ -2,3 +2,6 @@ deps:
 - name: grafana
   branch: PMM-11879-assign-role-api-update
   url: https://github.com/percona-platform/grafana
+- name: pmm
+  branch: PMM-11878-refactor-user-roles
+  url: https://github.com/percona/pmm
