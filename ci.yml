@@ -1,0 +1,5 @@
+deps:
+  - name: grafana
+    branch: PMM-11200-migrate-pmm-checks
+  - name: grafana-dashboards
+    branch: PMM-11200-migrate-pmm-checks
