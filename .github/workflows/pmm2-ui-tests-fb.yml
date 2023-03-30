@@ -89,7 +89,7 @@ jobs:
       pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
       pmm_ui_branch: ${{ inputs.pmm_ui_branch || 'main' }}
       sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
-      client_flags: '--setup-bm-mysql'
+      client_flags: '--mongo-replica-for-backup --setup-bm-mysql'
       tags_for_tests: '@bm-mysql'
 
   backup_management_common:
