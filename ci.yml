@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-11904-victoriametrics-fix-queries
+  url: https://github.com/percona/grafana-dashboards
