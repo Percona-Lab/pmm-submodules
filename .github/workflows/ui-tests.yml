@@ -37,7 +37,8 @@ on:
 
 jobs:
   ui-tests-e2e:
-    runs-on: ubuntu-latest
+#    runs-on: ubuntu-latest Mongo Replica setup fails in ubuntu-latest for some reason. Additional investigation needed
+    runs-on: ubuntu-20.04
     timeout-minutes: 40
     env:
       SERVER_IMAGE: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
@@ -78,7 +79,7 @@ jobs:
         with:
           ref: ${{ env.PMM_UI_BRANCH }}
           repository: percona/pmm-ui-tests
-          path: ./
+          path: ./pmm-ui-tests
 
       - name: Setup tools
         run: |
@@ -99,6 +100,7 @@ jobs:
           popd
 
       - name: Setup PMM2-Server
+        working-directory: ./pmm-ui-tests
         run: |
           PWD=$(pwd) PMM_SERVER_IMAGE=${{ env.DOCKER_VERSION }} docker-compose up -d
           sleep 60
@@ -106,39 +108,36 @@ jobs:
           bash -x testdata/db_setup.sh
 
       - name: Setup PMM2-Client
-        run: sudo bash -x ./pmm-qa/pmm-tests/pmm2-client-setup.sh --pmm_server_ip 192.168.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password ${{ env.ADMIN_PASSWORD }} --use_metrics_mode no
+        working-directory: ./pmm-qa
+        run: sudo bash -x pmm-tests/pmm2-client-setup.sh --pmm_server_ip 192.168.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password ${{ env.ADMIN_PASSWORD }} --use_metrics_mode no
 
       - name: Run Setup for E2E Tests
-        run: sudo -E bash -x ./pmm-qa/pmm-tests/pmm-framework.sh ${{ env.CLIENT_FLAGS }} --pmm2
+        working-directory: ./pmm-qa
+        run: sudo -E bash -x pmm-tests/pmm-framework.sh ${{ env.CLIENT_FLAGS }} --pmm2
 
       - name: Setup npm modules for e2e tests
+        working-directory: ./pmm-ui-tests
         run: |
           npm ci
           envsubst < env.list > env.generated.list
 
       - name: Execute e2e tests with tags ${{ env.TAGS_FOR_TESTS }}
+        working-directory: ./pmm-ui-tests
         env:
           SERVER_IP : "192.168.0.1"
           PMM_UI_URL : "http://192.168.0.1/"
           PMM_URL : "http://admin:${{ env.ADMIN_PASSWORD }}@${{ env.SERVER_IP }}"
         run: |
           sed -i 's+http://localhost/+${PMM_UI_URL}/+g' pr.codecept.js
-          ./node_modules/.bin/codeceptjs run --steps --reporter mocha-multi -c pr.codecept.js --grep "${{ env.TAGS_FOR_TESTS }}"
+          ./node_modules/.bin/codeceptjs run -c pr.codecept.js --grep "${{ env.TAGS_FOR_TESTS }}"
 
       - uses: actions/github-script@v6
+        if: ${{ always() }}
         id: artifact_name
         with:
           script: |
-            
             return `artifacts_for_${process.env.TAGS_FOR_TESTS.replaceAll('|', '')}`
           result-encoding: string
-
-      - name: Attach artifacts
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.artifact_name.outputs.result }}
-          path: tests/output
 
       - name: Create status check
         if: ${{ github.event_name != 'pull_request' && always() }}
