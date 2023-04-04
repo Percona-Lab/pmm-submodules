@@ -1,7 +1,7 @@
 [submodule "pmm"]
-	path = sources/pmm/src/github.com/percona/pmm
-	url = https://github.com/percona/pmm
-	branch = main
+        path = sources/pmm/src/github.com/percona/pmm
+        url = https://github.com/percona/pmm
+        branch = pmm_2.37_el9_main
 
 # PMM Client
 
@@ -40,7 +40,7 @@
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit.git
-	branch = release-3.5.1
+	branch = release-v3.5.2
 
 # PMM Server
 
