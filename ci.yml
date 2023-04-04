@@ -2,3 +2,6 @@ deps:
 - name: grafana
   branch: PMM-11349-base-file-migration
   url: https://github.com/percona-platform/grafana
+- name: pmm
+  branch: PMM-11350-migrate-base-files-from-file-system-to-db
+  url: https://github.com/percona/pmm
