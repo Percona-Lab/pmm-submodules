@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-11349-base-file-migration
+  url: https://github.com/percona-platform/grafana
