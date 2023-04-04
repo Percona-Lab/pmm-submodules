@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: rikwasmus-patch-1
+  url: https://github.com/rikwasmus/pmm
