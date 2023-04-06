@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-11853-remove-aurora-from-aws
+  url: https://github.com/percona/pmm
