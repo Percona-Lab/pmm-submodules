@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-7-content-type-header
+  url: https://github.com/percona/pmm
