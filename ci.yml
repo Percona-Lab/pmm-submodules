@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-11924-HA-phase-3-PoC
+  url: https://github.com/percona/pmm
