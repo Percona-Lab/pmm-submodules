@@ -1,0 +1,4 @@
+deps:
+  # SERVER
+  - name: grafana-dashboards
+    branch: PMM-10799-show-aliased-table
