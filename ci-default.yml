@@ -20,7 +20,7 @@ deps:
     component: client
 
   - name: mongodb_exporter
-    branch: v2.37.0
+    branch: release-2.37.0
     path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
     url: https://github.com/percona/mongodb_exporter
     component: client
@@ -56,7 +56,7 @@ deps:
     component: client
 
   - name: percona-toolkit
-    branch: v3.5.2
+    branch: release-v3.5.2
     path: sources/percona-toolkit/src/github.com/percona/percona-toolkit
     url: https://github.com/percona/percona-toolkit
     component: client
