@@ -39,7 +39,7 @@ jobs:
   ui-tests-e2e:
 #    runs-on: ubuntu-latest Mongo Replica setup fails in ubuntu-latest for some reason. Additional investigation needed
     runs-on: ubuntu-20.04
-    timeout-minutes: 40
+    timeout-minutes: 60
     env:
       SERVER_IMAGE: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
       CLIENT_IMAGE: ${{ inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
