@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-11970-fix-sending-ui-events-after-connection-was-disrupted
