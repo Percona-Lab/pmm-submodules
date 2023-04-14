@@ -247,10 +247,10 @@ jobs:
         if: ${{ matrix.db-type == 'ms8.0' }}
         run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=ms,1 --pmm2 --ms-version=8.0
 
-      - name: Run bats tests for MySQL Tests
+      - name: Run MySQL specific CLI tests
         if: ${{ matrix.db-type == 'ms8.0' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-ui-tests/cli/tests/mysql.spec.ts
 
       - name: Run CLI tests for MySQL Tests
         if: ${{ matrix.db-type == 'ms8.0' }}
