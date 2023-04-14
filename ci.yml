@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-11746-changed-color-innodb-writes
+  url: https://github.com/percona/grafana-dashboards
