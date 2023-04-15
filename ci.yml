@@ -1,0 +1,7 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-11681-clusterServiceDNSMode
+    path: sources/pmm/src/github.com/percona/pmm
+    url: https://github.com/percona/pmm
+    component: common
