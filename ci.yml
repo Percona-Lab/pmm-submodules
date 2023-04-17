@@ -1,0 +1,4 @@
+deps:
+  - name: grafana
+    branch: PMM-12015-fix-text-table-overflow
+    
