@@ -2,3 +2,5 @@ deps:
   # COMMON
   - name: pmm
     branch: PMM-11788-add-PG-support
+  - name: grafana
+    branch: PMM-11795-postgresql-operator
