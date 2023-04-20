@@ -1,6 +1,6 @@
 deps:
   # COMMON
   - name: pmm
-    branch: main
+    branch: PMM-11975-install-pg-operator-with-olm
   - name: grafana
     branch: PMM-11795-postgresql-operator
