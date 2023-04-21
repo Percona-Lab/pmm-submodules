@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-12023-backups-restore-for-PG-operator
