@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: remove-direct-connection-for-pbm-pitr-switch
