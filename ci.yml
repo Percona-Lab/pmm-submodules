@@ -1,0 +1,6 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: dbaas-fix-pg-secret
+  - name: grafana
+    branch: PMM-11795-postgresql-operator
