@@ -1,0 +1,3 @@
+deps:
+  - name: postgres_exporter
+    branch: PMM-9541-fix-socket-connection
