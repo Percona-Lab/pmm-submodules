@@ -1,3 +1,5 @@
 deps:
+  - name: pmm
+    branch: main
   - name: grafana
     branch: PMM-12023-backups-restore-for-PG-operator
