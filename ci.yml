@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: main
+  - name: grafana
+    branch: PMM-11704-restore-from-selection
