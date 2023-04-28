@@ -71,7 +71,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        db-type: [ps5.7, ps8, ms8.0, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, help, generic, clientContainer, haproxy, proxysql]
+        db-type: [ps5.7, ps8, ms8.0, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, help, generic, clientContainer, haproxy, proxysql, remove]
 
     steps:
       - name: Create status check
@@ -140,6 +140,11 @@ jobs:
         if: ${{ matrix.db-type == 'help' }}
         working-directory: ./pmm-ui-tests/cli
         run: npx playwright test pmm-ui-tests/cli/tests/help.spec.ts
+
+      - name: Run CLI remove tests
+        if: ${{ matrix.db-type == 'remove' }}
+        working-directory: ./pmm-ui-tests
+        run: npx playwright test pmm-ui-tests/cli/tests/remove.spec.ts
 
       - name: Run Setup for ps5.7
         working-directory: pmm-integration
