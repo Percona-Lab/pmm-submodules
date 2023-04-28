@@ -1,3 +1,5 @@
 deps:
+  - name: pmm
+    branch: main
   - name: grafana
     branch: PMM-11673-fix-psmdb-configuration
