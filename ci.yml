@@ -1,0 +1,3 @@
+deps:
+    - name: pmm
+      branch: PMM-12024-PGSM-query-id
