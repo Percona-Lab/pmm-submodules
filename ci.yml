@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-12082-change-queries
+  url: https://github.com/percona/grafana-dashboards
