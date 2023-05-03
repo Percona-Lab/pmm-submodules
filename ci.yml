@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-12077-configure-sending-os-name-and-version-which-is-used-for-running-up
