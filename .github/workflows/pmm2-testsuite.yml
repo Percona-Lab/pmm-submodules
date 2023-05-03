@@ -71,7 +71,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        db-type: [ps5.7, ps8, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, help, generic, clientContainer, haproxy, proxysql, ms8.0]
+        db-type: [ps5.7, ps8, ms8.0, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, help, generic, clientContainer, haproxy, proxysql, remove]
 
     steps:
       - name: Create status check
@@ -126,6 +126,9 @@ jobs:
           docker run -d -p 80:80 -p 443:443 -p 9000:9000 -e PERCONA_TEST_PLATFORM_ADDRESS=https://check-dev.percona.com:443 -e PERCONA_TEST_PLATFORM_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX --volumes-from pmm-server-data --name pmm-server --restart always ${{ env.SERVER_IMAGE }}
           sleep 30
 
+      - name: healthcheck PMM2-server
+        run: timeout 100 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost/ping)" != "200" ]]; do sleep 5; done' || false
+      
       - name: Setup PMM2-Client
         run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
 
@@ -137,6 +140,11 @@ jobs:
         if: ${{ matrix.db-type == 'help' }}
         working-directory: ./pmm-ui-tests/cli
         run: npx playwright test pmm-ui-tests/cli/tests/help.spec.ts
+
+      - name: Run CLI remove tests
+        if: ${{ matrix.db-type == 'remove' }}
+        working-directory: ./pmm-ui-tests
+        run: npx playwright test pmm-ui-tests/cli/tests/remove.spec.ts
 
       - name: Run Setup for ps5.7
         working-directory: pmm-integration
@@ -240,14 +248,19 @@ jobs:
         working-directory: ./pmm-ui-tests/cli
         run: npx playwright test proxySql
 
-      - name: Run Setup for MySQL
+      - name: Run Setup for MySQL 8.0
         if: ${{ matrix.db-type == 'ms8.0' }}
         run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=ms,1 --pmm2 --ms-version=8.0
 
-      - name: Run bats tests for MySQL Tests
+      - name: Run MySQL specific CLI tests
         if: ${{ matrix.db-type == 'ms8.0' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-ui-tests/cli/tests/mysql.spec.ts
+
+      - name: Run CLI tests for MySQL Tests
+        if: ${{ matrix.db-type == 'ms8.0' }}
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-ui-tests/cli/tests/mysql-conf-file.spec.ts
 
       - name: Generate and Attach the report
         if: ${{ always() }}
