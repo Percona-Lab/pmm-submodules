@@ -2,4 +2,4 @@ deps:
   - name: grafana
     branch: PMM-11401-onboarding
   - name: pmm
-    branch: PMM-11401-onboarding
+    branch: PMM-11594_onboarding
