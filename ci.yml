@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12078-HA-Phase-3-Active-Active-PoC
+  url: https://github.com/percona/pmm
