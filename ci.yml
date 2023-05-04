@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: main
