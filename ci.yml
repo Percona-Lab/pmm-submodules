@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-11984-add-datapoints-to-show-installed-and-available-postgressql-extensions
+  - name: postgres_exporter
+    branch: PMM-11984-add-collector-for-extensions-metrics
