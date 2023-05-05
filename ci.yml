@@ -2,3 +2,5 @@ deps:
 - name: grafana
   branch: PMM-12037-pause-resume-pg
   url: https://github.com/percona-platform/grafana
+- name: pmm
+  branch: PMM-11975-install-pg-operator-with-olm
