@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-12087-status-info
