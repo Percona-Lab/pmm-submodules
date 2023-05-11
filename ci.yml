@@ -1,0 +1,7 @@
+deps:
+  - name: postgres_exporter
+    branch: PMM-12116-update-cve-dependencies
+  - name: node_exporter
+    branch: PMM-12116-update-cve-dependencies
+  - name: mysqld_exporter
+    branch: PMM-12116-update-cve-dependencies
