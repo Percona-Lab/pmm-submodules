@@ -1,3 +1,6 @@
 deps:
+  - name: pmm
+    branch: PMM-10799-table-tab
+
   - name: grafana-dashboards
     branch: PMM-10799-pmm-aliased-tables
