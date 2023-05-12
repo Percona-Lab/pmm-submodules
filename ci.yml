@@ -5,3 +5,5 @@ deps:
     branch: PMM-12116-update-cve-dependencies
   - name: mysqld_exporter
     branch: PMM-12116-update-cve-dependencies
+  - name: mongodb_exporter
+    branch: main
