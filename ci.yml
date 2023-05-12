@@ -1,0 +1,6 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-11974-integrate-version-service
+  - name: grafana
+    branch: PMM-11795-postgresql-operator
