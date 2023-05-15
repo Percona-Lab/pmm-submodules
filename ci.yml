@@ -1,0 +1,7 @@
+deps:
+
+  - name: grafana-dashboards
+    branch: PMM-11968-add-comments-to-filters
+
+  - name: grafana
+    branch: PMM-12120-qan-disable-comments
