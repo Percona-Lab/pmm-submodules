@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-11950-admin-requests
