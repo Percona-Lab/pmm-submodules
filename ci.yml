@@ -1,0 +1,3 @@
+deps:
+  - name: grafana-dashboards
+    branch: PMM-12118-add-official-clickhouse-plugin
