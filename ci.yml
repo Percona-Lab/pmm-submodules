@@ -1,3 +1,5 @@
 deps:
   - name: grafana-dashboards
     branch: PMM-12118-add-official-clickhouse-plugin
+  - name: pmm
+    branch: PMM-12118-skip-plugin-binaries-stripping
