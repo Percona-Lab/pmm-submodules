@@ -160,6 +160,7 @@ jobs:
 
       - name: Run bats tests for PS
         if: ${{ matrix.db-type == 'ps5.7' || matrix.db-type == 'ps8' }}
+        working-directory: ./pmm-ui-tests/cli
         run: npx playwright test pmm-ui-tests/cli/tests/perconaMySqlServer.spec.ts
 
       - name: Run Setup for pdpgsql 13
