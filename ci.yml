@@ -2,4 +2,4 @@ deps:
   - name: pmm
     branch: PMM-11973-node-related-agents
   - name: grafana
-    branch: PMM-11976-node-related-agents
+    branch: PMM-11976-node-related-agents-fix
