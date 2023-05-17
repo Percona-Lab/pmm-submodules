@@ -1,5 +1,5 @@
 deps:
-  - name: pmm
-    branch: PMM-9224-allow-connect-arbiter-when-it-requires-authentication
+#  - name: pmm
+#    branch: PMM-9224-allow-connect-arbiter-when-it-requires-authentication
   - name: mongodb_exporter
     branch: PMM-9224-show-diagnostic-info-of-arbiter
