@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: disable_home_dashboard_reset
+  url: https://github.com/percona/pmm
