@@ -20,7 +20,7 @@ deps:
     component: client
 
   - name: mongodb_exporter
-    branch: release-2.37.0
+    branch: release-0.39.0
     path: sources/mongodb_exporter/src/github.com/percona/mongodb_exporter
     url: https://github.com/percona/mongodb_exporter
     component: client
