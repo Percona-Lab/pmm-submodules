@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-12165-change-clickhouse-querie
+  url: https://github.com/percona/grafana-dashboards
