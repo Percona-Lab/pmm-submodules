@@ -149,6 +149,34 @@ jobs:
       client_flags: '--addclient=ps,1 --addclient=modb,1 --addclient=pdpgsql,1'
       tags_for_tests: '@user-password'
 
+  pgsm:
+    name: PGSM UI tests
+    uses: ./.github/workflows/ui-tests.yml
+    secrets: inherit
+    with:
+      server_image: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+      client_version: ${{ inputs.client_version || 'dev-latest' }}
+      client_image: ${{ inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+      pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
+      pmm_ui_branch: ${{ inputs.pmm_ui_branch || 'main' }}
+      sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
+      client_flags: '--setup-pmm-pgsm-integration'
+      tags_for_tests: '@pgsm-pmm-integration'
+
+  pgss:
+    name: PGSS UI tests
+    uses: ./.github/workflows/ui-tests.yml
+    secrets: inherit
+    with:
+      server_image: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+      client_version: ${{ inputs.client_version || 'dev-latest' }}
+      client_image: ${{ inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+      pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
+      pmm_ui_branch: ${{ inputs.pmm_ui_branch || 'main' }}
+      sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
+      client_flags: '--setup-pmm-pgss-integration'
+      tags_for_tests: '@pgss-pmm-integration'
+
   rbac:
     name: RBAC UI tests
     uses: percona/pmm-ui-tests/.github/workflows/pmm-ui-tests.yml@main
