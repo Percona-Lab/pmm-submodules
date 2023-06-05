@@ -1,0 +1,4 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-10270-restore-mongo-backup-on-new-service
