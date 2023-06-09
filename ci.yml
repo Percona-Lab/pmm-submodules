@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: revert-2254-PMM-12175-fix-postgres-supervisorctl
