@@ -1,7 +1,4 @@
 deps:
-- name: grafana
-  branch: PMM-11578-change-text-on-alerting-page
-  url: https://github.com/percona-platform/grafana
 - name: grafana-dashboards
   branch: PMM-12070-table-plugin-db-cluster-summary
   url: https://github.com/percona/grafana-dashboards
