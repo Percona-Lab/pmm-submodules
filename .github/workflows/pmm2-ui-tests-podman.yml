@@ -133,7 +133,6 @@ jobs:
       - name: Setup PMM2-Server
         working-directory: ./pmm-ui-tests
         run: |
-          sed -i "s/SERVER_IMAGE=.*/SERVER_IMAGE=${{ env.DOCKER_VERSION }}/g" ~/.config/pmm-server/env
           systemctl --user enable --now pmm-server
           sleep 60
           podman ps
