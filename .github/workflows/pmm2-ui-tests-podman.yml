@@ -137,8 +137,9 @@ jobs:
         working-directory: ./pmm-ui-tests
         run: |
           systemctl --user enable --now pmm-server
-          sleep 60
+          sleep 120
           podman ps
+          podman logs pmm-server
       
 
       - name: Export path to pmm-qa repo
