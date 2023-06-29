@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-7-force-remove-db-2.38
+  url: https://github.com/percona/pmm
