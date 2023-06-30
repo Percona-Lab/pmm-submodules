@@ -1,3 +1,6 @@
 deps:
     - name: pmm
       branch: PMM-6279-metadata
+
+    - name: grafana-dashboards
+      branch: PMM-6279-metadata
