@@ -1,4 +1,4 @@
 deps:
 - name: grafana-dashboards
-  branch: PMM-12070-table-plugin-pxc-galera-cluster
+  branch: PMM-12070-table-plugin-os-node-summary
   url: https://github.com/percona/grafana-dashboards
