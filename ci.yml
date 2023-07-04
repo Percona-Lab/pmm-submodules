@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-11651-fix-full-access-role
+  url: https://github.com/percona/pmm
