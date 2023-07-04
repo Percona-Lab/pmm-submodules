@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-12070-table-plugin-os-node-overview
+  url: https://github.com/percona/grafana-dashboards
