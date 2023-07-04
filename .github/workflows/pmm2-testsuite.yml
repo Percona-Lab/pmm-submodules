@@ -1,4 +1,4 @@
-name: pmm2-testsuite pipeline
+name: pmm2 integration tests pipeline
 on:
   # run with default inputs
   workflow_dispatch:
@@ -17,6 +17,10 @@ on:
         type: string
       pmm_qa_branch:
         description: "Branch for PMM-QA to checkout"
+        required: false
+        type: string
+      pmm_ui_branch:
+        description: "Branch for PMM-UI(CLI) tests to checkout"
         required: false
         type: string
       sha:
@@ -41,13 +45,17 @@ on:
         description: "Branch for PMM-QA to checkout"
         required: false
         type: string
+      pmm_ui_branch:
+        description: "Branch for PMM-UI(CLI) tests to checkout"
+        required: false
+        type: string
       sha:
         description: "SHA (leave empty if running manually, default - 'null')"
         required: false
         type: string
 
 jobs:
-  bats-testsuite:
+  cli-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -56,19 +64,19 @@ jobs:
       CLIENT_VERSION: ${{ github.event.inputs.client_version || inputs.client_version || 'dev-latest' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PMM_QA_BRANCH: ${{ github.event.inputs.pmm_qa_branch || inputs.pmm_qa_branch || 'main' }}
+      PMM_UI_BRANCH: ${{ github.event.inputs.pmm_ui_branch || inputs.pmm_ui_branch || 'main' }}
       DOCKER_VERSION: ${{ github.event.inputs.server_image || inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
       CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-      PMM_QA_GIT_BRANCH: ${{ github.event.inputs.pmm_qa_branch || inputs.pmm_qa_branch || 'main' }}
-      SHA: ${{ github.event.inputs.sha || inputs.sha || 'null' }}
+      SHA: ${{ github.event.inputs.sha || inputs.sha || github.event.pull_request.head.sha || github.event.pull_request.head.sha || github.sha || 'null' }}
     strategy:
       fail-fast: false
       matrix:
-        db-type: [ps5.7, ps8, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, generic, clientContainer, haproxy, proxysql, ms8.0]
+        db-type: [ps5.7, ps8, ms8.0, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, help, generic, clientContainer, haproxy, proxysql, remove]
 
     steps:
       - name: Create status check
         if: ${{ env.SHA != 'null' }}
-        uses: percona-platform/github-status-action@v1
+        uses: percona-platform/github-status-action@update-node
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
@@ -85,6 +93,19 @@ jobs:
           ref: ${{ env.PMM_QA_BRANCH }}
           repository: percona/pmm-qa
           path: ./
+
+      - name: Checkout PMM UI tests
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.PMM_UI_BRANCH }}
+          repository: percona/pmm-ui-tests
+          path: ./pmm-ui-tests
+
+      - name: Install  playwright
+        working-directory: ./pmm-ui-tests/cli
+        run: |
+          npm install
+          npx playwright install
 
       - name: Setup tools
         run: |
@@ -105,77 +126,107 @@ jobs:
           docker run -d -p 80:80 -p 443:443 -p 9000:9000 -e PERCONA_TEST_PLATFORM_ADDRESS=https://check-dev.percona.com:443 -e PERCONA_TEST_PLATFORM_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX --volumes-from pmm-server-data --name pmm-server --restart always ${{ env.SERVER_IMAGE }}
           sleep 30
 
+      - name: healthcheck PMM2-server
+        run: timeout 100 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost/ping)" != "200" ]]; do sleep 5; done' || false
+      
       - name: Setup PMM2-Client
         run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
+
+      - name: Setup npm modules for the integration setup
+        working-directory: pmm-integration
+        run: npm ci
+
+      - name: Run CLI '--help' tests
+        if: ${{ matrix.db-type == 'help' }}
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-ui-tests/cli/tests/help.spec.ts
+
+      - name: Run CLI remove tests
+        if: ${{ matrix.db-type == 'remove' }}
+        working-directory: ./pmm-ui-tests
+        run: npx playwright test pmm-ui-tests/cli/tests/remove.spec.ts
 
       - name: Run Setup for ps5.7
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'ps5.7' }}
         run: |
-          sudo npm install
           sudo npx ts-node ./integration-setup.ts --ps-version=5.7 --ci --addclient=ps,1
 
       - name: Run Setup for ps8.0
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'ps8' }}
         run: |
-          sudo npm install
           sudo npx ts-node ./integration-setup.ts --ps-version=8 --ci --addclient=ps,1
 
       - name: Run bats tests for PS
         if: ${{ matrix.db-type == 'ps5.7' || matrix.db-type == 'ps8' }}
-        run: sudo bats ./pmm-tests/pmm-2-0-bats-tests/ps-specific-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-ui-tests/cli/tests/perconaMySqlServer.spec.ts
 
       - name: Run Setup for pdpgsql 13
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'pdpgsql13' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=13 --pmm2
+        run: |
+          sudo npx ts-node ./integration-setup.ts --ci --addclient=pdpgsql,1 --pdpgsql-version=13
 
       - name: Run Setup for pdpgsql 14
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'pdpgsql14' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=14 --pmm2
+        run: |
+          sudo npx ts-node ./integration-setup.ts --ci --addclient=pdpgsql,1 --pdpgsql-version=14
 
       - name: Run Setup for pdpgsql 15.0
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'pdpgsql15' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pdpgsql,1 --pdpgsql-version=15.0 --pmm2
-
-      - name: Run bats tests for PDPGSQL
-        if: ${{ matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/pdpgsql-tests.bats
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/pgsql-specific-tests.bats
+          sudo npx ts-node ./integration-setup.ts --ci --addclient=pdpgsql,1 --pdpgsql-version=15.0
+
+      - name: Run CLI tests for PDPGSQL
+        if: ${{ matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test postgreSql
 
       - name: Run Setup for PSMDB 4.4
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb4.4' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=4.4 --pmm2
+        run: sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=4.4
 
       - name: Run Setup for PSMDB 5
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb5' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=5 --pmm2
+        run: sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=5
 
       - name: Run Setup for PSMDB 6
+        working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb6' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --modb-version=6 --pmm2
+        run: sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=6
 
-      - name: Run bats tests for PSMDB
+      - name: Run CLI tests for PSMDB
         if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' }}
-        run: sudo bats ./pmm-tests/pmm-2-0-bats-tests/modb-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-ui-tests/cli/tests/mongoDb-psmdb.spec.ts
 
-      - name: Run Setup Generic Tests, Including Client Container Setup
+# TODO: Add setup for the official MongoDB and run "npx playwright test pmm-ui-tests/cli/tests/mongoDb.spec.ts"
+
+      - name: Run Client Container Setup
         if: ${{ matrix.db-type == 'clientContainer' }}
         run: |
           sudo -E bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm2
+
+      - name: Run CLI tests for Generic Scenarios
+        if: ${{ matrix.db-type == 'generic' }}
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test generic unregister
 
       - name: Run bats tests for generic Scenarios
         if: ${{ matrix.db-type == 'generic' }}
         run: |
           sudo bats ./pmm-tests/pmm-2-0-bats-tests/generic-tests.bats
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/docker-env-variable-tests.bats
 
-      - name: Run bats tests for Client Container Scenarios
+      - name: Run CLI tests for PMM Client Docker Container
         if: ${{ matrix.db-type == 'clientContainer' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-client-docker-tests.bats
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/pmm-admin-unregister-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-client-docker
 
       - name: Run Setup for HAPROXY
         if: ${{ matrix.db-type == 'haproxy' }}
@@ -184,32 +235,44 @@ jobs:
           export CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }}
           sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=haproxy,1 --pmm2
 
-      - name: Run bats tests for Client Container Scenarios
+      - name: Run CLI tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'haproxy' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/haproxy-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test haproxy
 
       - name: Run Setup for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
         run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pxc,1 --pmm2 --pxc-version=5.7
 
-      - name: Run bats tests for ProxySQL
+      - name: Run CLI tests for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/proxysql-specific-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test proxySql
 
-      - name: Run Setup for MySQL
+      - name: Run Setup for MySQL 8.0
         if: ${{ matrix.db-type == 'ms8.0' }}
         run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=ms,1 --pmm2 --ms-version=8.0
 
-      - name: Run bats tests for MySQL Tests
+      - name: Run MySQL specific CLI tests
         if: ${{ matrix.db-type == 'ms8.0' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-ui-tests/cli/tests/mysql.spec.ts
+
+      - name: Run CLI tests for MySQL Tests
+        if: ${{ matrix.db-type == 'ms8.0' }}
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-ui-tests/cli/tests/mysql-conf-file.spec.ts
+
+      - name: Generate and Attach the report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: "report-${{ matrix.db-type }}"
+          path: ./pmm-ui-tests/cli/test-report
 
       - name: Create status check
         if: ${{ always() }}
-        uses: percona-platform/github-status-action@v1
+        uses: percona-platform/github-status-action@update-node
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
