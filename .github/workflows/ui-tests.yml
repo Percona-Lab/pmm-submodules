@@ -107,6 +107,10 @@ jobs:
           docker exec pmm-server change-admin-password ${{ env.ADMIN_PASSWORD }}
           bash -x testdata/db_setup.sh
 
+      - name: Export path to pmm-qa repo
+        working-directory: ./pmm-qa
+        run: echo "PATH_TO_PMM_QA=$(pwd)" >> $GITHUB_ENV
+
       - name: Setup PMM2-Client
         working-directory: ./pmm-qa
         run: sudo bash -x pmm-tests/pmm2-client-setup.sh --pmm_server_ip 192.168.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password ${{ env.ADMIN_PASSWORD }} --use_metrics_mode no
