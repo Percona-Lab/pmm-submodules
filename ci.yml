@@ -1,0 +1,6 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-10270-restore-mongo-backup-on-new-service
+  - name: grafana
+    branch: 12191-compatible-target-services
