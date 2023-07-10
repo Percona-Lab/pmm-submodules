@@ -2,3 +2,5 @@ deps:
   # COMMON
   - name: pmm
     branch: PMM-11796-positive-advisor-insights
+  - name: grafana
+    branch: PMM_12253_Remove_Alert
