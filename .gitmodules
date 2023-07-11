@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = pmm-2.38.0
+	branch = pmm-2.38.1
 
 # PMM Client
 
@@ -55,7 +55,7 @@
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
 	url = https://github.com/percona-platform/grafana
-	branch = pmm-2.38.0
+	branch = pmm-2.38.1
 [submodule "pmm-dump"]
 	path = sources/pmm-dump
 	url = https://github.com/percona/pmm-dump

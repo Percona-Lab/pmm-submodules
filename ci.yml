@@ -1,7 +1,0 @@
-deps:
-- name: pmm
-  branch: pmm-2.38.1
-  url: https://github.com/percona/pmm
-- name: grafana
-  branch: pmm-2.38.1
-  url: https://github.com/percona-platform/grafana
