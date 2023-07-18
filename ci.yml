@@ -1,3 +1,6 @@
 deps:
     - name: pmm
       branch: PMM-12151-12273-explain
+
+    - name: grafana-dashboards
+      branch: PMM-12328-explain-query-id
