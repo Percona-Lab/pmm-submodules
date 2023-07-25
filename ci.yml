@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-11963-services-nodes-linking
+  url: https://github.com/percona-platform/grafana
