@@ -204,7 +204,7 @@ jobs:
       client_flags: '--setup-pmm-psmdb-integration --with-replica'
       tags_for_tests: '@pmm-psmdb-replica-integration'
 
-    psmdb_arbiter:
+  psmdb_arbiter:
     name: PSMDB Arbiter Replica UI tests
     uses: ./.github/workflows/ui-tests.yml
     secrets: inherit
