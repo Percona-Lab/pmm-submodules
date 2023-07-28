@@ -201,7 +201,7 @@ jobs:
       pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
       pmm_ui_branch: ${{ inputs.pmm_ui_branch || 'main' }}
       sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
-      client_flags: '--setup-pmm-psmdb-integration --with-replica'
+      client_flags: '--mongomagic --with-replica'
       tags_for_tests: '@pmm-psmdb-replica-integration'
 
   psmdb_arbiter:
@@ -215,7 +215,7 @@ jobs:
       pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
       pmm_ui_branch: ${{ inputs.pmm_ui_branch || 'main' }}
       sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
-      client_flags: '--setup-pmm-psmdb-integration --with-arbiter'
+      client_flags: '--mongomagic --with-arbiter'
       tags_for_tests: '@pmm-psmdb-arbiter-integration'
 
   psmdb_regular:
@@ -229,5 +229,5 @@ jobs:
       pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
       pmm_ui_branch: ${{ inputs.pmm_ui_branch || 'main' }}
       sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
-      client_flags: '--setup-pmm-psmdb-integration --with-regular'
+      client_flags: '--mongomagic --with-regular'
       tags_for_tests: '@pmm-psmdb-regular-integration'
