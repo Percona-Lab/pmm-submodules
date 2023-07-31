@@ -98,6 +98,7 @@ jobs:
           sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 8919F6BD2B48D754
           echo "deb https://packages.clickhouse.com/deb stable main" | sudo tee \
               /etc/apt/sources.list.d/clickhouse.list
+          . /etc/os-release
           echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /" | sudo tee \
               /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
           curl -L "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key" | sudo apt-key add -
