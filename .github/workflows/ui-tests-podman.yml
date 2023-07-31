@@ -165,7 +165,7 @@ jobs:
           
           EOF
           
-          systemctl enable --now pmm-server
+          systemctl --user enable --now pmm-server
           
           export CONTAINER_NAME="pmm-server"
           export LOGS="pmm-managed entered RUNNING state"
