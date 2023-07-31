@@ -1,0 +1,237 @@
+name: UI tests
+on:
+  workflow_call:
+    inputs:
+      server_image:
+        description: "pmm-server docker image, default perconalab/pmm-server:dev-latest"
+        required: false
+        type: string
+      client_version:
+        description: "pmm2-client version Tarball or Dev-latest, default is dev-latest"
+        required: false
+        type: string
+      client_image:
+        description: "pmm2-client docker image, default perconalab/pmm-client:dev-latest"
+        required: false
+        type: string
+      pmm_qa_branch:
+        description: "Branch for PMM-QA to checkout"
+        required: false
+        type: string
+      pmm_ui_branch:
+        description: "Branch for PMM-UI tests to checkout"
+        required: false
+        type: string
+      sha:
+        description: "SHA (leave empty if running manually, default - 'null')"
+        required: false
+        type: string
+      client_flags:
+        description: "example: --addclient=ps,1 --ps-version=5.7"
+        required: false
+        type: string
+      tags_for_tests:
+        description: "example: @settings-fb"
+        required: true
+        type: string
+  push:
+    branches:
+      - PMM-12359-podman-setup
+
+jobs:
+  ui-tests-e2e:
+#    runs-on: ubuntu-latest Mongo Replica setup fails in ubuntu-latest for some reason. Additional investigation needed
+    runs-on: ubuntu-20.04
+    timeout-minutes: 60
+    env:
+      SERVER_IMAGE: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+      CLIENT_IMAGE: ${{ inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+      CLIENT_VERSION: ${{ inputs.client_version || 'dev-latest' }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ADMIN_PASSWORD: 'admin-password'
+      PMM_QA_BRANCH: ${{ inputs.pmm_qa_branch || 'main' }}
+      PMM_QA_GIT_BRANCH: ${{ inputs.pmm_qa_branch || 'main' }}
+      PMM_UI_BRANCH: ${{ inputs.pmm_ui_branch || 'main' }}
+      DOCKER_VERSION: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+      CLIENT_DOCKER_VERSION: ${{ inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+      SHA: ${{ inputs.sha || 'null' }}
+      CLIENT_FLAGS: ${{ inputs.client_flags || '' }}
+      TAGS_FOR_TESTS: ${{ inputs.tags_for_tests || '@settings-fb' }}
+
+#      Environment variables for tests
+      BACKUP_LOCATION_ACCESS_KEY: ${{ secrets.BACKUP_LOCATION_ACCESS_KEY }}
+      BACKUP_LOCATION_SECRET_KEY: ${{ secrets.BACKUP_LOCATION_SECRET_KEY }}
+
+
+    steps:
+      - name: Create status check
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: percona-platform/github-status-action@v1
+        continue-on-error: true
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: "${{ env.TAGS_FOR_TESTS }} UI tests"
+          description: "Test execution ${{ job.status }}"
+          state: "pending"
+          repository: ${{ github.repository }}
+          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          sha: ${{ env.SHA }}
+
+      - name: "Checkout PMM UI tests: ${{ env.PMM_UI_BRANCH }}"
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.PMM_UI_BRANCH }}
+          repository: percona/pmm-ui-tests
+          path: ./pmm-ui-tests
+
+      - name: "Checkout PMM QA: ${{ env.PMM_QA_BRANCH }}"
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.PMM_QA_BRANCH }}
+          repository: percona/pmm-qa
+          path: ./pmm-qa
+
+      - name: Setup tools
+        run: |
+          npm install -g bats
+          sudo apt-get install -y apt-transport-https ca-certificates dirmngr ansible libaio1 libaio-dev libnuma-dev libncurses5 socat sysbench
+          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 8919F6BD2B48D754
+          echo "deb https://packages.clickhouse.com/deb stable main" | sudo tee \
+              /etc/apt/sources.list.d/clickhouse.list
+          echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /" | sudo tee \
+              /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+          curl -L "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key" | sudo apt-key add -
+          sudo apt-get update
+          sudo apt-get -y upgrade
+          sudo apt-get install -y 
+          sudo apt-get install -y clickhouse-client podman
+          sudo curl -s https://raw.githubusercontent.com/datacharmer/dbdeployer/master/scripts/dbdeployer-install.sh | bash
+          ls -la
+          pushd ./pmm-qa
+          wget https://raw.githubusercontent.com/Percona-QA/percona-qa/master/get_download_link.sh
+          chmod +x get_download_link.sh
+          popd
+          sudo sysctl net.ipv4.ip_unprivileged_port_start=80
+
+      - name: Setup PMM2-Server
+        working-directory: ./pmm-ui-tests
+        run: |
+          mkdir -p ~/.config/systemd/user/
+          sudo -u $real_user cat > ~/.config/systemd/user/pmm-server.service <<EOF
+          [Unit]
+          Description=pmm-server
+          Wants=network-online.target
+          After=network-online.target
+          After=nss-user-lookup.target nss-lookup.target
+          After=time-sync.target
+          
+          [Service]
+          Type=simple
+          
+          # set environment for this unit
+          Environment=PMM_HTTP_PORT=80
+          Environment=PMM_PUBLIC_PORT=443
+          Environment=PMM_VOLUME_NAME=%N
+          Environment=PMM_SERVER_IMAGE=docker.io/${{ env.DOCKER_VERSION }}
+          Environment=PMM_ENV_FILE=%h/.config/pmm-server/pmm-server.env
+          
+          # optional env file that could override previous env settings for this unit
+          EnvironmentFile=-%h/.config/pmm-server/env
+          
+          ExecStart=/usr/bin/podman run --rm --replace=true --name=%N -p \${PMM_PUBLIC_PORT}:443/tcp -p \${PMM_HTTP_PORT}:80/tcp --ulimit=host --volume=\${PMM_VOLUME_NAME}:/srv --env-file=\${PMM_ENV_FILE} --health-cmd=none --health-interval=disable \${PMM_SERVER_IMAGE}
+          ExecStop=/usr/bin/podman stop -t 10 %N
+          Restart=on-failure
+          RestartSec=20
+          
+          [Install]
+          Alias=%N
+          WantedBy=default.target
+          
+          EOF
+          
+          mkdir -p ~/.config/pmm-server/
+          cat > ~/.config/pmm-server/pmm-server.env <<EOF
+          DISABLE_UPDATES=1
+          #ENABLE_DBAAS=1
+          PMM_DEBUG=1
+          PERCONA_TEST_SAAS_HOST=check-dev.percona.com:443
+          PERCONA_TEST_CHECKS_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX
+          PERCONA_TEST_PLATFORM_ADDRESS=https://check-dev.percona.com:443
+          PERCONA_TEST_PLATFORM_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX
+          PERCONA_TEST_VERSION_SERVICE_URL=https://check-dev.percona.com/versions/v1
+          PERCONA_TEST_TELEMETRY_INTERVAL=10s
+          PERCONA_TEST_TELEMETRY_RETRY_BACKOFF=10s
+          
+          EOF
+          
+          systemctl enable --now pmm-server
+          
+          export CONTAINER_NAME="pmm-server"
+          export LOGS="pmm-managed entered RUNNING state"
+          attempt=0
+          while [ $attempt -le 3 ]; do
+            attempt=$(( $attempt + 1 ))
+            echo "Waiting for ${CONTAINER_NAME} to be up (attempt: $attempt)..."
+            result=$(systemctl --user status ${CONTAINER_NAME})
+            if grep "${LOGS}" <<< $result ; then
+              echo "${CONTAINER_NAME} is ready!"
+              break
+            fi
+            sleep 10
+          done;
+          timeout 100 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://admin:admin@127.0.0.1/ping)" != "200" ]]; do sleep 5; done' || false
+          podman exec -t pmm-server change-admin-password ${{ env.ADMIN_PASSWORD }}
+          bash -x testdata/db_setup.sh
+
+      - name: Export path to pmm-qa repo
+        working-directory: ./pmm-qa
+        run: echo "PATH_TO_PMM_QA=$(pwd)" >> $GITHUB_ENV
+
+      - name: Setup PMM2-Client
+        working-directory: ./pmm-qa
+        run: sudo bash -x pmm-tests/pmm2-client-setup.sh --pmm_server_ip 192.168.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password ${{ env.ADMIN_PASSWORD }} --use_metrics_mode no
+
+      - name: Run Setup for E2E Tests
+        working-directory: ./pmm-qa
+        run: sudo -E bash -x pmm-tests/pmm-framework.sh ${{ env.CLIENT_FLAGS }} --pmm2
+
+      - name: Setup npm modules for e2e tests
+        working-directory: ./pmm-ui-tests
+        run: |
+          npm ci
+          envsubst < env.list > env.generated.list
+
+      - name: Execute e2e tests with tags ${{ env.TAGS_FOR_TESTS }}
+        working-directory: ./pmm-ui-tests
+        env:
+          SERVER_IP : "192.168.0.1"
+          PMM_UI_URL : "http://192.168.0.1/"
+          PMM_URL : "http://admin:${{ env.ADMIN_PASSWORD }}@${{ env.SERVER_IP }}"
+        run: |
+          sed -i 's+http://localhost/+${PMM_UI_URL}/+g' pr.codecept.js
+          ./node_modules/.bin/codeceptjs run -c pr.codecept.js --grep "${{ env.TAGS_FOR_TESTS }}"
+
+      - uses: actions/github-script@v6
+        if: ${{ always() }}
+        id: artifact_name
+        with:
+          script: |
+            return `artifacts_for_${process.env.TAGS_FOR_TESTS.replaceAll('|', '')}`
+          result-encoding: string
+
+      - name: Create status check
+        if: ${{ github.event_name != 'pull_request' && always() }}
+        uses: percona-platform/github-status-action@v1
+        continue-on-error: true
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: "${{ env.TAGS_FOR_TESTS }} UI tests"
+          description: "Test execution ${{ job.status }}"
+          state: ${{ job.status }}
+          repository: ${{ github.repository }}
+          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          sha: ${{ env.SHA }}
+
+#      - name: Setup tmate session  on failure
+#        if: ${{ failure() }}
+#        uses: percona-platform/action-tmate@v2
