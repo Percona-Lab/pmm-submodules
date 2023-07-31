@@ -182,7 +182,7 @@ jobs:
           done;
           timeout 100 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://admin:admin@127.0.0.1/ping)" != "200" ]]; do sleep 5; done' || false
           podman exec pmm-server change-admin-password ${{ env.ADMIN_PASSWORD }}
-          bash -x testdata/db_setup.sh
+          # bash -x testdata/db_setup.sh
 
       - name: Export path to pmm-qa repo
         working-directory: ./pmm-qa
