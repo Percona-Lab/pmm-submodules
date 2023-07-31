@@ -1,4 +1,4 @@
-name: UI tests
+name: UI tests (podman)
 on:
   workflow_call:
     inputs:
