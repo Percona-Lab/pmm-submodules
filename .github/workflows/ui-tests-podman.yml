@@ -190,7 +190,7 @@ jobs:
 
       - name: Setup PMM2-Client
         working-directory: ./pmm-qa
-        run: sudo bash -x pmm-tests/pmm2-client-setup.sh --pmm_server_ip 192.168.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password ${{ env.ADMIN_PASSWORD }} --use_metrics_mode no
+        run: sudo bash -x pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password ${{ env.ADMIN_PASSWORD }} --use_metrics_mode no
 
       - name: Run Setup for E2E Tests
         working-directory: ./pmm-qa
@@ -205,8 +205,8 @@ jobs:
       - name: Execute e2e tests with tags ${{ env.TAGS_FOR_TESTS }}
         working-directory: ./pmm-ui-tests
         env:
-          SERVER_IP : "192.168.0.1"
-          PMM_UI_URL : "http://192.168.0.1/"
+          SERVER_IP : "127.0.0.1"
+          PMM_UI_URL : "http://127.0.0.1/"
           PMM_URL : "http://admin:${{ env.ADMIN_PASSWORD }}@${{ env.SERVER_IP }}"
         run: |
           sed -i 's+http://localhost/+${PMM_UI_URL}/+g' pr.codecept.js
