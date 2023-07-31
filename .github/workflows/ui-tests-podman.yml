@@ -118,7 +118,7 @@ jobs:
         working-directory: ./pmm-ui-tests
         run: |
           mkdir -p ~/.config/systemd/user/
-          sudo -u $real_user cat > ~/.config/systemd/user/pmm-server.service <<EOF
+          cat > ~/.config/systemd/user/pmm-server.service <<EOF
           [Unit]
           Description=pmm-server
           Wants=network-online.target
