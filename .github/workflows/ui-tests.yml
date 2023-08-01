@@ -1,4 +1,4 @@
-name: UI tests
+name: ui-tests-pipeline
 on:
   workflow_call:
     inputs:
@@ -37,6 +37,7 @@ on:
 
 jobs:
   ui-tests-e2e:
+    name: "e2e tests: ${{ inputs.tags_for_tests || '@settings-fb' }}"
 #    runs-on: ubuntu-latest Mongo Replica setup fails in ubuntu-latest for some reason. Additional investigation needed
     runs-on: ubuntu-20.04
     timeout-minutes: 60
