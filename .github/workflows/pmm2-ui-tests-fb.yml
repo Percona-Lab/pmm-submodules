@@ -1,4 +1,4 @@
-name: pmm2-ui-tests-fb pipeline
+name: pmm2-ui-tests-fb
 on:
 
   workflow_dispatch:
