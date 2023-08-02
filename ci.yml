@@ -1,0 +1,7 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-12310-docs-links-replacement
+  url: https://github.com/percona/grafana-dashboards
+- name: grafana
+  branch: PMM-12310-docs-links-replacement
+  url: https://github.com/percona-platform/grafana
