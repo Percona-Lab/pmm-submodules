@@ -1,6 +1,6 @@
 name: pmm2-ui-tests-fb
-on:
 
+on:
   workflow_dispatch:
     inputs:
       server_image:
@@ -61,9 +61,7 @@ on:
       BACKUP_LOCATION_SECRET_KEY:
         required: false
 
-
 jobs:
-
   backup_management_mongo:
     name: Backup Management MongoDB UI tests
     uses: ./.github/workflows/ui-tests.yml
