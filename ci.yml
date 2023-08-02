@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-12382-custom-labels-validation
+  url: https://github.com/percona-platform/grafana
