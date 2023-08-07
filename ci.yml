@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-12377-custom-labels-component
+  url: https://github.com/percona-platform/grafana
