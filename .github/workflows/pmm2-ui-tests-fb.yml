@@ -131,6 +131,7 @@ jobs:
       pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
       pmm_ui_branch: ${{ inputs.pmm_ui_branch || 'main' }}
       sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
+      client_flags: '--addclient=ms,1'
       tags_for_tests: '@alerting-fb|@settings-fb'
 
   user_and_password:
