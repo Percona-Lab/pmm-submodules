@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12361-pmm-inventory-help-command
+  url: https://github.com/percona/pmm
