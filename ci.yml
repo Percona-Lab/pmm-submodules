@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12393-cant-login-to-pmm-with-sso
+  url: https://github.com/percona/pmm
