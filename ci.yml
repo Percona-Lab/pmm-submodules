@@ -1,0 +1,7 @@
+deps:
+  - name: grafana
+    branch: PMM-11148-inventory-manage-labels-direct
+    url: https://github.com/percona-platform/grafana
+  - name: pmm
+    branch: PMM-11423-update-standard-labels
+    url: https://github.com/percona/pmm
