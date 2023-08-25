@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-9769-update-all-components
