@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-12448-backup-preconditions-bugfix
