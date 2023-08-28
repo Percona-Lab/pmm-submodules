@@ -1,4 +1,4 @@
 deps:
 - name: pmm
-  branch: PMM-7-2.39.0-fix
+  branch: PMM-12173-pmm-2.39.0-updated-victoriametrics
   url: https://github.com/percona/pmm
