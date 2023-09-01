@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12346-fix-victoria-metrics-date
+  url: https://github.com/percona/pmm
