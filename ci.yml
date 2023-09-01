@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12420-fix-sqlite-to-postgres-upgrade
+  url: https://github.com/percona/pmm
