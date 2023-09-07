@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-11714-dont-return-error
+  url: https://github.com/percona/pmm
