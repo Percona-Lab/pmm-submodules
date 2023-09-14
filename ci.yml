@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-12488-update-victoria-metrics-1-93-4
+  - name: pmm-qa
+    branch: PMM-12488-update-victoria-metrics-1-93-4
