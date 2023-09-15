@@ -1,4 +1,4 @@
 deps:
-- name: pmm
+- name: grafana-dashboards
   branch: PMM-12500-k8s-cluster-tech
   url: https://github.com/percona/grafana-dashboards
