@@ -2,6 +2,3 @@ deps:
 - name: grafana
   branch: PMM-12378-cluster-view
   url: https://github.com/percona-platform/grafana
-- name: pmm
-  branch: PMM-11670-add-default-cluster-label
-  url: https://github.com/percona/pmm
