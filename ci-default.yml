@@ -1,7 +1,7 @@
 deps:
   # COMMON
   - name: pmm
-    branch: main
+    branch: v3
     path: sources/pmm/src/github.com/percona/pmm
     url: https://github.com/percona/pmm
     component: common
@@ -70,13 +70,13 @@ deps:
     component: server
 
   - name: grafana-dashboards
-    branch: main
+    branch: v3
     path: sources/grafana-dashboards
     url: https://github.com/percona/grafana-dashboards
     component: server
 
   - name: grafana
-    branch: main
+    branch: v3
     path: sources/grafana/src/github.com/grafana/grafana
     url: https://github.com/percona-platform/grafana
     component: server
