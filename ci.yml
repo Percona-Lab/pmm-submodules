@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: revert-2459-PMM-11670-add-default-cluster-label
