@@ -1,3 +1,5 @@
 deps:
   - name: pmm
     branch: revert-2459-PMM-11670-add-default-cluster-label
+  - name: grafana
+    branch: PMM-12547-non-clustered-services-view-fix
