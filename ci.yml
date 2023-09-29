@@ -1,4 +1,4 @@
 deps:
 - name: grafana-dashboards
-  branch: PMM-12500-k8s-cluster-tech
+  branch: Kubernetes_DB_Cluster-update
   url: https://github.com/percona/grafana-dashboards
