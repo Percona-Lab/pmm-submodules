@@ -1,4 +1,4 @@
-name: pmm2 integration tests pipeline
+name: PMM2 Integration Tests
 on:
   # run with default inputs
   workflow_dispatch:
@@ -101,7 +101,7 @@ jobs:
           repository: percona/pmm-ui-tests
           path: ./pmm-ui-tests
 
-      - name: Install  playwright
+      - name: Install playwright
         working-directory: ./pmm-ui-tests/cli
         run: |
           npm install
@@ -128,7 +128,7 @@ jobs:
 
       - name: healthcheck PMM2-server
         run: timeout 100 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost/ping)" != "200" ]]; do sleep 5; done' || false
-      
+
       - name: Setup PMM2-Client
         run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
 
@@ -143,7 +143,7 @@ jobs:
 
       - name: Run CLI remove tests
         if: ${{ matrix.db-type == 'remove' }}
-        working-directory: ./pmm-ui-tests
+        working-directory: ./pmm-ui-tests/cli
         run: npx playwright test pmm-ui-tests/cli/tests/remove.spec.ts
 
       - name: Run Setup for ps5.7
