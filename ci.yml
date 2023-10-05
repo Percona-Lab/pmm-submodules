@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-7-update-prom-exporter-toolkit
