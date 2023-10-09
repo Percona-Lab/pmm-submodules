@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12576-change-admin-id
+  url: https://github.com/percona/pmm
