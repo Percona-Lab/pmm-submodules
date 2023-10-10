@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12562-show-503-error-instead-500
+  url: https://github.com/percona/pmm
