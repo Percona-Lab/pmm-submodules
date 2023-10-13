@@ -1,6 +1,6 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
-	url = https://github.com/percona/pmm
+	url = https://github.com/adivinho/pmm
 	branch = pmm-2.40.0-more-debug-data
 
 # PMM Client
