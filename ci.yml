@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-12422-restrict-agent-interface
+
