@@ -1,8 +1,12 @@
 deps:
   - name: pmm
     branch: PMM-12460-pmm-dump
+
   - name: grafana
     branch: PMM-12459
+
   - name: pmm-dump
     branch: PMM-12460-pmm-dump-integration
-
+    path: sources/pmm-dump
+    url: https://github.com/percona/pmm-dump
+    component: server
