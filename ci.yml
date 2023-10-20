@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-12621-services-anonymous-mode
+  url: https://github.com/percona-platform/grafana
