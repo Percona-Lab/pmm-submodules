@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    url: https://github.com/surbhat1595/pmm
+    branch: PMM-12557-automate-pmm3
