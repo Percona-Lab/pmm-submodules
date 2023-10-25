@@ -79,14 +79,14 @@ jobs:
           sha: ${{ env.SHA }}
 
       - name: "Checkout PMM UI tests: ${{ env.PMM_UI_BRANCH }}"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ env.PMM_UI_BRANCH }}
           repository: percona/pmm-ui-tests
           path: ./pmm-ui-tests
 
       - name: "Checkout PMM QA: ${{ env.PMM_QA_BRANCH }}"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ env.PMM_QA_BRANCH }}
           repository: percona/pmm-qa
