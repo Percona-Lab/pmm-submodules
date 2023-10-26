@@ -42,13 +42,13 @@ jobs:
       - name: Unzip client
         run: |
           tar -xzf ${{ env.PMM_CLIENT_TAR }}
-          echo "PMM_CLIENT_BASEDIR=$(ls -1td pmm2-client-* 2>/dev/null | grep -v ".tar" | head -n1)" >> $GITHUB_ENV
+          echo "PMM_CLIENT_BASEDIR=$(ls -1td pmm-client-* 2>/dev/null | grep -v ".tar" | head -n1)" >> $GITHUB_ENV
 
       - name: Rename client folder
-        run: mv ${{ env.PMM_CLIENT_BASEDIR }} pmm2-client
+        run: mv ${{ env.PMM_CLIENT_BASEDIR }} pmm-client
 
       - name: Check pmm version output
-        working-directory: pmm2-client
+        working-directory: pmm-client
         run: |
           echo "export PATH=$PATH:$PWD/bin" >> ~/.bash_profile
           source ~/.bash_profile

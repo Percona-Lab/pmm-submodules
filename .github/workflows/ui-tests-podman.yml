@@ -3,15 +3,15 @@ on:
   workflow_call:
     inputs:
       server_image:
-        description: "pmm-server docker image, default perconalab/pmm-server:dev-latest"
+        description: "pmm-server docker image, default perconalab/pmm-server:3-dev-latest"
         required: false
         type: string
       client_version:
-        description: "pmm2-client version Tarball or Dev-latest, default is dev-latest"
+        description: "pmm-client version Tarball or Dev-latest, default is 3-dev-latest"
         required: false
         type: string
       client_image:
-        description: "pmm2-client docker image, default perconalab/pmm-client:dev-latest"
+        description: "pmm-client docker image, default perconalab/pmm-client:3-dev-latest"
         required: false
         type: string
       pmm_qa_branch:
@@ -45,16 +45,16 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 60
     env:
-      SERVER_IMAGE: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-      CLIENT_IMAGE: ${{ inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-      CLIENT_VERSION: ${{ inputs.client_version || 'dev-latest' }}
+      SERVER_IMAGE: ${{ inputs.server_image || 'perconalab/pmm-server:3-dev-latest' }}
+      CLIENT_IMAGE: ${{ inputs.client_image || 'perconalab/pmm-client:3-dev-latest' }}
+      CLIENT_VERSION: ${{ inputs.client_version || '3-dev-latest' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ADMIN_PASSWORD: 'admin-password'
       PMM_QA_BRANCH: ${{ inputs.pmm_qa_branch || 'main' }}
       PMM_QA_GIT_BRANCH: ${{ inputs.pmm_qa_branch || 'main' }}
       PMM_UI_BRANCH: ${{ inputs.pmm_ui_branch || 'main' }}
-      DOCKER_VERSION: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-      CLIENT_DOCKER_VERSION: ${{ inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+      DOCKER_VERSION: ${{ inputs.server_image || 'perconalab/pmm-server:3-dev-latest' }}
+      CLIENT_DOCKER_VERSION: ${{ inputs.client_image || 'perconalab/pmm-client:3-dev-latest' }}
       SHA: ${{ inputs.sha || 'null' }}
       CLIENT_FLAGS: ${{ inputs.client_flags || '' }}
       TAGS_FOR_TESTS: ${{ inputs.tags_for_tests || '@settings-fb' }}
@@ -115,7 +115,7 @@ jobs:
           popd
           sudo sysctl net.ipv4.ip_unprivileged_port_start=80
 
-      - name: Setup PMM2-Server
+      - name: Setup PMM3-Server
         working-directory: ./pmm-ui-tests
         run: |
           mkdir -p ~/.config/systemd/user/
@@ -189,13 +189,13 @@ jobs:
         working-directory: ./pmm-qa
         run: echo "PATH_TO_PMM_QA=$(pwd)" >> $GITHUB_ENV
 
-      - name: Setup PMM2-Client
+      - name: Setup PMM3-Client
         working-directory: ./pmm-qa
-        run: sudo bash -x pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password ${{ env.ADMIN_PASSWORD }} --use_metrics_mode no
+        run: sudo bash -x pmm-tests/pmm-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password ${{ env.ADMIN_PASSWORD }} --use_metrics_mode no
 
       - name: Run Setup for E2E Tests
         working-directory: ./pmm-qa
-        run: sudo -E bash -x pmm-tests/pmm-framework.sh ${{ env.CLIENT_FLAGS }} --pmm2
+        run: sudo -E bash -x pmm-tests/pmm-framework.sh ${{ env.CLIENT_FLAGS }} --pmm
 
       - name: Setup npm modules for e2e tests
         working-directory: ./pmm-ui-tests
