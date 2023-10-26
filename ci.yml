@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: release-10.1.5
+  url: https://github.com/matejkubinec/grafana
