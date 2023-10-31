@@ -1,5 +1,5 @@
 deps:
     - name: pmm
-      branch: PMM-11341-autodiscovery-control
+      branch: PMM-11341-autodiscovery-control-241
     - name: postgres_exporter
       branch: PMM-11341-autodiscovery-control
