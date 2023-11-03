@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-7-upgrade-grafana-url
+  url: https://github.com/percona/pmm
