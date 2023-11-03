@@ -54,7 +54,7 @@
 	branch = main
 [submodule "grafana"]
 	path = sources/grafana/src/github.com/grafana/grafana
-	url = https://github.com/percona-platform/grafana
+	url = https://github.com/percona/grafana
 	branch = main
 [submodule "pmm-dump"]
 	path = sources/pmm-dump
