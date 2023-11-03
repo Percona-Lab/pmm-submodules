@@ -78,7 +78,7 @@ deps:
   - name: grafana
     branch: v3
     path: sources/grafana/src/github.com/grafana/grafana
-    url: https://github.com/percona-platform/grafana
+    url: https://github.com/percona/grafana
     component: server
 
   - name: pmm-dump
