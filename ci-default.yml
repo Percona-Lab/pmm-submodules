@@ -66,7 +66,7 @@ deps:
   - name: dbaas-controller
     branch: main
     path: sources/dbaas-controller/src/github.com/percona-platform/dbaas-controller
-    url: https://github.com/percona-platform/dbaas-controller
+    url: https://github.com/percona/dbaas-controller
     component: server
 
   - name: grafana-dashboards
