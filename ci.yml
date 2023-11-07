@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: Kubernetes_DB_Cluster-update
+  url: https://github.com/percona/grafana-dashboards
