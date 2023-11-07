@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12654-fix-auth-pmm-admin-logs
+  url: https://github.com/percona/pmm
