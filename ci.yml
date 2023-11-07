@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12660-do-not-leak-certs-when-listing-agents
+  url: https://github.com/percona/pmm
