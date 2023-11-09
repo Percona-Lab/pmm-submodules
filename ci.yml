@@ -1,0 +1,5 @@
+deps:
+- name: pmm
+  branch: PMM-12624-single-inventory-service-add-endpoint
+  url: https://github.com/percona/pmm
+
