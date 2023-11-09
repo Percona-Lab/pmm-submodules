@@ -1,0 +1,5 @@
+deps:
+    - name: pmm
+      branch: PMM-12251-service-accounts
+    - name: grafana
+      branch: PMM-12251-service-acc
