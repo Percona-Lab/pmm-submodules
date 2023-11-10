@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12643-type-consistency-in-admin-json-list-result
+  url: https://github.com/percona/pmm
