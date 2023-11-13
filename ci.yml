@@ -2,3 +2,6 @@ deps:
   # COMMON
   - name: pmm
     branch: PMM-12284-remove-alertmanager
+
+  - name: grafana
+    branch: PMM-12284-remove-alertmanager
