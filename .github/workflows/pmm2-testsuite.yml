@@ -1,4 +1,4 @@
-name: pmm2 integration tests pipeline
+name: PMM2 Integration Tests
 on:
   # run with default inputs
   workflow_dispatch:
@@ -71,7 +71,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        db-type: [ps5.7, ps8, ms8.0, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, help, generic, clientContainer, haproxy, proxysql]
+        db-type: [ps5.7, ps8, ms8.0, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, help, generic, clientContainer, haproxy, proxysql, remove]
 
     steps:
       - name: Create status check
@@ -88,20 +88,20 @@ jobs:
           sha: ${{ env.SHA }}
 
       - name: Checkout PMM-QA tests ${{ env.PMM_QA_BRANCH }} branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ env.PMM_QA_BRANCH }}
           repository: percona/pmm-qa
           path: ./
 
       - name: Checkout PMM UI tests
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ env.PMM_UI_BRANCH }}
           repository: percona/pmm-ui-tests
           path: ./pmm-ui-tests
 
-      - name: Install  playwright
+      - name: Install playwright
         working-directory: ./pmm-ui-tests/cli
         run: |
           npm install
@@ -128,7 +128,7 @@ jobs:
 
       - name: healthcheck PMM2-server
         run: timeout 100 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost/ping)" != "200" ]]; do sleep 5; done' || false
-      
+
       - name: Setup PMM2-Client
         run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
 
@@ -140,6 +140,11 @@ jobs:
         if: ${{ matrix.db-type == 'help' }}
         working-directory: ./pmm-ui-tests/cli
         run: npx playwright test pmm-ui-tests/cli/tests/help.spec.ts
+
+      - name: Run CLI remove tests
+        if: ${{ matrix.db-type == 'remove' }}
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-ui-tests/cli/tests/remove.spec.ts
 
       - name: Run Setup for ps5.7
         working-directory: pmm-integration
@@ -155,7 +160,8 @@ jobs:
 
       - name: Run bats tests for PS
         if: ${{ matrix.db-type == 'ps5.7' || matrix.db-type == 'ps8' }}
-        run: sudo bats ./pmm-tests/pmm-2-0-bats-tests/ps-specific-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-ui-tests/cli/tests/perconaMySqlServer.spec.ts
 
       - name: Run Setup for pdpgsql 13
         working-directory: pmm-integration
@@ -247,10 +253,10 @@ jobs:
         if: ${{ matrix.db-type == 'ms8.0' }}
         run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=ms,1 --pmm2 --ms-version=8.0
 
-      - name: Run bats tests for MySQL Tests
+      - name: Run MySQL specific CLI tests
         if: ${{ matrix.db-type == 'ms8.0' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/ms-specific-tests.bats
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-ui-tests/cli/tests/mysql.spec.ts
 
       - name: Run CLI tests for MySQL Tests
         if: ${{ matrix.db-type == 'ms8.0' }}
