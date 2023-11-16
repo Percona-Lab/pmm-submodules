@@ -6,4 +6,4 @@ deps:
     branch: PMM-12459
 
   - name: pmm-dump
-    branch: main
+    branch: fix-multi-instance-dumps
