@@ -1,6 +1,6 @@
 deps:
   - name: pmm
-    branch: PMM-12460-pmm-dump
+    branch: main
 
   - name: grafana
     branch: PMM-12390_Make_the_text_search_case_insensitive
