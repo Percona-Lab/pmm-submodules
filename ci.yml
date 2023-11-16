@@ -4,3 +4,6 @@ deps:
 
   - name: grafana
     branch: PMM-12459
+
+  - name: pmm-dump
+    branch: main
