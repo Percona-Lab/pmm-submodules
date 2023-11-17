@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12702-fix-ssl-for-old
+  url: https://github.com/percona/pmm
