@@ -135,7 +135,7 @@ class Builder():
         if GITHUB_TOKEN:
             github_api = Github(GITHUB_TOKEN)
             repo = github_api.get_repo('Percona-Lab/pmm-submodules')
-            pr = repo.get_pulls(base='PMM-2.0', head=f'Percona-Lab:{branch_name}')
+            pr = repo.get_pulls(base='v3', head=f'Percona-Lab:{branch_name}')
             # TODO we can use totalCount here: https://github.com/PyGithub/PyGithub/blob/babcbcd04fd5605634855f621b8558afc5cbc515/github/PaginatedList.py#L102
             # but it works pretty strange. It returned count ALL PR from repo without filters
             hasPR = False
@@ -151,7 +151,7 @@ class Builder():
                     title=f'{branch_name} (FB)',
                     body=body,
                     head=branch_name,
-                    base='PMM-2.0',
+                    base='v3',
                     draft=True
                 )
                 logging.info(
