@@ -65,8 +65,8 @@
 [submodule "pmm-qa"]
 	path = sources/pmm-qa/src/github.com/percona/pmm-qa
 	url = https://github.com/percona/pmm-qa
-	branch = pmm-3.0.0
+	branch = v3
 [submodule "pmm-ui-tests"]
 	path = sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
 	url = https://github.com/percona/pmm-ui-tests
-	branch = pmm-3.0.0
+	branch = v3
