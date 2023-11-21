@@ -1,4 +1,4 @@
 deps:
 - name: grafana
   branch: PMM-12476-cluster-view-search
-  url: https://github.com/percona-platform/grafana
+  url: https://github.com/percona/grafana
