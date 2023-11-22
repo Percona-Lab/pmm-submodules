@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12473-pass-query-string-as-is
+  url: https://github.com/percona/pmm
