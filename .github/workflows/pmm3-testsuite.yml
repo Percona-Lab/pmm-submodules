@@ -1,18 +1,18 @@
-name: pmm2 integration tests pipeline
+name: pmm integration tests pipeline
 on:
   # run with default inputs
   workflow_dispatch:
     inputs:
       server_image:
-        description: "pmm-server docker image, default perconalab/pmm-server:dev-latest"
+        description: "pmm-server docker image, default perconalab/pmm-server:3-dev-latest"
         required: false
         type: string
       client_version:
-        description: "pmm2-client version Tarball or Dev-latest, default is dev-latest"
+        description: "pmm-client version Tarball or Dev-latest, default is 3-dev-latest"
         required: false
         type: string
       client_image:
-        description: "pmm2-client docker image, default perconalab/pmm-client:dev-latest"
+        description: "pmm-client docker image, default perconalab/pmm-client:3-dev-latest"
         required: false
         type: string
       pmm_qa_branch:
@@ -30,15 +30,15 @@ on:
   workflow_call:
     inputs:
       server_image:
-        description: "pmm-server docker image, default perconalab/pmm-server:dev-latest"
+        description: "pmm-server docker image, default perconalab/pmm-server:3-dev-latest"
         required: false
         type: string
       client_version:
-        description: "pmm2-client version Tarball or Dev-latest, default is dev-latest"
+        description: "pmm-client version Tarball or Dev-latest, default is 3-dev-latest"
         required: false
         type: string
       client_image:
-        description: "pmm2-client docker image, default perconalab/pmm-client:dev-latest"
+        description: "pmm-client docker image, default perconalab/pmm-client:3-dev-latest"
         required: false
         type: string
       pmm_qa_branch:
@@ -59,14 +59,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
-      SERVER_IMAGE: ${{ github.event.inputs.server_image || inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-      CLIENT_IMAGE: ${{ github.event.inputs.client_image || inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
-      CLIENT_VERSION: ${{ github.event.inputs.client_version || inputs.client_version || 'dev-latest' }}
+      SERVER_IMAGE: ${{ github.event.inputs.server_image || inputs.server_image || 'perconalab/pmm-server:3-dev-latest' }}
+      CLIENT_IMAGE: ${{ github.event.inputs.client_image || inputs.client_image || 'perconalab/pmm-client:3-dev-latest' }}
+      CLIENT_VERSION: ${{ github.event.inputs.client_version || inputs.client_version || '3-dev-latest' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PMM_QA_BRANCH: ${{ github.event.inputs.pmm_qa_branch || inputs.pmm_qa_branch || 'main' }}
       PMM_UI_BRANCH: ${{ github.event.inputs.pmm_ui_branch || inputs.pmm_ui_branch || 'main' }}
-      DOCKER_VERSION: ${{ github.event.inputs.server_image || inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
-      CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
+      DOCKER_VERSION: ${{ github.event.inputs.server_image || inputs.server_image || 'perconalab/pmm-server:3-dev-latest' }}
+      CLIENT_DOCKER_VERSION: ${{ github.event.inputs.client_image || inputs.client_image || 'perconalab/pmm-client:3-dev-latest' }}
       SHA: ${{ github.event.inputs.sha || inputs.sha || github.event.pull_request.head.sha || github.event.pull_request.head.sha || github.sha || 'null' }}
     strategy:
       fail-fast: false
@@ -120,17 +120,17 @@ jobs:
           wget https://raw.githubusercontent.com/Percona-QA/percona-qa/master/get_download_link.sh
           chmod +x get_download_link.sh
 
-      - name: Setup PMM2-Server
+      - name: Setup PMM3-Server
         run: |
           docker create -v /srv --name pmm-server-data ${{ env.SERVER_IMAGE }}
           docker run -d -p 80:80 -p 443:443 -p 9000:9000 -e PERCONA_TEST_PLATFORM_ADDRESS=https://check-dev.percona.com:443 -e PERCONA_TEST_PLATFORM_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX --volumes-from pmm-server-data --name pmm-server --restart always ${{ env.SERVER_IMAGE }}
           sleep 30
 
-      - name: healthcheck PMM2-server
+      - name: healthcheck PMM3-server
         run: timeout 100 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost/ping)" != "200" ]]; do sleep 5; done' || false
       
-      - name: Setup PMM2-Client
-        run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
+      - name: Setup PMM3-Client
+        run: sudo -E bash -x ./pmm-tests/pmm-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
 
       - name: Setup npm modules for the integration setup
         working-directory: pmm-integration
@@ -211,7 +211,7 @@ jobs:
       - name: Run Client Container Setup
         if: ${{ matrix.db-type == 'clientContainer' }}
         run: |
-          sudo -E bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm2
+          sudo -E bash -x ./pmm-tests/pmm-framework.sh --setup-pmm-client-docker --pmm
 
       - name: Run CLI tests for Generic Scenarios
         if: ${{ matrix.db-type == 'generic' }}
@@ -233,7 +233,7 @@ jobs:
         run: |
           export CLIENT_VERSION=${{ env.CLIENT_VERSION }}
           export CLIENT_DOCKER_VERSION=${{ env.CLIENT_DOCKER_VERSION }}
-          sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=haproxy,1 --pmm2
+          sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=haproxy,1 --pmm
 
       - name: Run CLI tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'haproxy' }}
@@ -242,7 +242,7 @@ jobs:
 
       - name: Run Setup for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pxc,1 --pmm2 --pxc-version=5.7
+        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=pxc,1 --pmm --pxc-version=5.7
 
       - name: Run CLI tests for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
@@ -251,7 +251,7 @@ jobs:
 
       - name: Run Setup for MySQL 8.0
         if: ${{ matrix.db-type == 'ms8.0' }}
-        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=ms,1 --pmm2 --ms-version=8.0
+        run: sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=ms,1 --pmm --ms-version=8.0
 
       - name: Run MySQL specific CLI tests
         if: ${{ matrix.db-type == 'ms8.0' }}
