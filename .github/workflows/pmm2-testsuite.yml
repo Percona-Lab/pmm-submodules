@@ -76,7 +76,7 @@ jobs:
     steps:
       - name: Create status check
         if: ${{ env.SHA != 'null' }}
-        uses: percona-platform/github-status-action@update-node
+        uses: percona/gh-action-github-status-action@update-node
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
@@ -272,7 +272,7 @@ jobs:
 
       - name: Create status check
         if: ${{ always() }}
-        uses: percona-platform/github-status-action@update-node
+        uses: percona/gh-action-github-status-action@update-node
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
