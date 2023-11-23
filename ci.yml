@@ -4,6 +4,3 @@ deps:
 
   - name: grafana
     branch: PMM-12459
-
-  - name: pmm-dump
-    branch: fix-multi-instance-dumps
