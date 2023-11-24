@@ -105,7 +105,6 @@ jobs:
         working-directory: ./pmm-ui-tests/cli
         run: |
           npm ci
-          npx playwright install
 
       - name: Setup tools
         run: |
