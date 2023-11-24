@@ -108,7 +108,6 @@ jobs:
 
       - name: Setup tools
         run: |
-          npm install -g bats
           sudo apt-get install -y apt-transport-https ca-certificates dirmngr ansible libaio1 libaio-dev libnuma-dev libncurses5 socat sysbench
           sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 8919F6BD2B48D754
           echo "deb https://packages.clickhouse.com/deb stable main" | sudo tee \
@@ -157,7 +156,7 @@ jobs:
         run: |
           sudo npx ts-node ./integration-setup.ts --ps-version=8 --ci --addclient=ps,1
 
-      - name: Run bats tests for PS
+      - name: Run CLI tests for PS
         if: ${{ matrix.db-type == 'ps5.7' || matrix.db-type == 'ps8' }}
         working-directory: ./pmm-ui-tests/cli
         run: npx playwright test pmm-ui-tests/cli/tests/perconaMySqlServer.spec.ts --quiet
@@ -216,11 +215,6 @@ jobs:
         if: ${{ matrix.db-type == 'generic' }}
         working-directory: ./pmm-ui-tests/cli
         run: npx playwright test generic unregister --quiet
-
-      - name: Run bats tests for generic Scenarios
-        if: ${{ matrix.db-type == 'generic' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/generic-tests.bats
 
       - name: Run CLI tests for PMM Server Container
         if: ${{ matrix.db-type == 'server-container' && !contains(env.PMM_UI_BRANCH, 'pmm-2.') }}
