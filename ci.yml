@@ -5,3 +5,6 @@ deps:
 
   - name: grafana
     branch: PMM-12284-remove-alertmanager
+
+  - name: pmm-ui-tests
+    branch: PMM-12284-remove-alertmanager
