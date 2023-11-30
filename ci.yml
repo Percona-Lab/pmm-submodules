@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12529-run-pmm-agent-as-non-root
+  url: https://github.com/percona/pmm
