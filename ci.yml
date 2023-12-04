@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-12545-dbaas-removal-ui
+  url: https://github.com/percona/grafana
