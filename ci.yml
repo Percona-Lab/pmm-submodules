@@ -1,4 +1,0 @@
-deps:
-- name: pmm
-  branch: PMM-12743-pmm-agent-stopped
-  url: https://github.com/percona/pmm

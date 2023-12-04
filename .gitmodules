@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = pmm-2.41.0
+	branch = PMM-12743-pmm-agent-stopped
 
 # PMM Client
 
