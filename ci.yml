@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12692-run-postgres-as-non-root
+  url: https://github.com/percona/pmm
