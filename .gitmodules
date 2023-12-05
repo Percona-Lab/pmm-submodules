@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = PMM-12743-revert-PMM-8655
+	branch = pmm-2.41.0
 
 # PMM Client
 
