@@ -1,0 +1,4 @@
+deps:
+  - name: mongodb_exporter
+    branch: PMM-12510-correctly-recognize-arbiter-nodes
+
