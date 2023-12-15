@@ -5,3 +5,6 @@ deps:
 - name: grafana-dashboards
   branch: PMM-12314-grafana-10
   url: https://github.com/percona/grafana-dashboards
+- name: pmm
+  branch: PMM-12314-grafana-10
+  url: https://github.com/percona/pmm
