@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12738-fix-certificate-conf
+  url: https://github.com/percona/pmm
