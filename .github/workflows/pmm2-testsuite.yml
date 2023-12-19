@@ -71,12 +71,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        db-type: [ps5.7, ps8, ms8.0, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, help, generic, clientContainer, haproxy, proxysql, remove]
+        db-type: [ps5.7, ps8, ms8.0, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, help, generic, server-container, clientContainer, haproxy, proxysql, remove]
 
     steps:
       - name: Create status check
         if: ${{ env.SHA != 'null' }}
-        uses: percona-platform/github-status-action@update-node
+        uses: percona/gh-action-github-status-action@update-node
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
@@ -104,12 +104,10 @@ jobs:
       - name: Install playwright
         working-directory: ./pmm-ui-tests/cli
         run: |
-          npm install
-          npx playwright install
+          npm ci
 
       - name: Setup tools
         run: |
-          npm install -g bats
           sudo apt-get install -y apt-transport-https ca-certificates dirmngr ansible libaio1 libaio-dev libnuma-dev libncurses5 socat sysbench
           sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 8919F6BD2B48D754
           echo "deb https://packages.clickhouse.com/deb stable main" | sudo tee \
@@ -123,11 +121,11 @@ jobs:
       - name: Setup PMM2-Server
         run: |
           docker create -v /srv --name pmm-server-data ${{ env.SERVER_IMAGE }}
-          docker run -d -p 80:80 -p 443:443 -p 9000:9000 -e PERCONA_TEST_PLATFORM_ADDRESS=https://check-dev.percona.com:443 -e PERCONA_TEST_PLATFORM_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX --volumes-from pmm-server-data --name pmm-server --restart always ${{ env.SERVER_IMAGE }}
-          sleep 30
-
-      - name: healthcheck PMM2-server
-        run: timeout 100 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost/ping)" != "200" ]]; do sleep 5; done' || false
+          docker run -d -p 80:80 -p 443:443 -p 9000:9000 \
+            -e PERCONA_TEST_PLATFORM_ADDRESS=https://check-dev.percona.com:443 \
+            -e PERCONA_TEST_PLATFORM_PUBLIC_KEY=RWTg+ZmCCjt7O8eWeAmTLAqW+1ozUbpRSKSwNTmO+exlS5KEIPYWuYdX \
+            --volumes-from pmm-server-data --name pmm-server --restart always ${{ env.SERVER_IMAGE }}
+          timeout 240 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://127.0.0.1/v1/readyz)" != "200" ]]; do sleep 2; done' || false
 
       - name: Setup PMM2-Client
         run: sudo -E bash -x ./pmm-tests/pmm2-client-setup.sh --pmm_server_ip 127.0.0.1 --client_version ${{ env.CLIENT_VERSION }} --admin_password admin --use_metrics_mode no
@@ -139,12 +137,12 @@ jobs:
       - name: Run CLI '--help' tests
         if: ${{ matrix.db-type == 'help' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test pmm-ui-tests/cli/tests/help.spec.ts
+        run: npx playwright test pmm-ui-tests/cli/tests/help.spec.ts --quiet
 
       - name: Run CLI remove tests
         if: ${{ matrix.db-type == 'remove' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test pmm-ui-tests/cli/tests/remove.spec.ts
+        run: npx playwright test pmm-ui-tests/cli/tests/remove.spec.ts --quiet
 
       - name: Run Setup for ps5.7
         working-directory: pmm-integration
@@ -158,10 +156,10 @@ jobs:
         run: |
           sudo npx ts-node ./integration-setup.ts --ps-version=8 --ci --addclient=ps,1
 
-      - name: Run bats tests for PS
+      - name: Run CLI tests for PS
         if: ${{ matrix.db-type == 'ps5.7' || matrix.db-type == 'ps8' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test pmm-ui-tests/cli/tests/perconaMySqlServer.spec.ts
+        run: npx playwright test pmm-ui-tests/cli/tests/perconaMySqlServer.spec.ts --quiet
 
       - name: Run Setup for pdpgsql 13
         working-directory: pmm-integration
@@ -184,7 +182,7 @@ jobs:
       - name: Run CLI tests for PDPGSQL
         if: ${{ matrix.db-type == 'pdpgsql13' || matrix.db-type == 'pdpgsql14' || matrix.db-type == 'pdpgsql15' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test postgreSql
+        run: npx playwright test postgreSql --quiet
 
       - name: Run Setup for PSMDB 4.4
         working-directory: pmm-integration
@@ -204,7 +202,7 @@ jobs:
       - name: Run CLI tests for PSMDB
         if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test pmm-ui-tests/cli/tests/mongoDb-psmdb.spec.ts
+        run: npx playwright test pmm-ui-tests/cli/tests/mongoDb-psmdb.spec.ts --quiet
 
 # TODO: Add setup for the official MongoDB and run "npx playwright test pmm-ui-tests/cli/tests/mongoDb.spec.ts"
 
@@ -216,17 +214,17 @@ jobs:
       - name: Run CLI tests for Generic Scenarios
         if: ${{ matrix.db-type == 'generic' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test generic unregister
+        run: npx playwright test generic unregister --quiet
 
-      - name: Run bats tests for generic Scenarios
-        if: ${{ matrix.db-type == 'generic' }}
-        run: |
-          sudo bats ./pmm-tests/pmm-2-0-bats-tests/generic-tests.bats
+      - name: Run CLI tests for PMM Server Container
+        if: ${{ matrix.db-type == 'server-container' && !contains(env.PMM_UI_BRANCH, 'pmm-2.') }}
+        working-directory: ./pmm-ui-tests/cli
+        run: npx playwright test pmm-server-only --quiet
 
       - name: Run CLI tests for PMM Client Docker Container
         if: ${{ matrix.db-type == 'clientContainer' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test pmm-client-docker
+        run: npx playwright test pmm-client-docker --quiet
 
       - name: Run Setup for HAPROXY
         if: ${{ matrix.db-type == 'haproxy' }}
@@ -238,7 +236,7 @@ jobs:
       - name: Run CLI tests for Client Container Scenarios
         if: ${{ matrix.db-type == 'haproxy' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test haproxy
+        run: npx playwright test haproxy --quiet
 
       - name: Run Setup for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
@@ -247,7 +245,7 @@ jobs:
       - name: Run CLI tests for ProxySQL
         if: ${{ matrix.db-type == 'proxysql' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test proxySql
+        run: npx playwright test proxySql --quiet
 
       - name: Run Setup for MySQL 8.0
         if: ${{ matrix.db-type == 'ms8.0' }}
@@ -256,12 +254,12 @@ jobs:
       - name: Run MySQL specific CLI tests
         if: ${{ matrix.db-type == 'ms8.0' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test pmm-ui-tests/cli/tests/mysql.spec.ts
+        run: npx playwright test pmm-ui-tests/cli/tests/mysql.spec.ts --quiet
 
       - name: Run CLI tests for MySQL Tests
         if: ${{ matrix.db-type == 'ms8.0' }}
         working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test pmm-ui-tests/cli/tests/mysql-conf-file.spec.ts
+        run: npx playwright test pmm-ui-tests/cli/tests/mysql-conf-file.spec.ts --quiet
 
       - name: Generate and Attach the report
         if: ${{ always() }}
@@ -272,7 +270,7 @@ jobs:
 
       - name: Create status check
         if: ${{ always() }}
-        uses: percona-platform/github-status-action@update-node
+        uses: percona/gh-action-github-status-action@update-node
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
