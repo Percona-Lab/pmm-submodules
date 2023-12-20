@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-9825-use-username-instead-userid
+  url: https://github.com/percona/pmm
