@@ -1,0 +1,5 @@
+deps:
+    - name: pmm
+      branch: PMM-12712-shards-info
+    - name: mongodb_exporter
+      branch: PMM-12712-shards-info
