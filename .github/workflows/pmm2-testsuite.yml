@@ -263,7 +263,7 @@ jobs:
 
       - name: Generate and Attach the report
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: "report-${{ matrix.db-type }}"
           path: ./pmm-ui-tests/cli/test-report
