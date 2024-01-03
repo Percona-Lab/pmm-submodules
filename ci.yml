@@ -2,3 +2,9 @@ deps:
 - name: grafana-dashboards
   branch: PMM-12802-update-grafana-plugins
   url: https://github.com/percona/grafana-dashboards
+- name: grafana
+  branch: PMM-12314-grafana-10
+  url: https://github.com/percona/grafana
+- name: pmm
+  branch: PMM-12314-grafana-10
+  url: https://github.com/percona/pmm
