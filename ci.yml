@@ -2,6 +2,3 @@ deps:
 - name: grafana
   branch: PMM-12545-dbaas-removal-ui
   url: https://github.com/percona/grafana
-- name: pmm
-  branch: v3
-  url: https://github.com/percona/pmm
