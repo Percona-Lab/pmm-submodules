@@ -1,0 +1,4 @@
+deps:
+- name: postgres_exporter
+  branch: PMM-12781-disable-pg-wal
+  url: https://github.com/percona/postgres_exporter
