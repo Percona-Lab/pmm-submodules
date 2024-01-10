@@ -1,4 +1,6 @@
 deps:
   - name: mongodb_exporter
     branch: PMM-12510-correctly-recognize-arbiter-nodes
+  - name: pmm
+    branch: PMM-12815-mongo-socket-parsing
 
