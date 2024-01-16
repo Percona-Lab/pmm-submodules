@@ -3,4 +3,6 @@ deps:
     branch: PMM-12510-correctly-recognize-arbiter-nodes
   - name: pmm
     branch: PMM-12510-connect-to-arbiter
-
+  - name: grafana-dashboards
+    branch: PMM-12510-change-mongo-arbiter-color
+  
