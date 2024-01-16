@@ -1,0 +1,4 @@
+deps:
+- name: mongodb_exporter
+  branch: PMM-12350-fix-mongos-error
+  url: https://github.com/percona/mongodb_exporter
