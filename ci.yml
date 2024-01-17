@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12846-Telemetry-data-for-the-client-node-version
+  url: https://github.com/percona/pmm
