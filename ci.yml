@@ -1,0 +1,7 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-12840-pt-summary-fix-and-migration
+  url: https://github.com/percona/grafana-dashboards
+- name: grafana
+  branch: PMM-12840-pt-summary-fix-and-migration
+  url: https://github.com/percona/grafana
