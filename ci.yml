@@ -2,6 +2,4 @@ deps:
     - name: pmm
       branch: PMM-12251-service-accounts
     - name: grafana
-      branch: PMM-12251-service-acc
-    - name: grafana-dashboards
-      branch: PMM-12314-grafana-10
+      branch: PMM-12251-service-acc_grafan10
