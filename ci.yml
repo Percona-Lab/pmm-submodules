@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-12806-victoriametrcis-to-honor-env-vars
