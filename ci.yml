@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12871-telemetry]-time-to-first-added-service
+  url: https://github.com/percona/pmm
