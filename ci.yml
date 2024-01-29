@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-12866-update-k8s-cluster-dashboard
+  url: https://github.com/percona/grafana-dashboards
