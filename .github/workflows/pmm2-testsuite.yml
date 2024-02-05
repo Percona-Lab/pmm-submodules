@@ -71,7 +71,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        db-type: [ps5.7, ps8, ms8.0, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, mongo-shard, help, generic, server-container, clientContainer, haproxy, proxysql, remove]
+        db-type: [ps5.7, ps8, ms8.0, pdpgsql13, pdpgsql14, pdpgsql15, modb4.4, modb5, modb6, help, generic, server-container, clientContainer, haproxy, proxysql, remove]
 
     steps:
       - name: Create status check
@@ -187,32 +187,35 @@ jobs:
       - name: Run Setup for PSMDB 4.4
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb4.4' }}
-        run: sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=4.4
+        run: |
+          sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=4
+          sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --mo-version=4 --with-shard --mongomagic    
 
       - name: Run Setup for PSMDB 5
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb5' }}
-        run: sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=5
+        run: |
+          sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=5
+          sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --mo-version=5 --with-shard --mongomagic
 
       - name: Run Setup for PSMDB 6
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb6' }}
-        run: sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=6
+        run: |
+          sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=6
+          sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --mo-version=6 --with-shard --mongomagic
+
+      - name: Run CLI tests for PSMDB
+        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' }}
+        working-directory: ./pmm-ui-tests/cli
+        run: |
+          npx playwright test pmm-ui-tests/cli/tests/mongoDb-psmdb.spec.ts --quiet
+          npx playwright test pmm-ui-tests/cli/tests/mongoDb-psmdb-new.spec.ts --quiet
 
       - name: Run Setup for PSMDB 6
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb6' }}
         run:  sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --mo-version=6 --with-shard --mongomagic
-
-      - name: Run CLI tests for PSMDB
-        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'mongo-shard' }}
-        working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test pmm-ui-tests/cli/tests/mongoDb-psmdb-new.spec.ts --quiet
-
-      - name: Run CLI tests for PSMDB
-        if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' }}
-        working-directory: ./pmm-ui-tests/cli
-        run: npx playwright test pmm-ui-tests/cli/tests/mongoDb-psmdb.spec.ts --quiet
 
 # TODO: Add setup for the official MongoDB and run "npx playwright test pmm-ui-tests/cli/tests/mongoDb.spec.ts"
 
