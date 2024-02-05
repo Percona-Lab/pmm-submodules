@@ -1,0 +1,4 @@
+# Testing PMM-12729 change
+deps:
+- name: pmm
+  branch: pmm2-submodules-12729
