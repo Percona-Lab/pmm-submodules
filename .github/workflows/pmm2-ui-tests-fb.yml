@@ -242,7 +242,7 @@ jobs:
       metrics_mode: 'auto'
 
   tarball_upgrade:
-    name: Tarball Upgrade test
+    name: Tarball Upgrade Test
     uses: Percona-QA/package-testing/.github/workflows/pmm-package-test-fb.yml@master
     secrets: inherit
     with:
