@@ -189,21 +189,21 @@ jobs:
         if: ${{ matrix.db-type == 'modb4.4' }}
         run: |
           sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=4
-          sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --mo-version=4 --with-shard --mongomagic    
+          sudo -E bash -x ../pmm-tests/pmm-framework.sh --addclient=modb,1 --mo-version=4 --with-shard --mongomagic    
 
       - name: Run Setup for PSMDB 5
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb5' }}
         run: |
           sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=5
-          sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --mo-version=5 --with-shard --mongomagic
+          sudo -E bash -x ../pmm-tests/pmm-framework.sh --addclient=modb,1 --mo-version=5 --with-shard --mongomagic
 
       - name: Run Setup for PSMDB 6
         working-directory: pmm-integration
         if: ${{ matrix.db-type == 'modb6' }}
         run: |
           sudo npx ts-node ./integration-setup.ts --ci --addclient=modb,1 --mo-version=6
-          sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --mo-version=6 --with-shard --mongomagic
+          sudo -E bash -x ../pmm-tests/pmm-framework.sh --addclient=modb,1 --mo-version=6 --with-shard --mongomagic
 
       - name: Run CLI tests for PSMDB
         if: ${{ matrix.db-type == 'modb6' || matrix.db-type == 'modb5' || matrix.db-type == 'modb4.4' }}
