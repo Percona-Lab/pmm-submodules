@@ -232,7 +232,7 @@ jobs:
 
   tarball_install:
     name: Tarball Install test
-    uses: Percona-QA/package-testing/.github/workflows/pmm-package-test-fb.yml
+    uses: Percona-QA/package-testing/.github/workflows/pmm-package-test-fb.yml@master
     secrets: inherit
     with:
       package_testing_branch: 'master'
@@ -242,7 +242,7 @@ jobs:
 
   tarball_upgrade:
     name: Tarball Upgrade test
-    uses: Percona-QA/package-testing/.github/workflows/pmm-package-test-fb.yml
+    uses: Percona-QA/package-testing/.github/workflows/pmm-package-test-fb.yml@master
     secrets: inherit
     with:
       package_testing_branch: 'master'
