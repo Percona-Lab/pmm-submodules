@@ -239,6 +239,7 @@ jobs:
       pmm_server_image: ${{ inputs.pmm_server_image }}
       pmm_client_tarball: ${{ inputs.client_version || 'dev-latest' }}
       playbook: 'pmm2-client_integration_custom_port'
+      metrics_mode: 'auto'
 
   tarball_upgrade:
     name: Tarball Upgrade test
@@ -249,3 +250,4 @@ jobs:
       pmm_server_image: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
       pmm_client_tarball: ${{ inputs.client_version || 'dev-latest' }}
       playbook: 'pmm2-client_integration_upgrade_custom_path'
+      metrics_mode: 'auto'
