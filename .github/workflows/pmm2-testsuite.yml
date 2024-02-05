@@ -212,11 +212,6 @@ jobs:
           npx playwright test pmm-ui-tests/cli/tests/mongoDb-psmdb.spec.ts --quiet
           npx playwright test pmm-ui-tests/cli/tests/mongoDb-psmdb-new.spec.ts --quiet
 
-      - name: Run Setup for PSMDB 6
-        working-directory: pmm-integration
-        if: ${{ matrix.db-type == 'modb6' }}
-        run:  sudo -E bash -x ./pmm-tests/pmm-framework.sh --addclient=modb,1 --mo-version=6 --with-shard --mongomagic
-
 # TODO: Add setup for the official MongoDB and run "npx playwright test pmm-ui-tests/cli/tests/mongoDb.spec.ts"
 
       - name: Run Client Container Setup
