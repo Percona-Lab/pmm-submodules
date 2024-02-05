@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-12847-fix-product-tour
+  url: https://github.com/percona/grafana
