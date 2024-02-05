@@ -231,7 +231,7 @@ jobs:
       tags_for_tests: '@dump'
 
   tarball_install:
-    name: Tarball Install test
+    name: Tarball Install Test
     uses: Percona-QA/package-testing/.github/workflows/pmm-package-test-fb.yml@master
     secrets: inherit
     with:
