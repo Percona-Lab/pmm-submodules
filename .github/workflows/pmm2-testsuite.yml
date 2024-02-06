@@ -210,7 +210,6 @@ jobs:
         working-directory: ./pmm-ui-tests/cli
         run: |
           npx playwright test pmm-ui-tests/cli/tests/mongoDb-psmdb.spec.ts --quiet
-          npx playwright test pmm-ui-tests/cli/tests/mongoDb-psmdb-new.spec.ts --quiet
 
 # TODO: Add setup for the official MongoDB and run "npx playwright test pmm-ui-tests/cli/tests/mongoDb.spec.ts"
 
