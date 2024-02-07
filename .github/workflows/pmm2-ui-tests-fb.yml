@@ -106,8 +106,8 @@ jobs:
       #      tags_for_tests: '@bm-common|@bm-locations' -- include bm-common once setup for mysql fixed
       tags_for_tests: '@bm-locations'
 
-  mongodb_exporter:
-    name: MongoDB Exporter tests
+  exporters:
+    name: Exporters tests
     uses: ./.github/workflows/ui-tests.yml
     secrets: inherit
     with:
