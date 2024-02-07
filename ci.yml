@@ -1,0 +1,4 @@
+# Verify PMM-12729 changes
+deps:
+- name: pmm
+  branch: pmm2-12729
