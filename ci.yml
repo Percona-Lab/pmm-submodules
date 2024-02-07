@@ -1,0 +1,3 @@
+deps:
+    - name: mongodb_exporter
+      branch: PMM-12805-view-error
