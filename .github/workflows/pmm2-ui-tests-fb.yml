@@ -253,7 +253,7 @@ jobs:
       pmm_server_image: ${{ inputs.pmm_server_image }}
       pmm_client_tarball: ${{ inputs.client_version || 'dev-latest' }}
       playbook: 'pmm2-client_integration_custom_port'
-      test_name: 'Tarball install test'
+      test_name: 'Tarball install Test'
 
   tarball_upgrade:
     name: Tarball Upgrade test
