@@ -1,4 +1,4 @@
 deps:
 - name: grafana-dashboards
-  branch: guriandoro:PMM-12887
+  branch: PMM-12887
   url: https://github.com/guriandoro/grafana-dashboards
