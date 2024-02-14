@@ -87,7 +87,7 @@ deps:
     url: https://github.com/percona/pmm-dump
     component: server
 
-  # QA
+  # QA 
   - name: pmm-qa
     branch: main
     path: sources/pmm-qa/src/github.com/percona/pmm-qa
