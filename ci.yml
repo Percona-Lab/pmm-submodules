@@ -1,0 +1,4 @@
+deps:
+  # QA
+  - name: pmm-ui-tests
+    branch: PMM-7-make-workflows-green
