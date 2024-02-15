@@ -119,7 +119,7 @@ jobs:
       sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
       client_flags: '--mongo-replica-for-backup'
       tags_for_tests: '@mongodb-exporter|@exporters'
-  
+
   instances:
     name: Instances UI tests
     uses: ./.github/workflows/ui-tests.yml
@@ -253,7 +253,7 @@ jobs:
       pmm_server_image: ${{ inputs.pmm_server_image }}
       pmm_client_tarball: ${{ inputs.client_version || 'dev-latest' }}
       playbook: 'pmm2-client_integration_custom_port'
-      metrics_mode: 'auto'
+      test_name: 'Tarball install'
 
   tarball_upgrade:
     name: Tarball Upgrade test
@@ -264,4 +264,4 @@ jobs:
       pmm_server_image: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
       pmm_client_tarball: ${{ inputs.client_version || 'dev-latest' }}
       playbook: 'pmm2-client_integration_upgrade_custom_path'
-      metrics_mode: 'auto'
+      test_name: 'Tarball upgrade'
