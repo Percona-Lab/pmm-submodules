@@ -1,4 +1,4 @@
 deps:
 - name: grafana-dashboards
-  branch: PMM-12763-fix-outdated-deps
+  branch: PMM-12763-fix-root-path
   url: https://github.com/percona/grafana-dashboards
