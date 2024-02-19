@@ -246,7 +246,7 @@ jobs:
 
   tarball_install:
     name: Tarball Install test
-    uses: percona/pmm-qa/.github/workflows/pmm-package-test-fb.yml@main
+    uses: percona/pmm-qa/.github/workflows/package-test-fb.yml@main
     secrets: inherit
     with:
       package_testing_branch: 'master'
