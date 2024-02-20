@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-12948-Database-uptime-reported-is-wrong-in-PMM
+  url: https://github.com/percona/grafana-dashboards
