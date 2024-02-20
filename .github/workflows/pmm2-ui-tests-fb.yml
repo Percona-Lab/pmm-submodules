@@ -192,7 +192,7 @@ jobs:
 
   rbac:
     name: RBAC UI tests
-    uses: percona/pmm-ui-tests/.github/workflows/pmm-ui-tests.yml@main
+    uses: percona/pmm-qa/.github/workflows/runner-e2e-tests-playwright.yml@main
     secrets: inherit
     with:
       pmm_ui_tests_branch: ${{ inputs.pmm_ui_branch || 'main '}}
