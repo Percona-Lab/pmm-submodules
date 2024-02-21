@@ -145,6 +145,13 @@ jobs:
             return `artifacts_for_${process.env.TAGS_FOR_TESTS.replaceAll('|', '')}`
           result-encoding: string
 
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: ${{ steps.artifact_name.outputs.result }}
+          path: |
+            pmm-ui-tests/tests/output/*.png
+
       - name: Create status check
         if: ${{ github.event_name != 'pull_request' && always() }}
         uses: percona/gh-action-github-status-action@v1
