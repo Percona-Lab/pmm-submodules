@@ -1,3 +1,1 @@
-deps:
-  - name: pmm
-    branch: PMM-7-no-forward-slashes-in-branch-names
+
