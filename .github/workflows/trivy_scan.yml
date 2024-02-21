@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SHA: ${{ github.event.inputs.sha || github.event.pull_request.head.sha || github.sha }}
-    
+
     strategy:
       fail-fast: false
       matrix:
@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - name: Communicate action status back to the PR
-        uses: percona-platform/github-status-action@update-node
+        uses: percona/gh-action-github-status-action@update-node
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
@@ -59,7 +59,7 @@ jobs:
 
       - name: Archive trivy scan results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.REPORT }}
           path: ${{ env.REPORT }}
@@ -67,7 +67,7 @@ jobs:
 
       - name: Communicate action status back to the PR
         if: always()
-        uses: percona-platform/github-status-action@update-node
+        uses: percona/gh-action-github-status-action@update-node
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
