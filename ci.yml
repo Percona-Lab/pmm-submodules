@@ -1,3 +1,0 @@
-deps:
-  - name: grafana-dashboards
-    branch: PMM-12763-fix-root-path
