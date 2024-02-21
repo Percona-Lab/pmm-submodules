@@ -8,11 +8,11 @@ on:
       server_image:
         description: "pmm-server docker image"
         required: false
-        default: percona/pmm-server:dev-latest
+        default: perconalab/pmm-server:dev-latest
         type: string
       client_image:
         description: "pmm-client docker image"
-        default: percona/pmm-client:dev-latest
+        default: perconalab/pmm-client:dev-latest
         required: false
         type: string
 
