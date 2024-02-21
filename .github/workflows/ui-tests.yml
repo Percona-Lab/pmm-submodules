@@ -45,6 +45,7 @@ jobs:
       SERVER_IMAGE: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
       CLIENT_IMAGE: ${{ inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
       CLIENT_VERSION: ${{ inputs.client_version || 'dev-latest' }}
+      PMM_CLIENT_VERSION: ${{ inputs.client_version || 'dev-latest' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ADMIN_PASSWORD: 'admin-password'
       PMM_QA_BRANCH: ${{ inputs.pmm_qa_branch || 'main' }}
@@ -64,7 +65,7 @@ jobs:
     steps:
       - name: Create status check
         if: ${{ github.event_name != 'pull_request' }}
-        uses: percona-platform/github-status-action@v1
+        uses: percona/gh-action-github-status-action@v1
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
@@ -136,7 +137,7 @@ jobs:
           sed -i 's+http://localhost/+${PMM_UI_URL}/+g' pr.codecept.js
           ./node_modules/.bin/codeceptjs run -c pr.codecept.js --grep "${{ env.TAGS_FOR_TESTS }}"
 
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         if: ${{ always() }}
         id: artifact_name
         with:
@@ -144,9 +145,16 @@ jobs:
             return `artifacts_for_${process.env.TAGS_FOR_TESTS.replaceAll('|', '')}`
           result-encoding: string
 
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: ${{ steps.artifact_name.outputs.result }}
+          path: |
+            pmm-ui-tests/tests/output/*.png
+
       - name: Create status check
         if: ${{ github.event_name != 'pull_request' && always() }}
-        uses: percona-platform/github-status-action@v1
+        uses: percona/gh-action-github-status-action@v1
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
