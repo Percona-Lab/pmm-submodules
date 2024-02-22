@@ -1,1 +1,7 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-12894-rolling-collection-strategy-for-PG-exporter
 
+  - name: postgres_exporter
+    branch: PMM-12893-rolling-collection-strategy
