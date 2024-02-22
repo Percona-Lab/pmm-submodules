@@ -1,1 +1,4 @@
-
+deps:
+- name: grafana-dashboards
+  branch: k8s-dashboards-rework
+  url: https://github.com/spron-in/grafana-dashboards
