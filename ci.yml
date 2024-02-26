@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-11261-update-via-watchtower
+  url: https://github.com/percona/pmm
