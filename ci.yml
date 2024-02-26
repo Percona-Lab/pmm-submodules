@@ -1,1 +1,4 @@
-
+deps:
+- name: grafana
+  branch: PMM-12952-pg-stat-monitor-default
+  url: https://github.com/percona/grafana
