@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-12802-update-grafana-plugins
+  url: https://github.com/percona/grafana-dashboards
