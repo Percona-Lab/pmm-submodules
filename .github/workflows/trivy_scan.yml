@@ -1,47 +1,36 @@
 name: Scan pmm server and client docker images
 
 on:
+  schedule:
+    - cron: '0 7 * * 1'
   workflow_dispatch:
     inputs:
       server_image:
         description: "pmm-server docker image"
-        required: true
+        required: false
+        default: perconalab/pmm-server:dev-latest
         type: string
       client_image:
         description: "pmm-client docker image"
-        required: true
-        type: string
-      sha:
-        description: "SHA of commit to update status on"
-        required: true
+        default: perconalab/pmm-client:dev-latest
+        required: false
         type: string
 
 jobs:
   scan:
     runs-on: ubuntu-latest
     env:
-      SHA: ${{ github.event.inputs.sha || github.event.pull_request.head.sha || github.sha }}
+      SERVER_IMAGE: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+      CLIENT_IMAGE: ${{ inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
 
     strategy:
       fail-fast: false
       matrix:
         include:
-          - image: ${{ inputs.server_image }}
-          - image: ${{ inputs.client_image }}
+          - image: ${{ env.SERVER_IMAGE }}
+          - image: ${{ env.CLIENT_IMAGE }}
 
     steps:
-      - name: Communicate action status back to the PR
-        uses: percona/gh-action-github-status-action@update-node
-        continue-on-error: true
-        with:
-          authToken: ${{ secrets.GITHUB_TOKEN }}
-          context: "${{ matrix.image }}"
-          description: "Trivy vulnerability scanning ${{ job.status }}"
-          state: "pending"
-          repository: ${{ github.repository }}
-          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          sha: ${{ env.SHA }}
-
       - name: Set report filename
         run: |
           echo "REPORT=$(echo ${{ matrix.image }} | cut -d'/' -f2 | tr ':' '-')" >> $GITHUB_ENV
@@ -65,15 +54,14 @@ jobs:
           path: ${{ env.REPORT }}
           retention-days: 7
 
-      - name: Communicate action status back to the PR
-        if: always()
-        uses: percona/gh-action-github-status-action@update-node
-        continue-on-error: true
-        with:
-          authToken: ${{ secrets.GITHUB_TOKEN }}
-          context: "${{ matrix.image }}"
-          description: "Trivy vulnerability scanning ${{ job.status }}"
-          state: ${{ job.status }}
-          repository: ${{ github.repository }}
-          target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          sha: ${{ env.SHA }}
+      - name: Send Slack notification on failure
+        if: ${{ failure() }}
+        uses: percona/gh-action-action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_TOKEN }}
+          SLACK_USERNAME: "trivy scanner"
+          SLACK_ICON_EMOJI: ":squirrel:"
+          SLACK_COLOR: "#FF0000"
+          SLACK_TITLE: "CVE Scan failure"
+          SLACK_MESSAGE: "Failed CVE scan for ${{ matrix.image }}"
+          SLACK_FOOTER: "Please check the Actions URL ^"
