@@ -1,1 +1,7 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-12897-move-db-specific-metrics-to-low-resolution
 
+  - name: postgres_exporter
+    branch: PMM-12897-move-db-specific-metrics-to-low-resolution
