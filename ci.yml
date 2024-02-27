@@ -1,1 +1,7 @@
-
+deps:
+- name: mongodb_exporter
+  branch: PMM-9403-add-extra-self-label-for-replicaset
+  url: https://github.com/percona/mongodb_exporter
+- name: grafana-dashboards
+  branch: PMM-9403-add-extra-self-label-for-replicaset
+  url: https://github.com/percona/grafana-dashboards
