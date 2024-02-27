@@ -1,0 +1,99 @@
+name: "FB Tests"
+
+on:
+  workflow_dispatch:
+    inputs:
+      pmm_qa_branch:
+        description: "Branch for PMM-QA to checkout"
+        required: false
+        type: string
+      pmm_ui_branch:
+        description: "Branch for PMM-UI tests to checkout"
+        required: false
+        type: string
+      package_testing_branch:
+        description: "Branch for PMM-UI tests to checkout"
+        required: false
+        type: string
+      server_image:
+        description: "pmm-server docker image, default perconalab/pmm-server:dev-latest"
+        required: false
+        type: string
+      client_image:
+        description: "pmm2-client docker image, default perconalab/pmm-client:dev-latest"
+        required: false
+        type: string
+      client_version:
+        description: "pmm2-client version Tarball or Dev-latest, default is dev-latest"
+        required: false
+        type: string
+      sha:
+        description: "SHA (leave empty if running manually, default - 'null')"
+        required: false
+        type: string
+
+  workflow_call:
+    inputs:
+      pmm_qa_branch:
+        required: false
+        type: string
+      pmm_ui_tests_branch:
+        required: false
+        type: string
+      package_testing_branch:
+        description: "Branch for PMM-UI tests to checkout"
+        required: false
+        type: string
+      pmm_server_image:
+        required: false
+        type: string
+      pmm_client_image:
+        required: false
+        type: string
+      pmm_client_version:
+        required: false
+        type: string
+      sha:
+        required: false
+        type: string
+
+    secrets:
+      BACKUP_LOCATION_ACCESS_KEY:
+        required: false
+      BACKUP_LOCATION_SECRET_KEY:
+        required: false
+
+jobs:
+  integration_fb_suite:
+    name: CLI
+    uses: percona/pmm-qa/.github/workflows/fb-integration-suite.yml@main
+    secrets: inherit
+    with:
+      sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
+      pmm_ui_tests_branch: ${{ inputs.pmm_ui_tests_branch || 'main' }}
+      pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
+      pmm_server_image: ${{ inputs.pmm_server_image || 'perconalab/pmm-server:dev-latest' }}
+      pmm_client_image: ${{ inputs.pmm_client_image || 'perconalab/pmm-client:dev-latest' }}
+      pmm_client_version: ${{ inputs.pmm_client_version || 'dev-latest' }}
+
+  e2e_fb_suite:
+    name: E2E
+    uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@main
+    secrets: inherit
+    with:
+      sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
+      pmm_ui_tests_branch: ${{ inputs.pmm_ui_tests_branch || 'main' }}
+      pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
+      pmm_server_image: ${{ inputs.pmm_server_image || 'perconalab/pmm-server:dev-latest' }}
+      pmm_client_image: ${{ inputs.pmm_client_image || 'perconalab/pmm-client:dev-latest' }}
+      pmm_client_version: ${{ inputs.pmm_client_version || 'dev-latest' }}
+
+  tarball_fb_suite:
+    name: Tarball
+    uses: percona/pmm-qa/.github/workflows/fb-tarball-suite.yml@main
+    secrets: inherit
+    with:
+      sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
+      package_testing_branch: ${{ inputs.package_testing_branch || 'master' }}
+      pmm_server_image: ${{ inputs.pmm_server_image || 'perconalab/pmm-server:dev-latest' }}
+      pmm_client_tarball: ${{ inputs.pmm_client_version || 'dev-latest' }}
