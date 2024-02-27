@@ -19,13 +19,16 @@ on:
 jobs:
   scan:
     runs-on: ubuntu-latest
+    env:
+      SERVER_IMAGE: ${{ inputs.server_image || 'perconalab/pmm-server:dev-latest' }}
+      CLIENT_IMAGE: ${{ inputs.client_image || 'perconalab/pmm-client:dev-latest' }}
 
     strategy:
       fail-fast: false
       matrix:
         include:
-          - image: ${{ inputs.server_image }}
-          - image: ${{ inputs.client_image }}
+          - image: ${{ env.SERVER_IMAGE }}
+          - image: ${{ env.CLIENT_IMAGE }}
 
     steps:
       - name: Set report filename
