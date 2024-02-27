@@ -1,4 +1,4 @@
-name: "Feature Build: pmm-qa checks"
+name: "FB Tests"
 
 on:
   workflow_dispatch:
@@ -63,13 +63,9 @@ on:
       BACKUP_LOCATION_SECRET_KEY:
         required: false
 
-  push:
-    branches:
-      - PMM-12921-pmm-qa-checks
-
 jobs:
   integration_fb_suite:
-    name: CLI Integration tests
+    name: CLI
     uses: percona/pmm-qa/.github/workflows/fb-integration-suite.yml@main
     secrets: inherit
     with:
@@ -81,7 +77,7 @@ jobs:
       pmm_client_version: ${{ inputs.pmm_client_version || 'dev-latest' }}
 
   e2e_fb_suite:
-    name: e2e FB tests
+    name: E2E
     uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@main
     secrets: inherit
     with:
@@ -93,7 +89,7 @@ jobs:
       pmm_client_version: ${{ inputs.pmm_client_version || 'dev-latest' }}
 
   tarball_fb_suite:
-    name: Tarball FB tests
+    name: Tarball
     uses: percona/pmm-qa/.github/workflows/fb-tarball-suite.yml@main
     secrets: inherit
     with:
