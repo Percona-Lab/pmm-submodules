@@ -7,7 +7,7 @@ on:
         description: "Branch for PMM-QA to checkout (pmm-qa)"
         required: false
         type: string
-      pmm_ui_branch:
+      pmm_ui_tests_branch:
         description: "Branch for UI tests to checkout (pmm-ui-tests)"
         required: false
         type: string
@@ -15,15 +15,15 @@ on:
         description: "Branch for package tests to checkout (package-testing)"
         required: false
         type: string
-      server_image:
+      pmm_server_image:
         description: "pmm-server docker image, default perconalab/pmm-server:dev-latest"
         required: false
         type: string
-      client_image:
+      pmm_client_image:
         description: "pmm2-client docker image, default perconalab/pmm-client:dev-latest"
         required: false
         type: string
-      client_version:
+      pmm_client_version:
         description: "pmm2-client version Tarball or Dev-latest, default is dev-latest"
         required: false
         type: string
