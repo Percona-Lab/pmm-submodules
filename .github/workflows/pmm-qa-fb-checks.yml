@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       pmm_qa_branch:
-        description: "Branch for PMM-QA to checkout"
+        description: "Branch for PMM-QA to checkout (pmm-qa)"
         required: false
         type: string
       pmm_ui_branch:
-        description: "Branch for PMM-UI tests to checkout"
+        description: "Branch for UI tests to checkout (pmm-ui-tests)"
         required: false
         type: string
       package_testing_branch:
-        description: "Branch for PMM-UI tests to checkout"
+        description: "Branch for package tests to checkout (package-testing)"
         required: false
         type: string
       server_image:
