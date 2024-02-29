@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-12741-percona-templated-alerts
+  url: https://github.com/percona/grafana
