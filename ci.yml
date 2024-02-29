@@ -1,1 +1,4 @@
-
+deps:
+- name: grafana-dashboards
+  branch: pg-instance-summary-dgb
+  url: https://github.com/percona/grafana-dashboards
