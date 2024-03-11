@@ -1,1 +1,4 @@
-
+deps:
+- name: pmm
+  branch: PMM-12992-add-service-name
+  url: https://github.com/percona/pmm
