@@ -1,4 +1,7 @@
 deps:
   - name: mongodb_exporter
     branch: PMM-12855-pbm-poc-metrics
+  - name: pmm
+    branch: PMM-12855-pbm-poc-metrics
+
 
