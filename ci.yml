@@ -1,0 +1,10 @@
+deps:
+- name: pmm
+  branch: PMM-12991-grafana-10-4-0
+  url: https://github.com/percona/pmm
+- name: grafana-dashboards
+  branch: PMM-12991-grafana-10-4-0
+  url: https://github.com/percona/grafana-dashboards
+- name: grafana
+  branch: PMM-12991-grafana-10-4-0
+  url: https://github.com/percona/grafana
