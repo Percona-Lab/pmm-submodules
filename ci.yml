@@ -1,1 +1,5 @@
 
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-12896-limit-conns-num-from-jobs-runner
