@@ -1,1 +1,3 @@
-
+deps:
+  - name: postgres_exporter
+    branch: PMM-12994-extend-replication-metrics
