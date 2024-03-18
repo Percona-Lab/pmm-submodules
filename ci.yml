@@ -1,1 +1,4 @@
-
+deps:
+- name: pmm
+  branch: PMM-13007-fix-path-and-pmm-agent-service
+  url: https://github.com/percona/pmm
