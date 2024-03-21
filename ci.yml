@@ -1,1 +1,4 @@
 
+deps:
+    - name: pmm
+      branch: PMM-10684-clickhouse-v2
