@@ -1,3 +1,4 @@
+# CI build related
 build/pmm-server-docker/RPMS/
 *.swp
 *~
@@ -5,5 +6,9 @@ tmp/
 results/
 .DS_Store
 .git-sources
+go-build/
+go-path/
+
+# editors
 .vscode/
 .idea/
