@@ -1,7 +1,7 @@
-  - name: pmm
-    branch: PMM-11231-pmm-updates-ui
-    url: https://github.com/percona/pmm
-
-  - name: grafana
-    branch: PMM-12912-updates-menu-indicator
-    url: https://github.com/percona/grafana
+deps:
+- name: pmm
+  branch: PMM-11231-pmm-updates-ui
+  url: https://github.com/percona/pmm
+- name: grafana
+  branch: PMM-12912-updates-menu-indicator
+  url: https://github.com/percona/grafana
