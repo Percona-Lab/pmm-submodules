@@ -1,1 +1,4 @@
-
+deps:
+- name: postgres_exporter
+  branch: PMM-7-enable-all-collectors
+  url: https://github.com/percona/postgres_exporter
