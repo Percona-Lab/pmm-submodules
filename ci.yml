@@ -1,1 +1,4 @@
+deps:
+  - name: mongodb_exporter
+    branch: PMM-12989-arbiter-error-logs
 
