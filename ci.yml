@@ -1,1 +1,3 @@
-
+deps:
+  - name: pmm
+    branch: PMM-12998-ansible-self-update-msg
