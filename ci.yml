@@ -1,0 +1,5 @@
+deps:
+    - name: pmm
+      branch: PMM-12686-PMM-server-client-auth
+    - name: grafana
+      branch: PMM-12251-service-acc_grafan10
