@@ -1,1 +1,3 @@
-
+deps:
+  - name: node-exporter
+    branch: textfile-conector-namefix
