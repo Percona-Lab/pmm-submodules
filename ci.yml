@@ -1,1 +1,4 @@
-
+deps:
+- name: pmm
+  branch: PMM-3303-monitor-clickhouse
+  url: https://github.com/percona/pmm
