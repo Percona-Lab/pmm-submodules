@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-12845-qan-column-management
+  url: https://github.com/percona/grafana-dashboards
