@@ -1,1 +1,13 @@
-
+deps:
+- name: pmm
+  branch: dependabot/go_modules/github.com/prometheus/common-0.52.3
+  url: https://github.com/percona/pmm
+- name: node_exporter
+  branch: dependabot/go_modules/github.com/prometheus/common-0.52.3
+  url: https://github.com/percona/node_exporter
+- name: mongodb_exporter
+  branch: dependabot/go_modules/github.com/prometheus/common-0.52.3
+  url: https://github.com/percona/mongodb_exporter
+- name: postgres_exporter
+  branch: dependabot/go_modules/github.com/prometheus/common-0.52.3
+  url: https://github.com/percona/postgres_exporter
