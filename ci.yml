@@ -2,6 +2,3 @@ deps:
 - name: grafana
   branch: PMM-12776-re-enable-RBAC
   url: https://github.com/percona/grafana
-- name: pmm
-  branch: PMM-12776-re-enable-RBAC
-  url: https://github.com/percona/pmm
