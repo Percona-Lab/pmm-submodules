@@ -1,1 +1,4 @@
-
+deps:
+- name: grafana
+  branch: PMM-12971-add-max-conn-pg
+  url: https://github.com/percona/grafana
