@@ -1,1 +1,4 @@
-
+deps:
+- name: grafana-dashboards
+  branch: PMM-13123-low-query-response-time
+  url: https://github.com/percona/grafana-dashboards
