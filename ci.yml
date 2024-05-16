@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: menu-variables-poc
+  url: https://github.com/percona/grafana
