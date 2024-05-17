@@ -1,5 +1,5 @@
 deps:
     - name: grafana
       branch: PMM-13120-unregister-node
-     - name: pmm
+    - name: pmm
       branch: PMM-13120-unregister-node     
