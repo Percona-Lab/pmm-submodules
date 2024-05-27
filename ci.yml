@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-13122-main-menu-variables
+  url: https://github.com/percona/grafana
