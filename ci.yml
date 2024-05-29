@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13052-qan-time-range
+  url: https://github.com/percona/grafana-dashboards
