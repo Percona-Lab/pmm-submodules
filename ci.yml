@@ -1,4 +1,10 @@
 deps:
+- name: grafana
+  branch: PMM-12710-API-braking-changes
+  url: https://github.com/percona/grafana
 - name: grafana-dashboards
   branch: breaking-changes-test-yash
   url: https://github.com/percona/grafana-dashboards
+- name: pmm
+  branch: PMM-12913-migrate-api-endpoints-to-restful
+  url: https://github.com/percona/pmm
