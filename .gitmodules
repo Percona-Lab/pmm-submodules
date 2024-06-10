@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = main
+	branch = PMM-9242-arm-build-for-pmm2-client
 
 # PMM Client
 
