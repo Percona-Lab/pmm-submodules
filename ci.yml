@@ -1,3 +1,3 @@
 deps:
   - name: pmm
-    branch: dependabot-tools-google.golang.org-protobuf-1.34.1
+    branch: PMM-13133-upgrade-pg-query-go
