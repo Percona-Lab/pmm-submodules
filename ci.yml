@@ -1,1 +1,4 @@
-
+deps:
+- name: grafana-dashboards
+  branch: PMM-13159-remove-collection-details
+  url: https://github.com/percona/grafana-dashboards
