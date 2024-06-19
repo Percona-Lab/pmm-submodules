@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-13180-fix-url-build-error
+  url: https://github.com/percona/grafana
