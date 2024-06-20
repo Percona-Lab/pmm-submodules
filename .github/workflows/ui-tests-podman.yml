@@ -67,7 +67,7 @@ jobs:
     steps:
       - name: Create status check
         if: ${{ github.event_name != 'pull_request' }}
-        uses: percona/gh-action-github-status-action@v1
+        uses: percona/gh-action-github-status-action@v2
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
@@ -223,7 +223,7 @@ jobs:
 
       - name: Create status check
         if: ${{ github.event_name != 'pull_request' && always() }}
-        uses: percona/gh-action-github-status-action@v1
+        uses: percona/gh-action-github-status-action@v2
         continue-on-error: true
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
