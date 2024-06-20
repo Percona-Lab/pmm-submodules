@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13175-hide-deprecation-warnings
+  url: https://github.com/percona/pmm
