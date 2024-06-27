@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13176-qan-plan-tooltip
+  url: https://github.com/percona/grafana-dashboards
