@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13202-fix-double-unlock
+  url: https://github.com/percona/pmm
