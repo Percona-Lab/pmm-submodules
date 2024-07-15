@@ -6,5 +6,5 @@ deps:
   branch: PMM-12710-API-breaking-changes
   url: https://github.com/percona/grafana-dashboards
 - name: pmm
-  branch: PMM-12913-migrate-api-endpoints-to-restful
+  branch: v3-api-breaking-changes
   url: https://github.com/percona/pmm
