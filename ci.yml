@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-13078-list-available-client-versions
