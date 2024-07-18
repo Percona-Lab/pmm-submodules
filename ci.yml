@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-13077-list-pmm-server-versions
+
