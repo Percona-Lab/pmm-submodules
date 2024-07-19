@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-13250-fix-backup-restore-endpoint
