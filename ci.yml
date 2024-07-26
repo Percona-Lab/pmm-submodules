@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-13265-alert-rule-from-template-params
+  url: https://github.com/percona/grafana
