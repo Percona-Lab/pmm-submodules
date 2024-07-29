@@ -5,3 +5,6 @@ deps:
 - name: grafana
   branch: PMM-13235-grafana-11
   url: https://github.com/percona/grafana
+- name: pmm
+  branch: PMM-13235-grafana-11
+  url: https://github.com/percona/pmm
