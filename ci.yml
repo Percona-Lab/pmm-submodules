@@ -1,1 +1,4 @@
-
+deps:
+- name: pmm
+  branch: PMM-13111-ability-to-disable-postgres-collectors
+  url: https://github.com/percona/pmm
