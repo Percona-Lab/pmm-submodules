@@ -1,1 +1,4 @@
-
+deps:
+- name: pmm
+  branch: PMM-13288-honour-max-query-length-for-pg_stat_statements
+  url: https://github.com/percona/pmm
