@@ -1,7 +1,4 @@
 deps:
-  # COMMON
   - name: pmm
     branch: report_process_init_error
-    path: sources/pmm/src/github.com/percona/pmm
     url: https://github.com/GuanqunYang193/pmm
-    component: common
