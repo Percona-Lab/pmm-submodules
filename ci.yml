@@ -1,1 +1,4 @@
-
+deps:
+- name: pmm
+  branch: PMM-13136-enable-logical-restore-for-sharded-cluster
+  url: https://github.com/percona/pmm
