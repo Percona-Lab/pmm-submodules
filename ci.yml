@@ -1,1 +1,4 @@
-
+deps:
+- name: grafana-dashboards
+  branch: PMM-12982-mongo-replset-update-cleanup
+  url: https://github.com/percona/grafana-dashboards
