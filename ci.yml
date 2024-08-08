@@ -1,1 +1,9 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-13141-enable-fcv-collector
+    url: https://github.com/percona/pmm
 
+  - name: mongodb_exporter
+    branch: PMM-13141_featureCompatibilityVersion
+    url: https://github.com/cfsalguero/mongodb_exporter
