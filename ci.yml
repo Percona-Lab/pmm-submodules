@@ -2,4 +2,4 @@ deps:
   - name: pmm
     branch: PMM-13282-migrate-pmm-dump-to-v3
   - name: pmm-dump
-    bramch: PMM-13282-migrate-to-pmm-v3
+    branch: PMM-13282-migrate-to-pmm-v3
