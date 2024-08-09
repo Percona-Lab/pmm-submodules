@@ -55,7 +55,7 @@
 [submodule "pmm-dump"]
 	path = sources/pmm-dump
 	url = https://github.com/percona/pmm-dump
-	branch = main
+	branch = PMM-13282-migrate-to-pmm-v3
 
 ## PMM Tests
 [submodule "pmm-qa"]
