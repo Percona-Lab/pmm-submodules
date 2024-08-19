@@ -1,1 +1,5 @@
-
+deps:
+  - name: pmm
+    branch: PMM-10680-enable-pbm-collector
+  - name: mongodb_exporter
+    branch: PMM-12957-pbm-metrics-collector
