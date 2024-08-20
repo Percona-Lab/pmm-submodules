@@ -1,1 +1,4 @@
-
+deps:
+  - name: pmm
+    url: https://github.com/konopka90/pmm
+    branch: PMM-13314-add-yum-flag
