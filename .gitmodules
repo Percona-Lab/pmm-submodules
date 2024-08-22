@@ -1,7 +1,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = main
+	branch = PMM-13244-drop-amazon-linux-2
 
 # PMM Client
 
