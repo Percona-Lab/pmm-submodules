@@ -1,1 +1,4 @@
-
+deps:
+- name: grafana-dashboards
+  branch: PMM-13030
+  url: https://github.com/sleto-it/grafana-dashboards
