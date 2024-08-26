@@ -31,12 +31,6 @@ deps:
     url: https://github.com/percona/postgres_exporter
     component: client
 
-  - name: clickhouse_exporter
-    branch: main
-    path: sources/clickhouse_exporter/src/github.com/Percona-Lab/clickhouse_exporter
-    url: https://github.com/Percona-Lab/clickhouse_exporter
-    component: client
-
   - name: proxysql_exporter
     branch: main
     path: sources/proxysql_exporter/src/github.com/percona/proxysql_exporter
