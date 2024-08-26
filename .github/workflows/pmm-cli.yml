@@ -86,7 +86,3 @@ jobs:
             -f target_url="https://github.com/$REPO/actions/runs/$RUN_ID" \
             -f description="PMM binary CLI Tests $STATUS" \
             -f context='actions/workflows/pmm-cli'
-
-  #      - name: Setup tmate session on failure
-  #        if: ${{ failure() }}
-  #        uses: percona-platform/action-tmate@v2
