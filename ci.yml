@@ -1,7 +1,7 @@
 deps:
-- name: grafana
-  branch: PMM-13258-update-dashboards-structure
-  url: https://github.com/percona/grafana
-- name: grafana-dashboards
-  branch: PMM-13258-dashboard-structure-change
-  url: https://github.com/percona/grafana-dashboards
+  - name: grafana
+    branch: PMM-13258-update-dashboards-structure
+    url: https://github.com/percona/grafana
+  - name: grafana-dashboards
+    branch: PMM-13258-dashboard-structure-change
+    url: https://github.com/percona/grafana-dashboards
