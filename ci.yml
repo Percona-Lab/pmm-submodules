@@ -1,4 +1,4 @@
 deps:
   - name: mongodb_exporter
-    branch: PMM-13243-service-role
+    branch: PMM-13243-service-role-labels
 
