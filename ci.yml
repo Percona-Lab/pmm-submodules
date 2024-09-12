@@ -1,0 +1,4 @@
+deps:
+  - name: mongodb_exporter
+    branch: PMM-13362-adopt-metric-naming-convention
+
