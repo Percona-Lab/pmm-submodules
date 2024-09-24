@@ -3,4 +3,3 @@ deps:
     branch: PMM-13166_nodes_monitor_db
   - name: pmm
     branch: v3
-    url: https://github.com/percona/grafana
