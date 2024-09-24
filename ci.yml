@@ -1,5 +1,3 @@
 deps:
   - name: grafana
     branch: PMM-13166_nodes_monitor_db
-  - name: pmm
-    branch: v3
