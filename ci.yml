@@ -1,3 +1,5 @@
 deps:
   - name: grafana
     branch: PMM-13166_nodes_monitor_db
+  - name: pmm
+    branch: PMM-12013-rds-exporter
