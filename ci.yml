@@ -1,3 +1,3 @@
 deps:
-     - name: pmm
+    - name: pmm
       branch: PMM-13315-service-account-max-length
