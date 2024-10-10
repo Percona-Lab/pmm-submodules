@@ -98,7 +98,7 @@ git config --global push.default current
 
 ### What's a `global` repo in ci.yml?
 
-It's a branch name that this script will try to find in a repo instead of the default branch (usually called `main` or `PMM-2.0`).
+It's a branch name that this script will try to find in a repo instead of the default branch (usually called `main` or `v3`).
 
 ### Can I build my FB as before using .gitmodules?
 
