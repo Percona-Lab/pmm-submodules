@@ -1,5 +1,5 @@
 deps:
   - name: mongodb_exporter
     branch: fix-pbm-collector-memory-leak
-    url: https://github.com/percona/mongodb_exporter/
+    url: https://github.com/percona/mongodb_exporter
 
