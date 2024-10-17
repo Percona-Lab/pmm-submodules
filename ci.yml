@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-13419-tour-fix
+  url: https://github.com/percona/grafana
