@@ -1,0 +1,7 @@
+deps:
+  # COMMON
+  - name: pmm
+    branch: PMM-9574_VM_operator_installation_v2
+    path: sources/pmm/src/github.com/percona/pmm
+    url: https://github.com/percona/pmm
+    component: common
