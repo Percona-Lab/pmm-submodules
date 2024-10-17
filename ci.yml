@@ -1,0 +1,4 @@
+deps:
+  - name: grafana
+    branch: PMM-12910-popup-new-version-available
+    url: https://github.com/percona/grafana
