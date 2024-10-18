@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13409-fix-update-status-failure-after-upgrade-with-fe
+  url: https://github.com/percona/pmm
