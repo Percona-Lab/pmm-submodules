@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12573-update-ui-podman
+  url: https://github.com/percona/pmm
