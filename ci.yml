@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13399-include-nomad-into-pmm-client
+  url: https://github.com/percona/pmm
