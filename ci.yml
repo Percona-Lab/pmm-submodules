@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-13348-fix-status
+  url: https://github.com/percona/pmm
+- name: grafana
+  branch: PMM-13348-fix-status
+  url: https://github.com/percona/grafana
