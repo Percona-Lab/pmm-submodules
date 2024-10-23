@@ -1,0 +1,5 @@
+deps:
+  - name: mongodb_exporter
+    branch: update-pbm-sdk
+    url: https://github.com/percona/mongodb_exporter
+
