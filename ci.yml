@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12593-run-grafana-renderer-for-pmm2
+  url: https://github.com/percona/pmm
