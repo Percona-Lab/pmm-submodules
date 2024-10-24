@@ -1,0 +1,5 @@
+deps:
+  - name: node_exporter
+    branch: PMM-12116-update-from-upstream
+  - name: pmm
+    branch: PMM-12155-use-new-config-option
