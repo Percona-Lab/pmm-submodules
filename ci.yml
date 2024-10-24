@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13356-fix-raplication-lag
+  url: https://github.com/percona/grafana-dashboards
