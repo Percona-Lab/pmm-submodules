@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-13417-summary-panel
+  url: https://github.com/percona/grafana
