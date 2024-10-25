@@ -2,3 +2,9 @@ deps:
 - name: grafana
   branch: PMM-13449-grafana-patch-release
   url: https://github.com/percona/grafana
+- name: grafana-dashboards
+  branch: PMM-13449-grafana-11.1.8
+  url: https://github.com/percona/grafana-dashboards
+- name: pmm
+  branch: PMM-13449-grafana-11.1.8
+  url: https://github.com/percona/pmm
