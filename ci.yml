@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-13449-grafana-patch-release
+  url: https://github.com/percona/grafana
