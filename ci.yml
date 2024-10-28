@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13374-new-mongodb-fingerprints
+  url: https://github.com/percona/pmm
