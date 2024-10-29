@@ -1,0 +1,4 @@
+deps:
+- name: mongodb_exporter
+  branch: PMM-13477-support-mongodb-8
+  url: https://github.com/percona/mongodb_exporter
