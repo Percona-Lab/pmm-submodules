@@ -2,3 +2,6 @@ deps:
 - name: pmm
   branch: PMM-12013-rds-exporter
   url: https://github.com/percona/pmm
+- name: grafana
+  branch:  PMM-13428-fix-remote-instance-issues
+  url: https://github.com/percona/grafana
