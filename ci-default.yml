@@ -8,7 +8,7 @@ deps:
 
   # CLIENT
   - name: node_exporter
-    branch: main
+    branch: v3
     path: sources/node_exporter/src/github.com/prometheus/node_exporter
     url: https://github.com/percona/node_exporter
     component: client
