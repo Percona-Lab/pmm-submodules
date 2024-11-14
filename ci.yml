@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-7-run-supervisor-as-pmm-at-build-time
