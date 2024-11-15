@@ -232,12 +232,6 @@ class Builder():
             pull.create_issue_comment(outdated_branches_message)
             sys.exit(1)
 
-    def create_release(self):
-        pass
-
-    def create_tags(self):
-        pass
-
     def validate_config(self):
         for dep in self.config['deps']:
             if not os.path.abspath(dep['path']).startswith(os.getcwd()):
@@ -269,7 +263,7 @@ class Converter:
     def convert_gitmodules_to_yaml(self):
         yaml_config = Path(self.target)
         if yaml_config.is_file():
-            logging.warning('File {} already exist!'.format(self.target))
+            logging.warning('File {} already exists!'.format(self.target))
             sys.exit(1)
         with open(self.target, 'w') as f:
             yaml.dump(self.submodules, f, sort_keys=False)
@@ -277,15 +271,15 @@ class Converter:
 
 
 def switch_branch(path, branch):
-    # symbolic-ref works only if we on branch. If we use commit we use rev-parse instead
+    # 'symbolic-ref' works only if we are on a branch. If we use a commit, we run 'rev-parse' instead.
     try:
         cur_branch = check_output('git symbolic-ref --short HEAD'.split(), cwd=path).decode().strip()
     except CalledProcessError:
         cur_branch = check_output('git rev-parse HEAD'.split(), cwd=path).decode().strip()
     if cur_branch != branch:
         branches = check_output('git ls-remote --heads origin'.split(), cwd=path)
-        branches = [line.split("/")[-1]
-                    for line in branches.decode().strip().split("\n")]
+        branches = [line.split("/")[-1] for line in branches.decode().strip().split("\n")]
+
         if branch in branches:
             print(f'Switch to branch: {branch} (from {cur_branch})')
             check_call(f'git remote set-branches origin {branch}'.split(), cwd=path)
@@ -304,8 +298,6 @@ def main():
     parser.add_argument('--global', '-g', dest='global_repo', help='find and use all branches with this name',
                         action='store_true')
     parser.add_argument('--convert', help='convert .gitmodules to .git-deps.yml', action='store_true')
-    parser.add_argument('--release', help='create release candidate')
-    parser.add_argument('--tags', help='create tag')
     parser.add_argument('--get_branch', help='get branch name for repo')
 
     args = parser.parse_args()
