@@ -14,18 +14,18 @@ help:                       ## Display this help message.
 	@grep '^[a-zA-Z]' $(MAKEFILE_LIST) | \
 	awk -F ':.*?## ' 'NF==2 {printf "  %-26s%s\n", $$1, $$2}'
 
-submodules:                 ## Update all sumodules .
+submodules:                 ## Update all sumodules.
 	git submodule update --init --remote --jobs 10
 	git submodule status
 
-deps:						## Get deps from repos
+deps:                       ## Get deps from repos.
 	python3 ci.py
 
-trigger:
-	git commit -m 'Trigger FB' --allow-empty
+trigger:                    ## Make an empty commit to trigger the build.
+	git commit -m 'chore: trigger FB' --allow-empty
 	git push
 
-prepare:					## Create new FB (new style)
+prepare:                    ## Create a new FB (new style).
 	python3 ci.py -g --prepare $(RUN_ARGS)
 
 clean:                      ## Clean build results.
@@ -36,8 +36,8 @@ purge:                      ## Clean cache and leftovers. Please run this when s
 	git submodule update
 	git submodule foreach 'git reset --hard && git clean -xdff'
 
-fb:                         ## Creates feature build branch.
-  # Usage: make fb mainBranch=v3 featureBranch=PMM-XXXX-name submodules="pmm pmm-managed"
+fb:                         ## Create a feature build branch.
+  # Usage: make fb mainBranch=v3 featureBranch=PMM-XXXX-branch-name submodules="pmm pmm-managed"
 	$(eval MAIN_BRANCH = $(or $(mainBranch),v3))
 	git checkout $(MAIN_BRANCH)
 	make purge
