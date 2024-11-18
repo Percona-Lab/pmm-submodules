@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: revert-3282-dependabot/go_modules/github.com/alecthomas/kong-1.4.0
