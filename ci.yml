@@ -1,0 +1,4 @@
+deps:
+- name: postgres_exporter
+  branch: PMM-13448-PG17-compatibility-metrics
+  url: https://github.com/percona/postgres_exporter
