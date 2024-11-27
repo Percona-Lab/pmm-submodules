@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13360-show-node-down
+  url: https://github.com/percona/grafana-dashboards
