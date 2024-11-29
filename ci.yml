@@ -1,0 +1,4 @@
+deps:
+  - name: grafana
+    branch: PMM-13472-popup-wording
+    url: https://github.com/percona/grafana
