@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-13537-public-address-removal-fix
+  url: https://github.com/percona/grafana
