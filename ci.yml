@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13550-enable-postgres-db
+  url: https://github.com/percona/grafana-dashboards
