@@ -1,16 +1,20 @@
 on:
+  pull_request:
   workflow_dispatch:
     inputs:
       server_image:
         description: "server image: repo/name:tag"
+        default: "perconalab/pmm-server:dev-latest"
         required: true
         type: string
       client_image:
         description: "client image: repo/name:tag"
+        default: "perconalab/pmm-client:dev-latest"
         required: true
         type: string
       pmm_qa_branch:
         description: "Branch for PMM-QA to checkout"
+        default: "main"
         required: false
         type: string
       sha:
@@ -36,7 +40,7 @@ jobs:
 
       - name: install tools
         run: |
-          npm install -g bats
+          sudo npm install -g bats
 
       - name: Start minikube
         run: |
