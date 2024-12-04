@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13508-upgrade-error-messages
+  url: https://github.com/percona/pmm
