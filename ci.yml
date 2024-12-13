@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+  - branch: PMM-7-remove-rhel7-ops-leftovers
