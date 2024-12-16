@@ -1,4 +1,4 @@
 deps:
   - name: grafana
-    branch: PMM-13414_refresh_services
+    branch: PMM-13414-refresh-services
     url: https://github.com/percona/grafana
