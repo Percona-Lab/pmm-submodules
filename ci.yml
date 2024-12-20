@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-13629-fix-pmm-managed-npe-issue
+  url: https://github.com/percona/pmm
+- name: grafana
+  branch: PMM-13629-fix-pmm-managed-npe-issue
+  url: https://github.com/percona/grafana
