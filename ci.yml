@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13333-remove-link-vm-dashboard
+  url: https://github.com/percona/grafana-dashboards
