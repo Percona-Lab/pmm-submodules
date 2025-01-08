@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-13653-starred-dashboards
+  url: https://github.com/percona/grafana
