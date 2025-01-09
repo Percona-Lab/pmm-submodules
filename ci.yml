@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-13643-stop-watchtower-on-ami
+  url: https://github.com/percona/pmm
+- name: watchtower
+  branch: PMM-13643-stop-watchtower-on-ami
+  url: https://github.com/percona/watchtower
