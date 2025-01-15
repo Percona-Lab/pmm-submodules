@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-13658-server-error
+  url: https://github.com/percona/pmm
+- name: watchtower
+  branch: PMM-13658-updates-server-error
+  url: https://github.com/percona/watchtower
