@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13680-platform-user-call
+  url: https://github.com/percona/pmm
