@@ -1,4 +1,7 @@
 deps:
+- name: grafana
+  branch: PMM-13682-tickets-api
+  url: https://github.com/percona/grafana
 - name: pmm
   branch: PMM-13680-platform-user-call
   url: https://github.com/percona/pmm
