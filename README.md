@@ -5,9 +5,9 @@ to our build system managed by Jenkins as it helps pull the right branches from 
 
 # Installation of dependencies
 
-If you build with Python's script then you need to install the dependencies:
+If you intend to build PMM with 'ci.py' Python script, then you need to install the dependencies:
 
-```
+```shell
 pip install -r requirements.txt
 ```
 
@@ -18,29 +18,29 @@ To create a feature build (FB) you have to edit `ci.yml` and specify the branche
 ```yaml
 deps:
   - name: pmm
-    branch: PMM-0000-fix-everything
+    branch: PMM-0000-feature-branch
   - name: pmm-qa
-    branch: PMM-0000-fix-everything-and-even-more
+    branch: PMM-0000-bugfix-branch
 ```
 
-To build from a fork, you need to specify `url` for the dependency, for example:
+To build from a fork, you need to additionally specify `url` for the dependency, for example:
 
 ```yaml
 deps:
   - name: pmm-server
     url: https://github.com/<your-account>/pmm-server
-    branch: PMM-0000-fix-everything
+    branch: PMM-0000-feature-branch
 ```
 
-Next, you will commit changes to git and push them to the repo:
+Next, commit your changes to git and push them to the repo:
 
-```
+```shell
 git add ci.yml
 git commit -m 'use custom branches'
 git push
 ```
 
-Whenever you commit and push to a feature branch, a Jenkins job will be triggered and it will start building your feature. You can follow its progress right from the PR's actions (at the bottom of each PR).
+Whenever you commit and push to a feature branch, a Jenkins job will be triggered, which will start building your feature. You can follow its progress by following a github workflow link displayed at the bottom of each PR.
 
 ## Using a Personal Access Token (PAT)
 
@@ -54,21 +54,23 @@ The token requires the following permissions:
 
 It is recommended to set an expiration date for your token.
 
-if you use zsh:
+To make the Github token available to `ci.py`, add the following lines to your shell script:
+
+if you use `zsh` shell:
 
 ```console
 echo 'export GITHUB_API_TOKEN=********' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-if you use bash:
+if you use `bash` shell:
 
 ```console
 echo 'export GITHUB_API_TOKEN=********' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
-NOTE: Please make sure you don't commit your PAT to github. Should the PAT accidentally leak out, please revoke it asap and re-create it.
+NOTE: Please make sure you DO NOT commit your PAT to github. Should the PAT accidentally leak out, please revoke it asap and re-create it.
 
 ## FAQ
 
@@ -77,15 +79,15 @@ NOTE: Please make sure you don't commit your PAT to github. Should the PAT accid
 If you use the same branch name in all repos then you can run:
 
 ```console
-make prepare <you branch name>
+make prepare <your-branch-name>
 ```
 
-Branches with "you branch name" will be used for all repos or the default branch (usually called `main`) if the branch with this name isn't found in the repo.
+Branch "your-branch-name" will be used for every submodule repo. If not found, the repo's default branch (usually `main`) will be used.
 
-If you want to create a FB from a fork, you can pass an environment variable "FORK_OWNER" which should be equal to your username in github and run:
+If you want to create a FB from a fork, you can pass an environment variable "FORK_OWNER", which should be set to your github username:
 
 ```console
-FORK_OWNER=<your username> make prepare <you branch name>
+FORK_OWNER=<your username> make prepare <your-branch-name>
 ```
 
 ### I got an error "...branch has no upstream branch"

@@ -17,7 +17,7 @@ import git
 
 logging.basicConfig(stream=sys.stdout, format='[%(levelname)s] %(asctime)s: %(message)s', level=logging.INFO)
 
-YAML_CONFIG = 'ci-default.yml'
+YAML_EXPORT_CONFIG = 'gitmodules.yml'
 YAML_CONFIG_OVERRIDE = 'ci.yml'
 SUBMODULES_CONFIG = '.gitmodules'
 GIT_SOURCES_FILE = '.git-sources'
@@ -31,6 +31,8 @@ class Builder():
     rootdir = check_output(['git', 'rev-parse', '--show-toplevel']).decode('utf-8').strip()
 
     def __init__(self):
+        self.config_source = SUBMODULES_CONFIG
+
         self.config_override = self.read_config_override()
         self.config = self.read_config()
 
@@ -42,8 +44,17 @@ class Builder():
             return yaml.load(f, Loader=yaml.FullLoader)
 
     def read_config(self):
-        with open(YAML_CONFIG, 'r') as f:
-            return yaml.load(f, Loader=yaml.FullLoader)
+        config = configparser.ConfigParser()
+        config.read(self.config_source)
+
+        submodules = []
+        for s in config.sections():
+            submodules_name = s.split('"')[1]
+            submodules_info = dict(config.items(s))
+            submodules_info['name'] = submodules_name
+
+            submodules.append(submodules_info)
+        return {'deps': submodules}
 
     def write_custom_config(self, config):
         with open(YAML_CONFIG_OVERRIDE, 'w') as f:
@@ -64,6 +75,16 @@ class Builder():
                     logging.error(
                         f'Can"t find {override_dep["name"]} repo from ci.yml in the list of repos in ci-default.yml')
                     sys.exit(1)
+
+    # To test the merge, run `python ./ci.py --convert`
+    def export_gitmodules_to_yaml(self, target=YAML_EXPORT_CONFIG):
+        yaml_config = Path(target)
+        if yaml_config.is_file():
+            logging.warning('File {} already exists!'.format(target))
+            sys.exit(1)
+        with open(target, 'w') as f:
+            yaml.dump(self.config, f, sort_keys=False)
+        sys.exit(0)          
 
     def get_global_branches(self, target_branch_name):
         found_branches = {}
@@ -158,7 +179,7 @@ class Builder():
                     f'Pull Request was created: https://github.com/Percona-Lab/pmm-submodules/pull/{pr.number}')
             else:
                 logging.info(
-                    f'Pull request already exist: https://github.com/Percona-Lab/pmm-submodules/pull/{pr[0].number}')
+                    f'Pull request already exists: https://github.com/Percona-Lab/pmm-submodules/pull/{pr[0].number}')
         else:
             logging.info('Branch was created')
             logging.info(
@@ -232,60 +253,24 @@ class Builder():
             pull.create_issue_comment(outdated_branches_message)
             sys.exit(1)
 
-    def create_release(self):
-        pass
-
-    def create_tags(self):
-        pass
-
     def validate_config(self):
         for dep in self.config['deps']:
             if not os.path.abspath(dep['path']).startswith(os.getcwd()):
                 logging.error(f'For dependency [{dep["name"]} -> {os.path.abspath(dep["path"])}] '
-                              f'path must be in working directory [{os.getcwd()}]')
+                              f'the path must be located within the working directory [{os.getcwd()}]')
                 sys.exit(1)
 
 
-class Converter:
-    def __init__(self, origin=SUBMODULES_CONFIG, target=YAML_CONFIG):
-        self.origin = origin
-        self.target = target
-        self.submodules = self.get_list_of_submodules()
-        self.convert_gitmodules_to_yaml()
-
-    def get_list_of_submodules(self):
-        config = configparser.ConfigParser()
-        config.read(self.origin)
-
-        submodules = []
-        for s in config.sections():
-            submodules_name = s.split('"')[1]
-            submodules_info = dict(config.items(s))
-            submodules_info['name'] = submodules_name
-
-            submodules.append(submodules_info)
-        return {'deps': submodules}
-
-    def convert_gitmodules_to_yaml(self):
-        yaml_config = Path(self.target)
-        if yaml_config.is_file():
-            logging.warning('File {} already exist!'.format(self.target))
-            sys.exit(1)
-        with open(self.target, 'w') as f:
-            yaml.dump(self.submodules, f, sort_keys=False)
-        sys.exit(0)
-
-
 def switch_branch(path, branch):
-    # symbolic-ref works only if we on branch. If we use commit we use rev-parse instead
+    # 'symbolic-ref' works only if we are on a branch. If we use a commit, we run 'rev-parse' instead.
     try:
         cur_branch = check_output('git symbolic-ref --short HEAD'.split(), cwd=path).decode().strip()
     except CalledProcessError:
         cur_branch = check_output('git rev-parse HEAD'.split(), cwd=path).decode().strip()
     if cur_branch != branch:
         branches = check_output('git ls-remote --heads origin'.split(), cwd=path)
-        branches = [line.split("/")[-1]
-                    for line in branches.decode().strip().split("\n")]
+        branches = [line.split("/")[-1] for line in branches.decode().strip().split("\n")]
+
         if branch in branches:
             print(f'Switch to branch: {branch} (from {cur_branch})')
             check_call(f'git remote set-branches origin {branch}'.split(), cwd=path)
@@ -303,18 +288,16 @@ def main():
     parser.add_argument('--prepare', help='prepare feature build')
     parser.add_argument('--global', '-g', dest='global_repo', help='find and use all branches with this name',
                         action='store_true')
-    parser.add_argument('--convert', help='convert .gitmodules to .git-deps.yml', action='store_true')
-    parser.add_argument('--release', help='create release candidate')
-    parser.add_argument('--tags', help='create tag')
-    parser.add_argument('--get_branch', help='get branch name for repo')
+    parser.add_argument('--convert', help='convert .gitmodules config to yml', action='store_true')
 
     args = parser.parse_args()
 
+    builder = Builder()
+
     if args.convert:
-        Converter()
+        builder.export_gitmodules_to_yaml()
         sys.exit(0)
 
-    builder = Builder()
     if args.prepare:
         builder.create_fb_branch(args.prepare, args.global_repo)
         sys.exit(0)
