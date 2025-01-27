@@ -1,0 +1,5 @@
+deps:
+    - name: pmm
+      branch: PMM-12468-mongo-plan-summary
+    - name: grafana-dashboards
+      branch: PMM-12468-mongo-plan-summary
