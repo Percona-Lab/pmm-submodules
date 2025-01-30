@@ -1,1 +1,4 @@
-deps: []
+deps:
+  - name: grafana-dashboards
+    branch: PMM-12161-new-mongodb-topology
+    url: https://github.com/sleto-it/grafana-dashboards
