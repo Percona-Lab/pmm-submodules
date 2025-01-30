@@ -1,4 +1,4 @@
 deps:
   - name: grafana
-    branch: PMM-13608-dismiss-modal
+    branch: PMM-13676-PMM-logo
     url: https://github.com/percona/grafana
