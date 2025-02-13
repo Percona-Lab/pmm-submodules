@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13769-fix-default-panic
+  url: https://github.com/percona/pmm
