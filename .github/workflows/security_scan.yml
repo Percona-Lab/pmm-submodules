@@ -42,7 +42,7 @@ jobs:
         with:
           name: snyk.sarif
           path: snyk.sarif
-          retention-days: 7          
+          retention-days: 7
 
       - name: Send Slack notification on failure
         if: ${{ failure() }}
