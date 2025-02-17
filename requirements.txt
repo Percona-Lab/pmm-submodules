@@ -1,3 +1,3 @@
 pyaml==24.9.0
-GitPython==3.1.43
+GitPython==3.1.44
 PyGithub==2.5.0
