@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13400-nomad-configuration
+  url: https://github.com/percona/pmm
