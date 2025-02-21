@@ -1,0 +1,5 @@
+deps:
+    - name: pmm
+      branch: PMM-9288-extended-profiler
+    - name: grafana-dashboards
+      branch: PMM-9288-extended-profiler
