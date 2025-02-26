@@ -1,0 +1,5 @@
+deps:
+  - name: mongodb_exporter
+    branch: PMM-13575-incorrect-pbm-agent-status
+    url: https://github.com/percona/mongodb_exporter
+
