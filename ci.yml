@@ -1,0 +1,4 @@
+deps:
+  - name: grafana
+    branch: PMM-12881-advanced-settings-error-handling
+    url: https://github.com/percona/grafana
