@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13770-wrong-service-count
+  url: https://github.com/percona/grafana-dashboards
