@@ -2,3 +2,6 @@ deps:
   - name: mysqld_exporter
     branch: PMM-12153-upgrade-mysql-exporter
     url: https://github.com/percona/mysqld_exporter
+  - name: pmm
+    branch: PMM-12153-upgrade-mysql-exporter
+    url: https://github.com/percona/pmm
