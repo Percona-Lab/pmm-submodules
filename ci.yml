@@ -1,0 +1,5 @@
+deps:
+    - name: pmm
+      branch: PMM-12784-qan-error-handler
+    - name: grafana-dashboards
+      branch: PMM-12784-invalid-get-action-request
