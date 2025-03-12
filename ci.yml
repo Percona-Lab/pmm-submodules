@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-13748-mongodb-kerberos-auth-support
+  - name: mongodb_exporter
+    branch: PMM-13748-gssapi-support
