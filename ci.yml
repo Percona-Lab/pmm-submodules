@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-13869-logfmt-format-for-nginx-logs
+
