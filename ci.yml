@@ -1,0 +1,4 @@
+deps:
+- name: postgres_exporter
+  branch: postgres_exporter_changes_for_tx_duration
+  url: https://github.com/percona/postgres_exporter
