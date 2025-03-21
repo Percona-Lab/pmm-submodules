@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-13766-remove-certificates-after-service-removal
