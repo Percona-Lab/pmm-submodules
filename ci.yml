@@ -5,3 +5,6 @@ deps:
   - name: pmm
     branch: PMM-12153-upgrade-mysql-exporter
     url: https://github.com/percona/pmm
+  - name: grafana-dashboards
+    branch: PMM-12153-upgrade-mysql-exporter
+    url: https://github.com/percona/grafana-dashboards
