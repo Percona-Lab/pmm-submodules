@@ -1,0 +1,4 @@
+deps:
+- name: postgres_exporter
+  branch: PMM-7-pull-upstream-changes-v0.17.1
+  url: https://github.com/percona/postgres_exporter
