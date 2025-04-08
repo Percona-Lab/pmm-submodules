@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13916-fix-inventory-api-for-nomad-client
+  url: https://github.com/percona/pmm
