@@ -1,3 +1,3 @@
 deps:
-  - name: pmm
-    branch: PMM-13644-clickhouse-log-retention
+- name: pmm
+  branch: PMM-13644-clickhouse-log-retention
