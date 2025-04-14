@@ -1,0 +1,3 @@
+deps:
+    - name: percona-toolkit
+      branch: PMM-13897-plan-summary-values
