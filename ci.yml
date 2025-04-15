@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13139-proxysql-filtering-fix
+  url: https://github.com/percona/grafana-dashboards
