@@ -1,0 +1,7 @@
+deps:
+  - name: proxysql_exporter
+    branch: PMM-13915-update-golang-libs
+    url: https://github.com/percona/proxysql_exporter
+  - name: azure_metrics_exporter
+    branch: PMM-13915-update-golang-libs
+    url: https://github.com/percona/azure_metrics_exporter
