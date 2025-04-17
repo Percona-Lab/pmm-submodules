@@ -232,11 +232,9 @@ class Builder():
             else:
                 target_url = next(item for item in self.config['deps'] if item["name"] == dep['name'])['url']
             repo_path = '/'.join(target_url.split('/')[-2:])
-            if '.git' in repo_path:
-                repo_path = repo_path.replace('.git', '')
+            target_branch = dep['branch']
             repo = github_api.get_repo(repo_path)
             org = repo.organization.name if repo.organization else repo.owner.login
-            target_branch = dep['branch']
             head = f'{org}:{target_branch}'
             pulls_list = repo.get_pulls('open', 'updated', 'asc', 'main', head)
             if not pulls_list.totalCount:
