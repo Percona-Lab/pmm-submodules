@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13700-help-center-page
+  url: https://github.com/percona/pmm
