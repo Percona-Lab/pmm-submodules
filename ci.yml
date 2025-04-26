@@ -1,0 +1,3 @@
+deps:
+- name: pmm
+  branch: PMM-13758-migrate-to-dnf
