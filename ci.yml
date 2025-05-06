@@ -3,3 +3,5 @@ deps:
     branch: PMM-13596-fix-logs-redirect
   - name: grafana
     branch: PMM-13596-logs-dump-admin-access
+  - name: pmm-dump
+    branch: PMM-13596-fix-logs-redirect
