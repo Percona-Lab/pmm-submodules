@@ -1,3 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-13943-provide-uid-per-datasource
+  - name: grafana-dashboards
+    branch: PMM-13943-provide-uid-per-datasource
