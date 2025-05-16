@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-13884-update-modal-without-changelogs
+  url: https://github.com/percona/grafana
