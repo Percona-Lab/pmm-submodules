@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13794-fix-pmm-agent-on-pmm-server
+  url: https://github.com/percona/pmm
