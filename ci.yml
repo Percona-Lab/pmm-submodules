@@ -1,0 +1,3 @@
+deps:
+    - name: pmm
+      branch: PKG-521-redis-exporter-build
