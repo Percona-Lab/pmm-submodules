@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-13868-additional-custom-queries
+  url: https://github.com/percona/pmm
+- name: postgres_exporter
+  branch: PMM-13868-additional-custom-queries
+  url: https://github.com/percona/postgres_exporter
