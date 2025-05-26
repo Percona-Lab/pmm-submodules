@@ -2,9 +2,6 @@ deps:
 - name: grafana-dashboards
   branch: PMM-13862-pg-instances
   url: https://github.com/percona/grafana-dashboards
-- name: grafana
-  branch: PMM-13862-pg-instances
-  url: https://github.com/percona/grafana
 - name: pmm
   branch: PMM-13868-additional-custom-queries
   url: https://github.com/percona/pmm
