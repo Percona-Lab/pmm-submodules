@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13836-valkey-inventory-api
+  url: https://github.com/percona/pmm
