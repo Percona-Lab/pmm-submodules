@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-11826-override-vmagent-configuration
+  url: https://github.com/percona/pmm
