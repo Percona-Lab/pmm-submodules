@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14021-change-auth-level-swagger
+  url: https://github.com/percona/pmm
