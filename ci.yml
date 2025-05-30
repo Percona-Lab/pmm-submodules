@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13867-postgreSQL-top-queries-dashboard
+  url: https://github.com/percona/grafana-dashboards
