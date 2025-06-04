@@ -1,5 +1,3 @@
 deps:
     - name: pmm
       branch: PMM-12548-new-mongo-query-source
-    - name: grafana
-      branch: PMM-12548-new-mongo-query-source
