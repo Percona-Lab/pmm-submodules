@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-14047-mongo-cluster-filter-fix
+  url: https://github.com/percona/grafana-dashboards
