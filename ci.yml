@@ -1,0 +1,4 @@
+deps:
+  - name: mongodb_exporter
+    url: https://github.com/vigno88/mongodb_exporter
+    branch: cache_name
