@@ -1,4 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-13881-fix-mongodb-exporter-version
-
+  - name: mongodb_exporter:
+    branch: PMM-13881-mongodb-exporter-version
