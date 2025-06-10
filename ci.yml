@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13866-pg-replication-dashboard
+  url: https://github.com/percona/grafana-dashboards
