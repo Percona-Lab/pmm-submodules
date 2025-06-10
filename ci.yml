@@ -2,3 +2,10 @@ deps:
 - name: grafana-dashboards
   branch: PMM-13865-PG-Patroni-dashboard
   url: https://github.com/percona/grafana-dashboards
+- name: pmm
+  branch: PMM-13868-additional-custom-queries
+  url: https://github.com/percona/pmm
+- name: postgres_exporter
+  branch: PMM-13868-additional-custom-queries
+  url: https://github.com/percona/postgres_exporter
+  
