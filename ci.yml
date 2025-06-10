@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13865-PG-Patroni-dashboard
+  url: https://github.com/percona/grafana-dashboards
