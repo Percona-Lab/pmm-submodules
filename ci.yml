@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-13885-enable-disable-advisors
+  url: https://github.com/percona/grafana
