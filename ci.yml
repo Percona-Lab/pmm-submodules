@@ -1,0 +1,5 @@
+deps:
+    - name: pmm
+      branch: PMM-13830-aws-v2
+    - name: rds_exporter
+      branch: PMM-13830-aws-v2
