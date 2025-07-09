@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13699-pmm-ui-sidebar
+  url: https://github.com/percona/pmm
