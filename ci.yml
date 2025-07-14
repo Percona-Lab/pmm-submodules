@@ -1,0 +1,7 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-14048-mongo-menu-reorder
+  url: https://github.com/percona/grafana-dashboards
+- name: grafana
+  branch: PMM-14048-mongo-menu-reorder
+  url: https://github.com/percona/grafana
