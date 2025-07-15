@@ -1,0 +1,6 @@
+deps:
+  - name: pmm
+    branch: PMM-14141-embed-mongodb-down-alerts
+  - name: mongodb_exporter
+    url: https://github.com/impimp/mongodb_exporter
+    branch: PMM-14141
