@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13338-mysql-tooltips-update
+  url: https://github.com/percona/grafana-dashboards
