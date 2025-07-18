@@ -3,5 +3,5 @@ deps:
   branch: PMM-13699-pmm-ui-sidebar
   url: https://github.com/percona/pmm
 - name: grafana
-  branch: PMM-13652-native-navigation
+  branch: PMM-13699-pmm-ui-sidebar
   url: https://github.com/percona/grafana
