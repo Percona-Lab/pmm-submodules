@@ -22,6 +22,7 @@ deps:                       ## Get deps from repos.
 	python3 ci.py
 
 trigger:                    ## Make an empty commit to trigger the build.
+	git pull
 	git commit -m 'chore: trigger FB' --allow-empty
 	git push
 
