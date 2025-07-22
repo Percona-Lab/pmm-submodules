@@ -2,7 +2,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = pmm-3.3.0
+	branch = pmm-3.3.1
 
 # PMM Client
 [submodule "node_exporter"]
@@ -60,7 +60,7 @@
 [submodule "pmm-qa"]
 	path = sources/pmm-qa/src/github.com/percona/pmm-qa
 	url = https://github.com/percona/pmm-qa
-	branch = pmm-3.3.0
+	branch = v3
 [submodule "pmm-ui-tests"]
 	path = sources/pmm-ui-tests/src/github.com/percona/pmm-ui-tests
 	url = https://github.com/percona/pmm-ui-tests
