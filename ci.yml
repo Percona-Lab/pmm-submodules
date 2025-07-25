@@ -5,3 +5,6 @@ deps:
 - name: grafana
   branch: PMM-13699-pmm-ui-sidebar
   url: https://github.com/percona/grafana
+- name: grafana-dashboards
+  branch: PMM-13699-remove-dashboard-side-navigation
+  url: https://github.com/percona/grafana-dashboards
