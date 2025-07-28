@@ -3,3 +3,6 @@ deps:
     branch: PMM-13513-mysql-cleartext-auth
   - name: grafana
     branch: PMM-13513-mysql-cleartext-auth
+  - name: mysqld_exporter
+    branch: PMM-13513-mysql-cleartext-auth
+
