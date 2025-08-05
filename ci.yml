@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-14166-fix-image-rendered-port
+  url: https://github.com/percona/grafana
