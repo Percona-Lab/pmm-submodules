@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-14065-refresh-advisors-panel
+  url: https://github.com/percona/grafana
