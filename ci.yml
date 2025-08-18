@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-14257-add-instance-id-field
+  url: https://github.com/percona/grafana
