@@ -2,3 +2,6 @@ deps:
 - name: pmm
   branch: PMM-6659-remove-internal-pg-from-qan
   url: https://github.com/percona/pmm
+- name: grafana
+  branch: PMM-14271-agent-monitoring-status
+  url: https://github.com/percona/grafana
