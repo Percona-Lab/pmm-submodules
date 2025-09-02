@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-14289-fix-add-instance
+  url: https://github.com/percona/grafana
