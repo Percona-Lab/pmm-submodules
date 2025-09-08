@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: ivan5
+  url: https://github.com/percona/grafana-dashboards
