@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14228-real-time-analytics
+  url: https://github.com/percona/pmm
