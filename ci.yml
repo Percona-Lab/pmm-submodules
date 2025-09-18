@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-13782-remove-qrt-dasboard
+  url: https://github.com/percona/grafana
