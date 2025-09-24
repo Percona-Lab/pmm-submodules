@@ -1,0 +1,5 @@
+deps:
+  - name: grafana-dashboards
+    branch: PMM-14350-cve-upgrade-grafana-plugins
+    url: https://github.com/percona/grafana-dashboards
+
