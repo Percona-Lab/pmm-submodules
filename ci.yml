@@ -1,4 +1,4 @@
 deps:
   - name: grafana
     branch: PMM-13781-v3-missing-MyRocks-but-still-shows-TokuDB
-    url: https://github.com/grafana
+    url: https://github.com/percona/grafana
