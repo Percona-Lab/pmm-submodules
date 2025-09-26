@@ -1,0 +1,4 @@
+deps:
+  - name: percona-toolkit
+    branch: PMM-14356-upgrade-percona-toolkit-to-3.7.0-2
+    url: https://github.com/percona/percona-toolkit
