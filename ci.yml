@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14118-default-clickhouse-ssl-certificates
+  url: https://github.com/percona/pmm
