@@ -1,4 +1,4 @@
 deps:
-  - name: mysqld_exporter
-    branch: PMM-13454
-    url: https://github.com/percona/mysqld_exporter
+  - name: mongodb_exporter
+    branch: PMM-14231
+    url: https://github.com/theTibi/mongodb_exporter
