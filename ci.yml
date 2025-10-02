@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-14348-pmm-server-qan-toggle
+  url: https://github.com/percona/grafana
