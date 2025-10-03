@@ -1,4 +1,4 @@
 deps:
-  - name: pmm
+  - name: pmm-dump
     branch: PMM-7-update-x-net
 
