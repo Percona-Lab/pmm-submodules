@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-14355-valkey-home-dashboard
+  url: https://github.com/percona/grafana-dashboards
