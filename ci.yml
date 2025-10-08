@@ -2,3 +2,6 @@ deps:
 - name: grafana
   branch: PMM-14006-ui-disable-query-examples
   url: https://github.com/percona/grafana
+- name: pmm
+  branch: PMM-14006-disabled-perfschema-examples-fix
+  url: https://github.com/percona/pmm
