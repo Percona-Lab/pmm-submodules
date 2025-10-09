@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14387-upgrade-clickhouse-to-25.3.6.56
+  url: https://github.com/percona/pmm
