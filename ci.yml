@@ -1,4 +1,4 @@
 deps:
 - name: pmm
-  branch: PMM-14228-real-time-analytics
+  branch: PMM-7-fix-raft-implementation
   url: https://github.com/percona/pmm
