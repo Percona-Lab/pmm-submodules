@@ -12,9 +12,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  fb_tests:
+  helm_tests:
     if: ${{ github.event.pull_request.draft == false && contains(github.event.pull_request.labels.*.name, 'build') }}
-    uses: ./.github/workflows/pmm-qa-fb-checks.yml
+    uses: percona/pmm-qa/.github/workflows/helm-tests.yml@v3
+    secrets: inherit
+    with:
+      sha: ${{ github.event.pull_request.head.sha }}
+
+  integration_fb_suite:
+    if: ${{ github.event.pull_request.draft == false && contains(github.event.pull_request.labels.*.name, 'build') }}
+    uses: percona/pmm-qa/.github/workflows/fb-integration-suite.yml@v3
+    secrets: inherit
+    with:
+      sha: ${{ github.event.pull_request.head.sha }}
+
+  e2e_fb_suite:
+    if: ${{ github.event.pull_request.draft == false && contains(github.event.pull_request.labels.*.name, 'build') }}
+    uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@v3
+    secrets: inherit
+    with:
+      sha: ${{ github.event.pull_request.head.sha }}
+
+  tarball_fb_suite:
+    if: ${{ github.event.pull_request.draft == false && contains(github.event.pull_request.labels.*.name, 'build') }}
+    uses: percona/pmm-qa/.github/workflows/fb-tarball-suite.yml@v3
     secrets: inherit
     with:
       sha: ${{ github.event.pull_request.head.sha }}
