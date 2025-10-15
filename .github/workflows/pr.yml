@@ -17,26 +17,42 @@ jobs:
     uses: percona/pmm-qa/.github/workflows/helm-tests.yml@v3
     secrets: inherit
     with:
-      sha: ${{ github.event.pull_request.head.sha }}
+      sha: ${{ github.event.pull_request.head.sha || 'null' }}
+      server_image: perconalab/pmm-server:3-dev-latest
+      client_image: perconalab/pmm-server:3-dev-latest
+      pmm_qa_branch: v3
 
   integration_fb_suite:
     if: ${{ github.event.pull_request.draft == false && contains(github.event.pull_request.labels.*.name, 'build') }}
     uses: percona/pmm-qa/.github/workflows/fb-integration-suite.yml@v3
     secrets: inherit
     with:
-      sha: ${{ github.event.pull_request.head.sha }}
+      sha: ${{ github.event.pull_request.head.sha || 'null' }}
+      pmm_ui_tests_branch: v3
+      qa_integration_branch: v3
+      pmm_server_image: perconalab/pmm-server:3-dev-latest
+      pmm_client_image: perconalab/pmm-server:3-dev-latest
+      pmm_client_version: 3-dev-latest
 
   e2e_fb_suite:
     if: ${{ github.event.pull_request.draft == false && contains(github.event.pull_request.labels.*.name, 'build') }}
     uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@v3
     secrets: inherit
     with:
-      sha: ${{ github.event.pull_request.head.sha }}
+      sha: ${{ github.event.pull_request.head.sha || 'null' }}
+      pmm_ui_tests_branch: v3
+      pmm_qa_branch: v3
+      pmm_server_image: perconalab/pmm-server:3-dev-latest
+      pmm_client_image: perconalab/pmm-server:3-dev-latest
+      pmm_client_version: 3-dev-latest
 
   tarball_fb_suite:
     if: ${{ github.event.pull_request.draft == false && contains(github.event.pull_request.labels.*.name, 'build') }}
     uses: percona/pmm-qa/.github/workflows/fb-tarball-suite.yml@v3
     secrets: inherit
     with:
-      sha: ${{ github.event.pull_request.head.sha }}
+      sha: ${{ github.event.pull_request.head.sha || 'null' }}
+      package_testing_branch: master
+      pmm_server_image: perconalab/pmm-server:3-dev-latest
+      pmm_client_tarball: 3-dev-latest
 
