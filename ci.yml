@@ -1,4 +1,7 @@
 deps:
   - name: pmm
     branch: custom-advisors-ui
+  - name: grafana
+    branch: custom-advisors-ui
+
 
