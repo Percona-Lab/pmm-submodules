@@ -2,5 +2,5 @@ deps:
   - name: pmm
     branch: PMM-14157
   - name: mongodb_exporter
-    branch: PMM-14404
-    url: https://github.com/theTibi/mongodb_exporter
+    branch: main
+    url: https://github.com/percona/mongodb_exporter
