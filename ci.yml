@@ -1,0 +1,5 @@
+deps:
+- name: pmm
+  branch: PMM-14429-ability-to-generate-encyption-key
+  url: https://github.com/percona/pmm
+
