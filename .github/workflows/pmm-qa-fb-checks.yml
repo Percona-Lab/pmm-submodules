@@ -82,7 +82,8 @@ jobs:
   e2e_fb_suite:
     name: E2E
     uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@PMM-14427-launchable
-    secrets: inherit
+    secrets:
+      LAUNCHABLE_TOKEN: ${{ secrets.LAUNCHABLE_TOKEN }}
     with:
       sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
       pmm_ui_tests_branch: ${{ inputs.pmm_ui_tests_branch || 'v3' }}
