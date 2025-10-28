@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14375-agent-env-vars
+
