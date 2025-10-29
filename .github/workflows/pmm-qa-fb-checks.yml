@@ -81,7 +81,7 @@ jobs:
 
   e2e_fb_suite:
     name: E2E
-    uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@PMM-14427-launchable
+    uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@v3
     secrets:
       LAUNCHABLE_TOKEN: ${{ secrets.LAUNCHABLE_TOKEN }}
     with:

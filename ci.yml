@@ -1,4 +1,0 @@
-deps:
-  - name: pmm-ui-tests
-    branch: PMM-14427-launchable
-
