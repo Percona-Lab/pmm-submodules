@@ -1,0 +1,5 @@
+deps:
+- name: pmm
+  branch: PMM-14378-client-better-mgmt-of-child-processes
+  url: https://github.com/percona/pmm
+
