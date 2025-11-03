@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14498-fix-connection-checker
+  url: https://github.com/percona/pmm
