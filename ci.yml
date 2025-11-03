@@ -1,5 +1,1 @@
-deps:
-    - name: pmm
-      branch: PMM-11406-percona-toolkit-update
-    - name: percona-toolkit
-      branch: PMM-11406-percona-toolkit-update
+
