@@ -3,3 +3,5 @@ deps:
     branch: PMM-13576-valkey-support
   - name: grafana
     branch: PMM-13840-valkey-ui
+  - name: pmm
+    branch: PMM-13576-valkey-support
