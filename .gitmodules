@@ -36,7 +36,7 @@
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit
-	branch = release-3.7.0-1
+	branch = NEEDED-FOR-PMM-3.5
 
 # PMM Server
 [submodule "grafana-dashboards"]
@@ -50,7 +50,7 @@
 [submodule "pmm-dump"]
 	path = sources/pmm-dump
 	url = https://github.com/percona/pmm-dump
-	branch = v3
+	branch = pmm-3.4.1
 [submodule "watchtower"]
 	path = sources/watchtower/src/github.com/percona/watchtower
 	url = https://github.com/percona/watchtower
