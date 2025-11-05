@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-14504-fix-columns
+  url: https://github.com/percona/grafana-dashboards
