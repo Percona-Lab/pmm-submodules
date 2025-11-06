@@ -1,3 +1,5 @@
 deps:
   - name: postgres_exporter
     branch: PMM-14368-pg18-support
+  - name: pmm
+    branch: PMM-14517-PG-18-support
