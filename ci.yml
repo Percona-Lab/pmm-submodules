@@ -1,0 +1,4 @@
+deps:
+  - name: grafana-dashboards
+    branch: PMM-10308-Mysql-Instance-Summary-Dashboard-multiple-panels-do-not-have-data
+    url: https://github.com/percona/grafana-dashboards
