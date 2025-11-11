@@ -2,3 +2,6 @@ deps:
 - name: mongodb_exporter
   branch: PMM-7-update-go-version
   url: https://github.com/percona/mongodb_exporter
+- name: proxysql_exporter
+  branch: PMM-14516-bump-up-go-to-1.24.9
+  url: https://github.com/percona/proxysql_exporter
