@@ -7,3 +7,9 @@ deps:
   url: https://github.com/percona/proxysql_exporter
 - name: grafana-dashboards
   branch: PMM-14516-upgrade-grafana-clickhouse-plugin
+- name: postgres_exporter
+  branch: PMM-14516-go-bump
+- name: rds_exporter
+  branch: PMM-14516-go-bump
+- name: azure_metrics_exporter
+  branch: PMM-14516-bump-go
