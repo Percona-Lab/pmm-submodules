@@ -5,3 +5,5 @@ deps:
 - name: proxysql_exporter
   branch: PMM-14516-bump-up-go-to-1.24.9
   url: https://github.com/percona/proxysql_exporter
+- name: grafana-dashboards
+  branch: PMM-14516-upgrade-grafana-clickhouse-plugin
