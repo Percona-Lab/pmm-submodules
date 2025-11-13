@@ -10,6 +10,8 @@ deps:
 - name: postgres_exporter
   branch: PMM-14516-go-bump
 - name: rds_exporter
-  branch: PMM-14516-go-bump
+  branch: pmm-3.5.0
 - name: azure_metrics_exporter
   branch: PMM-14516-bump-go
+- name: node_exporter
+  branch: PMM-14516-bump-up-go-to-1.24.9
