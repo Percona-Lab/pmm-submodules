@@ -1,12 +1,10 @@
 deps:
 - name: mongodb_exporter
-  branch: PMM-7-update-go-version
-  url: https://github.com/percona/mongodb_exporter
+  branch: pmm-3.5.0
 - name: proxysql_exporter
-  branch: PMM-14516-bump-up-go-to-1.24.9
-  url: https://github.com/percona/proxysql_exporter
+  branch: pmm-3.5.0
 - name: grafana-dashboards
-  branch: PMM-14516-upgrade-grafana-clickhouse-plugin
+  branch: pmm-3.5.0
 - name: postgres_exporter
   branch: pmm-3.5.0
 - name: rds_exporter
@@ -14,4 +12,8 @@ deps:
 - name: azure_metrics_exporter
   branch: pmm-3.5.0
 - name: node_exporter
-  branch: PMM-14516-bump-up-go-to-1.24.9
+  branch: pmm-3.5.0
+- name: grafana
+  branch: pmm-3.5.0
+- name: pmm-dump
+  branch: PMM-7-bump-go
