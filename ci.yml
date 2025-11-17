@@ -1,0 +1,4 @@
+deps:
+- name: mongodb_exporter
+  branch: PMM-13602-improved-performance
+  url: https://github.com/percona/mongodb_exporter
