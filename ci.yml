@@ -1,0 +1,4 @@
+deps:
+- name: mysqld_exporter
+  branch: PMM-14440-duplicate-metrics
+
