@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14568-add-a-special-label-for-watchtower
+  url: https://github.com/percona/pmm
