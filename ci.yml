@@ -1,4 +1,4 @@
 deps:
 - name: mongodb_exporter
-  branch: connection-leaks
+  branch: PMM-14573-close-connections-on-error
 
