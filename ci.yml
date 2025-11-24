@@ -1,0 +1,4 @@
+deps:
+- name: mongodb_exporter
+  branch: connection-leaks
+
