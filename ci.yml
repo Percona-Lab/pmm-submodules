@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14546-upgrade-nomad-to-1.11.0
+  url: https://github.com/percona/pmm
