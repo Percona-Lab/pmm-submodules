@@ -1,10 +1,4 @@
 deps:
-- name: pmm
-  branch: PMM-13652-native-navigation
-  url: https://github.com/percona/pmm
-- name: grafana-dashboards
-  branch: PMM-13652-native-navigation
-  url: https://github.com/percona/grafana-dashboards
 - name: grafana
-  branch: PMM-13652-native-navigation
+  branch: PMM-14560-Bug-change-theme
   url: https://github.com/percona/grafana
