@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14442-fix-the-race
+  url: https://github.com/percona/pmm
