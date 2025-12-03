@@ -1,0 +1,4 @@
+deps:
+- name: watchtower
+  branch: PMM-14528-update-dependencies
+  url: https://github.com/percona/watchtower

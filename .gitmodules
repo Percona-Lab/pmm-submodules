@@ -54,7 +54,7 @@
 [submodule "watchtower"]
 	path = sources/watchtower/src/github.com/percona/watchtower
 	url = https://github.com/percona/watchtower
-	branch = main
+	branch = PMM-14528-update-dependencies
 
 ## PMM Tests
 [submodule "pmm-qa"]
