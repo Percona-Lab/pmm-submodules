@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14587-rt-qan-tab
+  url: https://github.com/percona/pmm
