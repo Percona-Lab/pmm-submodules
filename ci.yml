@@ -1,4 +1,4 @@
 deps:
 - name: grafana-dashboards
-  branch: PMM-14514-valkey-tooltips
+  branch: fix_pbm
   url: https://github.com/percona/grafana-dashboards
