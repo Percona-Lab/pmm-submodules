@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-14615-Tour-should-not-be-dismissible-when-clicking-on-backdrop
+    url: https://github.com/percona/pmm
