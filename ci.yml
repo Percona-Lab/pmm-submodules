@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-14434-remove-tokudb
+  url: https://github.com/percona/grafana-dashboards
