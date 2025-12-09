@@ -1,0 +1,4 @@
+deps:
+  - name: grafana
+    branch: PMM-14080-Lack-of-guidance-on-Fired-Alerts-to-set-up-Alerting-after-install-v2
+    url: https://github.com/percona/grafana
