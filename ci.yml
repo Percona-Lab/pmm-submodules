@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-14624-Fix-theme-inheritance
+    url: https://github.com/percona/pmm
