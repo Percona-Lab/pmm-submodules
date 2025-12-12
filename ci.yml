@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-14630-use-correct-casing-in-navigation-menu-and-help-center
+    url: https://github.com/percona/pmm
