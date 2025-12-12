@@ -2,3 +2,4 @@ deps:
 - name: pmm
   branch: otel
   url: https://github.com/percona/pmm
+  
