@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: mongo_refresh
+  url: https://github.com/percona/grafana-dashboards
