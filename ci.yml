@@ -1,0 +1,4 @@
+deps:
+  - name: grafana-dashboards
+    branch: PMM-14511-Extend-QAN-table-to-fill-out-available-space
+    url: https://github.com/percona/grafana-dashboards
