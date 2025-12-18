@@ -50,7 +50,7 @@
 [submodule "pmm-dump"]
 	path = sources/pmm-dump
 	url = https://github.com/percona/pmm-dump
-	branch = pmm-3.4.1
+	branch = v3
 [submodule "watchtower"]
 	path = sources/watchtower/src/github.com/percona/watchtower
 	url = https://github.com/percona/watchtower
