@@ -2,3 +2,9 @@ deps:
 - name: grafana-dashboards
   branch: PMM-14569-mongo-backup-dashboard
   url: https://github.com/percona/grafana-dashboards
+- name: pmm
+  branch: PMM-14569-Mongo-backup-nav-update
+  url: https://github.com/percona/pmm
+- name: grafana
+  branch: PMM-14569-navigation-update
+  url: https://github.com/percona/grafana
