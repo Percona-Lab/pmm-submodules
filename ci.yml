@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14577-bump-up-go-CVE-2025-61729
+  url: https://github.com/percona/pmm
