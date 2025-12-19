@@ -1,7 +1,4 @@
 deps:
-- name: pmm
-  branch: PMM-14625-pmm-ha-endpoint
-  url: https://github.com/percona/pmm
 - name: grafana
   branch: PMM-14626-add-service-payload-fix
   url: https://github.com/percona/grafana
