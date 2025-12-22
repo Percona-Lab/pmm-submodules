@@ -2,3 +2,6 @@ deps:
 - name: pmm
   branch: PMM-14656-use-fqdn-address-for-raft
   url: https://github.com/percona/pmm
+- name: grafana
+  branch: pmm-ha
+  url: https://github.com/percona/grafana
