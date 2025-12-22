@@ -1,3 +1,5 @@
 deps:
     - name: pmm
       branch: PMM-14577-CVEs-fix
+    - name: pmm-dump
+      branch: PMM-14577-CVEs-fix
