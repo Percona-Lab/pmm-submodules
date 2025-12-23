@@ -1,0 +1,4 @@
+deps:
+  - name: grafana
+    branch: PMM-14640-ui-foc-observed-on-inventory-service-agents-page
+    url: https://github.com/percona/grafana
