@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14578-drop-support-of-manual-HA
+  url: https://github.com/percona/pmm
