@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14643-config-file-encryption
+  url: https://github.com/percona/pmm
