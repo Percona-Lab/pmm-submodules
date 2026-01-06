@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-7-enable-native-navigation
+  url: https://github.com/percona/pmm
