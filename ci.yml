@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-14691-enable-identify-nodes-link
+  url: https://github.com/percona/pmm
+- name: grafana
+  branch: PMM-14325-ha-info-inventory
+  url: https://github.com/percona/grafana
