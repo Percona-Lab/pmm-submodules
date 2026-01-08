@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-14698-path-prefix-removal
+  url: https://github.com/percona/pmm
+- name: grafana
+  branch: PMM-14698-path-prefix-removal
+  url: https://github.com/percona/grafana
