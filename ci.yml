@@ -1,0 +1,15 @@
+deps:
+    - name: mongodb_exporter
+      branch: PMM-14577-CVEs
+    - name: node_exporter
+      branch: PMM-14577-CVEs
+    - name: postgres_exporter
+      branch: PMM-14577-CVEs
+    - name: proxysql_exporter
+      branch: PMM-14577-CVEs
+    - name: rds_exporter
+      branch: PMM-14577-CVEs
+    - name: grafana-dashboards
+      branch: PMM-14577-update-clickhouse-plugin
+    - name: pmm-dump
+      branch: v3
