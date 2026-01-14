@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-14709-fix-upgrades-disabled-alert-contrast
+    url: https://github.com/percona/pmm
