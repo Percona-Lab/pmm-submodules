@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14732-fix-change-settings-failure
+  url: https://github.com/percona/pmm
