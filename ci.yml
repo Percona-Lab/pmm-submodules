@@ -11,5 +11,7 @@ deps:
       branch: PMM-14577-CVEs
     - name: grafana-dashboards
       branch: PMM-14577-update-clickhouse-plugin
+    - name: exporter_shared
+      branch: PMM-14577-CVEs
     - name: pmm-dump
       branch: v3
