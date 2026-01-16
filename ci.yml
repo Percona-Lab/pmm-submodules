@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14577-bump-up-valkey-version
+  url: https://github.com/percona/pmm
