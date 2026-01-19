@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       pmm_qa_branch:
-        description: "Branch for QA-integration to checkout (qa-integration)"
+        description: "Branch for PMM-QA to checkout (pmm-qa)"
         required: false
         type: string
       qa_integration_branch:
-        description: "Branch for PMM-QA to checkout (pmm-qa)"
+        description: "Branch for QA-integration to checkout (qa-integration)"
         required: false
         type: string
       pmm_ui_tests_branch:
