@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       pmm_qa_branch:
+        description: "Branch for QA-integration to checkout (qa-integration)"
+        required: false
+        type: string
+      qa_integration_branch:
         description: "Branch for PMM-QA to checkout (pmm-qa)"
         required: false
         type: string
@@ -35,6 +39,9 @@ on:
   workflow_call:
     inputs:
       pmm_qa_branch:
+        required: false
+        type: string
+      qa_integration_branch:
         required: false
         type: string
       pmm_ui_tests_branch:
@@ -88,6 +95,7 @@ jobs:
       sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
       pmm_ui_tests_branch: ${{ inputs.pmm_ui_tests_branch || 'main' }}
       pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
+      qa_integration_branch: ${{ inputs.qa_integration_branch || 'main' }}
       pmm_server_image: ${{ inputs.pmm_server_image || 'perconalab/pmm-server:3-dev-latest' }}
       pmm_client_image: ${{ inputs.pmm_client_image || 'perconalab/pmm-server:3-dev-latest' }}
       pmm_client_version: ${{ inputs.pmm_client_version || '3-dev-latest' }}
