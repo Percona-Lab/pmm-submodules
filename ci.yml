@@ -1,3 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-14636-rta-inventory
+  - name: grafana
+    branch: PMM-14636-rta-inventory
