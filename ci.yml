@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14765-fix-navigation-icon
+  url: https://github.com/percona/pmm
