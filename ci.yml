@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14779-fix-qan-database-creation
+  url: https://github.com/percona/pmm
