@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: revert-3926-PMM-13943-provide-uid-per-datasource
+  url: https://github.com/percona/pmm
