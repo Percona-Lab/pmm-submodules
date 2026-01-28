@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-14549-fix-myrocks-legends
+  url: https://github.com/percona/grafana-dashboards
