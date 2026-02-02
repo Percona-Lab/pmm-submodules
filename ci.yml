@@ -1,0 +1,5 @@
+deps:
+- name: grafana
+  branch: PMM-14012-remove-portal
+- name: pmm-ui-tests
+  branch: PMM-14012-remove-portal
