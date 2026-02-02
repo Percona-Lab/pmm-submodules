@@ -1,4 +1,3 @@
 deps:
 - name: pmm
-  branch: PMM-14321-slowlog-crashes
-
+  branch: PMM-12478-external-exporter-status
