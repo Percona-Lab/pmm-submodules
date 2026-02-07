@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14267-fix-persistence-of-changed-listen-ports
+  url: https://github.com/percona/pmm
