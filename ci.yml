@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: fix-anonymous-valkey-navbar-item
+  - name: grafana
+    branch: fix-pallete-flickering
