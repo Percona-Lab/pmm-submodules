@@ -1,5 +1,5 @@
 deps:
   - name: pmm
-    branch: pmm-3.6.0-fix-anonymous-valkey-navbar-item
+    branch: 3.6.0-fix-anonymous-valkey-navbar-item
   - name: grafana
     branch: pmm-3.6.0-fix-pallete-flickering
