@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: dependabot/docker/v3/golang-1.26
+  url: https://github.com/percona/pmm
