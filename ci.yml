@@ -1,4 +1,4 @@
 deps:
 - name: pmm
-  branch: dependabot/docker/v3/golang-1.26
+  branch: PMM-7-bump-go-to-1.25.7
   url: https://github.com/percona/pmm
