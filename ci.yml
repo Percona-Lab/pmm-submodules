@@ -1,4 +1,4 @@
 deps:
 - name: grafana-dashboards
-  branch: PMM-14363-disk-space-unit
+  branch: PMM-14363
   url: https://github.com/percona/grafana-dashboards
