@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14376-enrich-managed-metrics-with-more-labels
+  url: https://github.com/percona/pmm
