@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14376-change-xyz-down-alert-templates
+  url: https://github.com/percona/pmm
