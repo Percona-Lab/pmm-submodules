@@ -1,0 +1,3 @@
+deps:
+    - name: postgres_exporter
+      branch: PMM-14857-pg-exporter-config
