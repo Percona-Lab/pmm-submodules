@@ -1,10 +1,4 @@
 deps:
 - name: pmm
-  branch: PMM-14550-rt-qan-mongo
+  branch: v3
   url: https://github.com/percona/pmm
-- name: grafana
-  branch: PMM-14550-rt-qan-mongo
-  url: https://github.com/percona/grafana
-- name: pmm-ui-tests
-  branch: PMM-14838-fix-tests-for-rta
-  url: https://github.com/percona/pmm-ui-tests
