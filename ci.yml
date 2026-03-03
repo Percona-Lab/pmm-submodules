@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-14889-rta-gssapi
+    url: https://github.com/percona/pmm
