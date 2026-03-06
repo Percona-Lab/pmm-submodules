@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-14829-bump-go-to-1.25.8
+  url: https://github.com/percona/pmm
+- name: grafana
+  branch: PMM-14829-bump-go-to-1.25.8
+  url: https://github.com/percona/grafana
