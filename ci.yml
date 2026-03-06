@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14903-rta-overview-fix
+  url: https://github.com/percona/pmm
