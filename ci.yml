@@ -8,7 +8,3 @@ deps:
   - name: grafana-dashboards
     branch: PMM-14213-grafana-12.3.1
     url: https://github.com/percona/grafana-dashboards
-  - name: pmm-ui-tests
-    branch: PMM-14213-grafana-12.3.1
-    url: https://github.com/percona/pmm-ui-tests
-    
