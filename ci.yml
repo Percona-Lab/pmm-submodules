@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14897-fix-mysql-config-advisor-check
+  url: https://github.com/percona/pmm
