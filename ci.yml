@@ -1,0 +1,5 @@
+deps:
+- name: pmm
+  branch: PMM-14837-move-dashboards-to-monorepo
+  url: https://github.com/percona/pmm
+
