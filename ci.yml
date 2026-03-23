@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14940-iframe-external-links
+  url: https://github.com/percona/pmm
