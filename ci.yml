@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: dependabot/go_modules/go_modules-99199a662a
