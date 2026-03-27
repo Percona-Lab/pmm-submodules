@@ -1,0 +1,4 @@
+deps:
+- name: mysqld_exporter
+  branch: PMM-14958-fix-duplicate-metrics-errors
+  url: https://github.com/percona/mysqld_exporter
