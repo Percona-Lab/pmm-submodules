@@ -2,6 +2,3 @@ deps:
 - name: pmm
   branch: tibi-holmes
   url: https://github.com/percona/pmm
-- name: grafana-dashboards
-  branch: tibi-holmes
-  url: https://github.com/percona/grafana-dashboards
