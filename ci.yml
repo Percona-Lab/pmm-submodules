@@ -1,4 +1,7 @@
 deps:
-- name: node_exporter
-  branch: PMM-14832
-  url: https://github.com/percona/node_exporter
+  - name: node_exporter
+    branch: PMM-14832
+    url: https://github.com/percona/node_exporter
+  - name: pmm
+    branch: PMM-14832-client-support-of-proc-mounts-path
+    url: https://github.com/percona/pmm
