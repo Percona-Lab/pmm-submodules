@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14011-migrate-saas-to-platform
+  url: https://github.com/percona/pmm
