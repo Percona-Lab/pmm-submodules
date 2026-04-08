@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14980-fix-readiness-probe
+  url: https://github.com/percona/pmm
