@@ -76,12 +76,12 @@ jobs:
 
   integration_fb_suite:
     name: CLI
-    uses: percona/pmm-qa/.github/workflows/fb-integration-suite.yml@main
+    uses: percona/pmm-qa/.github/workflows/fb-integration-suite.yml@PMM-14982-move-cli-tests
     secrets: inherit
     with:
       sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
-      pmm_ui_tests_branch: ${{ inputs.pmm_ui_tests_branch || 'main' }}
-      qa_integration_branch: ${{ inputs.pmm_qa_branch || 'main' }}
+      pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
+      qa_integration_branch: ${{ inputs.qa_integration_branch || 'main' }}
       pmm_server_image: ${{ inputs.pmm_server_image || 'perconalab/pmm-server:3-dev-latest' }}
       pmm_client_image: ${{ inputs.pmm_client_image || 'perconalab/pmm-server:3-dev-latest' }}
       pmm_client_version: ${{ inputs.pmm_client_version || '3-dev-latest' }}
