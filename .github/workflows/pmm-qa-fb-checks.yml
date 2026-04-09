@@ -77,7 +77,8 @@ jobs:
   integration_fb_suite:
     name: CLI
     uses: percona/pmm-qa/.github/workflows/fb-integration-suite.yml@PMM-14982-move-cli-tests
-    secrets: inherit
+    secrets:
+      LAUNCHABLE_TOKEN: ${{ secrets.LAUNCHABLE_TOKEN }}
     with:
       sha: ${{ inputs.sha || github.event.pull_request.head.sha ||  'null' }}
       pmm_qa_branch: ${{ inputs.pmm_qa_branch || 'main' }}
@@ -85,10 +86,11 @@ jobs:
       pmm_server_image: ${{ inputs.pmm_server_image || 'perconalab/pmm-server:3-dev-latest' }}
       pmm_client_image: ${{ inputs.pmm_client_image || 'perconalab/pmm-server:3-dev-latest' }}
       pmm_client_version: ${{ inputs.pmm_client_version || '3-dev-latest' }}
+      launchable_confidence: '93%'
 
   e2e_fb_suite:
     name: E2E
-    uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@main
+    uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@PMM-14982-move-cli-tests
     secrets:
       LAUNCHABLE_TOKEN: ${{ secrets.LAUNCHABLE_TOKEN }}
     with:
@@ -99,6 +101,7 @@ jobs:
       pmm_server_image: ${{ inputs.pmm_server_image || 'perconalab/pmm-server:3-dev-latest' }}
       pmm_client_image: ${{ inputs.pmm_client_image || 'perconalab/pmm-server:3-dev-latest' }}
       pmm_client_version: ${{ inputs.pmm_client_version || '3-dev-latest' }}
+      launchable_confidence: '93%'
 
   tarball_fb_suite:
     name: Tarball
