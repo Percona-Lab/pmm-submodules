@@ -1,4 +1,0 @@
-deps:
-  - name: pmm-qa
-    branch: PMM-14982-move-cli-tests
-    url: https://github.com/percona/pmm-qa

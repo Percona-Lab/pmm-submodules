@@ -76,7 +76,7 @@ jobs:
 
   integration_fb_suite:
     name: CLI
-    uses: percona/pmm-qa/.github/workflows/fb-integration-suite.yml@PMM-14982-move-cli-tests
+    uses: percona/pmm-qa/.github/workflows/fb-integration-suite.yml@main
     secrets:
       LAUNCHABLE_TOKEN: ${{ secrets.LAUNCHABLE_TOKEN }}
     with:
@@ -90,7 +90,7 @@ jobs:
 
   e2e_fb_suite:
     name: E2E
-    uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@PMM-14982-move-cli-tests
+    uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@main
     secrets:
       LAUNCHABLE_TOKEN: ${{ secrets.LAUNCHABLE_TOKEN }}
     with:
