@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: one_step_install
+    url: https://github.com/percona/pmm
