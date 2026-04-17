@@ -7,22 +7,27 @@ on:
         description: "Branch for PMM-QA to checkout (pmm-qa)"
         required: false
         type: string
+        default: "main"
       package_testing_branch:
         description: "Branch for package tests to checkout (package-testing)"
         required: false
         type: string
+        default: "master"
       pmm_server_image:
         description: "pmm-server docker image, default perconalab/pmm-server:3-dev-latest"
         required: false
         type: string
+        default: "perconalab/pmm-server:3-dev-latest"
       pmm_client_image:
         description: "pmm3-client docker image, default perconalab/pmm-server:3-dev-latest"
         required: false
         type: string
+        default: "perconalab/pmm-client:3-dev-latest"
       pmm_client_version:
         description: "pmm3-client version Tarball or Dev-latest, default is dev-latest"
         required: false
         type: string
+        default: "latest-tarball"
       sha:
         description: "SHA (leave empty if running manually, default - 'null')"
         required: false
