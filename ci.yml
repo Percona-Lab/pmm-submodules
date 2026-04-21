@@ -2,4 +2,4 @@ deps:
   - name: pmm
     branch: v3
   - name: pmm-dump
-    branch: v0.8.0-ga
+    branch: main
