@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-15006-use-same-go-toolchain-for-vm
+  url: https://github.com/percona/pmm
