@@ -1,0 +1,5 @@
+deps:
+- name: pmm
+  branch: PMM-12832-connection-timeout
+- name: grafana
+  branch: PMM-14937-instance-connection-timeout
