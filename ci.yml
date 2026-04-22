@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14944-bump-up-nomad-to-2.0.0
+  url: https://github.com/percona/pmm
