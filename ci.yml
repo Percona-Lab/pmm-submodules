@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14944-bump-up-victoriametrics-to-1.140.0
+  url: https://github.com/percona/pmm
