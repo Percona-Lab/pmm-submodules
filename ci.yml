@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14944-bump-up-nginx-to-1.26
+  url: https://github.com/percona/pmm
