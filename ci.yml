@@ -2,3 +2,6 @@ deps:
   - name: pmm-qa
     branch: PMM-14986-codeceptjs-tests-qa-integration
     url: https://github.com/percona/pmm-qa
+  - name: pmm
+    branch: PMM-14986-codeceptjs-tests-qa-integration
+    url: https://github.com/percona/pmm
