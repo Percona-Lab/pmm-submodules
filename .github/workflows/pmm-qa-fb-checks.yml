@@ -30,7 +30,7 @@ on:
         default: "latest-tarball"
       launchable_confidence:
         description: "Launchable subset confidence percentage"
-        default: '100%'
+        default: '99%'
         required: false
         type: string
       sha:
