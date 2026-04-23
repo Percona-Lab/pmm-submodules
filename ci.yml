@@ -1,5 +1,7 @@
 deps:
   - name: pmm
-    branch: v3
+    branch: PMM-14441-pmm-dump-encryption
+  - name: grafana
+    branch: PMM-14441-pmm-dump-encryption
   - name: pmm-dump
     branch: main
