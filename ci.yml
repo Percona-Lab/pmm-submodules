@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-15015-fix-the-client-package-conflict-section
+  url: https://github.com/percona/pmm
