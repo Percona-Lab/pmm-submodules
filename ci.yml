@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-15005-remove-the-redundant-certificate
+  url: https://github.com/percona/pmm
+- name: pmm-qa
+  branch: PMM-15005-remove-the-redundant-certificate
+  url: https://github.com/percona/pmm-qa
