@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-14995-Update_existing_PMM_assets_and_styles
+  url: https://github.com/percona/pmm
+- name: grafana
+  branch: PMM-14995-Update_existing_PMM_assets_and_styles
+  url: https://github.com/percona/grafana
