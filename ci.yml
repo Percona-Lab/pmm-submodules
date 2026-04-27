@@ -5,9 +5,6 @@ deps:
   - name: grafana
     branch: PMM-14213-grafana-12.3.1
     url: https://github.com/percona/grafana
-  - name: pmm-ui-tests
-    branch: PMM-14213-grafana-12.3.1
-    url: https://github.com/percona/pmm-ui-tests
   - name: pmm-qa
     branch: PMM-14213-grafana-12.3.1
     url: https://github.com/percona/pmm-qa
