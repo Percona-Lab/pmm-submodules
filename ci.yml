@@ -1,5 +1,5 @@
 deps:
   - name: pmm
-    branch: PMM-14880-rta-pmm-demo
+    branch: PMM-14880-anonymous-role
   - name: grafana
     branch: PMM-14880-rta-pmm-demo
