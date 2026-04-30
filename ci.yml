@@ -1,3 +1,3 @@
 deps:
-  - name: grafana-dashboards
+  - name: pmm
     branch: PMM-14068-fix-gradients
