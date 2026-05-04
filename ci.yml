@@ -1,3 +1,3 @@
 deps:
   - name: pmm
-    branch: PMM-12392-collect-processlist-from-performance-schema
+    branch: PMM-14985-add-promdb-telemetry
