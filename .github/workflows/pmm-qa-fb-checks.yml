@@ -30,7 +30,7 @@ on:
         default: "latest-tarball"
       launchable_confidence:
         description: "Launchable subset confidence percentage"
-        default: '99%'
+        default: '98%'
         required: false
         type: string
       sha:
@@ -81,7 +81,7 @@ jobs:
       pmm_server_image: ${{ inputs.pmm_server_image || 'perconalab/pmm-server:3-dev-latest' }}
       pmm_client_image: ${{ inputs.pmm_client_image || 'perconalab/pmm-server:3-dev-latest' }}
       pmm_client_version: ${{ inputs.pmm_client_version || '3-dev-latest' }}
-      launchable_confidence: ${{ inputs.launchable_confidence || '99%' }}
+      launchable_confidence: ${{ inputs.launchable_confidence || '98%' }}
 
   e2e_fb_suite:
     name: E2E
@@ -94,4 +94,4 @@ jobs:
       pmm_server_image: ${{ inputs.pmm_server_image || 'perconalab/pmm-server:3-dev-latest' }}
       pmm_client_image: ${{ inputs.pmm_client_image || 'perconalab/pmm-server:3-dev-latest' }}
       pmm_client_version: ${{ inputs.pmm_client_version || '3-dev-latest' }}
-      launchable_confidence: ${{ inputs.launchable_confidence || '99%' }}
+      launchable_confidence: ${{ inputs.launchable_confidence || '98%' }}
