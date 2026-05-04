@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: fix/pmm-14971
+    url: https://github.com/percona/pmm
