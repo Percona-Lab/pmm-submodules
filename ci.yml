@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-15012-fragmentation-analysis-tooltips
+  url: https://github.com/percona/pmm
