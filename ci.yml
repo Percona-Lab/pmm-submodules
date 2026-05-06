@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: one_step_install
