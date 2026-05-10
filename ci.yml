@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-15050-perf-improvements
+  url: https://github.com/percona/pmm
