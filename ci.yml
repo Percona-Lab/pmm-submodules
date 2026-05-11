@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-15044-bump-grafana-clickhouse-plugin-to-4.17.0
+  url: https://github.com/percona/pmm
