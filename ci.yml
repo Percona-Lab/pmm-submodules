@@ -8,3 +8,4 @@ deps:
   - name: pmm-qa
     branch: PMM-14213-grafana-12.3.1
     url: https://github.com/percona/pmm-qa
+    
