@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    url: https://github.com/HanCheo/pmm
+    branch: feature/rds-assume-role-discovery-pr
+  - name: grafana
+    url: https://github.com/HanCheo/grafana
+    branch: feature/rds-assume-role-discovery-ui
