@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14934-revert-removal-of-rpm-directory
+  url: https://github.com/percona/pmm
