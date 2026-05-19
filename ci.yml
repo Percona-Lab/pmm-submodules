@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-15075-fix-pmm-health-dashboard
+  url: https://github.com/percona/pmm
