@@ -2,3 +2,5 @@ deps:
 - name: pmm
   branch: PMM-14934-adjust-the-healthcheck
   url: https://github.com/percona/pmm
+- name: pmm-qa
+  branch: PMM-14934-adjust-the-healthcheck
