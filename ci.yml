@@ -1,0 +1,3 @@
+deps:
+  - name: grafana
+    branch: PMM-15079-fix-dashboard-sorting
