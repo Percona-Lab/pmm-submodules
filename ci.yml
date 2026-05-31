@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-7-fix-filter-list-api-test
+      url: https://github.com/percona/pmm
