@@ -1,0 +1,3 @@
+- name: grafana
+  branch: PMM-14915-remove-telemetry-FE
+  url: https://github.com/percona/grafana
