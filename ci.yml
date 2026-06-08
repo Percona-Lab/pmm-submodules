@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15111-bump-go-to-v1.26.4
+      url: https://github.com/percona/pmm
