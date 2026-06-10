@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: revert-5435-PMM-15039-disable-telemetry-except-for-ga-rc-builds
+      url: https://github.com/percona/pmm
