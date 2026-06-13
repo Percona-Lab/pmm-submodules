@@ -85,7 +85,7 @@ jobs:
 
   e2e_fb_suite:
     name: E2E
-    uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@main
+    uses: percona/pmm-qa/.github/workflows/fb-e2e-suite.yml@PMM-15138-fix-alerting-permissions
     secrets:
       LAUNCHABLE_TOKEN: ${{ secrets.LAUNCHABLE_TOKEN }}
     with:
