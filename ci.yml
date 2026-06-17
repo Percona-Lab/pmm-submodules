@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: claude/relaxed-lamport-x5znzm
+      url: https://github.com/percona/pmm
