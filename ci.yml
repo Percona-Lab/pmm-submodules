@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-15095-shared-navigable-table-rows
+    url: https://github.com/percona/pmm
+  - name: percona-ui
+    branch: PMM-15095-shared-navigable-table-rows
+    url: https://github.com/percona/percona-ui
