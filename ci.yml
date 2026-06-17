@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15129-fix-linter-depguard-2
+      url: https://github.com/percona/pmm
