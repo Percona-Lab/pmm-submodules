@@ -1,4 +1,4 @@
 deps:
     - name: pmm
-      branch: claude/relaxed-lamport-x5znzm
+      branch: rta-mysql-test
       url: https://github.com/percona/pmm
