@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14896-valkey-pmm-annotations
+  url: https://github.com/percona/pmm
