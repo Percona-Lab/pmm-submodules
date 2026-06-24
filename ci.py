@@ -274,7 +274,7 @@ def switch_branch(path, branch):
         if branch in branches:
             print(f'Switch to branch: {branch} (from {cur_branch})')
             check_call(f'git remote set-branches origin {branch}'.split(), cwd=path)
-            check_call(f'git fetch --depth 10 origin {branch}'.split(), cwd=path)
+            check_call(f'git fetch --depth 100 origin {branch}'.split(), cwd=path)
             check_call(f'git checkout {branch}'.split(), cwd=path)
         else:
             logging.error(f'Can\' find branch: {branch} in {path}')
