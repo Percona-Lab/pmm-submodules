@@ -33,7 +33,7 @@ jobs:
           echo "REPORT=$(echo ${{ matrix.image }} | cut -d'/' -f2 | tr ':' '-')" >> $GITHUB_ENV
 
       - name: Run trivy scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           image-ref: ${{ matrix.image }}
           format: 'table'
@@ -45,7 +45,7 @@ jobs:
 
       - name: Archive trivy scan results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.REPORT }}
           path: ${{ env.REPORT }}
