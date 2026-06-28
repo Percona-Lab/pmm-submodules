@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15181-migrate-to-new-grafana-client-library
+      url: https://github.com/percona/pmm
