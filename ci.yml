@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15139-postgresql-datasource-exposure
+      url: https://github.com/percona/pmm
