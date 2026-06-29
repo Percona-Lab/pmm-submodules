@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14911-alerts-full
+  url: https://github.com/percona/pmm
