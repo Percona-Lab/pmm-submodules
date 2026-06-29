@@ -200,7 +200,7 @@ class Builder():
                     target_branch = dep['branch']
                     target_url = dep['url']
                     check_call(
-                        f'git clone --depth 10 --single-branch --branch {target_branch} {target_url} {path}'.split())
+                        f'git clone --depth 100 --single-branch --branch {target_branch} {target_url} {path}'.split())
                 else:
                     logging.info(f'Files in the path for {dep["name"]} is already exist')
                 call(['git', 'pull', '--ff-only'], cwd=path)
