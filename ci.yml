@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15174-fix-router-cluster-var
+      url: https://github.com/percona/pmm
