@@ -2,6 +2,3 @@ deps:
     - name: pmm
       branch: PMM-15099-bump-up-dependencies
       url: https://github.com/percona/pmm
-    - name: mysqld_exporter
-      branch: PMM-15099-bump-up-dependencies
-      url: https://github.com/percona/mysqld_exporter
