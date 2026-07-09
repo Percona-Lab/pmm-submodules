@@ -2,7 +2,7 @@
 [submodule "pmm"]
 	path = sources/pmm/src/github.com/percona/pmm
 	url = https://github.com/percona/pmm
-	branch = main
+	branch = arm64-server-build
 
 # PMM Client
 [submodule "node_exporter"]

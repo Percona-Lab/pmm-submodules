@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: arm64-server-build
