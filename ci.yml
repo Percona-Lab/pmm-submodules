@@ -2,3 +2,6 @@ deps:
 - name: pmm
   branch: PMM-14911-alerts-full
   url: https://github.com/percona/pmm
+- name: grafana
+  branch: PMM-14911-alerts-page
+  url: https://github.com/percona/grafana
