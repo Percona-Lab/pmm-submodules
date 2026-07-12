@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: claude/alert-templates-pmm-migration-bw7vfm
+  url: https://github.com/percona/pmm
