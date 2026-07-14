@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15099-bump-ch-datasource-plugin-to-v4.19.0
+      url: https://github.com/percona/pmm
