@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15200-pmm-agent-add-connection-timeout
+      url: https://github.com/percona/pmm
