@@ -2,3 +2,6 @@ deps:
 - name: grafana
   branch: PMM-14754-prohibit-pmm-server-nodes-deletion
   url: https://github.com/percona/grafana
+- name: pmm
+  branch: PMM-14754-prohibit-pmm-server-nodes-deletion
+  url: https://github.com/percona/pmm
