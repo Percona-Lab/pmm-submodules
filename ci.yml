@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-14109-improve-advisor-ux
+      url: https://github.com/percona/pmm
