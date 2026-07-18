@@ -3,3 +3,5 @@ deps:
     branch: PMM-15195-mysql-97
   - name: mysqld_exporter
     branch: PMM-15195-mysql-97
+  - name: percona-toolkit
+    branch: PMM-15195-mysql-97
