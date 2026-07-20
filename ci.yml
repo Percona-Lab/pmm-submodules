@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: cursor/mongodb-unused-indexes-dashboard-0faa
