@@ -1,0 +1,5 @@
+deps:
+  - name: mongodb_exporter
+    branch: PMM-memory-fix
+  - name: pmm
+    branch: PMM-memory-fix
