@@ -1,0 +1,7 @@
+deps:
+- name: pmm
+  branch: PMM-14665-skip-non-eligible-nodes-from-add-service
+  url: https://github.com/percona/pmm
+- name: grafana
+  branch: PMM-14665-skip-non-eligible-nodes-from-add-service
+  url: https://github.com/percona/grafana
