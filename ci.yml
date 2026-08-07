@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-15302-ha-remove-ssh-settings
+  url: https://github.com/percona/pmm
