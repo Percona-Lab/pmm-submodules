@@ -1,3 +1,3 @@
 deps:
   - name: pmm
-    branch: PMM-15216
+    branch: PMM-15205-sep-fb
