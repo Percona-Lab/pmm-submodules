@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15157-remove-hetzner-infra-provisioning
+      url: https://github.com/percona/pmm
