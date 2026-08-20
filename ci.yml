@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15172-auto-reload-ui-on-server-version-change
+    url: https://github.com/percona/pmm
