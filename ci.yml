@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15228-split-connection-pool
+      url: https://github.com/percona/pmm
