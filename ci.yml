@@ -1,4 +1,4 @@
 deps:
-  - name: rds_exporter
-    url: https://github.com/MuraliMon/rds_exporter
+  - name: pmm
+    url: https://github.com/MuraliMon/pmm
     branch: fix/rds-exporter-roster-encrypted-access-key
