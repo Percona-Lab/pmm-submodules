@@ -1,0 +1,4 @@
+deps:
+  - name: rds_exporter
+    url: https://github.com/MuraliMon/rds_exporter
+    branch: fix/rds-exporter-roster-encrypted-access-key
