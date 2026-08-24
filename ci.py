@@ -269,8 +269,6 @@ def switch_branch(path, branch):
         cur_branch = check_output('git rev-parse HEAD'.split(), cwd=path).decode().strip()
     if cur_branch != branch:
         branches = check_output('git ls-remote --heads origin'.split(), cwd=path)
-        # Prefer refs/heads/<name> so branch names containing "/" (e.g. cursor/foo)
-        # are preserved; split("/")[-1] would keep only the last path segment.
         branches = [
             line.split("refs/heads/", 1)[-1]
             for line in branches.decode().strip().split("\n")
