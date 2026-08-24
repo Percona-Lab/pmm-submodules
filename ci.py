@@ -268,12 +268,12 @@ def switch_branch(path, branch):
     except CalledProcessError:
         cur_branch = check_output('git rev-parse HEAD'.split(), cwd=path).decode().strip()
     if cur_branch != branch:
-        branches = check_output('git ls-remote --heads origin'.split(), cwd=path)
-        branches = [
-            line.split("refs/heads/", 1)[-1]
-            for line in branches.decode().strip().split("\n")
-            if line.strip()
-        ]
+        raw_branches = check_output('git ls-remote --heads origin'.split(), cwd=path)
+        branches = []
+        for line in raw_branches.decode().strip().split("\n"):
+            if not line.strip():
+                continue
+            branches.append(line.split("refs/heads/", 1)[-1])
 
         if branch in branches:
             print(f'Switch to branch: {branch} (from {cur_branch})')
