@@ -207,7 +207,7 @@ class Builder():
                 commit_id = switch_branch(path, dep['branch'])
 
                 dep_name_underscore = dep['name'].replace('-', '_')
-                f.write(f'export {dep_name_underscore}_commit={commit_id}')
+                f.write(f'export {dep_name_underscore}_commit={commit_id}\n')
                 f.write(f'export {dep_name_underscore}_branch={dep["branch"]}\n')
                 f.write(f'export {dep_name_underscore}_url={dep["url"]}\n')
 
@@ -272,12 +272,12 @@ def switch_branch(path, branch):
             print(f'Switch to branch: {branch} (from {cur_branch})')
             check_call(f'git remote set-branches origin {branch}'.split(), cwd=path)
             check_call(f'git fetch --depth 100 origin {branch}'.split(), cwd=path)
-            check_call(f'git checkout {branch}'.split(), cwd=path)
+            check_call(f'git checkout -B {branch} origin/{branch}'.split(), cwd=path)
         else:
-            logging.error(f'Can\' find branch: {branch} in {path}')
+            logging.error(f"Can't find branch: {branch} in {path}")
             sys.exit(1)
 
-    return check_output('git rev-parse HEAD'.split(), cwd=path).decode("utf-8")
+    return check_output('git rev-parse HEAD'.split(), cwd=path).decode("utf-8").strip()
 
 
 def main():
