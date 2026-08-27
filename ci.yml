@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-0000-rds-iam-role-arn
+    url: https://github.com/fergalhk/pmm
