@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15404-fix-pg-migration-crashloop
+      url: https://github.com/percona/pmm
