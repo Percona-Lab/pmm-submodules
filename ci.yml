@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15304-fix-node-type-detection
+      url: https://github.com/percona/pmm
