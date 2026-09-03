@@ -1,3 +1,19 @@
+# Feature-build coordinates for the PMM + SEP integration (PMM-15205).
+#
+# The pin below follows the *tip* of PMM-15205-sep-fb at build time, and the
+# published tag is PR-4500-<short sha of this commit>, so the tag alone does not
+# say which PMM commit went in. This block records it; refresh it on every
+# rebuild of this branch.
+#
+#   Built:  2026-09-03
+#   From:   percona/pmm PMM-15205-sep-fb @ 53521917d
+#           "PMM-15205 Sync the vendored SEP frontend to c16578dfe (#5886)"
+#
+# To tell whether a PR merged into PMM-15205-sep-fb since then is in the latest
+# feature build, ask git whether its merge commit is an ancestor of that SHA:
+#
+#   git merge-base --is-ancestor <merge-commit> 53521917d && echo included
+#
 deps:
   - name: pmm
     branch: PMM-15205-sep-fb
