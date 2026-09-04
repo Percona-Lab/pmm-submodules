@@ -1,0 +1,10 @@
+deps:
+- name: pmm
+  branch: PMM-13887-add-tls-skip-verify
+  url: https://github.com/percona/pmm
+- name: pmm-ui-tests
+  branch: PMM-13887-add-tls-skip-verify
+  url: https://github.com/percona/pmm-ui-tests
+- name: grafana
+  branch: PMM-13887-add-tls-skip-verify
+  url: https://github.com/percona/grafana
