@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15204-dynamic-rta-csv-export
+    url: https://github.com/percona/pmm
