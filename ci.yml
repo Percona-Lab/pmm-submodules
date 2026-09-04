@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-14751-fix-API-interceptors
+  - name: grafana
+    branch: PMM-14751-fix-axios-error-message
