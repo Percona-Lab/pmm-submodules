@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15144-auto-alert-annotations
+      url: https://github.com/percona/pmm
