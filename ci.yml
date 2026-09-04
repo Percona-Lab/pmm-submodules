@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-13782-PMM-13781-missing-menu-changes
+  url: https://github.com/percona/pmm
