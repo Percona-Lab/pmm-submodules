@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-7-cache-nomad-vmagent
+  url: https://github.com/percona/pmm
