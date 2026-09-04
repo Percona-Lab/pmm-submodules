@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: dependabot/go_modules/main/github.com/go-openapi/swag-0.29.0
