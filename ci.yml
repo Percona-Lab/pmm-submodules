@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-13963-QAN-service-id-error
+  url: https://github.com/percona/grafana-dashboards
