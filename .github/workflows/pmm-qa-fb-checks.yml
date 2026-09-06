@@ -146,7 +146,7 @@ jobs:
           text="FB Tests failed on ${GITHUB_REPOSITORY} PR #${PR_NUMBER}."
           text="${text} PR: https://github.com/${GITHUB_REPOSITORY}/pull/${PR_NUMBER}"
           text="${text} Run: ${RUN_URL}"
-          curl -fsS -X POST "https://api.anthropic.com/v1/claude_code/routines/${ROUTINE_ID}/fire" \
+          curl -fsS --connect-timeout 10 --max-time 60 -X POST "https://api.anthropic.com/v1/claude_code/routines/${ROUTINE_ID}/fire" \
             -H "Authorization: Bearer ${ROUTINE_TOKEN}" \
             -H "anthropic-version: 2023-06-01" \
             -H "anthropic-beta: experimental-cc-routine-2026-04-01" \
