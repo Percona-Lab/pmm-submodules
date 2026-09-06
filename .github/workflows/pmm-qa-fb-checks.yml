@@ -98,14 +98,6 @@ jobs:
 
   notify_investigator:
     name: Fire Investigator routine
-    # Mirrors the notify job in percona/pmm-qa's scheduled suites, covering
-    # Investigator's second event source: FB Tests going red on a PR here.
-    # It lives in this workflow rather than a standalone `workflow_run` watcher,
-    # which left a skipped "Notify Investigator" entry in the Actions list after
-    # every green feature build. `!cancelled()` + `needs.*.result` is the
-    # job-graph equivalent of that watcher's run-level conclusion, and the
-    # `github.workflow` check keeps it to a top-level run: called as a reusable
-    # workflow, that context holds the caller's name instead.
     needs:
       - helm_tests
       - integration_fb_suite
@@ -125,10 +117,6 @@ jobs:
           HEAD_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
-          # Jenkins dispatches this workflow on a branch of this repo that has an
-          # open PR, so the head SHA resolves to it. It finds nothing once that
-          # PR is closed or merged -- then there is no PR for Investigator to
-          # work on, so notify nobody.
           pr="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${HEAD_SHA}/pulls" \
             --jq 'map(select(.state == "open")) | .[0].number // empty')"
           case "${pr}" in
