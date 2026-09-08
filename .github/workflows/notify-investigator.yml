@@ -1,0 +1,81 @@
+name: Notify Investigator
+
+# Mirrors percona/pmm-qa's .github/workflows/notify-investigator.yml, covering
+# Investigator's second event source: FB Tests going red on a PR here.
+#
+# FB Tests is a *native* GitHub Actions workflow in this repo
+# (.github/workflows/pmm-qa-fb-checks.yml, name "FB Tests") -- Jenkins
+# (JNKPercona) dispatches it per feature build via `workflow_dispatch` on the
+# PR's head branch, and the percona/pmm-qa reusable workflows it calls post the
+# individual "@... UI tests" / "CLI tests ..." commit statuses onto the PR head
+# SHA. Jenkins itself never posts the FB check results, so no `status` /
+# `check_run` listener is needed -- `workflow_run` sees the same run, and its
+# own computed conclusion is the aggregate over every FB check, which also
+# catches a run that fails overall for reasons no single check reports.
+on:
+  workflow_run:
+    workflows:
+      - "FB Tests"
+    types: [completed]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  notify-investigator:
+    name: Fire Investigator routine
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'failure'
+    steps:
+      - name: Resolve pull request number
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_PR: ${{ github.event.workflow_run.pull_requests[0].number }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          pr="${EVENT_PR}"
+          # `pull_requests` is populated on virtually every FB Tests run, since
+          # Jenkins dispatches it on a branch of this repo that has an open PR.
+          # It comes back empty once that PR is closed or merged -- fall back to
+          # a lookup by head SHA, and if that finds nothing open either, there is
+          # no PR for Investigator to work on, so notify nobody.
+          if [ -z "${pr}" ]; then
+            pr="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${HEAD_SHA}/pulls" \
+              --jq 'map(select(.state == "open")) | .[0].number // empty')"
+          fi
+          case "${pr}" in
+            '' | *[!0-9]*)
+              echo "::notice::FB Tests failed for ${HEAD_SHA} with no open pull request -- Investigator not notified."
+              echo "number=" >>"${GITHUB_OUTPUT}"
+              ;;
+            *)
+              echo "number=${pr}" >>"${GITHUB_OUTPUT}"
+              ;;
+          esac
+
+      - name: Fire Investigator routine
+        if: steps.pr.outputs.number != ''
+        env:
+          # Update this if Investigator's routine is ever recreated.
+          ROUTINE_ID: trig_01FhHBdz2yBibyVEfnG5gbQz
+          ROUTINE_TOKEN: ${{ secrets.INVESTIGATOR_ROUTINE_TOKEN }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+        run: |
+          set -euo pipefail
+          if [ -z "${ROUTINE_TOKEN}" ]; then
+            echo "::error::INVESTIGATOR_ROUTINE_TOKEN is not set -- Investigator was not notified of this failure." >&2
+            exit 1
+          fi
+          text="FB Tests failed on ${GITHUB_REPOSITORY} PR #${PR_NUMBER}."
+          text="${text} PR: https://github.com/${GITHUB_REPOSITORY}/pull/${PR_NUMBER}"
+          text="${text} Run: ${RUN_URL}"
+          curl -fsS -X POST "https://api.anthropic.com/v1/claude_code/routines/${ROUTINE_ID}/fire" \
+            -H "Authorization: Bearer ${ROUTINE_TOKEN}" \
+            -H "anthropic-version: 2023-06-01" \
+            -H "anthropic-beta: experimental-cc-routine-2026-04-01" \
+            -H "Content-Type: application/json" \
+            -d "$(jq -n --arg text "${text}" '{text: $text}')"

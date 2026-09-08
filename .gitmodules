@@ -36,7 +36,7 @@
 [submodule "percona-toolkit"]
 	path = sources/percona-toolkit/src/github.com/percona/percona-toolkit
 	url = https://github.com/percona/percona-toolkit
-	branch = pmm-3.9.0
+	branch = pmm-3.9.1
 
 # PMM Server
 [submodule "grafana"]
