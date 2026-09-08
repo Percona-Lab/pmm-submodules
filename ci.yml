@@ -5,14 +5,17 @@
 # say which PMM commit went in. This block records it; refresh it on every
 # rebuild of this branch.
 #
-#   Built:  2026-09-03
-#   From:   percona/pmm PMM-15205-sep-fb @ 53521917d
-#           "PMM-15205 Sync the vendored SEP frontend to c16578dfe (#5886)"
+#   Built:  2026-09-08
+#   From:   percona/pmm PMM-15205-sep-fb @ dbdbab54a
+#           "Merge pull request #5906 from percona/PMM-15478-expose-sep-enabled"
+#   Carries: PMM-15478 (#5906), which makes the server report sep_enabled.
+#           Without it the UI gate added by PMM-15281 (#5876) is off by
+#           construction and no SEP navigation renders at all.
 #
 # To tell whether a PR merged into PMM-15205-sep-fb since then is in the latest
 # feature build, ask git whether its merge commit is an ancestor of that SHA:
 #
-#   git merge-base --is-ancestor <merge-commit> 53521917d && echo included
+#   git merge-base --is-ancestor <merge-commit> dbdbab54a && echo included
 #
 deps:
   - name: pmm
