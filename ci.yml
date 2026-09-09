@@ -5,17 +5,23 @@
 # say which PMM commit went in. This block records it; refresh it on every
 # rebuild of this branch.
 #
-#   Built:  2026-09-08
-#   From:   percona/pmm PMM-15205-sep-fb @ 563b009de
-#           "Merge branch 'main' into PMM-15205-sep-fb"
-#   Carries: PMM-15478 (#5906), which makes the server report sep_enabled.
-#           Without it the UI gate added by PMM-15281 (#5876) is off by
-#           construction and no SEP navigation renders at all.
+#   Built:  2026-09-09
+#   From:   percona/pmm PMM-15205-sep-fb @ 66a3d7fb5
+#           "PMM-15205 Sync the vendored SEP frontend to be2859f3a (#5911)"
+#   Carries: the vendored SEP frontend synced to be2859f3a (#5911), which is
+#           what makes PMM-15449's failure-reason path resolve against a real
+#           field rather than a defensive probe, and brings the destructive,
+#           value_labels, record-name and task-status additions the remaining
+#           MySQL Backups UX tickets are written against.
+#           Also PMM-15448 (#5899, paper surface), PMM-15419 (#5891,
+#           ServiceNow connection tab) and PMM-15449 (#5900, run progress).
+#           PMM-15478 (#5906, sep_enabled on the settings payload) is still
+#           in, from the previous build.
 #
 # To tell whether a PR merged into PMM-15205-sep-fb since then is in the latest
 # feature build, ask git whether its merge commit is an ancestor of that SHA:
 #
-#   git merge-base --is-ancestor <merge-commit> 563b009de && echo included
+#   git merge-base --is-ancestor <merge-commit> 66a3d7fb5 && echo included
 #
 deps:
   - name: pmm
