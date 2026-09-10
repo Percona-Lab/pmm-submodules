@@ -1,3 +1,5 @@
 deps:
   - name: pmm
     branch: claude/pr-5799-review-changes-0ee6ql
+  - name: mysqld_exporter
+    branch: PMM-2813-time-zone-mycnf
