@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: claude/pr-5799-review-changes-0ee6ql
