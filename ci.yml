@@ -1,4 +1,5 @@
 deps:
   - name: pmm
-    branch: PMM-0000-rds-iam-role-arn
-    url: https://github.com/fergalhk/pmm
+    branch: PMM-15389-rds-assume-iam-role
+  - name: grafana
+    branch: PMM-15389-rds-role-arn-ui
