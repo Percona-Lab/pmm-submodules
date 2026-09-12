@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-14076-PostgreSQL-Top-Queries---add-panels-and-fix-tooltips
