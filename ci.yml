@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: backup-compression-3
+    url: https://github.com/the-wunmi/pmm
+  - name: grafana
+    branch: backup-compression-3
+    url: https://github.com/the-wunmi/grafana
