@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15184-fix-disk-details-stacking-legend
+    url: https://github.com/percona/pmm
