@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-15180-replace-local-icons
