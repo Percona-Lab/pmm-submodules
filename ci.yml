@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15092-fix-innodb-row-reads-legend
+    url: https://github.com/percona/pmm
