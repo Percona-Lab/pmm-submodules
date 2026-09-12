@@ -1,0 +1,4 @@
+deps:
+  - name: grafana-dashboards
+    branch: PMM-14534-Duplicate-Wrong-panels-on-MySQL-Instances-Overview-dashboard
+    url: https://github.com/percona/grafana-dashboards
