@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15260-idempotent-node-registration
+      url: https://github.com/percona/pmm
