@@ -1,0 +1,4 @@
+deps:
+- name: mongodb_exporter
+  branch: PMM-14153
+  url: https://github.com/theTibi/mongodb_exporter
