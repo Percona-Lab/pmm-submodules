@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-14609-RTA-data-export
+    url: https://github.com/percona/pmm
