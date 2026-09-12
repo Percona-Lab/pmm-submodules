@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15206-rta-host-filter
+    url: https://github.com/percona/pmm
