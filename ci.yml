@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12575-change-api-for-agents
+  url: https://github.com/percona/pmm
