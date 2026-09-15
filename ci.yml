@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-15389-rds-assume-iam-role
+  - name: grafana
+    branch: PMM-15389-rds-role-arn-ui
