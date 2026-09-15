@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-15076---Unable-to-list-all-the-Numa-Nodes-in-NUMA-Details-Graph
