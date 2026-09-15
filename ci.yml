@@ -1,0 +1,19 @@
+# Feature build carrying POM: pmm-managed's topology service plus the POM dashboard.
+#
+# No `url` here on purpose: the branch lives in percona/pmm, which is the url .gitmodules
+# already gives the `pmm` dependency. A `url` line would only be needed to build from a
+# fork. ci.py's get_deps() clones with
+# `git clone --depth 100 --single-branch --branch <branch> <url>`, so the branch has to
+# exist on percona/pmm before this build runs.
+#
+# One entry is enough. PMM-15333-pom-poc is forked off PMM-15293-sep-session-exchange
+# and is 39 commits ahead of main with nothing behind, so PMM-15216 (the SEP frontend in
+# PMM), PMM-15238 (Postgres exposed to SEP) and PMM-15293 (the session exchange) are all
+# ancestors of it.
+#
+# SEP is absent on purpose: it is not a pmm-submodules dependency and no PMM build can
+# produce it. Its side-car image is built separately (`make image-sidecar-embedded` in
+# the SEP checkout) and paired with this image at run time.
+deps:
+  - name: pmm
+    branch: PMM-15333-pom-poc
