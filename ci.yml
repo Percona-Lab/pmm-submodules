@@ -1,0 +1,4 @@
+deps:
+- name: grafana
+  branch: PMM-14913-pmm-ui-redirect
+  url: https://github.com/percona/grafana
