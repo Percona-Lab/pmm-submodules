@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-15031-email-logo-asset
+    url: https://github.com/percona/pmm
+  - name: grafana
+    branch: PMM-15031-email-logo
+    url: https://github.com/percona/grafana
