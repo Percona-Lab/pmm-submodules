@@ -1,0 +1,4 @@
+deps:
+- name: mongodb_exporter
+  branch: PMM-13543-socket-failure-fix
+  url: https://github.com/percona/mongodb_exporter
