@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15379-lbac-datasource-proxy-prefix
+    url: https://github.com/percona/pmm
