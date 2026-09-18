@@ -1,0 +1,24 @@
+# Feature build carrying PMM-15347: the MongoDB host-management bootstrap
+# wizard (pmm-managed bootstrap dispatch, the Hosts/Operations UI, abort and
+# per-member settings).
+#
+# No `url` here on purpose: the branch lives in percona/pmm, which is the url
+# .gitmodules already gives the `pmm` dependency.
+#
+# PMM-15347-om-bootstrap-fb is a no-PR bundle branch, not a feature branch of
+# its own: it merges PMM-15347-bootstrap-abort-per-member (the tip of the
+# stacked host-management chain: #5949 backend, #5950 UI, #5951 abort +
+# per-member settings) with PMM-15360-om-integration (the OM on/off switch
+# work, PMM-15360-om-switch-flag/-service-gate/-nav-gate), so this feature
+# build carries pmm-managed's startup-sync fix for the switch state
+# (percona/pmm#5888, open on PMM-15360-om-service-gate) that the bootstrap
+# chain alone does not have. Rebuild it the same way when either side moves:
+# fresh merge of both current tips onto their shared base, tested, replacing
+# this branch (it has no history worth preserving).
+#
+# SEP is absent on purpose: it is not a pmm-submodules dependency and no PMM
+# build can produce it. Its side-car image (carrying the matching om_bootstrap
+# app) is built separately and paired with this image at run time.
+deps:
+  - name: pmm
+    branch: PMM-15347-om-bootstrap-fb
