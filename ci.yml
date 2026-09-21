@@ -6,19 +6,19 @@
 # rebuild of this branch.
 #
 #   Built:  2026-09-21
-#   From:   percona/pmm PMM-15205-sep-fb @ 4e9a95fda
-#           "PMM-15205 Wait for a diagnostic run to start streaming"
-#   Carries: the previous build (ab6a2a0e0, the six smoke-run UI fixes) plus
-#           4e9a95fda, which mounts a diagnostic run's live log viewer only
-#           once the run is `running` — the tasks log route refuses a pending
-#           run, and the viewer does not reconnect.
+#   From:   percona/pmm PMM-15205-sep-fb @ 0dc783dc4
+#           "PMM-15205 Keep a live log that finished cleanly"
+#   Carries: the six smoke-run UI fixes (ab6a2a0e0), the pending-run gate on
+#           the diagnostics live log viewer (4e9a95fda), and 0dc783dc4, which
+#           stops the log viewer blanking and jumping to the top when a
+#           cleanly finished live run's status turns terminal.
 #           Paired side-car: percona/percona-sep:83e40358c7ecaeeb62f1bae04bda759b5f3d3864
 #           (SEP-2096, SEP-2062, SEP-2098, SEP-2035, SEP-2043).
 #
 # To tell whether a PR merged into PMM-15205-sep-fb since then is in the latest
 # feature build, ask git whether its merge commit is an ancestor of that SHA:
 #
-#   git merge-base --is-ancestor <merge-commit> 4e9a95fda && echo included
+#   git merge-base --is-ancestor <merge-commit> 0dc783dc4 && echo included
 #
 deps:
   - name: pmm
