@@ -6,19 +6,20 @@
 # rebuild of this branch.
 #
 #   Built:  2026-09-21
-#   From:   percona/pmm PMM-15205-sep-fb @ 0dc783dc4
-#           "PMM-15205 Keep a live log that finished cleanly"
+#   From:   percona/pmm PMM-15205-sep-fb @ b7dfc6c56
+#           "PMM-15205 Avoid Object.hasOwn in the shared log viewer"
 #   Carries: the six smoke-run UI fixes (ab6a2a0e0), the pending-run gate on
-#           the diagnostics live log viewer (4e9a95fda), and 0dc783dc4, which
-#           stops the log viewer blanking and jumping to the top when a
-#           cleanly finished live run's status turns terminal.
+#           the diagnostics live log viewer (4e9a95fda), and the log viewer
+#           keeping a cleanly finished live log instead of blanking and
+#           re-fetching it (0dc783dc4) -- only on a terminal `finish`
+#           (ac61d684d, b7dfc6c56).
 #           Paired side-car: percona/percona-sep:83e40358c7ecaeeb62f1bae04bda759b5f3d3864
 #           (SEP-2096, SEP-2062, SEP-2098, SEP-2035, SEP-2043).
 #
 # To tell whether a PR merged into PMM-15205-sep-fb since then is in the latest
 # feature build, ask git whether its merge commit is an ancestor of that SHA:
 #
-#   git merge-base --is-ancestor <merge-commit> 0dc783dc4 && echo included
+#   git merge-base --is-ancestor <merge-commit> b7dfc6c56 && echo included
 #
 deps:
   - name: pmm
