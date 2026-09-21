@@ -5,24 +5,23 @@
 # say which PMM commit went in. This block records it; refresh it on every
 # rebuild of this branch.
 #
-#   Built:  2026-09-20
-#   From:   percona/pmm PMM-15205-sep-fb @ d92b2646d
-#           "PMM-15205 Sync the vendored SEP frontend to 193cd869a"
-#   Carries: `main` merged in (27 commits, through 8a69bb41a), and the vendored
-#           SEP frontend synced to SEP main's tip 193cd869a — which is the same
-#           commit the paired side-car image
-#           percona/percona-sep:193cd869ad5d178da3104e10452bdfc63320f1fb was
-#           built from, so the two halves of the stack carry one SEP version
-#           rather than two that drift.
-#           Also the whole MySQL Backups / Support diagnostics UX batch merged
-#           since the last build: PMM-15450/15451/15452/15453/15454/15455/15457
-#           /15458/15490/15509/15510, plus PMM-15406 (ServiceNow connection
-#           test) and a check-types fix for PMM-15510.
+#   Built:  2026-09-21
+#   From:   percona/pmm PMM-15205-sep-fb @ ab6a2a0e0
+#           "PMM-15438 Warn when the executor cannot run sudo"
+#   Carries: the six UI fixes from the 2026-09-20 end-to-end smoke run on top
+#           of the previous build (d92b2646d): a task's header status now
+#           tracks its run (PMM-15449), task detail names inventory
+#           references instead of raw ids (PMM-15453), the next-runs preview
+#           names its zone (PMM-15454), the restore confirmation warns that it
+#           writes into live data (PMM-15450), a running diagnostic run's log
+#           streams (PMM-15205), and the run form warns when the executor
+#           cannot run a sudo snippet (PMM-15438).
+#           Paired side-car unchanged: percona/percona-sep:193cd869a...
 #
 # To tell whether a PR merged into PMM-15205-sep-fb since then is in the latest
 # feature build, ask git whether its merge commit is an ancestor of that SHA:
 #
-#   git merge-base --is-ancestor <merge-commit> d92b2646d && echo included
+#   git merge-base --is-ancestor <merge-commit> ab6a2a0e0 && echo included
 #
 deps:
   - name: pmm
