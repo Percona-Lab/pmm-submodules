@@ -6,22 +6,19 @@
 # rebuild of this branch.
 #
 #   Built:  2026-09-21
-#   From:   percona/pmm PMM-15205-sep-fb @ ab6a2a0e0
-#           "PMM-15438 Warn when the executor cannot run sudo"
-#   Carries: the six UI fixes from the 2026-09-20 end-to-end smoke run on top
-#           of the previous build (d92b2646d): a task's header status now
-#           tracks its run (PMM-15449), task detail names inventory
-#           references instead of raw ids (PMM-15453), the next-runs preview
-#           names its zone (PMM-15454), the restore confirmation warns that it
-#           writes into live data (PMM-15450), a running diagnostic run's log
-#           streams (PMM-15205), and the run form warns when the executor
-#           cannot run a sudo snippet (PMM-15438).
-#           Paired side-car unchanged: percona/percona-sep:193cd869a...
+#   From:   percona/pmm PMM-15205-sep-fb @ 4e9a95fda
+#           "PMM-15205 Wait for a diagnostic run to start streaming"
+#   Carries: the previous build (ab6a2a0e0, the six smoke-run UI fixes) plus
+#           4e9a95fda, which mounts a diagnostic run's live log viewer only
+#           once the run is `running` — the tasks log route refuses a pending
+#           run, and the viewer does not reconnect.
+#           Paired side-car: percona/percona-sep:83e40358c7ecaeeb62f1bae04bda759b5f3d3864
+#           (SEP-2096, SEP-2062, SEP-2098, SEP-2035, SEP-2043).
 #
 # To tell whether a PR merged into PMM-15205-sep-fb since then is in the latest
 # feature build, ask git whether its merge commit is an ancestor of that SHA:
 #
-#   git merge-base --is-ancestor <merge-commit> ab6a2a0e0 && echo included
+#   git merge-base --is-ancestor <merge-commit> 4e9a95fda && echo included
 #
 deps:
   - name: pmm
