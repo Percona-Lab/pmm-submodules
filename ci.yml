@@ -6,8 +6,8 @@
 # rebuild of this branch.
 #
 #   Built:  2026-09-21
-#   From:   percona/pmm PMM-15205-sep-fb @ 948a64b37
-#           "PMM-15205 Reload an ended live log under All"
+#   From:   percona/pmm PMM-15205-sep-fb @ fd0bb9076
+#           "PMM-15205 Reveal schema form violations"
 #   Carries: `main` merged in again (a31cc4593, through 381d20743), the six
 #           smoke-run UI fixes (c70eeeace), the pending-run gate on the
 #           diagnostics live log viewer (8c50951eb), the log viewer keeping a
@@ -19,7 +19,10 @@
 #           whole log on every chunk (a14e6d73d), and the viewer keeping a
 #           live stream open when the polled status turns terminal before the
 #           stream's own `finish` (8b4556f3f), reloading such a stream once
-#           it ends cut short even under the "All" line cap (948a64b37).
+#           it ends cut short even under the "All" line cap (948a64b37), and
+#           schema forms revealing and expanding sections that hold a rule
+#           violation and marking the fields a fail rule names (fd0bb9076,
+#           ported from SEP-2068).
 #           IDs are post-rewrite: the branch was re-hashed on 2026-09-21 to
 #           re-author a Copilot merge for the CLA; pre-rewrite history is on
 #           percona/pmm branch PMM-15205-sep-fb-pre-cla-rewrite.
@@ -29,7 +32,7 @@
 # To tell whether a PR merged into PMM-15205-sep-fb since then is in the latest
 # feature build, ask git whether its merge commit is an ancestor of that SHA:
 #
-#   git merge-base --is-ancestor <merge-commit> 948a64b37 && echo included
+#   git merge-base --is-ancestor <merge-commit> fd0bb9076 && echo included
 #
 deps:
   - name: pmm
