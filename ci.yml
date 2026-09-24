@@ -27,7 +27,13 @@
 # The branch is force-pushed on every restack of the stack, by design, so a
 # rebuild of this PR takes whatever it points to at that moment rather than
 # what it pointed to before. Note the commit sha from the build if you need to
-# know exactly what an image contains.
+# know exactly what an image contains. Builds so far:
+#
+#   PR-4571-2b16f10  bundle 53041711e
+#   this build       bundle 55955bb96, which adds two OM fixes found by running
+#                    the stack: PMM retries a scoped inventory refresh the app
+#                    refused (#5949), and the OM switch tells SEP it is enabled
+#                    before asking it to collect, instead of after (#5888).
 #
 # SEP is absent on purpose: it is not a pmm-submodules dependency and no PMM
 # build can produce it. Its side-car image (carrying the matching om_bootstrap
