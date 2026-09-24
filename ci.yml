@@ -1,24 +1,38 @@
-# Feature build carrying PMM-15347: the MongoDB host-management bootstrap
-# wizard (pmm-managed bootstrap dispatch, the Hosts/Operations UI, abort and
-# per-member settings).
+# Feature build carrying the OpenManager work: the MongoDB host-management
+# bootstrap wizard (pmm-managed bootstrap dispatch, the Hosts/Operations UI,
+# abort and per-member settings) and the OM on/off switch.
 #
 # No `url` here on purpose: the branch lives in percona/pmm, which is the url
 # .gitmodules already gives the `pmm` dependency.
 #
-# PMM-15347-om-bootstrap-fb is a no-PR bundle branch, not a feature branch of
-# its own: it merges PMM-15347-bootstrap-abort-per-member (the tip of the
-# stacked host-management chain: #5949 backend, #5950 UI, #5951 abort +
-# per-member settings) with PMM-15360-om-integration (the OM on/off switch
-# work, PMM-15360-om-switch-flag/-service-gate/-nav-gate), so this feature
-# build carries pmm-managed's startup-sync fix for the switch state
-# (percona/pmm#5888, open on PMM-15360-om-service-gate) that the bootstrap
-# chain alone does not have. Rebuild it the same way when either side moves:
-# fresh merge of both current tips onto their shared base, tested, replacing
-# this branch (it has no history worth preserving).
+# PMM-15347-om-integration-v3 is a no-PR bundle branch, not a feature branch of
+# its own. It carries every commit of all eight open OM pull requests, verified
+# per commit rather than by branch tip:
+#
+#   #5866 PMM-15360-om-switch-flag              the Settings flag
+#   #5853 PMM-15360-om-nav-gate                 nav + page gating
+#   #5888 PMM-15360-om-service-gate             the service gate, SEP client hardening
+#   #5921 PMM-15326-pagination-envelope-fix     SEP's paginated envelope
+#   #5995 PMM-15326-sep-env-token-log           stop logging PMM_SEP_TOKEN
+#   #5949 PMM-15347-bootstrap-backend           bootstrap driven from pmm-managed
+#   #5950 PMM-15347-bootstrap-ui                the Hosts and Automations UI
+#   #5951 PMM-15347-bootstrap-abort-per-member  abort + per-member settings
+#
+# It replaces PMM-15347-om-bootstrap-fb, which was a hand-merged bundle of two
+# of those chains and went stale: it sat on the pre-2026-09-23 baseline, so it
+# was 551 files behind and carried neither #5949's refused-refresh retry nor
+# #5995. Pointing at the integration branch instead removes the second bundle
+# that had to be rebuilt by hand every time either side moved.
+#
+# The branch is force-pushed on every restack of the stack, by design, so a
+# rebuild of this PR takes whatever it points to at that moment rather than
+# what it pointed to before. Note the commit sha from the build if you need to
+# know exactly what an image contains.
 #
 # SEP is absent on purpose: it is not a pmm-submodules dependency and no PMM
 # build can produce it. Its side-car image (carrying the matching om_bootstrap
-# app) is built separately and paired with this image at run time.
+# and om_inventory apps) is built separately and paired with this image at run
+# time. Those apps are merged to SEP main, so a current side-car build has them.
 deps:
   - name: pmm
-    branch: PMM-15347-om-bootstrap-fb
+    branch: PMM-15347-om-integration-v3
