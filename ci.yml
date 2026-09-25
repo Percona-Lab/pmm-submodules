@@ -1,28 +1,26 @@
 # Feature-build coordinates for the PMM + PMM Extensions integration (PMM-15570).
 #
-# The pin below follows the *tip* of PMM-15569-extensions-rename at build time,
-# and the published tag is PR-4500-<short sha of this commit>, so the tag alone
-# does not say which PMM commit went in. This block records it; refresh it on
-# every rebuild of this branch.
+# The pin below follows the *tip* of percona/pmm main at build time, and the
+# published tag is PR-4500-<short sha of this commit>, so the tag alone does
+# not say which PMM commit went in. This block records it; refresh it on every
+# rebuild of this branch.
 #
-#   Built:  2026-09-24
-#   From:   percona/pmm PMM-15569-extensions-rename @ 0135023fa
-#           "PMM-15569 Rename vendored UI to @pmm-extensions/*"
-#   Carries: percona/pmm#5992, renaming the SEP integration to PMM Extensions
-#           across percona/pmm before PMM-1 merges to main: the settings API
-#           field, env vars, telemetry metric, nginx path, UI routes and copy,
-#           Postgres role/database, secrets volume and paths, Ansible roles,
-#           internal identifiers and the vendored `@pmm-extensions/*` packages.
+#   Built:  2026-09-25
+#   From:   percona/pmm main @ 7a20dfff5
+#           "PMM-15569 Rename SEP to PMM Extensions (#5992)"
+#   Carries: percona/pmm#5992 as merged to main, renaming the SEP integration
+#           to PMM Extensions across percona/pmm: the settings API field, env
+#           vars, telemetry metric, nginx path, UI routes and copy, Postgres
+#           role/database, secrets volume and paths, Ansible roles, internal
+#           identifiers and the vendored `@pmm-extensions/*` packages.
 #   Paired side-car: percona/percona-sep:a4060c4dceea7656c21450454b89e9d46984050b
-#           (SEP main tip, carrying PMM-15570's contracts/stored-names rename
-#           and the app/extensions move).
+#           (unchanged from the previous build).
 #
-# To tell whether a PR merged into PMM-15569-extensions-rename since then is in
-# the latest feature build, ask git whether its merge commit is an ancestor of
-# that SHA:
+# To tell whether a PR merged into main since then is in the latest feature
+# build, ask git whether its merge commit is an ancestor of that SHA:
 #
-#   git merge-base --is-ancestor <merge-commit> 0135023fa && echo included
+#   git merge-base --is-ancestor <merge-commit> 7a20dfff5 && echo included
 #
 deps:
   - name: pmm
-    branch: PMM-15569-extensions-rename
+    branch: main
