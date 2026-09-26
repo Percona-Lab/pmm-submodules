@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14875-mongodb-fragmentation
+  url: https://github.com/percona/pmm
