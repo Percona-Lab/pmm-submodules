@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-10038-prevent-downgrade
+  url: https://github.com/percona/pmm
