@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15146-prevent-non-official-telemetry
+    url: https://github.com/percona/pmm
