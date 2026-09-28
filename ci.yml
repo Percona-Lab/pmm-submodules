@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15422-support-azure-on-standalone-clients
+      url: https://github.com/percona/pmm
