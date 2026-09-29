@@ -1,3 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-15403-protect-ha-client-nodes
+  - name: grafana
+    branch: PMM-15403-protect-ha-client-nodes
