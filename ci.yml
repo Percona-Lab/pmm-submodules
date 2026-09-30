@@ -2,11 +2,8 @@
 # bootstrap wizard (pmm-managed bootstrap dispatch, the Hosts/Operations UI,
 # abort and per-member settings) and the OM on/off switch.
 #
-# No `url` here on purpose: the branch lives in percona/pmm, which is the url
-# .gitmodules already gives the `pmm` dependency.
-#
-# PMM-15299-open-manager is the OM work's own integration branch in percona/pmm,
-# and every OM pull request has now merged into it:
+# PMM-15299-open-manager is the OM work's own integration branch, and every OM
+# pull request has now merged into it:
 #
 #   #5866 PMM-15360-om-switch-flag              the Settings flag
 #   #5853 PMM-15360-om-nav-gate                 nav + page gating
@@ -17,20 +14,41 @@
 #   #5950 PMM-15347-bootstrap-ui                the Hosts and Automations UI
 #   #5951 PMM-15347-bootstrap-abort-per-member  abort + per-member settings
 #
-# This replaces PMM-15347-om-integration-v3, and the reason it can is that the
-# merges happened. That branch was a no-PR bundle carrying the same eight
-# chains, assembled and verified per commit because none of them had landed
-# anywhere a build could name; it had to be rebuilt by hand every time either
-# side moved, and it is the second such bundle to be retired this way (it
-# replaced PMM-15347-om-bootstrap-fb for the same reason). Pointing at the
-# branch the PRs actually merged into removes the hand step: what this builds is
-# now what percona/pmm holds, not what someone re-bundled.
+# This replaces PMM-15347-om-integration-v3, a no-PR bundle carrying those same
+# eight chains, assembled by hand because none of them had landed anywhere a
+# build could name. The merges happened, so the bundle has nothing left to do.
 #
-# The force-push caveat the bundle carried no longer applies either. The bundle
-# was force-pushed on every restack, so a rebuild took whatever it pointed at
-# that moment; this branch grows by merge commits. The last three above are
-# visible as merges at the tip (#5951 <- #5950 <- #5949, a stack), and the
-# other five merged directly.
+# ---------------------------------------------------------------------------
+# Why `url` points at the fork, when the branch also exists in percona/pmm
+# ---------------------------------------------------------------------------
+#
+# Not a preference: a build off percona/pmm cannot start. `ci.py`'s check_deps
+# looks up every dependency branch's open PR against main and exits 1 if that
+# PR is `behind` or `dirty`, before anything is fetched or compiled. This branch
+# has such a PR - #5872, "PMM-15299 Open Manager" - and it is CONFLICTING, so
+# the job errors with "This commit cannot be built" and the bot comments
+# "Looks like there are outdated source branches". That is build #9 of PR-4571.
+#
+# The fork carries the same commit and has no PR of its own, so check_deps finds
+# nothing to judge and the build proceeds. The image is built from the identical
+# tree either way; only the gate differs.
+#
+# This is also why the old bundle built for so long: a no-PR branch is invisible
+# to that check. The bundle was dodging this gate, not merely collecting commits.
+#
+# The conflict is one line, for whoever clears #5872: main's #5999 deleted
+# `platform/v1` from api/Makefile's SPECS list, and this branch's #5813 added
+# `om/v1` immediately after it. Keep main's deletion and this branch's addition.
+# Nothing else in the tree conflicts, and main is one commit ahead.
+#
+# Cost of the fork route: this branch is a *snapshot*. percona/pmm's copy moves
+# and the fork's does not, so re-push the fork before a rebuild, or the build
+# silently repeats the previous one:
+#
+#   git push origin upstream/PMM-15299-open-manager:refs/heads/PMM-15299-open-manager
+#
+# Drop the `url` line once #5872 is mergeable; the branch name below is already
+# the one percona/pmm uses, so that is the whole change.
 #
 # 64 ahead of upstream/main and 1 behind, so the build carries main as of the
 # branch's last merge rather than main's tip. Note the commit sha from the build
@@ -49,10 +67,12 @@
 #   PR-4571-716cda8  bundle rebased onto the PMM Extensions rename
 #   PR-4571-b52f0b9  after fixing a corrupt ui/pnpm-lock.yaml
 #   PR-4571-3c88545  after de-duplicating router.tsx's imports
-#   this build       pmm at PMM-15299-open-manager 0bcc5f13c, the merged
-#                    branch rather than a bundle. Same eight chains, so the
-#                    image content should not move much; what changes is where
-#                    it comes from.
+#   PR-4571-a9bd41e  first attempt at the merged branch, off percona/pmm.
+#                    Errored in check_deps, never built - see above
+#   this build       the same commit, 0bcc5f13c, off the fork so the build can
+#                    start. Same eight chains as the bundle, so the image
+#                    content should not move much; what changes is where it
+#                    comes from
 #
 # SEP is absent on purpose: it is not a pmm-submodules dependency and no PMM
 # build can produce it. Its side-car image (carrying the matching om_bootstrap
@@ -61,4 +81,5 @@
 # them.
 deps:
   - name: pmm
+    url: https://github.com/plebioda/pmm
     branch: PMM-15299-open-manager
