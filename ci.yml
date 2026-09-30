@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15601-promote-ha-api-to-v1
+      url: https://github.com/percona/pmm
