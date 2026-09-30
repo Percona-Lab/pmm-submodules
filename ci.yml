@@ -1,3 +1,5 @@
 deps:
   - name: pmm
     branch: PMM-14956-ha-alert-templates
+  - name: pmm-qa
+    branch: claude/great-einstein-kq0cos
