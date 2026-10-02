@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-14519-mysql-fails-with-tls-skip-verify
