@@ -1,0 +1,108 @@
+# Feature build carrying the OpenManager work: the MongoDB host-management
+# bootstrap wizard (pmm-managed bootstrap dispatch, the Hosts/Operations UI,
+# abort and per-member settings) and the OM on/off switch.
+#
+# PMM-15347-bootstrap-push-metrics is PMM-15299-open-manager, the OM work's own
+# integration branch, plus one unmerged commit - see "What this build adds"
+# below. Every OM pull request has merged into that branch:
+#
+#   #5866 PMM-15360-om-switch-flag              the Settings flag
+#   #5853 PMM-15360-om-nav-gate                 nav + page gating
+#   #5888 PMM-15360-om-service-gate             the service gate, SEP client hardening
+#   #5921 PMM-15326-pagination-envelope-fix     SEP's paginated envelope
+#   #5995 PMM-15326-sep-env-token-log           stop logging the extensions token
+#   #5949 PMM-15347-bootstrap-backend           bootstrap driven from pmm-managed
+#   #5950 PMM-15347-bootstrap-ui                the Hosts and Automations UI
+#   #5951 PMM-15347-bootstrap-abort-per-member  abort + per-member settings
+#
+# This replaces PMM-15347-om-integration-v3, a no-PR bundle carrying those same
+# eight chains, assembled by hand because none of them had landed anywhere a
+# build could name. The merges happened, so the bundle has nothing left to do.
+#
+# ---------------------------------------------------------------------------
+# What this build adds on top of the integration branch
+# ---------------------------------------------------------------------------
+#
+# percona/pmm#6018, "Register a bootstrapped host's exporter in push metrics
+# mode" - one commit, open against PMM-15299-open-manager and built here ahead
+# of review because it cannot be tested any other way: it is pmm-managed code,
+# so it only exists in a PMM image.
+#
+# registerBootstrapHost never set ExporterOptions, so PushMetrics took its zero
+# value and every service om_bootstrap registered was pull-scraped. PMM Server
+# then has to reach the host's exporter port inbound, on an ephemeral port from
+# 42000 up. On the CHAOS deployment, whose network allows only the ports its
+# terraform names, six hosts bootstrapped green and stayed Down forever with no
+# mongodb_up series at all.
+#
+# Drop the branch back to PMM-15299-open-manager once #6018 merges; the commit
+# is then in the integration branch and this build needs nothing special.
+#
+# ---------------------------------------------------------------------------
+# Why `url` points at the fork, when the branch also exists in percona/pmm
+# ---------------------------------------------------------------------------
+#
+# Not a preference: a build off percona/pmm cannot start. `ci.py`'s check_deps
+# looks up every dependency branch's open PR against main and exits 1 if that
+# PR is `behind` or `dirty`, before anything is fetched or compiled. This branch
+# has such a PR - #5872, "PMM-15299 Open Manager" - and it is CONFLICTING, so
+# the job errors with "This commit cannot be built" and the bot comments
+# "Looks like there are outdated source branches". That is build #9 of PR-4571.
+#
+# The fork carries the same commit and has no PR of its own, so check_deps finds
+# nothing to judge and the build proceeds. The image is built from the identical
+# tree either way; only the gate differs.
+#
+# This is also why the old bundle built for so long: a no-PR branch is invisible
+# to that check. The bundle was dodging this gate, not merely collecting commits.
+#
+# The conflict is one line, for whoever clears #5872: main's #5999 deleted
+# `platform/v1` from api/Makefile's SPECS list, and this branch's #5813 added
+# `om/v1` immediately after it. Keep main's deletion and this branch's addition.
+# Nothing else in the tree conflicts, and main is one commit ahead.
+#
+# Cost of the fork route: this branch is a *snapshot*. percona/pmm's copy moves
+# and the fork's does not, so re-push the fork before a rebuild, or the build
+# silently repeats the previous one:
+#
+#   git push origin upstream/PMM-15347-bootstrap-push-metrics:refs/heads/PMM-15347-bootstrap-push-metrics
+#
+# Drop the `url` line once #5872 is mergeable *and* #6018 has merged, at which
+# point the branch below goes back to PMM-15299-open-manager and percona/pmm
+# carries everything this builds.
+#
+# 64 ahead of upstream/main and 1 behind, so the build carries main as of the
+# branch's last merge rather than main's tip. Note the commit sha from the build
+# if you need to know exactly what an image contains.
+#
+# Builds so far, each the sha of the commit to this branch that triggered it:
+#
+#   PR-4571-9b5d1f7  pmm at the host-management bootstrap chain
+#   PR-4571-7d9f12a  the combined bootstrap + OM-switch bundle
+#   PR-4571-a08488b  re-trigger with the hardened bundle
+#   PR-4571-2b16f10  bundle 53041711e, first from an OM integration branch
+#   PR-4571-b0634ff  bundle 55955bb96, adds two OM fixes found by running the
+#                    stack: PMM retries a scoped inventory refresh the app
+#                    refused (#5949), and the OM switch tells SEP it is
+#                    enabled before asking it to collect (#5888)
+#   PR-4571-716cda8  bundle rebased onto the PMM Extensions rename
+#   PR-4571-b52f0b9  after fixing a corrupt ui/pnpm-lock.yaml
+#   PR-4571-3c88545  after de-duplicating router.tsx's imports
+#   PR-4571-a9bd41e  first attempt at the merged branch, off percona/pmm.
+#                    Errored in check_deps, never built - see above
+#   PR-4571-2f183d5  0bcc5f13c off the fork, so the build could start at all.
+#                    Same eight chains as the bundle; what changed was where it
+#                    came from
+#   this build       0bcc5f13c plus #6018's one commit (b06a1ecb2), so a
+#                    bootstrapped host's exporter is registered to push. The
+#                    first build here carrying something not yet merged
+#
+# SEP is absent on purpose: it is not a pmm-submodules dependency and no PMM
+# build can produce it. Its side-car image (carrying the matching om_bootstrap
+# and om_inventory apps) is built separately and paired with this image at run
+# time. Those apps are on PMM Extensions main, so a current side-car build has
+# them.
+deps:
+  - name: pmm
+    url: https://github.com/plebioda/pmm
+    branch: PMM-15347-bootstrap-push-metrics
