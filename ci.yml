@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-14956-ha-alert-templates
+  - name: pmm-qa
+    branch: PMM-14956-skip-provisioned-rule-groups
