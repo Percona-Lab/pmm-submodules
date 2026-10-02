@@ -1,0 +1,4 @@
+deps:
+  - name: grafana
+    branch: PMM-15632-template-button-rule-list
+    url: https://github.com/percona/grafana
