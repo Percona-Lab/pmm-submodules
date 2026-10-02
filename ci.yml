@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15241-fix-update-popup-snooze
+    url: https://github.com/percona/pmm
