@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15617-fix-ha-pg-connection-exhaustion
+      url: https://github.com/percona/pmm
