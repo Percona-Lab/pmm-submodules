@@ -1,0 +1,12 @@
+# Feature build for percona/pmm#6025, OpenManager: make a down member visible and
+# status readable without colour. That PR is stacked on PMM-15299-open-manager, so
+# this image carries the whole OM integration branch plus its commits.
+#
+# Built from percona/pmm directly: check_deps only judges a branch's open PR
+# against main, and #6025 targets PMM-15299-open-manager, so it is not checked.
+#
+# PMM Extensions (with the om_inventory and om_bootstrap apps) is not a
+# pmm-submodules dependency; pair this image with a current side-car build.
+deps:
+  - name: pmm
+    branch: PMM-15652-om-down-member-status
