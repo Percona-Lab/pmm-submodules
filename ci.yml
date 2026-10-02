@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15194-migrate-encryption-to-v2
+      url: https://github.com/percona/pmm
