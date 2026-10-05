@@ -133,7 +133,7 @@ jobs:
         if: steps.pr.outputs.number != ''
         env:
           # Update this if Investigator's routine is ever recreated.
-          ROUTINE_ID: trig_01FhHBdz2yBibyVEfnG5gbQz
+          ROUTINE_ID: trig_01P2LXxvVmuqKJG1eaJb7j5m
           ROUTINE_TOKEN: ${{ secrets.INVESTIGATOR_ROUTINE_TOKEN }}
           PR_NUMBER: ${{ steps.pr.outputs.number }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
