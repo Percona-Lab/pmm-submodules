@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15679-fix-inventory-load-504-error
+      url: https://github.com/percona/pmm
