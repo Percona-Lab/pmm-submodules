@@ -2,8 +2,8 @@
 # bootstrap wizard (pmm-managed bootstrap dispatch, the Hosts/Operations UI,
 # abort and per-member settings) and the OM on/off switch.
 #
-# PMM-15347-bootstrap-push-metrics is PMM-15299-open-manager, the OM work's own
-# integration branch, plus one unmerged commit - see "What this build adds"
+# PMM-15659-operations-rename is PMM-15299-open-manager, the OM work's own
+# integration branch, plus the unmerged #6054 - see "What this build adds"
 # below. Every OM pull request has merged into that branch:
 #
 #   #5866 PMM-15360-om-switch-flag              the Settings flag
@@ -23,57 +23,33 @@
 # What this build adds on top of the integration branch
 # ---------------------------------------------------------------------------
 #
-# percona/pmm#6018, "Register a bootstrapped host's exporter in push metrics
-# mode" - one commit, open against PMM-15299-open-manager and built here ahead
-# of review because it cannot be tested any other way: it is pmm-managed code,
-# so it only exists in a PMM image.
+# percona/pmm#6054, "PMM-15659: Rename OpenManager to Operations for MongoDB
+# and consolidate its pages" - 26 commits, open against PMM-15299-open-manager,
+# 0 behind it. UI-side rename to a developer preview, four pages (Fleet, Nodes,
+# Automations, Settings) under /operations with redirects from the old /om
+# paths, the glossary pass, column budgets, empty states and a service detail
+# drawer. Built here so the pages can be checked in a real PMM image.
 #
-# registerBootstrapHost never set ExporterOptions, so PushMetrics took its zero
-# value and every service om_bootstrap registered was pull-scraped. PMM Server
-# then has to reach the host's exporter port inbound, on an ephemeral port from
-# 42000 up. On the CHAOS deployment, whose network allows only the ports its
-# terraform names, six hosts bootstrapped green and stayed Down forever with no
-# mongodb_up series at all.
-#
-# Drop the branch back to PMM-15299-open-manager once #6018 merges; the commit
-# is then in the integration branch and this build needs nothing special.
+# #6018 (bootstrap push metrics), which the previous build carried as an extra
+# commit, has since merged into PMM-15299-open-manager, so #6054's head carries
+# it too (merge e125da0a9). Nothing is lost by switching.
 #
 # ---------------------------------------------------------------------------
-# Why `url` points at the fork, when the branch also exists in percona/pmm
+# Why there is no `url` override any more
 # ---------------------------------------------------------------------------
 #
-# Not a preference: a build off percona/pmm cannot start. `ci.py`'s check_deps
-# looks up every dependency branch's open PR against main and exits 1 if that
-# PR is `behind` or `dirty`, before anything is fetched or compiled. This branch
-# has such a PR - #5872, "PMM-15299 Open Manager" - and it is CONFLICTING, so
-# the job errors with "This commit cannot be built" and the bot comments
-# "Looks like there are outdated source branches". That is build #9 of PR-4571.
+# The previous build pointed at a fork snapshot to get past ci.py's check_deps,
+# which exits 1 when a dependency branch's open PR *against main* is behind or
+# dirty. That bit PMM-15299-open-manager (#5872, conflicting). check_deps only
+# queries PRs with base main, and #6054's base is PMM-15299-open-manager, so
+# PMM-15659-operations-rename has nothing for it to judge and builds straight
+# from percona/pmm - no snapshot to keep re-pushing.
 #
-# The fork carries the same commit and has no PR of its own, so check_deps finds
-# nothing to judge and the build proceeds. The image is built from the identical
-# tree either way; only the gate differs.
+# Drop the branch back to PMM-15299-open-manager once #6054 merges.
 #
-# This is also why the old bundle built for so long: a no-PR branch is invisible
-# to that check. The bundle was dodging this gate, not merely collecting commits.
-#
-# The conflict is one line, for whoever clears #5872: main's #5999 deleted
-# `platform/v1` from api/Makefile's SPECS list, and this branch's #5813 added
-# `om/v1` immediately after it. Keep main's deletion and this branch's addition.
-# Nothing else in the tree conflicts, and main is one commit ahead.
-#
-# Cost of the fork route: this branch is a *snapshot*. percona/pmm's copy moves
-# and the fork's does not, so re-push the fork before a rebuild, or the build
-# silently repeats the previous one:
-#
-#   git push origin upstream/PMM-15347-bootstrap-push-metrics:refs/heads/PMM-15347-bootstrap-push-metrics
-#
-# Drop the `url` line once #5872 is mergeable *and* #6018 has merged, at which
-# point the branch below goes back to PMM-15299-open-manager and percona/pmm
-# carries everything this builds.
-#
-# 64 ahead of upstream/main and 1 behind, so the build carries main as of the
-# branch's last merge rather than main's tip. Note the commit sha from the build
-# if you need to know exactly what an image contains.
+# 99 ahead of upstream/main and 13 behind, so the build carries main as of the
+# integration branch's last merge rather than main's tip. Note the commit sha
+# from the build if you need to know exactly what an image contains.
 #
 # Builds so far, each the sha of the commit to this branch that triggered it:
 #
@@ -93,9 +69,11 @@
 #   PR-4571-2f183d5  0bcc5f13c off the fork, so the build could start at all.
 #                    Same eight chains as the bundle; what changed was where it
 #                    came from
-#   this build       0bcc5f13c plus #6018's one commit (b06a1ecb2), so a
+#   PR-4571-e5e9df2  0bcc5f13c plus #6018's one commit (b06a1ecb2), so a
 #                    bootstrapped host's exporter is registered to push. The
 #                    first build here carrying something not yet merged
+#   this build       #6054 at cdcadc31a, the Operations for MongoDB rename and
+#                    page consolidation, off percona/pmm directly
 #
 # SEP is absent on purpose: it is not a pmm-submodules dependency and no PMM
 # build can produce it. Its side-car image (carrying the matching om_bootstrap
@@ -104,5 +82,4 @@
 # them.
 deps:
   - name: pmm
-    url: https://github.com/plebioda/pmm
-    branch: PMM-15347-bootstrap-push-metrics
+    branch: PMM-15659-operations-rename
