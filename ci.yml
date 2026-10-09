@@ -1,55 +1,22 @@
-# Feature build carrying the OpenManager work: the MongoDB host-management
-# bootstrap wizard (pmm-managed bootstrap dispatch, the Hosts/Operations UI,
-# abort and per-member settings) and the OM on/off switch.
+# Feature build of PMM-15347-om-integration-v3, the Operations for MongoDB
+# (formerly OpenManager) integration bundle: PMM-15299-open-manager plus one
+# merge per PR still open against it, whoever wrote it. So the image carries
+# everything in review for OM, not only what has merged.
 #
-# PMM-15659-operations-rename is PMM-15299-open-manager, the OM work's own
-# integration branch, plus the unmerged #6054 - see "What this build adds"
-# below. Every OM pull request has merged into that branch:
+# This build: bundle b865061f8 =
+#   PMM-15299-open-manager at 37bf54abd (every PMM-15665 PR, #6054, #6066,
+#   #6067, #6076 merged)
+#   + #6084 at 26bafebaf (PMM-15677, a running install readable; open)
+#   + #6096 at e24992438 (PMM-15704, Install MongoDB as a primary action; open)
 #
-#   #5866 PMM-15360-om-switch-flag              the Settings flag
-#   #5853 PMM-15360-om-nav-gate                 nav + page gating
-#   #5888 PMM-15360-om-service-gate             the service gate, SEP client hardening
-#   #5921 PMM-15326-pagination-envelope-fix     SEP's paginated envelope
-#   #5995 PMM-15326-sep-env-token-log           stop logging the extensions token
-#   #5949 PMM-15347-bootstrap-backend           bootstrap driven from pmm-managed
-#   #5950 PMM-15347-bootstrap-ui                the Hosts and Automations UI
-#   #5951 PMM-15347-bootstrap-abort-per-member  abort + per-member settings
+# The bundle is force-pushed whenever a PR changes, so the branch tip moves;
+# the image tag's sha is this repo's commit, not pmm's. Note the bundle sha
+# above when re-triggering.
 #
-# This replaces PMM-15347-om-integration-v3, a no-PR bundle carrying those same
-# eight chains, assembled by hand because none of them had landed anywhere a
-# build could name. The merges happened, so the bundle has nothing left to do.
-#
-# ---------------------------------------------------------------------------
-# What this build adds on top of the integration branch
-# ---------------------------------------------------------------------------
-#
-# percona/pmm#6054, "PMM-15659: Rename OpenManager to Operations for MongoDB
-# and consolidate its pages" - 26 commits, open against PMM-15299-open-manager,
-# 0 behind it. UI-side rename to a developer preview, four pages (Fleet, Nodes,
-# Automations, Settings) under /operations with redirects from the old /om
-# paths, the glossary pass, column budgets, empty states and a service detail
-# drawer. Built here so the pages can be checked in a real PMM image.
-#
-# #6018 (bootstrap push metrics), which the previous build carried as an extra
-# commit, has since merged into PMM-15299-open-manager, so #6054's head carries
-# it too (merge e125da0a9). Nothing is lost by switching.
-#
-# ---------------------------------------------------------------------------
-# Why there is no `url` override any more
-# ---------------------------------------------------------------------------
-#
-# The previous build pointed at a fork snapshot to get past ci.py's check_deps,
-# which exits 1 when a dependency branch's open PR *against main* is behind or
-# dirty. That bit PMM-15299-open-manager (#5872, conflicting). check_deps only
-# queries PRs with base main, and #6054's base is PMM-15299-open-manager, so
-# PMM-15659-operations-rename has nothing for it to judge and builds straight
-# from percona/pmm - no snapshot to keep re-pushing.
-#
-# Drop the branch back to PMM-15299-open-manager once #6054 merges.
-#
-# 99 ahead of upstream/main and 13 behind, so the build carries main as of the
-# integration branch's last merge rather than main's tip. Note the commit sha
-# from the build if you need to know exactly what an image contains.
+# No `url` override: check_deps only judges a dependency branch's open PR
+# against main, and the bundle has none. (PMM-15299-open-manager itself does,
+# #5872, which conflicts with main, so building that branch directly needs a
+# fork copy - see PR-4571-a9bd41e and 2f183d5 below.)
 #
 # Builds so far, each the sha of the commit to this branch that triggered it:
 #
@@ -66,20 +33,17 @@
 #   PR-4571-3c88545  after de-duplicating router.tsx's imports
 #   PR-4571-a9bd41e  first attempt at the merged branch, off percona/pmm.
 #                    Errored in check_deps, never built - see above
-#   PR-4571-2f183d5  0bcc5f13c off the fork, so the build could start at all.
-#                    Same eight chains as the bundle; what changed was where it
-#                    came from
+#   PR-4571-2f183d5  0bcc5f13c off the fork, so the build could start at all
 #   PR-4571-e5e9df2  0bcc5f13c plus #6018's one commit (b06a1ecb2), so a
-#                    bootstrapped host's exporter is registered to push. The
-#                    first build here carrying something not yet merged
-#   this build       #6054 at cdcadc31a, the Operations for MongoDB rename and
+#                    bootstrapped host's exporter is registered to push
+#   PR-4571-1a75a83  #6054 at cdcadc31a, the Operations for MongoDB rename and
 #                    page consolidation, off percona/pmm directly
+#   this build       bundle b865061f8, as above
 #
 # SEP is absent on purpose: it is not a pmm-submodules dependency and no PMM
 # build can produce it. Its side-car image (carrying the matching om_bootstrap
 # and om_inventory apps) is built separately and paired with this image at run
-# time. Those apps are on PMM Extensions main, so a current side-car build has
-# them.
+# time.
 deps:
   - name: pmm
-    branch: PMM-15659-operations-rename
+    branch: PMM-15347-om-integration-v3
