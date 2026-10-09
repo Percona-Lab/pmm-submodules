@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15690-install-form-guidance
+    url: https://github.com/percona/pmm
