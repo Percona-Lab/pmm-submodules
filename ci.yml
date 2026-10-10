@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-14512---Fix-MySQL-InnoDB-Details-dashboard-buffer-pool-dirty-stats
+    url: https://github.com/percona/pmm
+    
