@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-14262-redo-space-calculation
+    url: https://github.com/percona/pmm
