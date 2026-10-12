@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-14742-retry-transient-db-errors
+      url: https://github.com/percona/pmm
