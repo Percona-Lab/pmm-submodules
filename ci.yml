@@ -1,22 +1,21 @@
-# Feature build of PMM-15347-om-integration-v3, the Operations for MongoDB
-# (formerly OpenManager) integration bundle: PMM-15299-open-manager plus one
-# merge per PR still open against it, whoever wrote it. So the image carries
-# everything in review for OM, not only what has merged.
+# Feature build of PMM-15299-open-manager, the Operations for MongoDB
+# (formerly OpenManager) branch every OM PR merges into, built from
+# percona/pmm directly.
 #
-# This build: bundle b865061f8 =
-#   PMM-15299-open-manager at 37bf54abd (every PMM-15665 PR, #6054, #6066,
-#   #6067, #6076 merged)
-#   + #6084 at 26bafebaf (PMM-15677, a running install readable; open)
-#   + #6096 at e24992438 (PMM-15704, Install MongoDB as a primary action; open)
+# This build: PMM-15299-open-manager at 85296c123 - the merge of main
+# (efc297968) into 6a793233c, plus a fix for golangci-lint v2.14.0. Every
+# OM PR that has merged is in it; the one still open, #6084 (PMM-15677),
+# is not.
 #
-# The bundle is force-pushed whenever a PR changes, so the branch tip moves;
-# the image tag's sha is this repo's commit, not pmm's. Note the bundle sha
-# above when re-triggering.
+# The OM tables' migrations moved from 120-122 to 122-124 in that merge,
+# behind main's own 120 and 121. A database that ran an earlier build from
+# this branch records 122, so it would skip main's two and then fail creating
+# om_bootstrap_secrets again: start this image on a fresh database.
 #
-# No `url` override: check_deps only judges a dependency branch's open PR
-# against main, and the bundle has none. (PMM-15299-open-manager itself does,
-# #5872, which conflicts with main, so building that branch directly needs a
-# fork copy - see PR-4571-a9bd41e and 2f183d5 below.)
+# No `url` override: check_deps judges the branch's open PR against main,
+# #5872, and fails while that PR is behind or conflicting - which is why
+# PR-4571-a9bd41e never built, and why the builds after it came from a fork
+# copy or the PMM-15347-om-integration-v3 bundle. Merging main in cleared it.
 #
 # Builds so far, each the sha of the commit to this branch that triggered it:
 #
@@ -38,7 +37,9 @@
 #                    bootstrapped host's exporter is registered to push
 #   PR-4571-1a75a83  #6054 at cdcadc31a, the Operations for MongoDB rename and
 #                    page consolidation, off percona/pmm directly
-#   this build       bundle b865061f8, as above
+#   PR-4571-15a36bf  bundle b865061f8: PMM-15299-open-manager at 37bf54abd
+#                    plus #6084 at 26bafebaf and #6096 at e24992438
+#   this build       PMM-15299-open-manager at 85296c123, as above
 #
 # SEP is absent on purpose: it is not a pmm-submodules dependency and no PMM
 # build can produce it. Its side-car image (carrying the matching om_bootstrap
@@ -46,4 +47,4 @@
 # time.
 deps:
   - name: pmm
-    branch: PMM-15347-om-integration-v3
+    branch: PMM-15299-open-manager
