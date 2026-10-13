@@ -2,10 +2,11 @@
 # (formerly OpenManager) branch every OM PR merges into, built from
 # percona/pmm directly.
 #
-# This build: PMM-15299-open-manager at 48add8d0d - main (efc297968) merged
-# into 6a793233c, then the golangci-lint v2.14.0 fix and the review round on
-# #5872 (comments trimmed, %s instead of %q in OM messages). Every OM PR that
-# has merged is in it; the one still open, #6084 (PMM-15677), is not.
+# This build: PMM-15299-open-manager at 82bc63add - main (efc297968) merged
+# into 6a793233c, then the golangci-lint v2.14.0 fix, the review round on
+# #5872 (comments trimmed, %s instead of %q in OM messages), and the bootstrap
+# stepper skipping its polling while OM is off. Every OM PR that has merged
+# is in it; the one still open, #6084 (PMM-15677), is not.
 #
 # The OM tables' migrations moved from 120-122 to 122-124 in that merge,
 # behind main's own 120 and 121. A database that ran an earlier build from
@@ -40,7 +41,8 @@
 #   PR-4571-15a36bf  bundle b865061f8: PMM-15299-open-manager at 37bf54abd
 #                    plus #6084 at 26bafebaf and #6096 at e24992438
 #   PR-4571-7e44b59  PMM-15299-open-manager at 85296c123, main merged in
-#   this build       PMM-15299-open-manager at 48add8d0d, as above
+#   PR-4571-4314646  PMM-15299-open-manager at 48add8d0d, after the review round
+#   this build       PMM-15299-open-manager at 82bc63add, as above
 #
 # SEP is absent on purpose: it is not a pmm-submodules dependency and no PMM
 # build can produce it. Its side-car image (carrying the matching om_bootstrap
