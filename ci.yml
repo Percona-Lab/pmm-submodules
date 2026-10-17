@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15675-operations-timestamps
+    url: https://github.com/percona/pmm
