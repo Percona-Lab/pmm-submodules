@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-14179-dashboard-cleanup-automation
+  url: https://github.com/percona/grafana-dashboards
