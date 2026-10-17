@@ -1,0 +1,7 @@
+deps:
+  - name: grafana
+    branch: PMM-13608-dismiss-modal
+    url: https://github.com/percona/grafana
+  - name: pmm
+    branch: PMM-13608-disable-updates
+    url: https://github.com/percona/pmm
