@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15240-fix-pg-replication-cluster-all
+    url: https://github.com/percona/pmm
