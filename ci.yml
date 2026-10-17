@@ -1,0 +1,4 @@
+deps:
+  - name: mongodb_exporter
+    branch: PMM-14141
+    url: https://github.com/impimp/mongodb_exporter
