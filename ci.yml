@@ -2,6 +2,6 @@ deps:
     - name: pmm
       branch: PMM-14109-improve-advisor-ux
     - name: grafana
-      branch: PMM-14109-improve-advisor-output
+      branch: PMM-14109-improve-advisor-ux
     - name: pmm-qa
       branch: PMM-14109-improve-advisor-ux
