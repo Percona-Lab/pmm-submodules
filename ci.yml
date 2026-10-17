@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-15271-enhanced-metrics-resilience
+  - name: rds_exporter
+    branch: PMM-15271-enhanced-metrics-resilience
