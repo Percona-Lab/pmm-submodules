@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-14917-rta-selection-redirect
+  url: https://github.com/percona/pmm
