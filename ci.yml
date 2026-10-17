@@ -1,0 +1,7 @@
+deps:
+    - name: pmm
+      branch: PMM-15650-arbiter-buildinfo-auth
+      url: https://github.com/percona/pmm
+    - name: mongodb_exporter
+      branch: PMM-15650-arbiter-buildinfo-auth
+      url: https://github.com/percona/mongodb_exporter
