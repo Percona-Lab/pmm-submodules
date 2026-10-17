@@ -1,0 +1,4 @@
+deps:
+  - name: grafana
+    branch: PMM-14014-incorrect-open-source-link-in-help-section
+    url: https://github.com/dmitri-saricev-3pillargloball/grafana
