@@ -1,0 +1,4 @@
+deps:
+- name: grafana-dashboards
+  branch: PMM-14791-disk-details-mountpoints-improvements
+  url: https://github.com/percona/grafana-dashboards
