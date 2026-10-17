@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-9838-disable-grafana-usage-reporting
+    url: https://github.com/percona/pmm
