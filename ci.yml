@@ -1,0 +1,4 @@
+deps:
+    - name: mongodb_exporter
+      branch: PMM-14807-use-connection-pooling-for-performance
+      url: https://github.com/percona/mongodb_exporter
