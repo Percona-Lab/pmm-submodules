@@ -1,0 +1,7 @@
+deps:
+  - name: grafana
+    branch: PMM-14745-alert-templates-pagination
+    url: https://github.com/percona/grafana
+  - name: pmm-qa
+    branch: PMM-14745-alert-templates-pagination
+    url: https://github.com/percona/pmm-qa
