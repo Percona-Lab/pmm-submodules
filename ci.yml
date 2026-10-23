@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15609-fleet-all-value
+    url: https://github.com/percona/pmm
