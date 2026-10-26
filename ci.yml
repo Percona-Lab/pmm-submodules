@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-15674-pmm-admin-ui-fb
+  - name: grafana
+    branch: PMM-15002-migrate-inventory
+  - name: pmm-qa
+    branch: PMM-15002-migrate-inventory
