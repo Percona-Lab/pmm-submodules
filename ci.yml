@@ -1,0 +1,10 @@
+deps:
+- name: pmm
+  branch: PMM-14961-pmm-dump-ui
+  url: https://github.com/percona/pmm
+- name: grafana
+  branch: PMM-14961-pmm-dump-ui
+  url: https://github.com/percona/grafana
+- name: pmm-qa
+  branch: PMM-14961-pmm-dump-ui
+  url: https://github.com/percona/pmm-qa
