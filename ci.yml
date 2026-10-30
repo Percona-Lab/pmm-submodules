@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15693-ha-follower-agent-state
+    url: https://github.com/percona/pmm
