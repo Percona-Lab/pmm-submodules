@@ -132,15 +132,14 @@ jobs:
       - name: Fire Investigator routine
         if: steps.pr.outputs.number != ''
         env:
-          # Update this if Investigator's routine is ever recreated.
-          ROUTINE_ID: trig_01P2LXxvVmuqKJG1eaJb7j5m
+          ROUTINE_ID: ${{ secrets.INVESTIGATOR_ROUTINE_ID }}
           ROUTINE_TOKEN: ${{ secrets.INVESTIGATOR_ROUTINE_TOKEN }}
           PR_NUMBER: ${{ steps.pr.outputs.number }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -euo pipefail
-          if [ -z "${ROUTINE_TOKEN}" ]; then
-            echo "::error::INVESTIGATOR_ROUTINE_TOKEN is not set -- Investigator was not notified of this failure." >&2
+          if [ -z "${ROUTINE_ID}" ] || [ -z "${ROUTINE_TOKEN}" ]; then
+            echo "::error::INVESTIGATOR_ROUTINE_ID or INVESTIGATOR_ROUTINE_TOKEN is not set -- Investigator was not notified of this failure." >&2
             exit 1
           fi
           text="FB Tests failed on ${GITHUB_REPOSITORY} PR #${PR_NUMBER}."
