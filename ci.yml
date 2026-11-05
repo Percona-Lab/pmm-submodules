@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15529-top-queries-reporting
+    url: https://github.com/percona/pmm
