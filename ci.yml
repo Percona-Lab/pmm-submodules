@@ -1,0 +1,9 @@
+deps:
+  - name: pmm
+    branch: PMM-15868-aurora-postgres-details
+  - name: rds_exporter
+    branch: PMM-15868-aurora-postgres-details
+  - name: postgres_exporter
+    branch: PMM-15868-aurora-postgres-details
+  - name: pmm-qa
+    branch: PMM-15868-aurora-postgres-details
