@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: backup-test
+      url: https://github.com/percona/pmm
