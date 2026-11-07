@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15697-qan-lbac
+    url: https://github.com/percona/pmm
