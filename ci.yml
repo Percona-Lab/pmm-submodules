@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-15182-remove-vmalert
+    url: https://github.com/percona/pmm
+  - name: pmm-qa
+    branch: PMM-15182-vmalert-removed
+    url: https://github.com/percona/pmm-qa
