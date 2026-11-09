@@ -10,7 +10,7 @@ import sys
 
 from subprocess import check_output, check_call, call, CalledProcessError
 from pathlib import Path
-from github import Github, UnknownObjectException
+from github import Auth, Github, UnknownObjectException
 
 import yaml
 import git
@@ -25,6 +25,10 @@ FORK_OWNER = os.environ.get('FORK_OWNER', '')
 GITHUB_TOKEN = os.environ.get('GITHUB_API_TOKEN', '')
 # example CHANGE_URL : https://github.com/Percona-Lab/pmm-submodules/pull/2167
 PR_URL = os.environ.get('CHANGE_URL', '')
+
+
+def github_client(token):
+    return Github(auth=Auth.Token(token) if token else None)
 
 
 class Builder():
@@ -88,7 +92,7 @@ class Builder():
 
     def get_global_branches(self, target_branch_name):
         found_branches = {}
-        github_api = Github(GITHUB_TOKEN)
+        github_api = github_client(GITHUB_TOKEN)
         for dep in self.config['deps']:
             url_parts = dep['url'].split('/')[-2:]
             owners = [url_parts[0]]
@@ -154,7 +158,7 @@ class Builder():
         logging.info('Last ci.yml was pushed')
 
         if GITHUB_TOKEN:
-            github_api = Github(GITHUB_TOKEN)
+            github_api = github_client(GITHUB_TOKEN)
             repo = github_api.get_repo('Percona-Lab/pmm-submodules')
             pr = repo.get_pulls(base='v3', head=f'Percona-Lab:{branch_name}')
             # TODO we can use totalCount here: https://github.com/PyGithub/PyGithub/blob/babcbcd04fd5605634855f621b8558afc5cbc515/github/PaginatedList.py#L102
@@ -223,7 +227,7 @@ class Builder():
             logging.warning('there is no GITHUB_TOKEN')
             GH_ACTIONS_TOKEN = os.environ.get('GH_API_TOKEN', '')
 
-        github_api = Github(GH_ACTIONS_TOKEN)
+        github_api = github_client(GH_ACTIONS_TOKEN)
 
         # it's not a good idea to use config_override here. Maybe we can add 'custom' key?
         for dep in self.config_override['deps']:
