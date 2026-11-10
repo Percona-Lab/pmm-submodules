@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-15849-fix-disk-io-panels
+  url: https://github.com/percona/pmm
