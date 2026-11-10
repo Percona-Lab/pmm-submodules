@@ -1,0 +1,7 @@
+deps:
+    - name: pmm
+      branch: PMM-14023-enforce-password-policy
+      url: https://github.com/percona/pmm
+    - name: pmm-qa
+      branch: PMM-14023-enforce-password-policy
+      url: https://github.com/percona/pmm-qa
