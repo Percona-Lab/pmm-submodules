@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15842-go-1.27.4
+      url: https://github.com/percona/pmm
