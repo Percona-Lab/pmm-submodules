@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15910-remove-stale-postgres-locks
+      url: https://github.com/percona/pmm
