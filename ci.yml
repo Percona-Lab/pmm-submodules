@@ -1,0 +1,27 @@
+# Feature-build coordinates for the PMM + PMM Extensions integration (PMM-15570).
+#
+# The pin below follows the *tip* of percona/pmm main at build time, and the
+# published tag is PR-4500-<short sha of this commit>, so the tag alone does
+# not say which PMM commit went in. This block records it; refresh it on every
+# rebuild of this branch.
+#
+#   Built:  2026-10-08
+#   From:   percona/pmm main @ 016153c7a
+#           "PMM-15513 Lead script discovery with search rather than a near-empty browser (#6056)"
+#   Carries: everything merged to main since 7a20dfff5, including for PMM
+#           Extensions: percona/pmm#5983 (nav stays active on nested routes),
+#           #5976 and #5977 (diagnostics run visibility and report view),
+#           #6037 (paper surface on ExtensionsPage), #5988 and #6056 (ATW
+#           first screen and script-discovery search), #5923 (nginx header
+#           changes on the VictoriaMetrics paths) and #5999 (Grafana bound to
+#           loopback).
+#   Paired side-car: percona/pmm-extensions:fb-20261007-330fd952f8
+#
+# To tell whether a PR merged into main since then is in the latest feature
+# build, ask git whether its merge commit is an ancestor of that SHA:
+#
+#   git merge-base --is-ancestor <merge-commit> 016153c7a && echo included
+#
+deps:
+  - name: pmm
+    branch: main
