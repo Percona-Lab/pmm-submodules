@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-12362-rootless-pmm-agent-systemd-service
+  url: https://github.com/percona/pmm
