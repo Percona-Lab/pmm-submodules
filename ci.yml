@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-15484-failing-backup-agents-panel
+  url: https://github.com/percona/pmm
