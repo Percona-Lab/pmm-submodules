@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: network-details-netstat-tcp
+    url: https://github.com/btriller/pmm
