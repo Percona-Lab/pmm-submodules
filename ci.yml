@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-15706-fix-stale-version-checks
+    url: https://github.com/percona/pmm
+  - name: pmm-qa
+    branch: PMM-15706-version-check-tests
+    url: https://github.com/percona/pmm-qa
