@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15773-force-only-scraped-agents
+    url: https://github.com/percona/pmm
