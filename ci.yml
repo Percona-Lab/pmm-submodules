@@ -5,3 +5,6 @@ deps:
     - name: pmm-qa
       branch: PMM-14023-enforce-password-policy
       url: https://github.com/percona/pmm-qa
+    - name: grafana
+      branch: PMM-14023-enforce-password-policy
+      url: https://github.com/percona/grafana
