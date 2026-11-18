@@ -5,3 +5,6 @@ deps:
   - name: pmm-qa
     branch: PMM-15182-vmalert-removed
     url: https://github.com/percona/pmm-qa
+  - name: grafana
+    branch: PMM-15941-recording-rule-target-write
+    url: https://github.com/percona/grafana
