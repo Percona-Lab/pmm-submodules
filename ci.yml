@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15682-mongodb-top-queries
+    url: https://github.com/percona/pmm
