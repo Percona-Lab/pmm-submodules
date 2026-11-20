@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-15129-fix-go-linter-revive-p1
