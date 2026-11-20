@@ -2,3 +2,6 @@ deps:
   - name: pmm
     branch: network-details-netstat-tcp
     url: https://github.com/btriller/pmm
+  - name: pmm-qa
+    branch: PMM-15559-netstat-tcp-rate-tests
+    url: https://github.com/percona/pmm-qa
