@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-15868-rds-overview-page
+  - name: rds_exporter
+    branch: PMM-15868-aurora-cluster-info
+  - name: pmm-qa
+    branch: PMM-15868-aurora-tests
