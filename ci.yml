@@ -1,0 +1,4 @@
+deps:
+    - name: pmm
+      branch: PMM-15919-fix-late-database-creation
+      url: https://github.com/percona/pmm
