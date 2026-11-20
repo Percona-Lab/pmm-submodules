@@ -1,0 +1,3 @@
+deps:
+  - name: pmm
+    branch: PMM-15923-quick-fixes
