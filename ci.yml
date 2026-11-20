@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15835-change-agent-lost-update
+    url: https://github.com/percona/pmm
