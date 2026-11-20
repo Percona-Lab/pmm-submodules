@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15917-clickhouse-cve-bump
+    url: https://github.com/percona/pmm
