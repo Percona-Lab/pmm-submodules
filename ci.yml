@@ -1,0 +1,6 @@
+deps:
+  - name: pmm
+    branch: PMM-15794-retry-sidecar-prerun
+  - name: pmm-qa
+    branch: PMM-15794-unskip-t2108-service-metrics
+    url: https://github.com/percona/pmm-qa
