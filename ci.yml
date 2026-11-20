@@ -2,3 +2,6 @@ deps:
   - name: pmm
     branch: PMM-15053
     url: https://github.com/percona/pmm
+  - name: pmm-qa
+    branch: PMM-15053-psmdb-mongot-setup
+    url: https://github.com/percona/pmm-qa
