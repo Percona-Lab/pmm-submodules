@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15153-summary-actions-remote-nodes
+    url: https://github.com/percona/pmm
