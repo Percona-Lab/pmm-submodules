@@ -1,0 +1,6 @@
+deps:
+  - name: pmm
+    branch: PMM-15013-remove-packages
+  - name: pmm-qa
+    branch: PMM-15013-remove-packages
+    url: https://github.com/percona/pmm-qa
