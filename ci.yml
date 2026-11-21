@@ -3,3 +3,6 @@ deps:
     branch: PMM-15389-assume-role
   - name: grafana
     branch: PMM-15389-rds-role-arn-ui
+  - name: pmm-qa
+    branch: claude/pmm-15389-zephyr-publish-g1efkm
+    url: https://github.com/percona/pmm-qa
