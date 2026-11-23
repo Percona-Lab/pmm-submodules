@@ -1,0 +1,3 @@
+deps:
+  - name: rds_exporter
+    branch: PMM-15272-drop-foreign-events
