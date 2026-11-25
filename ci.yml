@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15965-replset-environment-filter
+    url: https://github.com/percona/pmm
