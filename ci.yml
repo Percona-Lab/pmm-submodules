@@ -5,3 +5,6 @@ deps:
 - name: grafana
   branch: PMM-15364-offline-update-check
   url: https://github.com/percona/grafana
+- name: pmm-qa
+  branch: PMM-15364-offline-home-load
+  url: https://github.com/percona/pmm-qa
