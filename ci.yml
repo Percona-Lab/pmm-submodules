@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-15785-qan-clickhouse-db
+    url: https://github.com/percona/pmm
+  - name: pmm-qa
+    branch: PMM-15785-qan-database-repair-tests
+    url: https://github.com/percona/pmm-qa
