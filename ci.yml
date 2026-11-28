@@ -1,0 +1,7 @@
+deps:
+    - name: pmm
+      branch: PMM-15194-migrate-encryption-to-v2
+      url: https://github.com/percona/pmm
+    - name: pmm-qa
+      branch: PMM-15194-encryption-rotation-messages
+      url: https://github.com/percona/pmm-qa
