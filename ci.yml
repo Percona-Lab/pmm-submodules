@@ -1,0 +1,6 @@
+deps:
+  - name: pmm
+    branch: PMM-15674-pmm-admin-ui-fb
+  - name: pmm-qa
+    branch: PMM-15674-edit-service-labels-tests
+    url: https://github.com/percona/pmm-qa
