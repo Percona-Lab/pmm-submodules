@@ -1,0 +1,7 @@
+deps:
+  - name: pmm
+    branch: PMM-15036-shard-read-write-metrics
+    url: https://github.com/percona/pmm
+  - name: pmm-qa
+    branch: PMM-15036-single-shard-write-load
+    url: https://github.com/percona/pmm-qa
