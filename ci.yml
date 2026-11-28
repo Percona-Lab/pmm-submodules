@@ -1,0 +1,4 @@
+deps:
+- name: pmm
+  branch: PMM-15850-fix-disk-space-panels
+  url: https://github.com/percona/pmm
