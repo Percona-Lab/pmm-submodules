@@ -1,0 +1,4 @@
+deps:
+  - name: pmm
+    branch: PMM-15894-telemetry-api-usage-query
+    url: https://github.com/percona/pmm
