@@ -1,0 +1,5 @@
+deps:
+  - name: pmm
+    branch: PMM-2813-timezone-mycnf
+  - name: mysqld_exporter
+    branch: PMM-2813-time-zone-mycnf
